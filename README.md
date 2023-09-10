@@ -1,6 +1,6 @@
-# Home Cluster
+# Home Infrastructure
 [![k8s](https://img.shields.io/badge/Microk8s-v1.27.2-black?style=flat-square)](https://k8s.io/)
-[![GitHub last commit](https://img.shields.io/github/last-commit/maxim-mityutko/casa-ursa/main?style=flat-square)](https://github.com/maxim-mityutko/casa-ursa/commits/main)
+[![GitHub last commit](https://img.shields.io/github/last-commit/maxim-mityutko/home-infra/main?style=flat-square)](https://github.com/maxim-mityutko/home-infra/commits/main)
 
 ## Notes
 The rollout from scratch has not been fully automated yet, and generally requires following

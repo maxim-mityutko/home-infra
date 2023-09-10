@@ -37,7 +37,7 @@ sudo chmod +x /usr/local/bin/argocd
     instructions. Add public key to `Repo -> Settings -> Deploy Keys`
 
     ```shell
-    argocd repo add git@github.com:maxim-mityutko/casa-ursa.git --ssh-private-key-path ~/.ssh/argocd.brhd.io --insecure --port-forward-namespace argocd
+    argocd repo add git@github.com:maxim-mityutko/home-infra.git --ssh-private-key-path ~/.ssh/argocd.brhd.io --insecure --port-forward-namespace argocd
     ```
 
 # Tips

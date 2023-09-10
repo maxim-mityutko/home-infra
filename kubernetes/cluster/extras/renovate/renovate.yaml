@@ -14,7 +14,7 @@ data:
   RENOVATE_PLATFORM: github
   RENOVATE_GIT_AUTHOR: RB <rb@brhd.io>
   RENOVATE_DOCKER_USER: "1000:1000"
-  RENOVATE_REPOSITORIES: "maxim-mityutko/casa-ursa"
+  RENOVATE_REPOSITORIES: "maxim-mityutko/home-infra"
 ---
 apiVersion: batch/v1
 kind: CronJob

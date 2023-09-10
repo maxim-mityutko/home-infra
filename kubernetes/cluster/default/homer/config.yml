@@ -44,7 +44,7 @@ colors:
 links:
   - name: "Casa Ursa"
     icon: "fab fa-github"
-    url: "https://github.com/maxim-mityutko/casa-ursa"
+    url: "https://github.com/maxim-mityutko/home-infra"
   - name: "kotey.ninja"
     icon: "far fa-cat-space"
     url: "https://casa.brhd.io/ninja"
