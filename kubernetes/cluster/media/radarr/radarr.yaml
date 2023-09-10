@@ -1,0 +1,66 @@
+# Service: Radarr
+# Ingress: radarr.brhd.io
+# Label: app.kubernetes.io/name: radarr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: radarr
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 7878
+  selector:
+    app.kubernetes.io/name: radarr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: radarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: radarr
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: radarr
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: radarr
+          image: ghcr.io/hotio/radarr:release-4.7.5.7809
+          resources:
+            requests:
+              memory: 500Mi
+              cpu: 500m
+            limits:
+              memory: 1000Mi
+              cpu: 1000m
+          ports:
+            - containerPort: 7878
+          volumeMounts:
+            - name: radarr-config
+              mountPath: /config
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: radarr-config
+          persistentVolumeClaim:
+            claimName: radarr-config
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads

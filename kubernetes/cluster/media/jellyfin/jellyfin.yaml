@@ -1,0 +1,72 @@
+# Service: Jellyfin
+# Ingress: media.brhd.io
+# Label: app.kubernetes.io/name: jellyfin
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyfin
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyfin
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8096
+  selector:
+    app.kubernetes.io/name: jellyfin
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyfin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jellyfin
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: jellyfin
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: jellyfin
+          image: jellyfin/jellyfin:10.8.10
+          resources:
+            requests:
+              memory: 1000Mi
+              cpu: 1000m
+            limits:
+              memory: 2000Mi
+              cpu: 3000m
+          ports:
+            - containerPort: 8096
+          volumeMounts:
+            - name: jellyfin-config
+              mountPath: /config
+            - name: jellyfin-cache
+              mountPath: /cache
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: jellyfin-config
+          persistentVolumeClaim:
+            claimName: jellyfin-config
+        - name: jellyfin-cache
+          emptyDir: {}
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64

@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: omada
+  namespace: default
+  labels:
+    app.kubernetes.io/name: omada
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/proxy-ssl-verify: 'off'
+spec:
+  rules:
+    - host: omada.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: omada
+                port:
+                  number: 8043
+  tls:
+    - hosts:
+        - omada.brhd.io

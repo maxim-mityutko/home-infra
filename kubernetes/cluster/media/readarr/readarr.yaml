@@ -1,0 +1,66 @@
+# Service: Radarr
+# Ingress: readarr.brhd.io
+# Label: app.kubernetes.io/name: readarr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: readarr
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8787
+  selector:
+    app.kubernetes.io/name: readarr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: readarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: readarr
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: readarr
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: readarr
+          image: ghcr.io/hotio/readarr:testing-0.3.3.2171
+          resources:
+            requests:
+              memory: 500Mi
+              cpu: 500m
+            limits:
+              memory: 1000Mi
+              cpu: 1000m
+          ports:
+            - containerPort: 8787
+          volumeMounts:
+            - name: readarr-config
+              mountPath: /config
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: readarr-config
+          persistentVolumeClaim:
+            claimName: readarr-config
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads

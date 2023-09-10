@@ -1,0 +1,66 @@
+# Service: Bazarr
+# Ingress: bazarr.brhd.io
+# Label: app.kubernetes.io/name: bazarr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bazarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: bazarr
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 6767
+  selector:
+    app.kubernetes.io/name: bazarr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: bazarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bazarr
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: bazarr
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: bazarr
+          image: ghcr.io/hotio/bazarr:release-1.2.4
+          resources:
+            requests:
+              memory: 500Mi
+              cpu: 500m
+            limits:
+              memory: 1000Mi
+              cpu: 1000m
+          ports:
+            - containerPort: 8787
+          volumeMounts:
+            - name: bazarr-config
+              mountPath: /config
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: bazarr-config
+          persistentVolumeClaim:
+            claimName: bazarr-config
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads

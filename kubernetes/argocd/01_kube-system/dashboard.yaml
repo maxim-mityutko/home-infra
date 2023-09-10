@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubernetes-dashboard
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: kube-system
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: kubernetes/cluster/kube-system/dashboard
+    repoURL: 'git@github.com:maxim-mityutko/casa-ursa.git'
+    targetRevision: main
+  project: default

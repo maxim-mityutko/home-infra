@@ -1,0 +1,16 @@
+---
+# Qbittorrent -- Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: qbittorrent-config
+  namespace: media
+  labels:
+    app.kubernetes.io/name: qbittorrent
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 100M

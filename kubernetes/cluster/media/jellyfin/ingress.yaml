@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jellyfin
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyfin
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: media.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: jellyfin
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - media.brhd.io

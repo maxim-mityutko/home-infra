@@ -1,0 +1,61 @@
+# Service: prowlarr
+# Ingress: prowlarr.brhd.io
+# Label: app.kubernetes.io/name: prowlarr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prowlarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: prowlarr
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9696
+  selector:
+    app.kubernetes.io/name: prowlarr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prowlarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: prowlarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prowlarr
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: prowlarr
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: prowlarr
+          image: ghcr.io/hotio/prowlarr:release-1.7.4.3769
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m
+            limits:
+              memory: 200Mi
+              cpu: 1000m
+          ports:
+            - containerPort: 9696
+          volumeMounts:
+            - name: prowlarr-config
+              mountPath: /config
+      volumes:
+        - name: prowlarr-config
+          persistentVolumeClaim:
+            claimName: prowlarr-config

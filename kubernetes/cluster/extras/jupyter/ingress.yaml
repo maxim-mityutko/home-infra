@@ -1,0 +1,36 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jupyter
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: jupyter
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: jupyter.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: jupyter
+                port:
+                  number: 80
+    - host: spark.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: jupyter
+                port:
+                  number: 4040
+  tls:
+    - hosts:
+        - jupyter.brhd.io

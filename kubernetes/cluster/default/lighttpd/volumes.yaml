@@ -1,0 +1,14 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: lighttpd-www
+  labels:
+    app.kubernetes.io/name: lighttpd
+spec:
+  accessModes:
+  - ReadOnlyMany
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10M

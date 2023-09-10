@@ -1,0 +1,69 @@
+# Service: Tuya Gateway
+# Ingress: tuya.brhd.io
+# Label: app.kubernetes.io/name: tuya-gateway
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tuya-gateway
+  namespace: smarthome
+  labels:
+    app.kubernetes.io/name: tuya-gateway
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 65080
+  selector:
+    app.kubernetes.io/name: tuya-gateway
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tuya-gateway
+  namespace: smarthome
+  labels:
+    app.kubernetes.io/name: tuya-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tuya-gateway
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: smarthome
+      labels:
+        app.kubernetes.io/name: tuya-gateway
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: tuya-gateway
+          image: beerhead/tuya-gateway:latest
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              memory: 100Mi
+          ports:
+            - containerPort: 65080
+          envFrom:
+            - secretRef:
+                name: tuya-gateway
+            - configMapRef:
+                name: tuya-gateway
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tuya-gateway
+  namespace: smarthome
+  labels:
+    app.kubernetes.io/name: tuya-gateway
+data:
+  LOGGING_LEVEL: DEBUG
+  TUYA_REGION: eu

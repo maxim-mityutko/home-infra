@@ -1,0 +1,48 @@
+# Service: Qbitmanage
+# Label: app.kubernetes.io/name: qbitmanage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbitmanage
+  namespace: media
+  labels:
+    app.kubernetes.io/name: qbitmanage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: qbitmanage
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: qbitmanage
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: qbitmanage
+          image: ghcr.io/hotio/qbitmanage:release-4.0.3
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 500m
+              memory: 1000Mi
+          volumeMounts:
+            - name: downloads
+              mountPath: /downloads
+            - name: qbitmanage-config
+              mountPath: /config
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads
+        - name: qbitmanage-config
+          persistentVolumeClaim:
+            claimName: qbitmanage-config

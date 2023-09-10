@@ -1,0 +1,66 @@
+# Service: Sonarr
+# Ingress: sonarr.brhd.io
+# Label: app.kubernetes.io/name: sonarr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: sonarr
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8989
+  selector:
+    app.kubernetes.io/name: sonarr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: sonarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: sonarr
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: sonarr
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: sonarr
+          image: ghcr.io/hotio/sonarr:v4-4.0.0.665
+          resources:
+            requests:
+              memory: 500Mi
+              cpu: 500m
+            limits:
+              memory: 1000Mi
+              cpu: 1000m
+          ports:
+            - containerPort: 8989
+          volumeMounts:
+            - name: sonarr-config
+              mountPath: /config
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: sonarr-config
+          persistentVolumeClaim:
+            claimName: sonarr-config
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads

@@ -1,0 +1,119 @@
+# Service: PiHole
+# Ingress: pihole.brhd.io
+# Label: app.kubernetes.io/name: pihole
+# NOTE: all client IPs are substituted by pod IP due to use of ingress controller
+#       consider using 'hostPort' or NodePort with 'ExternalTrafficPolicy=Local"
+#       if it's not desired.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-ui
+  labels:
+    app.kubernetes.io/name: pihole
+spec:
+  selector:
+    app.kubernetes.io/name: pihole
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-dns
+  labels:
+    app.kubernetes.io/name: pihole
+spec:
+  selector:
+    app.kubernetes.io/name: pihole
+  ports:
+    - port: 53
+      targetPort: 53
+      name: dns-tcp
+      protocol: TCP
+    - port: 53
+      targetPort: 53
+      name: dns-udp
+      protocol: UDP
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pihole
+  labels:
+    app.kubernetes.io/name: pihole
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pihole
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pihole
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: pihole
+        image: pihole/pihole:2023.05.2
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 200Mi
+        env:
+        - name: TZ
+          value: Europe/Amsterdam
+        - name: WEBPASSWORD
+          value: QB3K2UPt3edZRe3G
+        - name: WEBTHEME
+          value: default-darker
+        - name: DHCP_ACTIVE
+          value: "false"
+        - name: VIRTUAL_HOST
+          value: pihole
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+          - name: https
+            containerPort: 443
+            protocol: TCP
+          - name: dns-tcp
+            protocol: TCP
+            containerPort: 53
+          - name: dns-udp
+            protocol: UDP
+            containerPort: 53
+        volumeMounts:
+          - name: pihole-etc
+            mountPath: /etc/pihole
+          - name: pihole-dnsmasqd
+            mountPath: /etc/dnsmasq.d
+      volumes:
+        - name: pihole-etc
+          persistentVolumeClaim:
+            claimName: pihole-etc
+        - name: pihole-dnsmasqd
+          persistentVolumeClaim:
+            claimName: pihole-dnsmasqd
+      dnsConfig:
+        nameservers:
+          - 127.0.0.1
+          - 8.8.8.8
+      nodeSelector:
+        kubernetes.io/hostname: kcw01

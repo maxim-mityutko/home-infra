@@ -1,0 +1,66 @@
+# Service: Jellyseerr
+# Ingress: media.brhd.io/r
+# Label: app.kubernetes.io/name: jellyseerr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyseerr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyseerr
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5055
+  selector:
+    app.kubernetes.io/name: jellyseerr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyseerr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyseerr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jellyseerr
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: jellyseerr
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: jellyseerr
+          image: fallenbagel/jellyseerr:1.6.0
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 100m
+            limits:
+              memory: 500Mi
+              cpu: 500m
+          ports:
+            - containerPort: 5055
+          env:
+            - name: TZ
+              value: 'Europe/Amsterdam'
+            - name: LOG_LEVEL
+              value: 'debug'
+          volumeMounts:
+            - name: jellyseerr-config
+              mountPath: /app/config
+      volumes:
+        - name: jellyseerr-config
+          persistentVolumeClaim:
+            claimName: jellyseerr-config

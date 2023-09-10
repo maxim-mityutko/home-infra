@@ -1,0 +1,16 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "enabled": true,
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Renovate Dashboard",
+  "kubernetes": {
+    "fileMatch": ["kubernetes/cluster/.+\\.ya?ml$"]
+  },
+  "prHourlyLimit": 10,
+  "includePaths": [
+    "kubernetes/cluster/default/**",
+    "kubernetes/cluster/extras/**",
+    "kubernetes/cluster/media/**",
+    "kubernetes/cluster/monitoring/**"
+  ]
+}

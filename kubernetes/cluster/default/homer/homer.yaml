@@ -1,0 +1,70 @@
+# Service: Homer
+# Ingress: home.brhd.io
+# Label: app.kubernetes.io/name: homer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homer
+  namespace: default
+  labels:
+    app.kubernetes.io/name: homer
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: homer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homer
+  labels:
+    app.kubernetes.io/name: homer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: homer
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: homer
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: homer
+          image: b4bz/homer:v23.05.1
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          ports:
+            - containerPort: 8080
+          env:
+            - name: INIT_ASSETS
+              value: "1"
+            - name: PORT
+              value: "8080"
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          volumeMounts:
+            - name: homer-config
+              mountPath: /www/assets/config.yml
+              subPath: config.yml
+      volumes:
+        - name: homer-config
+          configMap:
+            name: homer-config
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64

@@ -1,0 +1,28 @@
+# This config leverages `Server-Side Apply` feature of k8s and ArgoCD
+# Ingress in `microk8s` is deployed and configured from the command line.
+# However, using ServerSideApply and Validate options allow to apply custom
+# changes without knowing the full spec of the application.
+# KB: https://github.com/argoproj/argo-cd/issues/2437#issuecomment-1264964312
+# In general this serves similar purpose as `kubectl patch`.
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: microk8s-ingress
+  namespace: argocd
+spec:
+  destination:
+    namespace: ingress
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: kubernetes/cluster/ingress/microk8s-ingress
+    repoURL: 'git@github.com:maxim-mityutko/casa-ursa.git'
+    targetRevision:  main
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - Validate=false
+      - ServerSideApply=true

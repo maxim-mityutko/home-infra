@@ -1,0 +1,45 @@
+---
+# Omada Controller -- Data
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: omada-data
+  labels:
+    app.kubernetes.io/name: omada
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 5G
+---
+# Omada Controller -- Logs
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: omada-logs
+  labels:
+    app.kubernetes.io/name: omada
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10G
+---
+# Omada Controller -- Cert
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: omada-cert
+  labels:
+    app.kubernetes.io/name: omada
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1M

@@ -1,0 +1,33 @@
+# MariaDB Data
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mariadb-data
+  namespace: default
+  labels:
+    app.kubernetes.io/name: mariadb
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadOnlyMany
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10G
+# MariaDB Backup
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mariadb-backup
+  namespace: default
+  labels:
+    app.kubernetes.io/name: mariadb
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 50G

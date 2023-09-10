@@ -1,0 +1,85 @@
+# Service: MariaDB
+# Ingress: sql.brhd.io (for Adminer)
+# Label: app.kubernetes.io/name: mariadb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+  namespace: default
+  labels:
+    app.kubernetes.io/name: mariadb
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      name: adminer
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+      name: db
+  selector:
+    app.kubernetes.io/name: mariadb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+  namespace: default
+  labels:
+    app.kubernetes.io/name: mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mariadb
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: default
+      labels:
+        app.kubernetes.io/name: mariadb
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: db
+          image: mariadb:10.11.5
+          resources:
+            requests:
+              memory: 200M
+              cpu: 50m
+            limits:
+              memory: 500M
+              cpu: 250m
+          ports:
+            - containerPort: 3306
+          envFrom:
+            - secretRef:
+                name: mariadb
+          volumeMounts:
+            - name: mariadb-data
+              mountPath: /var/lib/mysql
+        - name: adminer
+          image: adminer:4.8.1-standalone
+          env:
+            - name: ADMINER_DEFAULT_SERVER
+              value: 'mariadb'
+            - name: ADMINER_DESIGN
+              value: 'pepa-linha-dark'
+          resources:
+            requests:
+              memory: 10M
+              cpu: 10m
+            limits:
+              memory: 100M
+              cpu: 100m
+          ports:
+            - containerPort: 8080
+      volumes:
+        - name: mariadb-data
+          persistentVolumeClaim:
+            claimName: mariadb-data

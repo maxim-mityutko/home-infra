@@ -1,0 +1,16 @@
+---
+# Radarr -- Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: bazarr-config
+  namespace: media
+  labels:
+    app.kubernetes.io/name: bazarr
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1G
