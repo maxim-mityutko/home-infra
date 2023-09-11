@@ -1,0 +1,41 @@
+---
+# Downloads
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: downloads
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyfin
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: nfs
+  resources:
+    requests:
+      storage: 4000G
+  selector:
+    matchLabels:
+      storage.target: downloads
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: downloads
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyfin
+    storage.target: downloads
+spec:
+  accessModes:
+    - ReadWriteMany
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  capacity:
+    storage: 4000G
+  nfs:
+    server: nas.brhd.io
+    path: /mnt/spin/torrent/downloads
+  mountOptions:
+    - mountvers=4

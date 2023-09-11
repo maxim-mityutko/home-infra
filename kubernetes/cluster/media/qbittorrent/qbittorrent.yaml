@@ -1,0 +1,96 @@
+# Service: Qbittorrent
+# Ingress: qbittorrent.brhd.io
+# Label: app.kubernetes.io/name: qbittorrent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbittorrent-ui
+  namespace: media
+  labels:
+    app.kubernetes.io/name: qbittorrent
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: qbittorrent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbittorrent
+  labels:
+    app.kubernetes.io/name: qbittorrent
+spec:
+  selector:
+    app.kubernetes.io/name: qbittorrent
+  type: NodePort
+  ports:
+   - port: 32412
+     name: torrent-tcp
+     protocol: TCP
+     targetPort: 32412
+     nodePort: 32412
+   - port: 32412
+     name: torrent-udp
+     protocol: UDP
+     targetPort: 32412
+     nodePort: 32412
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+  namespace: media
+  labels:
+    app.kubernetes.io/name: qbittorrent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: qbittorrent
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: qbittorrent
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: qbittorrent
+          image: ghcr.io/hotio/qbittorrent:release-4.5.5
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m
+            limits:
+              memory: 1000Mi
+              cpu: 1000m
+          ports:
+            - name: ui
+              protocol: TCP
+              containerPort: 8080
+            - name: torrent-tcp
+              protocol: TCP
+              containerPort: 32412
+            - name: torrent-udp
+              protocol: UDP
+              containerPort: 32412
+          volumeMounts:
+            - name: qbittorrent-config
+              mountPath: /config
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: qbittorrent-config
+          persistentVolumeClaim:
+            claimName: qbittorrent-config
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads

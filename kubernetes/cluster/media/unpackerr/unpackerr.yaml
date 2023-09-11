@@ -1,0 +1,87 @@
+# Service: Unpackerr
+# Label: app.kubernetes.io/name: unpackerr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unpackerr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: unpackerr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: unpackerr
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: unpackerr
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: sonarr
+          image: ghcr.io/hotio/unpackerr:release-0.12.0
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m
+            limits:
+             memory: 200Mi
+          envFrom:
+            - secretRef:
+                name: unpackerr
+            - configMapRef:
+                name: unpackerr
+          volumeMounts:
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: unpackerr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: unpackerr
+data:
+  # Global
+  UN_DEBUG: "false"
+  UN_INTERVAL: "2m"
+  UN_START_DELAY: "1m"
+  UN_RETRY_DELAY: "5m"
+  UN_MAX_RETRIES: "3"
+  UN_PARALLEL: "1"
+  UN_FILE_MODE: "0644"
+  UN_DIR_MODE: "0755"
+  # Prometheus Metrics
+  UN_WEBSERVER_METRICS: "false"
+  # Sonar
+  UN_SONARR_0_URL: "http://sonarr.media.svc.cluster.local"
+  UN_SONARR_0_PATHS_0: "/downloads"
+  UN_SONARR_0_PROTOCOLS: "torrent"
+  UN_SONARR_0_TIMEOUT: "15s"
+  UN_SONARR_0_DELETE_ORIG: "false"
+  UN_SONARR_0_DELETE_DELAY: "10m"
+  UN_SONARR_0_SYNCTHING: "false"
+  # Radarr
+  UN_RADARR_0_URL: "http://radarr.media.svc.cluster.local"
+  UN_RADARR_0_PATHS_0: "/downloads"
+  UN_RADARR_0_PROTOCOLS: "torrent"
+  UN_RADARR_0_TIMEOUT: "15s"
+  UN_RADARR_0_DELETE_ORIG: "false"
+  UN_RADARR_0_DELETE_DELAY: "10m"
+  UN_RADARR_0_SYNCTHING: "false"
+  # Webhook
+  UN_WEBHOOK_0_NAME: "homelab_media"
+  UN_WEBHOOK_0_SILENT: "false"
+  UN_WEBHOOK_0_EVENTS: "[3,4,7]"
+  UN_WEBHOOK_0_TEMPLATE: "discord"

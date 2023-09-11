@@ -1,0 +1,55 @@
+# Service: It-Tools
+# Ingress: it-tools.brhd.io
+# Label: app.kubernetes.io/name: it-tools
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: it-tools
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: it-tools
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app.kubernetes.io/name: it-tools
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: it-tools
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: it-tools
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: it-tools
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: extras
+      labels:
+        app.kubernetes.io/name: it-tools
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: it-tools
+          image: corentinth/it-tools:2023.8.21-6f93cba
+          resources:
+            requests:
+              memory: 10Mi
+              cpu: 10m
+            limits:
+              memory: 20Mi
+              cpu: 20m
+          ports:
+            - containerPort: 80

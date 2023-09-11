@@ -1,0 +1,85 @@
+# Service: Omada Controller
+# Ingress: omada.brhd.io
+# Label: app.kubernetes.io/name: omada
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: omada
+  labels:
+    app.kubernetes.io/name: omada
+  namespace: default
+spec:
+  ports:
+    - protocol: TCP
+      port: 8043
+      targetPort: 8043
+  selector:
+    app.kubernetes.io/name: omada
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: omada
+  labels:
+    app.kubernetes.io/name: omada
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: omada
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: omada
+    spec:
+      restartPolicy: Always
+      hostNetwork: true
+      containers:
+        - image: mbentley/omada-controller:5.9
+          name: omada
+          resources:
+            requests:
+              cpu: 400m
+              memory: 400Mi
+            limits:
+              cpu: 1
+              memory: 1.0Gi
+          envFrom:
+            - configMapRef:
+                name: omada
+          volumeMounts:
+            - name: omada-data
+              mountPath: /opt/tplink/EAPController/data
+            - name: omada-logs
+              mountPath: /opt/tplink/EAPController/logs
+            - name: omada-cert
+              mountPath: /cert
+      volumes:
+        - name: omada-data
+          persistentVolumeClaim:
+            claimName: omada-data
+        - name: omada-logs
+          persistentVolumeClaim:
+            claimName: omada-logs
+        - name: omada-cert # Let's Encrypt Cert from cert-manager
+          persistentVolumeClaim:
+            claimName: omada-cert
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: omada
+  namespace: default
+  labels:
+    app.kubernetes.io/name: omada
+data:
+  TZ: "Europe/Amsterdam"
+  SHOW_SERVER_LOGS: "false"
+  SHOW_MONGODB_LOGS: "false"
+  MANAGE_HTTPS_PORT: "8043"
+

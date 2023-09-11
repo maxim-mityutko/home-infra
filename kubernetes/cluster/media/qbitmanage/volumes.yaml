@@ -1,0 +1,16 @@
+---
+# Qbitmanage -- Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: qbitmanage-config
+  namespace: media
+  labels:
+    app.kubernetes.io/name: qbitmanage
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 50M

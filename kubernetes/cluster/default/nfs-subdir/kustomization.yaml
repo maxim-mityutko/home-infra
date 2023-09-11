@@ -1,0 +1,42 @@
+# Automatic provisioner of NFS subdirs from PVs via PVCs
+# Usage:
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: pvc
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   storageClassName: nfs-subdir
+#   resources:
+#     requests:
+#       storage: 1Gi
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+helmCharts:
+  - name: nfs-subdir-external-provisioner
+    namespace: kube-system
+    releaseName: nfs-subdir-external-provisioner
+    version: 4.0.18
+    repo: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+    valuesInline:
+      replicaCount: 1
+      nfs:
+        server: nas.brhd.io
+        path: /mnt/master/k8s/pods/
+        reclaimPolicy: Retain # Make sure it is 'Retain' otherwise the whole root will be dropped
+        mountOptions:
+          - nfsvers=4.1
+          - hard
+      storageClass:
+        name: nfs-subdir
+        archiveOnDelete: false
+        reclaimPolicy: Retain
+        accessModes: ReadWriteOnce
+        pathPattern: ${.PVC.name}
+      leaderElection:
+        enabled: false
+

@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: media
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: git@github.com:maxim-mityutko/home-infra.git
+        revision: main
+        directories:
+          - path: kubernetes/cluster/media/*
+  template:
+    metadata:
+      name: "{{path.basename}}"
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: ".;.."
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+      labels:
+        group: media
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com:maxim-mityutko/home-infra.git
+        targetRevision: main
+        path: "{{path}}"
+      destination:
+        namespace: media
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

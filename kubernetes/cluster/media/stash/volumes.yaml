@@ -1,0 +1,64 @@
+---
+# Stash -- Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: stash-config
+  namespace: media
+  labels:
+    app.kubernetes.io/name: stash
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 2G
+---
+# Stash -- Metadata
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: stash-metadata
+  namespace: media
+  labels:
+    app.kubernetes.io/name: stash
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 5G
+---
+# Stash -- Cache
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: stash-cache
+  namespace: media
+  labels:
+    app.kubernetes.io/name: stash
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1G
+---
+# Stash -- Generated
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: stash-generated
+  namespace: media
+  labels:
+    app.kubernetes.io/name: stash
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10G

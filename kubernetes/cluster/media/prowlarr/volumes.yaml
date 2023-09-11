@@ -1,0 +1,16 @@
+---
+# Prowlarr -- Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: prowlarr-config
+  namespace: media
+  labels:
+    app.kubernetes.io/name: prowlarr
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1G

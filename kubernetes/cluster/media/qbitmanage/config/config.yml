@@ -1,0 +1,109 @@
+# NOTE: this config is currently copied manually to the PV location
+# TODO: automate the deployment of this config
+commands:
+  dry_run: false
+  cross_seed: false
+  recheck: false
+  cat_update: false
+  tag_update: true
+  rem_unregistered: false
+  tag_tracker_error: true
+  rem_orphaned: true
+  tag_nohardlinks: true
+  share_limits: true
+  skip_qb_version_check: false
+  skip_cleanup: false
+
+qbt:
+  host: qbittorrent-ui.media.svc.cluster.local:80
+  user: null
+  pass: null
+
+settings:
+  force_auto_tmm: false
+  tracker_error_tag: issue
+  nohardlinks_tag: no-hl
+  share_limits_tag: share-limit
+  ignoreTags_OnUpdate:
+    - no-hl
+    - issue
+directory:
+  root_dir: /downloads/zzz/complete
+  recycle_bin: /downloads/zzz/trash
+  orphaned_dir: /downloads/zzz/orphaned
+  remote_dir: null
+  torrents_dir: null
+  cross_seed: null
+
+cat:
+  radarr: /downloads/zzz/complete/_radarr
+  sonarr: /downloads/zzz/complete/_sonarr
+  stash: /downloads/misc
+
+tracker:
+  t-ru:
+    tag: rutracker
+  torrentleech|tleechreload:
+    tag: torrentleech
+  racingfor:
+    tag: rfm
+  other:
+    tag: other
+
+nohardlinks:
+  - radarr
+  - sonarr
+
+share_limits:
+  media-no-hl:
+    priority: 1
+    include_all_tags:
+      - no-hl
+    categories:
+      - radarr
+      - sonarr
+    max_seeding_time: 20160 # 14 days
+    min_seeding_time: 20100
+    cleanup: true
+  media-non-tl:
+    priority: 3
+    exclude_all_tags:
+      - torrentleech
+    categories:
+      - radarr
+      - sonarr
+    max_seeding_time: 10080 # 7 days
+    cleanup: false
+  stash:
+    priority: 2
+    categories:
+      - stash
+    max_ratio: 5.0
+    max_seeding_time: 129600 # 90 days
+    min_seeding_time: 43200 # 30 days
+    cleanup: false
+
+recyclebin:
+  enabled: true
+  empty_after_x_days: 14
+  save_torrents: false
+  split_by_category: false
+
+orphaned:
+  empty_after_x_days: 14
+
+webhooks:
+  error: null
+  run_start: null
+  run_end: null
+  function:
+    cross_seed: null
+    recheck: null
+    cat_update: null
+    tag_update: null
+    rem_unregistered: null
+    tag_tracker_error: null
+    rem_orphaned: null
+    tag_nohardlinks: null
+    share_limits: null
+    cleanup_dirs: null

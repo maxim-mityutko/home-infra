@@ -1,0 +1,188 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - _namespace.yaml
+  - ss-argocd.yaml # VM Service Scrape
+  - secret.yaml
+helmCharts:
+    - name: victoria-metrics-k8s-stack
+      namespace: monitoring
+      releaseName: victoria-metrics
+      version: 0.16.0
+      repo: https://victoriametrics.github.io/helm-charts/
+      valuesInline:
+        defaultDashboardEnabled: true
+        fullnameOverride: stack
+        victoria-metrics-operator:
+          createCRD: true
+          cleanupCRD: true
+        grafana:
+          enabled: true
+          dashboards:
+            default:
+              # Kubernetes
+              k8s-system-api-server:
+                gnetId: 15761
+                revision: 12
+                datasource: VictoriaMetrics
+              k8s-system-coredns:
+                gnetId: 15762
+                revision: 12
+                datasource: VictoriaMetrics
+              k8s-views-global:
+                gnetId: 15757
+                revision: 27
+                datasource: VictoriaMetrics
+              k8s-views-namespaces:
+                gnetId: 15758
+                revision: 23
+                datasource: VictoriaMetrics
+              k8s-views-nodes:
+                gnetId: 15759
+                revision: 19
+                datasource: VictoriaMetrics
+              k8s-views-pods:
+                gnetId: 15760
+                revision: 18
+                datasource: VictoriaMetrics
+              # Persistent Volumes
+              kubernetes-persistent-volumes:
+                gnetId: 12660 #13646
+                revision: 1 #2
+                datasource: VictoriaMetrics
+              # Network
+              kubernetes-networking-namespace-pods:
+                gnetId: 12125
+                revision: 1
+                datasource: VictoriaMetrics
+              kubernetes-networking-namespace-cluster:
+                gnetId: 12124
+                revision: 1
+                datasource: VictoriaMetrics
+              # Ingress
+              nginx-ingress-controller:
+                gnetId: 9614
+                revision: 1
+                datasource: VictoriaMetrics
+              # Cluster
+              nodeexporter:
+                gnetId: 1860
+                revision: 31
+                datasource: VictoriaMetrics
+              # ArgoCD
+              argocd:
+                gnetId: 14584
+                revision: 1
+                datasource: VictoriaMetrics
+          sidecar:
+            dashboards:
+              enabled: true
+          grafana.ini:
+            auth.anonymous:
+              enabled: true
+              org_role: Editor
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public
+              cert-manager.io/cluster-issuer: lets-encrypt
+            hosts:
+              - grafana.brhd.io
+        alertmanager:
+          enabled: true
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public
+              cert-manager.io/cluster-issuer: lets-encrypt
+            hosts:
+              - alert-manager.brhd.io
+          spec:
+            externalURL: "https://alert-manager.brhd.io"
+            configSecret: alertmanager-config
+          monzoTemplate:
+            enabled: false
+
+        # VM Infra
+        vmsingle:
+          enabled: true
+          spec:
+            retentionPeriod: "14"
+            storage:
+              # Use custom storage class to leverage automatic PV creation
+              storageClassName: nfs-subdir
+          ingress:
+            enabled: true
+            hosts:
+              - vmsingle.brhd.io
+        vmalert:
+          enabled: true
+          spec:
+            resources:
+              requests:
+                cpu: 100m
+                memory: 200Mi
+              limits:
+                cpu: 200m
+                memory: 500Mi
+          ingress:
+            enabled: true
+            hosts:
+              - vmalert.brhd.io
+        vmagent:
+          enabled: true
+          spec:
+            scrapeInterval: 60s
+            resources:
+              requests:
+                cpu: 100m
+                memory: 200Mi
+              limits:
+                #cpu: 200m
+                memory: 500Mi
+          ingress:
+            enabled: true
+            hosts:
+              - vmagent.brhd.io
+
+        # Service Scrape
+        kubelet:
+          enabled: true
+          spec:
+            interval: 60s
+        kube-state-metrics:
+          enabled: true
+        prometheus-node-exporter:
+          enabled: true
+        kubeApiServer:
+          enabled: true
+          spec:
+            endpoints:
+              - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+                port: https
+                scheme: https
+                tlsConfig:
+                  caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                  serverName: kubernetes
+                # Drop high cardinality metrics
+                metricRelabelConfigs:
+                  - sourceLabels: ["__name__"]
+                    regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+                    action: drop
+                  - sourceLabels: ["__name__"]
+                    regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
+                    action: drop
+        coreDns:
+          enabled: true
+          service:
+            enabled: false
+        # Service Scrape (disabled)
+        kubeScheduler:
+          enabled: false
+        kubeControllerManager:
+          enabled: false
+        kubeEtcd:
+          enabled: false
+        kubeProxy:
+          enabled: false

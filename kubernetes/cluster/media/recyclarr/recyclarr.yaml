@@ -1,0 +1,48 @@
+# Service: Recyclarr
+# Label: app.kubernetes.io/name: recyclarr
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: recyclarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: recyclarr
+spec:
+  schedule: '0 8 * * *'
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      # successfulJobsHistoryLimit: 1
+      # failedJobsHistoryLimit: 2
+      ttlSecondsAfterFinished: 259200 # 3 days
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: recyclarr
+              image: ghcr.io/recyclarr/recyclarr:5.3.1
+              imagePullPolicy: IfNotPresent
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 100Mi
+                limits:
+                  cpu: 500m
+                  memory: 100Mi
+              command:
+                - /app/recyclarr/recyclarr
+              args:
+                - sync
+              envFrom:
+                - secretRef:
+                    name: recyclarr
+              volumeMounts:
+                - name: recyclarr-config
+                  mountPath: /config/recyclarr.yml
+                  subPath: config.yml
+                  readOnly: true
+          volumes:
+            - name: recyclarr-config
+              configMap:
+                name: recyclarr-config

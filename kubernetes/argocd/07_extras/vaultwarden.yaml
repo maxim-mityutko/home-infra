@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vaultwarden
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: extras
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: kubernetes/cluster/extras/vaultwarden
+    repoURL: 'git@github.com:maxim-mityutko/home-infra.git'
+    targetRevision: main
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: renovate
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: renovate
+data:
+  LOG_LEVEL: debug
+  RENOVATE_AUTODISCOVER: "false"
+  RENOVATE_DRY_RUN: "false"
+  RENOVATE_REPOSITORY_CACHE: disabled
+  RENOVATE_PLATFORM: github
+  RENOVATE_GIT_AUTHOR: RB <rb@brhd.io>
+  RENOVATE_DOCKER_USER: "1000:1000"
+  RENOVATE_REPOSITORIES: "maxim-mityutko/home-infra"
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: renovate
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: renovate
+spec:
+  schedule: '0 4 * * *'
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+#      successfulJobsHistoryLimit: 1
+#      failedJobsHistoryLimit: 2
+      ttlSecondsAfterFinished: 259200 # 3 days
+      template:
+        spec:
+          containers:
+            - name: renovate
+              image: renovate/renovate:36.88.1
+              envFrom:
+                - secretRef:
+                    name: renovate
+                - configMapRef:
+                    name: renovate
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 500Mi
+                limits:
+                  cpu: 500m
+                  memory: 500Mi
+          restartPolicy: Never
+          nodeSelector:
+            kubernetes.io/arch: amd64

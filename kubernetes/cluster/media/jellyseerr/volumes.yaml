@@ -1,0 +1,16 @@
+---
+# Jellyseerr -- Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: jellyseerr-config
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyseerr
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1G

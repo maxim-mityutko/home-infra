@@ -1,0 +1,52 @@
+# Service: Cloudflare DDNS
+# Label: app.kubernetes.io/name: cloudflare-ddns
+# Comment: Current version has placeholders for secrets (base64 encoded) within this manifest
+# T-Mobile Ranges: https://ipinfo.io/AS50266
+# Cloudflare token is usable from: 5.132.0.0/17
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflare-ddns
+  labels:
+    app.kubernetes.io/name: cloudflare-ddns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cloudflare-ddns
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cloudflare-ddns
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: cloudflare-ddns--brhd-io
+          image: oznu/cloudflare-ddns
+          resources:
+            requests:
+              cpu: 50m
+              memory: 50Mi
+            limits:
+              cpu: 100m
+              memory: 50Mi
+          envFrom:
+            - configMapRef:
+                name: cloudflare-ddns--brhd-io
+            - secretRef:
+                name: cloudflare-ddns
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflare-ddns--brhd-io
+  namespace: default
+  labels:
+    app.kubernetes.io/name: cloudflare-ddns
+data:
+  ZONE: brhd.io
+  CRON: 0 * * * *

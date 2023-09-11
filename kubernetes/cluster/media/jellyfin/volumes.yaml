@@ -1,0 +1,16 @@
+---
+# Jellyfin -- Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: jellyfin-config
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyfin
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 50G

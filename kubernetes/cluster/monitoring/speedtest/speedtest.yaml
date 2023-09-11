@@ -1,0 +1,77 @@
+# Service: Speedtest Tracker
+# Ingress: speed.brhd.io
+# Label: app.kubernetes.io/name: speedtest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: speedtest
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: speedtest
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+  selector:
+    app.kubernetes.io/name: speedtest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speedtest
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: speedtest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: speedtest
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: monitoring
+      labels:
+        app.kubernetes.io/name: speedtest
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: speedtest
+          image: ghcr.io/alexjustesen/speedtest-tracker:v0.12.0-beta.3
+          resources:
+            requests:
+              cpu: 50m
+              memory: 50Mi
+            limits:
+              cpu: 500m
+              memory: 200Mi
+          env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+          envFrom:
+            - secretRef:
+                name: speedtest
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          volumeMounts:
+            - name: speedtest-config
+              mountPath: /config
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+      volumes:
+        - name: speedtest-config
+          persistentVolumeClaim:
+            claimName: speedtest-config
