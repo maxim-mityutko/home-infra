@@ -47,9 +47,13 @@ helmCharts:
                 revision: 18
                 datasource: VictoriaMetrics
               # Persistent Volumes
-              kubernetes-persistent-volumes:
-                gnetId: 12660 #13646
-                revision: 1 #2
+              k8s-storage-volumes-namespace:
+                gnetId: 11455
+                revision: 6
+                datasource: VictoriaMetrics
+              k8s-storage-volumes-cluster:
+                gnetId: 11454
+                revision: 14
                 datasource: VictoriaMetrics
               # Network
               kubernetes-networking-namespace-pods:
