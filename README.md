@@ -4,15 +4,18 @@
 
 ## Notes
 The rollout from scratch has not been fully automated yet, and generally requires following
-the process defined in `\kubernetes\scripts` and `\readme` folders for the initial setup.
+the process defined in `\readme` and `\kubernetes\scripts` folders for the initial setup.
 
-After the initial steps are complete, deployments are handled via ArgoCD applications 
+After the initial steps are complete, deployments are handled via ArgoCD application manifests
 defined in the `kubernetes\argocd`.
 
 ## Hardware:
-* CPU Intel i5-3470 / RAM 24 GB / 2 x SSD 500 GB in RAID 0 / 2 x HDD 12TB in RAID 0 with TrueNas Scale and 2 VMs (8GB + 4GB)
-* Raspberry Pi 4B / RAM 4GB
-* Raspberry Pi 4B / RAM 8GB 
+* VM Host: CPU Intel i5-3470 / RAM 24 GB / 2 x SSD 500 GB in RAID 0 / 2 x HDD 12TB in RAID 0 with TrueNas Scale 
+  * VM1: RAM 8GB
+  * VM2: RAM 4GB
+* Raspberry Pi 4B / RAM 8GB
+* ~~Raspberry Pi 4B / RAM 4GB~~
+* Upcoming: [Compute Blade](https://www.kickstarter.com/projects/uptimelab/compute-blade) with CM4 8GB and 500 GB NVME x 2
 
 ## Services
 ### Microk8s
@@ -69,7 +72,7 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | **Readarr**           | Readarr is an ebook and audiobook collection manager for Usenet and BitTorrent users    |                                           [repo](https://github.com/readarr/readarr)                                            |              [docker](https://hotio.dev/containers/readarr/)              |
 | **Bazarr**            | Bazarr is a companion application to Sonarr and Radarr to manage                        |                                         [repo](https://github.com/morpheus65535/bazarr)                                         | [docker](https://github.com/recyclarr/recyclarr/pkgs/container/recyclarr) |
 | **Recyclarr**         | Automatically synchronize recommended settings from the TRaSH guides                    |                                         [repo](https://github.com/recyclarr/recyclarr/)                                         | [docker](https://github.com/recyclarr/recyclarr/pkgs/container/recyclarr) |
-| **qBittorrent + Vue** |                                                                                         |    [repo_qbittorrent](https://github.com/qbittorrent/qbittorrent)<br>[repo_vuetorrent](https://github.com/WDaan/VueTorrent)     |            [docker](https://hotio.dev/containers/qbittorrent/)            |
+| **qBittorrent + Vue** |                                                                                         |    [repo-qbittorrent](https://github.com/qbittorrent/qbittorrent)<br>[repo-vuetorrent](https://github.com/WDaan/VueTorrent)     |            [docker](https://hotio.dev/containers/qbittorrent/)            |
 | **qBit Manage**       | Manage qBittorrent instances with ease                                                  |                                      [repo](https://github.com/StuffAnThings/qbit_manage)                                       |            [docker](https://hotio.dev/containers/qbitmanage/)             |
 | **Unpackerr**         |                                                                                         |                                         [repo](https://github.com/Unpackerr/unpackerr)                                          |            [docker](https://hotio.dev/containers/qbittorrent/)            |
 | **Stash**             |                                                                                         | [repo](https://github.com/stashapp/stash)<br>[docs](https://github.com/stashapp/stash/blob/develop/docker/production/README.md) |             [docker](https://hub.docker.com/r/stashapp/stash)             |
