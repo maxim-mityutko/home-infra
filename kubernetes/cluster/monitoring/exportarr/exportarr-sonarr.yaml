@@ -11,7 +11,7 @@ spec:
   selector:
     app.kubernetes.io/name: exportarr-sonarr
   ports:
-    - name: metrics
+    - name: monitoring
       port: 9707
 ---
 apiVersion: apps/v1
@@ -42,7 +42,7 @@ spec:
           args:
             - sonarr
           ports:
-            - name: metrics
+            - name: monitoring
               containerPort: 9707
           resources:
             requests:
@@ -64,12 +64,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /healthz
-              port: metrics
+              port: monitoring
             failureThreshold: 5
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /healthz
-              port: metrics
+              port: monitoring
             failureThreshold: 5
             periodSeconds: 10
