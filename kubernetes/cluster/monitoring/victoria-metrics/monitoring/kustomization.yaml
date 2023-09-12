@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - _namespace.yaml
-  - ss-argocd.yaml # VM Service Scrape
+  - scrape-argocd.yaml # VM Service Scrape
   - secret.yaml
 helmCharts:
     - name: victoria-metrics-k8s-stack
