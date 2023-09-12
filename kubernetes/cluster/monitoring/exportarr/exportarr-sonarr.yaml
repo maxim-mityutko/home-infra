@@ -64,12 +64,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /healthz
-              port: monitoring
+              port: metrics
             failureThreshold: 5
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /healthz
-              port: monitoring
+              port: metrics
             failureThreshold: 5
             periodSeconds: 10
