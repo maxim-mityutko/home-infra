@@ -3,15 +3,12 @@ kind: VMServiceScrape
 metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
-  name: argocd-metrics
+  name: exportarr-radarr-metrics
   namespace: monitoring
 spec:
   endpoints:
     - port: metrics
-  namespaceSelector:
-    matchNames:
-      - argocd
   selector:
     matchLabels:
       app.kubernetes.io/component: metrics
-      app.kubernetes.io/name: argocd-metrics
+      app.kubernetes.io/name: exportarr-radarr-metrics

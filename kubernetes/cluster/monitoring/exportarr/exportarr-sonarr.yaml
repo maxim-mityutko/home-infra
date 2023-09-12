@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: exportarr-sonarr
+  name: exportarr-sonarr-metrics
   namespace: monitoring
   labels:
     app.kubernetes.io/name: exportarr-sonarr
@@ -11,7 +11,7 @@ spec:
   selector:
     app.kubernetes.io/name: exportarr-sonarr
   ports:
-    - name: monitoring
+    - name: metrics
       port: 9707
 ---
 apiVersion: apps/v1
@@ -42,7 +42,7 @@ spec:
           args:
             - sonarr
           ports:
-            - name: monitoring
+            - name: metrics
               containerPort: 9707
           resources:
             requests:
