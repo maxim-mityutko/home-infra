@@ -70,4 +70,4 @@ spec:
             claimName: downloads
       nodeSelector:
         beta.kubernetes.io/arch: amd64
-        nvidia.com/gpu.present: true
+        nvidia.com/gpu.present: "true"
