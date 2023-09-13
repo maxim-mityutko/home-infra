@@ -1,9 +1,0 @@
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: grafana-custom-dashboards
-  namespace: monitoring
-data:
-  arr.json: |
-    {{ .Files.Get "dashboards/arr.json" | indent 4 }}
