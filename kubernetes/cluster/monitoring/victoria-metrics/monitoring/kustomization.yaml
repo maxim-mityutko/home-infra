@@ -81,9 +81,9 @@ helmCharts:
                 revision: 1
                 datasource: VictoriaMetrics
               # *arr
-              arr:
-                json: |
-                  ${indent(8, file("${path.module}/dashboards/arr.json"))}
+#              arr:
+#                json: |
+#                  ${indent(8, file("${path.module}/dashboards/arr.json"))}
           sidecar:
             dashboards:
               enabled: true
