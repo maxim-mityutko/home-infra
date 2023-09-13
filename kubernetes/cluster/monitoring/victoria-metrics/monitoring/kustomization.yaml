@@ -5,6 +5,7 @@ resources:
   - _namespace.yaml
   - scrape-argocd.yaml # VM Service Scrape
   - secret.yaml
+  - dashboards
 helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring
