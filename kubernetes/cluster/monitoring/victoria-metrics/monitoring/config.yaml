@@ -5,4 +5,5 @@ metadata:
   name: grafana-custom-dashboards
   namespace: monitoring
 data:
-  kubernetes.json: {{ .Files.Get "dashboards/arr.json" | indent 4 }}
+  arr.json: |
+    {{ .Files.Get "dashboards/arr.json" | indent 4 }}
