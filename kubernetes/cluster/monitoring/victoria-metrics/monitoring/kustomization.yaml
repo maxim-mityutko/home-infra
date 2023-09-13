@@ -80,13 +80,10 @@ helmCharts:
                 gnetId: 14584
                 revision: 1
                 datasource: VictoriaMetrics
-              # *arr
-#              arr:
-#                json: |
-#                  ${indent(8, file("${path.module}/dashboards/arr.json"))}
           sidecar:
             dashboards:
               enabled: true
+              label: grafana-dashboard
           grafana.ini:
             auth.anonymous:
               enabled: true
