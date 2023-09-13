@@ -42,7 +42,7 @@ spec:
   endpoints:
     - port: monitoring
       path: /metrics
-      interval:
+      interval: 300s
   selector:
     matchLabels:
       app.kubernetes.io/name: exportarr-prowlarr
