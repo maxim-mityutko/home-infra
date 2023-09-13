@@ -79,6 +79,8 @@ helmCharts:
                 gnetId: 14584
                 revision: 1
                 datasource: VictoriaMetrics
+          dashboardsConfigMaps:
+            default: grafana-custom-dashboards
           sidecar:
             dashboards:
               enabled: true
