@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: exportarr-radarr-metrics
+  name: exportarr-radarr
   namespace: monitoring
   labels:
     app.kubernetes.io/name: exportarr-radarr

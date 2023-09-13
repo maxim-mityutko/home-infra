@@ -11,5 +11,4 @@ spec:
       path: /metrics
   selector:
     matchLabels:
-      app.kubernetes.io/component: metrics
-      app.kubernetes.io/name: exportarr-sonarr-metrics
+      app.kubernetes.io/name: exportarr-sonarr
