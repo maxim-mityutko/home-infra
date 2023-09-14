@@ -4,7 +4,7 @@ namespace: monitoring
 configMapGenerator:
   - name: media-arr
     files:
-      - media/arr.json
+      - media/arr.json # Ref: https://github.com/onedr0p/exportarr/blob/master/examples/grafana/dashboard2.json
 generatorOptions:
   disableNameSuffixHash: true
   labels:
