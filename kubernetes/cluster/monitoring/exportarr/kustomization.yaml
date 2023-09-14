@@ -7,7 +7,6 @@ resources:
   - exportarr-sonarr.yaml
   - scrape-exportarr.yaml
   - secret.yaml
-  - dashboards
 configMapGenerator:
   - name: media-dashboard
     files:
