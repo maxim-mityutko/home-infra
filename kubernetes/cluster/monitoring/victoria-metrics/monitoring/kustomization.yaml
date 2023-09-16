@@ -156,11 +156,9 @@ helmCharts:
           enabled: true
           spec:
             interval: 60s
-            # metricRelabelConfigs:
-            #relabelConfigs:
-              # Drop labels created after roll out of GPU operator
-            #  - action: labeldrop
-            #    regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
+            relabelConfigs:
+              - action: labeldrop # Drop labels created after roll out of GPU operator
+                regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
         kube-state-metrics:
           enabled: true
         prometheus-node-exporter:
