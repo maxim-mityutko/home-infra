@@ -159,7 +159,7 @@ helmCharts:
             metricRelabelConfigs:
               # Drop labels created after roll out of GPU operator
               - action: labeldrop
-                regex: ((.+)node_label_feature(.+)|(.+)nvidia(.+)|(.+)beta_kubernetes_io(.+))
+                regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
         kube-state-metrics:
           enabled: true
         prometheus-node-exporter:
@@ -182,8 +182,6 @@ helmCharts:
                   - sourceLabels: ["__name__"]
                     regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
                     action: drop
-                  - action: labeldrop # Drop labels created after roll out of GPU operator
-                    regex: ((.+)node_label_feature(.+)|(.+)nvidia(.+)|(.+)beta_kubernetes_io(.+))
         coreDns:
           enabled: true
           service:
