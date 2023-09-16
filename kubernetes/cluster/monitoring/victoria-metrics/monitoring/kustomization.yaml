@@ -167,10 +167,6 @@ helmCharts:
         kubeApiServer:
           enabled: true
           spec:
-            metricRelabelConfigs:
-              # Drop labels created after roll out of GPU operator
-              - action: labeldrop
-                regex: ((.+)node_label_feature(.+)|(.+)nvidia(.+)|(.+)beta_kubernetes_io(.+))
             endpoints:
               - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
                 port: https
@@ -186,6 +182,8 @@ helmCharts:
                   - sourceLabels: ["__name__"]
                     regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
                     action: drop
+                  - action: labeldrop # Drop labels created after roll out of GPU operator
+                    regex: ((.+)node_label_feature(.+)|(.+)nvidia(.+)|(.+)beta_kubernetes_io(.+))
         coreDns:
           enabled: true
           service:
