@@ -159,6 +159,8 @@ helmCharts:
             relabelConfigs:
               - action: labeldrop # Drop labels created after roll out of GPU operator
                 regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
+              - target_label: job
+                replacement: kubelet
         kube-state-metrics:
           enabled: true
         prometheus-node-exporter:
