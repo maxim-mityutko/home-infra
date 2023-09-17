@@ -128,7 +128,7 @@ helmCharts:
           enabled: true
           spec:
             externalLabels:
-              dummy: dummy #
+              dummy: dummy # FIX: ArgoCD infinite sync loop when `Replace=true`
             resources:
               requests:
                 cpu: 100m
