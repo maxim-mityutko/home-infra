@@ -1,5 +1,5 @@
 radarr:
-  default:
+  radarr-all:
     base_url: http://radarr.media.svc.cluster.local
     api_key: !env_var RADARR_API_KEY
     delete_old_custom_formats: true
@@ -8,21 +8,26 @@ radarr:
       type: movie
     quality_profiles:
       - name: HD (Remux)
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
       - name: HD
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
       - name: SD
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
     custom_formats:
       - trash_ids:
           - 3a3ff47579026e76d6504ebea39390de # Remux Tier 1
           - 9f98181fe5a3fbeb0cc29340da2a468a # Remux Tier 2
+          - 8baaf0b3142bf4d94c42a724f034e27a # Remux Tier 3
         quality_profiles:
           - name: HD (Remux)
       - trash_ids:
           # HQ Release Groups
           - ed27ebfef2f323e964fb1f61391bcb35 # HD Bluray Tier 1
           - c20c8647f2746a1f4c4262b0fbbeeeae # HD Bluray Tier 2
+          - 5608c71bcebba0a5e666223bae8c9227 # HD Bluray Tier 3
           - c20f169ef63c5f40c2def54abaf4438e # WEB Tier 1
           - 403816d65392c79236dcb6dd591aeda4 # WEB Tier 2
           - af94e0fe497124d1f9ce732069ec8c3b # WEB Tier 3
@@ -49,6 +54,7 @@ radarr:
           - e7718d7a3ce595f289bfee26adc178f5 # Repack / Proper
           - ae43b294509409a6a13919dedd4764c4 # Repack2
           - 2899d84dc9372de3408e6d8cc18e9666 # x264
+          - 9170d55c319f4fe40da8711ba9d8050d # x265
         quality_profiles:
           - name: HD (Remux)
           - name: HD
@@ -68,12 +74,13 @@ radarr:
           - 9364dd386c9b4a1100dde8264690add7 # HLG
           # Optional
           - 923b6abef9b17f937fab56cfcf89e1f1 # DV (WEBDL)
+          - cae4ca30163749b891686f95532519bd # AV1
           # Unwanted
           - ed38b889b31be83fda192888e2286d83 # BR-DISK
           - 90a6f9a284dff5103f6346090e6280c8 # LQ
           - b8cd450cbfa689c0259a01d9e29ba3d6 # 3D
-          - dc98083864ea246d05a42df0d05f81cc # x265
-          - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
+          - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
+          # - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
           - bfd8eb01832d646a0a89c4deb46f8564 # Upscaled
           # Unwanted (Optional)
           - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
@@ -88,7 +95,7 @@ radarr:
             score: -10000
 
 sonarr:
-  default:
+  sonarr-all:
     base_url: http://sonarr.media.svc.cluster.local
     api_key: !env_var SONARR_API_KEY
     delete_old_custom_formats: true
@@ -97,9 +104,11 @@ sonarr:
       type: series
     quality_profiles:
       - name: HD
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
       - name: SD
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
     custom_formats:
       - trash_ids:
           # Streaming

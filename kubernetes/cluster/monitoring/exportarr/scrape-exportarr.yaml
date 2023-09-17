@@ -1,0 +1,48 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  labels:
+    app.kubernetes.io/instance: victoria-metrics
+  name: exportarr-radarr-metrics
+  namespace: monitoring
+spec:
+  endpoints:
+    - port: monitoring
+      path: /metrics
+      interval: 300s
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: exportarr-radarr
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  labels:
+    app.kubernetes.io/instance: victoria-metrics
+  name: exportarr-sonarr-metrics
+  namespace: monitoring
+spec:
+  endpoints:
+    - port: monitoring
+      path: /metrics
+      interval: 300s
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: exportarr-sonarr
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  labels:
+    app.kubernetes.io/instance: victoria-metrics
+  name: exportarr-prowlarr-metrics
+  namespace: monitoring
+spec:
+  endpoints:
+    - port: monitoring
+      path: /metrics
+      interval: 300s
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: exportarr-prowlarr

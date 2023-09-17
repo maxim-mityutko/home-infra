@@ -52,6 +52,18 @@ spec:
               cpu: 3000m
           ports:
             - containerPort: 8096
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8096
+            initialDelaySeconds: 10
+            periodSeconds: 60
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8096
+            initialDelaySeconds: 30
+            periodSeconds: 120
           volumeMounts:
             - name: jellyfin-config
               mountPath: /config
@@ -70,3 +82,4 @@ spec:
             claimName: downloads
       nodeSelector:
         beta.kubernetes.io/arch: amd64
+        nvidia.com/gpu.present: "true"
