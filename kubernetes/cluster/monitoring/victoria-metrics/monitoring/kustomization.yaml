@@ -204,7 +204,7 @@ helmCharts:
             endpoints:
               - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
                 port: http-metrics
-                relabelConfigs:
+                metricRelabelConfigs:
                   - source_labels: [ __meta_kubernetes_endpoint_port_name ]
                     target_label: endpoint
                   - source_labels: [ __meta_kubernetes_endpoint_node_name ]
