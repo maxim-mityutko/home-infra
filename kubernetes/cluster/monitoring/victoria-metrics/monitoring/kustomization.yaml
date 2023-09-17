@@ -200,6 +200,26 @@ helmCharts:
           enabled: true
           service:
             enabled: false
+          spec:
+            endpoints:
+              - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+                port: http-metrics
+                relabelConfigs:
+                  - source_labels: [ __meta_kubernetes_endpoint_port_name ]
+                    target_label: endpoint
+                  - source_labels: [ __meta_kubernetes_endpoint_node_name ]
+                    target_label: node
+                  - source_labels: [ __meta_kubernetes_pod_name ]
+                    target_label: pod
+                  - source_labels: [ __meta_kubernetes_pod_container_name ]
+                    target_label: container
+                  - source_labels: [ __meta_kubernetes_namespace ]
+                    target_label: namespace
+                  - target_label: service
+                    replacement: coredns
+                  - target_label: job
+                    replacement: coredns
+
         # Service Scrape (disabled)
         kubeScheduler:
           enabled: false
