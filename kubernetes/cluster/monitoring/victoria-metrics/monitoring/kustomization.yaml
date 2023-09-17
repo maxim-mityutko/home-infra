@@ -119,6 +119,9 @@ helmCharts:
               storageClassName: nfs-subdir
           ingress:
             enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public
+              cert-manager.io/cluster-issuer: lets-encrypt
             hosts:
               - vmsingle.brhd.io
         vmalert:
@@ -133,6 +136,9 @@ helmCharts:
                 memory: 500Mi
           ingress:
             enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public
+              cert-manager.io/cluster-issuer: lets-encrypt
             hosts:
               - vmalert.brhd.io
         vmagent:
@@ -148,6 +154,9 @@ helmCharts:
                 memory: 500Mi
           ingress:
             enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public
+              cert-manager.io/cluster-issuer: lets-encrypt
             hosts:
               - vmagent.brhd.io
 
