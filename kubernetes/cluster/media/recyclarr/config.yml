@@ -16,20 +16,14 @@ radarr:
           - name: Bluray-2160p
           - name: WEBRip-2160p
           - name: WEBDL-2160p
-#          - name: WEB 2160p
-#            qualities:
-#              - WEBRip-2160p
-#              - WEBDL-2160p
 
       - name: HD (Remux)
         reset_unmatched_scores:
           enabled: true
         qualities:
           - name: Remux-1080p
-          - name: WEB 1080p
-            qualities:
-              - WEBRip-1080p
-              - WEBDL-1080p
+          - name: WEBRip-1080p
+          - name: WEBDL-1080p
 
       - name: HD
         reset_unmatched_scores:
@@ -37,16 +31,10 @@ radarr:
         qualities:
           - name: Bluray-1080p
           - name: Bluray-720p
-          - name: WEB 1080p
-            qualities:
-              - WEBRip-1080p
-              - WEBDL-1080p
-          - name: WEB 720p
-            qualities:
-              - WEBRip-720p
-              - WEBDL-720p
-
-
+          - name: WEBRip-1080p
+          - name: WEBDL-1080p
+          - name: WEBRip-720p
+          - name: WEBDL-720p
 
       - name: SD
         reset_unmatched_scores:
@@ -55,10 +43,8 @@ radarr:
           - name: HDTV-720p
           - name: Bluray-576p
           - name: Bluray-480p
-          - name: WEB 480p
-            qualities:
-              - WEBRip-480p
-              - WEBDL-480p
+          - name: WEBRip-480p
+          - name: WEBDL-480p
           - name: DVD-R
           - name: DVD
 
@@ -179,9 +165,22 @@ sonarr:
       - name: HD
         reset_unmatched_scores:
           enabled: true
+        qualities:
+          - name: Bluray-1080p
+          - name: WEBRip-1080p
+          - name: WEBDL-1080p
+          - name: Bluray-720p
+          - name: WEBRip-720p
+          - name: WEBDL-720p
       - name: SD
         reset_unmatched_scores:
           enabled: true
+        qualities:
+          - name: HDTV-1080p
+          - name: HDTV-720p
+          - name: WEBDL-480p
+          - name: WEBRip-480p
+          - name: DVD
     custom_formats:
       - trash_ids:
           # Streaming
