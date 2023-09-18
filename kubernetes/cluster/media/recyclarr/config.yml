@@ -7,6 +7,20 @@ radarr:
     quality_definition:
       type: movie
     quality_profiles:
+      - name: 4K
+        reset_unmatched_scores:
+          enabled: true
+        min_format_score: 100
+        qualities:
+          - name: Remux-2160p
+          - name: Bluray-2160p
+          - name: WEBRip-2160p
+          - name: WEBDL-2160p
+#          - name: WEB 2160p
+#            qualities:
+#              - WEBRip-2160p
+#              - WEBDL-2160p
+
       - name: HD (Remux)
         reset_unmatched_scores:
           enabled: true
@@ -32,17 +46,7 @@ radarr:
               - WEBRip-720p
               - WEBDL-720p
 
-      - name: 4K
-        reset_unmatched_scores:
-          enabled: true
-        min_format_score: 100
-        qualities:
-          - name: Remux-2160p
-          - name: Bluray-2160p
-          - name: WEB 2160p
-            qualities:
-              - WEBRip-2160p
-              - WEBDL-2160p
+
 
       - name: SD
         reset_unmatched_scores:
