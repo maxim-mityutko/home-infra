@@ -16,11 +16,12 @@
   "packageRules": [
     {
       "description": "Loose versioning for non-semver packages",
-      "matchDatasources": ["kubernetes"],
+      "matchDatasources": ["kubernetes", "docker"],
       "versioning": "loose",
       "matchPackagePatterns": [
         "bazarr", "prowlarr", "qbitmanage", "qbittorrent","radarr", "readarr", "sonarr", "unpackerr"
-      ]
+      ],
+      "extractVersion": "^release-(?<version>.*)$"
     }
   ]
 }
