@@ -12,5 +12,15 @@
     "kubernetes/cluster/extras/**",
     "kubernetes/cluster/media/**",
     "kubernetes/cluster/monitoring/**"
+  ],
+  "packageRules": [
+    {
+      "description": "Loose versioning for non-semver packages",
+      "matchDatasources": ["kubernetes"],
+      "versioning": "loose",
+      "matchPackagePatterns": [
+        "bazarr", "prowlarr", "qbitmanage", "qbittorrent","radarr", "readarr", "sonarr", "unpackerr"
+      ]
+    }
   ]
 }
