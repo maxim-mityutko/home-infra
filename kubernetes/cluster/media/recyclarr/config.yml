@@ -10,12 +10,28 @@ radarr:
       - name: HD (Remux)
         reset_unmatched_scores:
           enabled: true
+        qualities:
+          - name: Remux-1080p
+          - name: WEB 1080p
+            qualities:
+              - WEBRip-1080p
+              - WEBDL-1080p
+
       - name: HD
         reset_unmatched_scores:
           enabled: true
-      - name: SD
-        reset_unmatched_scores:
-          enabled: true
+        qualities:
+          - name: Bluray-1080p
+          - name: Bluray-720p
+          - name: WEB 1080p
+            qualities:
+              - WEBRip-1080p
+              - WEBDL-1080p
+          - name: WEB 720p
+            qualities:
+              - WEBRip-720p
+              - WEBDL-720p
+
       - name: 4K
         reset_unmatched_scores:
           enabled: true
@@ -24,13 +40,33 @@ radarr:
           - name: Remux-2160p
           - name: Bluray-2160p
           - name: WEB 2160p
-          - name: HDTV-2160p
+            qualities:
+              - WEBRip-2160p
+              - WEBDL-2160p
+
+      - name: SD
+        reset_unmatched_scores:
+          enabled: true
+        qualities:
+          - name: HDTV-720p
+          - name: Bluray-576p
+          - name: Bluray-480p
+          - name: WEB 480p
+            qualities:
+              - WEBRip-480p
+              - WEBDL-480p
+          - name: DVD-R
+          - name: DVD
+
     custom_formats:
       - trash_ids:
           # HQ Release Groups
           - 4d74ac4c4db0b64bff6ce0cffef99bf0 # UHD Bluray Tier 1
           - a58f517a70193f8e578056642178419d # UHD Bluray Tier 2
           - e71939fae578037e7aed3ee219bbe7c1 # UHD Bluray Tier 3
+          - c20f169ef63c5f40c2def54abaf4438e # WEB Tier 01
+          - 403816d65392c79236dcb6dd591aeda4 # WEB Tier 02
+          - af94e0fe497124d1f9ce732069ec8c3b # WEB Tier 03
           # Movie Versions
           - eca37840c13c6ef2dd0262b141a5482f # 4k Remaster
           - eecf3a857724171f968a66cb5719e152 # IMAX
