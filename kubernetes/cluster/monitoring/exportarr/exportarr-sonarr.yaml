@@ -56,6 +56,8 @@ spec:
               value: "9707"
             - name: URL
               value: "http://sonarr.media.svc.cluster.local:80"
+            - name: ENABLE_ADDITIONAL_METRICS
+              value: "true"
             - name: API_KEY
               valueFrom:
                 secretKeyRef:
