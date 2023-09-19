@@ -16,10 +16,18 @@
   "packageRules": [
     {
       "description": "Loose versioning for non-semver packages",
-      "matchDatasources": ["kubernetes"],
-      "versioning": "loose",
+      "matchDatasources": ["kubernetes", "docker"],
+      "versioning": "regex:^release-(?<major>\\d+).(?<minor>\\d+).(?<patch>\\d+).(?<build>\\d+)$",
       "matchPackagePatterns": [
-        "bazarr", "prowlarr", "qbitmanage", "qbittorrent","radarr", "readarr", "sonarr", "unpackerr"
+        "bazarr", "prowlarr", "qbitmanage", "qbittorrent","radarr", "readarr", "unpackerr"
+      ]
+    },
+	{
+      "description": "Loose versioning for non-semver packages",
+      "matchDatasources": ["kubernetes", "docker"],
+      "versioning": "regex:^v4-(?<major>\\d+).(?<minor>\\d+).(?<patch>\\d+).(?<build>\\d+)$",
+      "matchPackagePatterns": [
+        "sonarr"
       ]
     }
   ]
