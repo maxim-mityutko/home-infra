@@ -24,7 +24,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 17,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -106,7 +105,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -198,7 +197,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -327,7 +326,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -450,7 +449,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -595,7 +594,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -640,7 +639,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -705,7 +706,7 @@
         "frameIndex": 1,
         "showHeader": true
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -798,6 +799,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -891,6 +893,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1308,7 +1311,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -1400,7 +1403,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -1481,7 +1484,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -1626,7 +1629,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -1751,7 +1754,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -1795,6 +1798,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 3,
@@ -1900,6 +1904,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 3,
@@ -1981,7 +1986,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -2046,7 +2053,7 @@
         "frameIndex": 1,
         "showHeader": true
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -2193,7 +2200,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -2285,7 +2292,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -2351,7 +2358,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -2444,7 +2451,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -2519,7 +2526,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -2598,7 +2605,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -2635,6 +2642,76 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "continuous-BlPu"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 22,
+        "x": 0,
+        "y": 51
+      },
+      "id": 57,
+      "options": {
+        "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "text": {},
+        "valueMode": "color"
+      },
+      "pluginVersion": "10.1.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sonarr_episode_quality_total{instance=~\"${sonarr_instance}\"}",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "{{quality}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Qualities",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "palette-classic"
           },
           "custom": {
@@ -2651,6 +2728,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 3,
@@ -2689,7 +2767,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 51
+        "y": 61
       },
       "id": 24,
       "options": {
@@ -2756,6 +2834,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 3,
@@ -2794,7 +2873,7 @@
         "h": 8,
         "w": 7,
         "x": 8,
-        "y": 51
+        "y": 61
       },
       "id": 25,
       "options": {
@@ -2839,7 +2918,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -2888,7 +2969,7 @@
         "h": 8,
         "w": 7,
         "x": 15,
-        "y": 51
+        "y": 61
       },
       "id": 55,
       "options": {
@@ -2904,7 +2985,7 @@
         "frameIndex": 1,
         "showHeader": true
       },
-      "pluginVersion": "9.3.0",
+      "pluginVersion": "10.1.1",
       "targets": [
         {
           "datasource": {
@@ -2976,7 +3057,7 @@
   ],
   "refresh": "30s",
   "revision": 1,
-  "schemaVersion": 37,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [
     "sonarr",
@@ -2996,7 +3077,7 @@
         "current": {
           "selected": false,
           "text": "VictoriaMetrics",
-          "value": "VictoriaMetrics"
+          "value": "P4169E866C3094E38"
         },
         "hide": 0,
         "includeAll": false,
