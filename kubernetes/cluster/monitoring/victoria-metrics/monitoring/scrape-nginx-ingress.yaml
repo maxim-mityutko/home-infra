@@ -1,0 +1,19 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
+metadata:
+  labels:
+    app.kubernetes.io/instance: victoria-metrics
+  name: nginx-ingress-metrics
+  namespace: monitoring
+spec:
+  podMetricsEndpoints:
+    - port: health
+      scheme: http
+      path: /metrics
+      interval: 60s
+  namespaceSelector:
+    matchNames:
+      - ingress
+  selector:
+    matchLabels:
+     name:  nginx-ingress-microk8s
