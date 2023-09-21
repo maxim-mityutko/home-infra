@@ -11,10 +11,9 @@ spec:
       scheme: http
       path: /metrics
       interval: 60s
-  jobLabel: nginx-ingress-metrics
-#  relabelConfigs:
-#    - target_label: job
-#      replacement: nginx-ingress-metrics
+  relabelConfigs:
+    - target_label: job
+      replacement: nginx-ingress-metrics
   namespaceSelector:
     matchNames:
       - ingress
