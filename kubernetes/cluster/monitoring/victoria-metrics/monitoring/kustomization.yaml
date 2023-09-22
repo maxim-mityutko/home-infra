@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - _namespace.yaml
+  - rule-oom.yaml
   - scrape-argocd.yaml # VM Service Scrape
   - scrape-nginx-ingress.yaml # Microk8s Nginx Ingress Scrape
   - secret.yaml
