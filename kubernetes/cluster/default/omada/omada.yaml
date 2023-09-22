@@ -48,7 +48,7 @@ spec:
               memory: 400Mi
             limits:
               cpu: 1
-              memory: 1.0Gi
+              memory: 1.5Gi
           envFrom:
             - configMapRef:
                 name: omada
