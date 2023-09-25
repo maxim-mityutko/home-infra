@@ -1,0 +1,15 @@
+---
+# Home Assistant - Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: home-assistant-config
+  labels:
+    app.kubernetes.io/name: home-assistant
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10G
