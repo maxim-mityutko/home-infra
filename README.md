@@ -55,10 +55,11 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Renovate**             | Universal dependency update tool                    |          [repo](https://github.com/renovatebot/renovate)           |                                     [docker](https://hub.docker.com/r/renovate/renovate)                                      |
 | **IT Tools**             | Useful tools for developer and people working in IT |           [repo](https://github.com/CorentinTh/it-tools)           |                                    [docker](https://hub.docker.com/r/corentinth/it-tools)                                     |
 
-### Smarthome
+### Smart Home
 | Project           | Description                                |                       Docs / Repo                       |                      Docker / Helm                       |
 |-------------------|--------------------------------------------|:-------------------------------------------------------:|:--------------------------------------------------------:|
 | **Tuya Gateway**  | Lightweight gateway for Tuya / Smartlife   | [repo](https://github.com/maxim-mityutko/tuya-gateway)  | [docker](https://hub.docker.com/r/beerhead/tuya-gateway) |
+| **Home Assistant**| Central control system for smart home with a focus on local control and privacy | [docs](https://www.home-assistant.io/docs/)<br/>[repo](https://github.com/home-assistant/core)| [docker](https://github.com/home-assistant/core/pkgs/container/home-assistant)|
 
 ### Media
 A lot of general information on the topic: [TRaSH Guides](https://trash-guides.info/)
