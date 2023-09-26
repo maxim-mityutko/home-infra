@@ -16,6 +16,24 @@ spec:
   selector:
     app.kubernetes.io/name: postgres
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-external
+  namespace: default
+  labels:
+    app.kubernetes.io/name: postgres
+spec:
+  type: NodePort # 30000-32767
+  ports:
+    - name: postgres
+      port: 30432
+      targetPort: 5432
+      nodePort: 30432
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: postgres
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
