@@ -11,7 +11,8 @@
     "kubernetes/cluster/default/**",
     "kubernetes/cluster/extras/**",
     "kubernetes/cluster/media/**",
-    "kubernetes/cluster/monitoring/**"
+    "kubernetes/cluster/monitoring/**",
+    "kubernetes/cluster/smarthome/**"
   ],
   "packageRules": [
     {

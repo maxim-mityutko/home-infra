@@ -2,25 +2,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: tuya-gateway
-  namespace: smarthome
+  name: home-assistant
+  namespace: smart-home
   labels:
-    app.kubernetes.io/name: tuya-gateway
+    app.kubernetes.io/name: home-assistant
   annotations:
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
 spec:
   rules:
-    - host: tuya.brhd.io
+    - host: hass.brhd.io
       http:
         paths:
           - pathType: Prefix
             path: /
             backend:
               service:
-                name: tuya-gateway
+                name: home-assistant
                 port:
-                  number: 80
+                  number: 8123
   tls:
     - hosts:
-        - tgw.brhd.io
+        - hass.brhd.io

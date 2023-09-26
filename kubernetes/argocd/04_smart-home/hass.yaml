@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tuya-gateway
+  name: home-assistant
   namespace: argocd
 spec:
   destination:
     name: ''
-    namespace: smarthome
+    namespace: smart-home
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/smarthome/tuya-gateway
+    path: kubernetes/cluster/smart-home/hass
     repoURL: 'git@github.com:maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
