@@ -89,6 +89,8 @@ spec:
           emptyDir:
             medium: Memory
             sizeLimit: 1Gi
+#      nodeSelector:
+#        nvidia.com/gpu.present: "true"
 ---
 apiVersion: v1
 kind: ConfigMap
