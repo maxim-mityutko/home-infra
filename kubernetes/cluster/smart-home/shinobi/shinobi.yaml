@@ -42,7 +42,8 @@ spec:
 #      hostNetwork: true
       containers:
         - name: shinobi
-          image:  registry.gitlab.com/shinobi-systems/shinobi:no-db-dev
+#          image:  registry.gitlab.com/shinobi-systems/shinobi:no-db-dev
+          image:  registry.gitlab.com/shinobi-systems/shinobi:dev
           resources:
             requests:
               cpu: 500m
@@ -52,10 +53,10 @@ spec:
           ports:
             - containerPort: 8080
           envFrom:
-            - configMapRef:
-                name: shinobi
-            - secretRef:
-                name: shinobi
+#            - configMapRef:
+#                name: shinobi
+#            - secretRef:
+#                name: shinobi
           volumeMounts:
             - name: shinobi-config
               mountPath: /config
