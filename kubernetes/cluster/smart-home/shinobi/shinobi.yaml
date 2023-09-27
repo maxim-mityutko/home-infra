@@ -101,8 +101,8 @@ metadata:
     app.kubernetes.io/name: shinobi
 data:
   DB_TYPE: postgres
-  DB_HOST: casa.brhd.io
-  DB_PORT: "30432"
+  DB_HOST: postgres.default.svc.cluster.local
+  DB_PORT: "5432"
   DB_DATABASE: shinobi
 
 
