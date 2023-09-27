@@ -84,7 +84,7 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 1883
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
             periodSeconds: 10
 ---
 apiVersion: v1
