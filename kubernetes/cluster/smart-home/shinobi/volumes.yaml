@@ -1,0 +1,45 @@
+---
+# Shinobi - Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: shinobi-config
+  labels:
+    app.kubernetes.io/name: shinobi
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10M
+---
+# Shinobi - Videos
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: shinobi-videos
+  labels:
+    app.kubernetes.io/name: shinobi
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10G
+---
+# Shinobi - Plugins
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: shinobi-plugins
+  labels:
+    app.kubernetes.io/name: shinobi
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 100M

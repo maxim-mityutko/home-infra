@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shinobi
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: shinobi
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: nvr.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: shinobi
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - nvr.brhd.io
