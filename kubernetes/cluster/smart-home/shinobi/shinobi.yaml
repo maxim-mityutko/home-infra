@@ -103,4 +103,6 @@ data:
   DB_TYPE: postgres
   DB_HOST: casa.brhd.io
   DB_PORT: "30432"
+  DB_DATABASE: shinobi
+
 
