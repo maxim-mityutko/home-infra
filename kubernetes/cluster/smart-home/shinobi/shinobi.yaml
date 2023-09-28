@@ -53,10 +53,10 @@ spec:
           ports:
             - containerPort: 8080
           envFrom:
-#            - configMapRef:
-#                name: shinobi
-#            - secretRef:
-#                name: shinobi
+            - configMapRef:
+                name: shinobi
+            - secretRef:
+                name: shinobi
           volumeMounts:
             - name: shinobi-config
               mountPath: /config
