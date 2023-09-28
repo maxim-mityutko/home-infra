@@ -39,11 +39,9 @@ spec:
         app.kubernetes.io/name: shinobi
     spec:
       restartPolicy: Always
-#      hostNetwork: true
       containers:
         - name: shinobi
           image:  registry.gitlab.com/shinobi-systems/shinobi:no-db-dev
-#          image:  registry.gitlab.com/shinobi-systems/shinobi:dev
           resources:
             requests:
               cpu: 500m
@@ -60,12 +58,12 @@ spec:
           volumeMounts:
             - name: shinobi-config
               mountPath: /config
-            - name: shinobi-videos
-              mountPath: /home/Shinobi/videos
             - name: shinobi-plugins
               mountPath: /home/Shinobi/plugins
             - name: shinobi-streams
               mountPath: /dev/shm/Shinobi/streams
+            - name: shinobi-videos
+              mountPath: /home/Shinobi/videos
           readinessProbe:
             tcpSocket:
               port: 8080
@@ -80,16 +78,16 @@ spec:
         - name: shinobi-config
           persistentVolumeClaim:
             claimName: shinobi-config
-        - name: shinobi-videos
-          persistentVolumeClaim:
-            claimName: shinobi-videos
         - name: shinobi-plugins
           persistentVolumeClaim:
             claimName: shinobi-plugins
         - name: shinobi-streams
           emptyDir:
             medium: Memory
-            sizeLimit: 1Gi
+            sizeLimit: 500Mi
+        - name: shinobi-videos
+          persistentVolumeClaim:
+            claimName: nvr
       nodeSelector:
         nvidia.com/gpu.present: "true"
 ---
@@ -101,10 +99,6 @@ metadata:
   labels:
     app.kubernetes.io/name: shinobi
 data:
-#  DB_TYPE: postgres
-#  DB_HOST: postgres.default.svc.cluster.local
-#  DB_PORT: "5432"
-#  DB_DATABASE: shinobi
   DB_TYPE: mysql2
   DB_HOST: mariadb.default.svc.cluster.local
   DB_PORT: "3306"
