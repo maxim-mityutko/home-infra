@@ -42,14 +42,14 @@ spec:
 #      hostNetwork: true
       containers:
         - name: shinobi
-#          image:  registry.gitlab.com/shinobi-systems/shinobi:no-db-dev
-          image:  registry.gitlab.com/shinobi-systems/shinobi:dev
+          image:  registry.gitlab.com/shinobi-systems/shinobi:no-db-dev
+#          image:  registry.gitlab.com/shinobi-systems/shinobi:dev
           resources:
             requests:
               cpu: 500m
-              memory: 1.5Gi
+              memory: 500Mi
             limits:
-              memory: 2Gi
+              memory: 1Gi
           ports:
             - containerPort: 8080
           envFrom:
@@ -101,9 +101,13 @@ metadata:
   labels:
     app.kubernetes.io/name: shinobi
 data:
-  DB_TYPE: postgres
-  DB_HOST: postgres.default.svc.cluster.local
-  DB_PORT: "5432"
+#  DB_TYPE: postgres
+#  DB_HOST: postgres.default.svc.cluster.local
+#  DB_PORT: "5432"
+#  DB_DATABASE: shinobi
+  DB_TYPE: mysql2
+  DB_HOST: mariadb.default.svc.cluster.local
+  DB_PORT: "3306"
   DB_DATABASE: shinobi
 
 
