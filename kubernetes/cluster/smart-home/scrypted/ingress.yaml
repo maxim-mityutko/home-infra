@@ -9,6 +9,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/proxy-ssl-verify: 'off'
 spec:
   rules:
     - host: nvr.brhd.io
