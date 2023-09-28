@@ -1,0 +1,30 @@
+---
+# Scrypted - NVR
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: scrypted-nvr
+  labels:
+    app.kubernetes.io/name: scrypted
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10G
+---
+# Scrypted - Data
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: scrypted-data
+  labels:
+    app.kubernetes.io/name: scrypted
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10G
