@@ -51,7 +51,14 @@ spec:
           volumeMounts:
             - name: home-assistant-config
               mountPath: /config
+            - name: home-assistant-secret
+              mountPath: /config/secrets.yaml
+              subPath: secrets.yaml
+              readOnly: true
       volumes:
         - name: home-assistant-config
           persistentVolumeClaim:
             claimName: home-assistant-config
+        - name: home-assistant-secret
+          secret:
+            secretName: home-assistant
