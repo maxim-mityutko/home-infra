@@ -95,7 +95,7 @@ metadata:
   labels:
     app.kubernetes.io/name: nanomq
 data:
-  NANOMQ_LOG_LEVEL: "info"
+  NANOMQ_LOG_LEVEL: "error"
   NANOMQ_ALLOW_ANONYMOUS: "True"
   NANOMQ_WEBSOCKET_ENABLE: "False"
   NANOMQ_TLS_ENABLE: "False"
