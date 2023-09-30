@@ -35,7 +35,7 @@ spec:
               args:
                 - -c
                 - >
-                  DBS=("speedtest_tracker" "guacamole");
+                  DBS=("speedtest_tracker" "guacamole" "shinobi");
                   for DB in "${DBS[@]}"; 
                   do FILE_NAME=$DB"_"$(date +%Y%m%d%H%M);
                   echo "Current database and timestamp: "$FILE_NAME;
