@@ -54,10 +54,11 @@ spec:
             - name: home-assistant-secret
               mountPath: /config/secrets.yaml
               subPath: secrets.yaml
+              readOnly: true
       volumes:
         - name: home-assistant-config
           persistentVolumeClaim:
             claimName: home-assistant-config
         - name: home-assistant-secret
-          secretRef:
-            name: home-assistant
+          secret:
+            secretName: home-assistant
