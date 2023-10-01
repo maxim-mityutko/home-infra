@@ -62,8 +62,8 @@ share_limits:
     categories:
       - radarr
       - sonarr
-    max_seeding_time: 20160 # 14 days
-    min_seeding_time: 20100
+    max_ratio: 2.0
+    max_seeding_time: 10080 # 7 days
     cleanup: true
   media-non-tl:
     priority: 3
@@ -72,6 +72,7 @@ share_limits:
     categories:
       - radarr
       - sonarr
+    max_ratio: 2.0
     max_seeding_time: 10080 # 7 days
     cleanup: false
   stash:
