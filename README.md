@@ -81,4 +81,7 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | **Unpackerr**         |                                                                                         |                                         [repo](https://github.com/Unpackerr/unpackerr)                                          |            [docker](https://hotio.dev/containers/qbittorrent/)            |
 | **Stash**             |                                                                                         | [repo](https://github.com/stashapp/stash)<br>[docs](https://github.com/stashapp/stash/blob/develop/docker/production/README.md) |             [docker](https://hub.docker.com/r/stashapp/stash)             |
 
-
+#### Plugins and Extras
+| Project        | Description                                                                | Link                                          |
+|----------------|----------------------------------------------------------------------------|-----------------------------------------------|
+| **Jellyscrub** | Plugin generates "trickplay" files for bufferless scrubbing image previews | [repo](https://github.com/nicknsy/jellyscrub) |
