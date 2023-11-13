@@ -38,7 +38,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: exportarr-radarr
-          image: ghcr.io/onedr0p/exportarr:v1.5.5
+          image: ghcr.io/onedr0p/exportarr:v1.6.0
           args:
             - radarr
           ports:
