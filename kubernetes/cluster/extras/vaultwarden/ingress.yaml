@@ -21,13 +21,6 @@ spec:
                 name: vaultwarden
                 port:
                   name: http
-          - pathType: Prefix
-            path: /notifications/hub
-            backend:
-              service:
-                name: vaultwarden
-                port:
-                  name: websocket
   tls:
     - hosts:
         - vault.brhd.io
