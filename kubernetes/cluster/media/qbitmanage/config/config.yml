@@ -11,7 +11,7 @@ commands:
   rem_orphaned: true
   tag_nohardlinks: true
   share_limits: true
-  skip_qb_version_check: false
+  skip_qb_version_check: true
   skip_cleanup: false
 
 qbt:
