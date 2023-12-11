@@ -47,7 +47,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: db
-          image: mariadb:10.11.6
+          image: mariadb:11.2.2
           resources:
             requests:
               memory: 200M
