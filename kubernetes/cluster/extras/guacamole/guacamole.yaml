@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: guacamole
-          image: guacamole/guacamole:1.5.3
+          image: guacamole/guacamole:1.5.4
           resources:
             requests:
               cpu: 50m
