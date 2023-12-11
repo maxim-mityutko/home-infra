@@ -40,7 +40,7 @@ spec:
       restartPolicy: Always
       hostNetwork: true
       containers:
-        - image: mbentley/omada-controller:5.12
+        - image: mbentley/omada-controller:5.13
           name: omada
           resources:
             requests:
