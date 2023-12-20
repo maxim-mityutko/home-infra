@@ -1,0 +1,56 @@
+# Service: ESPHome
+# Ingress: esphome.brhd.io
+# Label: app.kubernetes.io/name: esphome
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: esphome
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: esphome
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 6052
+  selector:
+    app.kubernetes.io/name: esphome
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: esphome
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: esphome
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: esphome
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: smart-home
+      labels:
+        app.kubernetes.io/name: esphome
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: esphome
+          image: ghcr.io/esphome/esphome:2023.11.6
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 200Mi
+          ports:
+            - containerPort: 6052
+          envFrom:
+            - secretRef:
+                name: esphome
