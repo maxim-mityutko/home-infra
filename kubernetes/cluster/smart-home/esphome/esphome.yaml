@@ -55,3 +55,10 @@ spec:
           envFrom:
             - secretRef:
                 name: esphome
+          volumeMounts:
+            - name: esphome-config
+              mountPath: /config
+      volumes:
+        - name: esphome-config
+          persistentVolumeClaim:
+            claimName: esphome-config
