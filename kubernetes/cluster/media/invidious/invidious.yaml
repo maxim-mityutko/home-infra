@@ -81,7 +81,7 @@ metadata:
   labels:
     app.kubernetes.io/name: invidious
 data:
-  INVIDIOUS_CHECK_TABLE: "true"
+  INVIDIOUS_CHECK_TABLES: "true"
   INVIDIOUS_PORT: "3000"
   INVIDIOUS_DOMAIN: "yt.brhd.io"
   INVIDIOUS_HTTPS_ONLY: "true"
