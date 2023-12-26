@@ -80,6 +80,7 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | **qBit Manage**       | Manage qBittorrent instances with ease                                                  |                                      [repo](https://github.com/StuffAnThings/qbit_manage)                                       |            [docker](https://hotio.dev/containers/qbitmanage/)             |
 | **Unpackerr**         |                                                                                         |                                         [repo](https://github.com/Unpackerr/unpackerr)                                          |            [docker](https://hotio.dev/containers/qbittorrent/)            |
 | **Stash**             |                                                                                         | [repo](https://github.com/stashapp/stash)<br>[docs](https://github.com/stashapp/stash/blob/develop/docker/production/README.md) |             [docker](https://hub.docker.com/r/stashapp/stash)             |
+| **Invidious**         | Invidious is an open source alternative front-end to YouTube                            |                        [repo](https://github.com/iv-org/invidious)<br>[docs](https://docs.invidious.io/)     |     [docker](https://quay.io/repository/invidious/invidious?tab=info)     | 
 
 #### Plugins and Extras
 | Project        | Description                                                                | Link                                          |

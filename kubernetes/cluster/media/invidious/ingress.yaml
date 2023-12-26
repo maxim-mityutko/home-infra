@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: invidious
+  namespace: media
+  labels:
+    app.kubernetes.io/name: invidious
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: yt.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: invidious
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - yt.brhd.io
