@@ -99,7 +99,7 @@ data:
 
   INVIDIOUS_CONFIG: |
     default_user_preferences: 
-      region: NL
+      region: US
       dark_mode: dark
       player_style: youtube
       quality: dash
