@@ -199,6 +199,9 @@ services:
       - name: "Lighttpd"
         logo: "https://casa.brhd.io/icons/lighttpd.png"
         url: "https://casa.brhd.io"
+      - name: "Garden Camera (IPC01)"
+        logo: "https://casa.brhd.io/icons/cctv-1.png"
+        url: "https://ipc01.brhd.io/"
   - name: "Database"
     icon: "fas fa-database"
     items:
