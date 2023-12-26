@@ -1,0 +1,101 @@
+# Service: Invidious
+# Ingress: yt.brhd.io
+# Label: app.kubernetes.io/name: invidious
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: invidious
+  namespace: media
+  labels:
+    app.kubernetes.io/name: invidious
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  selector:
+    app.kubernetes.io/name: invidious
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invidious
+  namespace: media
+  labels:
+    app.kubernetes.io/name: invidious
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: invidious
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: invidious
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: invidious
+#          image: quay.io/invidious/invidious:latest-arm64
+          image: quay.io/invidious/invidious:latest
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 200m
+            limits:
+              memory: 512Mi
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: invidious
+            - configMapRef:
+                name: invidious
+#          readinessProbe:
+#            httpGet:
+#              path: /health
+#              port: 8096
+#            initialDelaySeconds: 10
+#            periodSeconds: 60
+#          livenessProbe:
+#            httpGet:
+#              path: /health
+#              port: 8096
+#            initialDelaySeconds: 30
+#            periodSeconds: 120
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+#        beta.kubernetes.io/arch: arm64
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: invidious
+  namespace: media
+  labels:
+    app.kubernetes.io/name: invidious
+data:
+  INVIDIOUS_CHECK_TABLE: "true"
+  INVIDIOUS_PORT: "3000"
+  INVIDIOUS_DOMAIN: "yt.brhd.io"
+  INVIDIOUS_HTTPS_ONLY: "true"
+  INVIDIOUS_LOG_LEVEL: "Info"
+  INVIDIOUS_POPULAR_ENABLED: "true"
+  INVIDIOUS_STATISTICS_ENABLED: "false"
+  INVIDIOUS_REGISTRATION_ENABLED: "true"
+  INVIDIOUS_LOGIN_ENABLED: "true"
+  INVIDIOUS_CAPTCHA_ENABLED: "false"
+  INVIDIOUS_ENABLE_USER_NOTIFICATIONS: "true"
+  INVIDIOUS_CHANNEL_THREADS: "1"
+  INVIDIOUS_CHANNEL_REFRESH_INTERVAL: "1h"
+  INVIDIOUS_FULL_REFRESH: "false"
+  INVIDIOUS_REGION: "NL"
+  INVIDIOUS_DARK_MODE: "auto"
+  INVIDIOUS_PLAYER_STYLE: "youtube"
+  INVIDIOUS_QUALITY: "dash"
