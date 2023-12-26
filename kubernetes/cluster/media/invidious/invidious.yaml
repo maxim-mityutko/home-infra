@@ -43,7 +43,7 @@ spec:
       containers:
         - name: invidious
 #          image: quay.io/invidious/invidious:latest-arm64
-          image: quay.io/invidious/invidious:latest
+          image: quay.io/invidious/invidious:2023.12.18-97c4165
           resources:
             requests:
               memory: 200Mi
