@@ -147,6 +147,11 @@ services:
         tag: "media"
         url: "https://request.brhd.io"
         target: "_blank"
+      - name: "Invidious"
+        logo: "https://casa.brhd.io/icons/youtube.png"
+        tag: "media"
+        url: "https://yt.brhd.io"
+        target: "_blank"
   - name: "Media (*arr)"
     icon: "fas fa-sliders"
     items:
