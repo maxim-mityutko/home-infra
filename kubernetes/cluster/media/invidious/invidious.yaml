@@ -103,6 +103,6 @@ data:
       dark_mode: dark
       player_style: youtube
       quality: dash
-      quality_dash: auto
+      quality_dash: best
       vr_mode: false
       save_player_pos: true
