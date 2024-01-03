@@ -74,7 +74,6 @@ metadata:
     app.kubernetes.io/name: grott
 data:
   gmode: "proxy"
-  ggrottport: "5279"
   gnomqtt: "False"
   gmqttip: "mqtt-tcp-listener.smart-home.svc.cluster.local"
   gmqttport: "1883"
