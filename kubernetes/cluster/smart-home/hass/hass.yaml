@@ -45,9 +45,9 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 500Mi
+              memory: 700Mi
             limits:
-              memory: 1Gi
+              memory: 1200Mi
           volumeMounts:
             - name: home-assistant-config
               mountPath: /config
