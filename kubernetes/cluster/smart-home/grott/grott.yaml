@@ -48,7 +48,7 @@ spec:
               cpu: 50m
               memory: 50Mi
             limits:
-              memory: 150Mi
+              memory: 100Mi
           ports:
             - containerPort: 5279
           envFrom:
