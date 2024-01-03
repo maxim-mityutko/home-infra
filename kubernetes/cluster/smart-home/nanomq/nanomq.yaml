@@ -60,7 +60,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: nanomq
-          image: emqx/nanomq:0.19.5-slim
+          image: emqx/nanomq:0.20.8-slim
           resources:
             requests:
               cpu: 10m
