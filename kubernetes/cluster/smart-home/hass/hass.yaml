@@ -49,12 +49,15 @@ spec:
             limits:
               memory: 1Gi
           readinessProbe:
-            tcpSocket:
+            httpGet:
+              path: /manifest.json
               port: 8123
+            failureThreshold: 5
             initialDelaySeconds: 60
             periodSeconds: 10
           livenessProbe:
-            tcpSocket:
+            httpGet:
+              path: /manifest.json
               port: 8123
             initialDelaySeconds: 60
             periodSeconds: 60
