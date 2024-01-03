@@ -48,6 +48,16 @@ spec:
               memory: 500Mi
             limits:
               memory: 1Gi
+          readinessProbe:
+            tcpSocket:
+              port: 8123
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8123
+            initialDelaySeconds: 60
+            periodSeconds: 60
           volumeMounts:
             - name: home-assistant-config
               mountPath: /config
