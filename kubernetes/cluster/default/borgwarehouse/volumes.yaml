@@ -42,7 +42,7 @@ spec:
   storageClassName: nfs-subdir
   resources:
     requests:
-      storage: 10M
+      storage: 50M
 ---
 # Borgwarehouse -- /home/borgwarehouse/tmp
 kind: PersistentVolumeClaim
@@ -57,7 +57,7 @@ spec:
   storageClassName: nfs-subdir
   resources:
     requests:
-      storage: 10M
+      storage: 50M
 ---
 # Borgwarehouse -- /etc/ssh
 kind: PersistentVolumeClaim
@@ -72,7 +72,7 @@ spec:
   storageClassName: nfs-subdir
   resources:
     requests:
-      storage: 100M
+      storage: 10M
 ---
 # Borg -- /home/borgwarehouse/repos
 kind: PersistentVolumeClaim
