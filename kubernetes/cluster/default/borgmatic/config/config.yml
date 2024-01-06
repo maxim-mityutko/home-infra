@@ -1,6 +1,6 @@
 repositories:
-  - path: /mnt/borg-repository/local.borg
-    label: local
+  - path: ssh://borgwarehouse@borgwarehouse.default.svc.cluster.local:30022/./024e5ec6
+    label: borgwarehouse
 keep_daily: 14
 keep_weekly: 8
 keep_monthly: 6
