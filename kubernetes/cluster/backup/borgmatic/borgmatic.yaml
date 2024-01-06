@@ -74,4 +74,4 @@ metadata:
 data:
   TZ: "Europe/Amsterdam"
   BACKUP_CRON: "0 4 * * *"
-  RUN_ON_STARTUP: "true"
+  RUN_ON_STARTUP: "false"
