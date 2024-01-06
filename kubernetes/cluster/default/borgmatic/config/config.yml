@@ -2,7 +2,7 @@ repositories:
 #  - path: ssh://borgwarehouse@borgwarehouse.default.svc.cluster.local:30022/./1d76edd9
 #    label: borgwarehouse
   - path: /borg/1d76edd9
-    label: borg
+    label: borgwarehouse
 keep_daily: 14
 keep_weekly: 8
 keep_monthly: 6
