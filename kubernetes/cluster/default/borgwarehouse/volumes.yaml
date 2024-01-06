@@ -59,6 +59,21 @@ spec:
     requests:
       storage: 10M
 ---
+# Borgwarehouse -- /etc/ssh
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: borgwarehouse-etc-ssh
+  labels:
+    app.kubernetes.io/name: borgwarehouse
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10M
+---
 # Borg -- /home/borgwarehouse/repos
 kind: PersistentVolumeClaim
 apiVersion: v1
