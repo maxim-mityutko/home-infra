@@ -7,9 +7,8 @@ keep_monthly: 6
 checks:
   - name: repository
     frequency: 2 weeks
-storage:
-  archive_name_format: k8s-db-{now}
-  encryption_passphrase: ${BORG_PASSPHRASE}
+encryption_passphrase: ${BORG_PASSPHRASE}
+archive_name_format: k8s-db-{now}
 postgresql_databases:
     - name: all
       hostname: postgres.default.svc.cluster.local
