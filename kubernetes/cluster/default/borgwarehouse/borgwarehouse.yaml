@@ -79,11 +79,21 @@ spec:
           envFrom:
             - configMapRef:
                 name: borgwarehouse
+          readinessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
           volumeMounts:
-            - name: borg
-              mountPath: /home/borgwarehouse/repos
             - name: borgwarehouse
               mountPath: /home/borgwarehouse
+            - name: borg
+              mountPath: /home/borgwarehouse/repos
       volumes:
         - name: borg
           persistentVolumeClaim:
