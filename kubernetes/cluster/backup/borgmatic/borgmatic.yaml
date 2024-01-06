@@ -49,9 +49,6 @@ spec:
             # PV create by the `borgwarehouse`
             - name: borg
               mountPath: /borg
-
-            - name: readarr-config
-              mountPath: /sqlite/readarr
       volumes:
         - name: borgmatic-keyfiles
           persistentVolumeClaim:
@@ -66,10 +63,6 @@ spec:
         - name: borg
           persistentVolumeClaim:
             claimName: borg
-
-        - name: readarr-config
-          persistentVolumeClaim:
-            claimName: readarr-config
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -81,4 +74,4 @@ metadata:
 data:
   TZ: "Europe/Amsterdam"
   BACKUP_CRON: "0 4 * * *"
-  RUN_ON_STARTUP: "true"
+  RUN_ON_STARTUP: "false"

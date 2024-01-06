@@ -28,20 +28,3 @@ spec:
   resources:
     requests:
       storage: 10M
-
----
-# Radarr -- Config
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: readarr-config
-  namespace: backup
-  labels:
-    app.kubernetes.io/name: readarr
-spec:
-  accessModes:
-  - ReadWriteOnce
-  storageClassName: nfs-subdir
-  resources:
-    requests:
-      storage: 1G
