@@ -13,3 +13,18 @@ spec:
   resources:
     requests:
       storage: 50G
+---
+# Borgmatic -- /root/.config/borg
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: borg-keyfiles
+  labels:
+    app.kubernetes.io/name: borgmatic
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1M

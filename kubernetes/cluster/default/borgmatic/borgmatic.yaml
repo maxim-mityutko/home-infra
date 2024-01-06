@@ -29,7 +29,7 @@ spec:
           resources:
             requests:
               memory: 50Mi
-              cpu: 100m
+              cpu: 50m
             limits:
              memory: 200Mi
           envFrom:
@@ -40,6 +40,8 @@ spec:
           volumeMounts:
             - name: borg-repository
               mountPath: /mnt/borg-repository
+            - name: borg-keyfiles
+              mountPath: /root/.config/borg
             - name: borgmatic-config-yml
               mountPath: /etc/borgmatic.d/config.yml
               subPath: config.yml
@@ -48,6 +50,9 @@ spec:
         - name: borg-repository
           persistentVolumeClaim:
             claimName: borg-repository
+        - name: borg-keyfiles
+          persistentVolumeClaim:
+            claimName: borg-keyfiles
         - name: borgmatic-config-yml
           configMap:
             name: borgmatic-config-yml
