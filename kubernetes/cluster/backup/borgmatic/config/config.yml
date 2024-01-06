@@ -4,7 +4,7 @@
 # local path mounted to NFS share to speed up the process and avoid bandwidth constraints
 # of the SSH protocol.
 #
-#- path: ssh://borgwarehouse@borgwarehouse.default.svc.cluster.local:30022/./1d76edd9
+#- path: ssh://borgwarehouse@borgwarehouse.backup.svc.cluster.local:30022/./1d76edd9
 #  label: borgwarehouse
 #
 # `Borgwarehouse` runs under UID 1001, however `borgmatic` uses UID 1000 (root) and changing it to anything
