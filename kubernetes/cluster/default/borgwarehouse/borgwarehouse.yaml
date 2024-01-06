@@ -90,17 +90,22 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 10
           volumeMounts:
-            - name: borgwarehouse
-              mountPath: /home/borgwarehouse
+            - name: borgwarehouse-config
+              mountPath: /home/borgwarehous/app/config
+            - name: borgwarehouse-ssh
+              mountPath: /home/borgwarehous/.ssh
             - name: borg
               mountPath: /home/borgwarehouse/repos
       volumes:
+        - name: borgwarehouse-config
+          persistentVolumeClaim:
+            claimName: borgwarehouse-config
+        - name: borgwarehouse-ssh
+          persistentVolumeClaim:
+            claimName: borgwarehouse-ssh
         - name: borg
           persistentVolumeClaim:
             claimName: borg
-        - name: borgwarehouse
-          persistentVolumeClaim:
-            claimName: borgwarehouse
 ---
 apiVersion: v1
 kind: ConfigMap
