@@ -69,7 +69,6 @@ spec:
 
         - name: readarr-config
           persistentVolumeClaim:
-            namespace: media
             claimName: readarr-config
 ---
 apiVersion: v1
@@ -82,4 +81,4 @@ metadata:
 data:
   TZ: "Europe/Amsterdam"
   BACKUP_CRON: "0 4 * * *"
-  RUN_ON_STARTUP: "false"
+  RUN_ON_STARTUP: "true"
