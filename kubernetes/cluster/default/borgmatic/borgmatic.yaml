@@ -37,9 +37,6 @@ spec:
                 name: borgmatic
             - configMapRef:
                 name: borgmatic
-          securityContext:
-            runAsUser: 1001
-            runAsGroup: 1001
           volumeMounts:
             - name: borgmatic-keyfiles
               mountPath: /root/.config/borg
