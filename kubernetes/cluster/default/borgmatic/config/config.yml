@@ -9,6 +9,7 @@ checks:
     frequency: 2 weeks
 storage:
   archive_name_format: k8s-db-{now}
+  encryption_passphrase: ${BORG_PASSPHRASE}
 postgresql_databases:
     - name: all
       hostname: postgres.default.svc.cluster.local
