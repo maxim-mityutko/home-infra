@@ -10,14 +10,14 @@ checks:
 postgresql_databases:
     - name: all
       hostname: postgres.default.svc.cluster.local
-      username: ${BACKUP_USER_NAME}
-      password: ${BACKUP_USER_PASSWORD}
+      username: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
       format: tar
 mariadb_databases:
     - name: all
       hostname: mariadb.default.svc.cluster.local
-      username: ${BACKUP_USER_NAME}
-      password: ${BACKUP_USER_PASSWORD}
+      username: ${MARIADB_USER}
+      password: ${MARIADB_PASSWORD}
       format: directory
       add_drop_database: true
 #      options: "--single-transaction --quick"
