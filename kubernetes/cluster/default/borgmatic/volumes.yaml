@@ -1,0 +1,15 @@
+---
+# Borgmatic -- /mnt/borg-repository
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: borg-repository
+  labels:
+    app.kubernetes.io/name: borgmatic
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 50G

@@ -1,0 +1,58 @@
+# Service: Borgmatic
+# Label: app.kubernetes.io/name: Borgmatic
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: borgmatic
+  namespace: default
+  labels:
+    app.kubernetes.io/name: borgmatic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: borgmatic
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: default
+      labels:
+        app.kubernetes.io/name: borgmatic
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: borgmatic
+          image: b3vis/borgmatic:1.8.5
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 100m
+            limits:
+             memory: 200Mi
+          envFrom:
+            - secretRef:
+                name: borgmatic
+            - configMapRef:
+                name: borgmatic
+          volumeMounts:
+            - name: borg-repository
+              mountPath: /mnt/borg-repository
+      volumes:
+        - name: borg-repository
+          persistentVolumeClaim:
+            claimName: borg-repository
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: borgmatic
+  namespace: default
+  labels:
+    app.kubernetes.io/name: borgmatic
+data:
+  TZ: "Europe/Amsterdam"
+  BACKUP_CRON: "0 4 * * *"
+  RUN_ON_STARTUP: "true"

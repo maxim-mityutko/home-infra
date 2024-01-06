@@ -1,0 +1,39 @@
+repositories:
+  - path: /mnt/borg-repository/local.borg
+    label: local
+keep_daily: 14
+keep_weekly: 8
+keep_monthly: 6
+checks:
+  - name: repository
+    frequency: 2 weeks
+postgresql_databases:
+    - name: all
+      hostname: postgres.default.svc.cluster.local
+      username: ${BACKUP_USER_NAME}
+      password: ${BACKUP_USER_PASSWORD}
+      format: tar
+mariadb_databases:
+    - name: all
+      hostname: mariadb.default.svc.cluster.local
+      username: ${BACKUP_USER_NAME}
+      password: ${BACKUP_USER_PASSWORD}
+      format: directory
+      add_drop_database: true
+#      options: "--single-transaction --quick"
+#sqlite_databases:
+#    - name: mydb
+#      path: /var/lib/sqlite3/mydb.sqlite
+apprise:
+  services:
+    - url: discord://${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
+      label: discord
+  start:
+    title: Borg
+    body: Backups started...
+  finish:
+    title: Borg
+    body: Backups succeeded!
+  fail:
+    title: Borg
+    body: Backups failed!
