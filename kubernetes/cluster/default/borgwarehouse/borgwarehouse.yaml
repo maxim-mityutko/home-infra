@@ -17,7 +17,7 @@ spec:
       targetPort: 3000
       name: web
     - port: 30022
-      targetPort: 22
+      targetPort: 30022
       name: ssh
   selector:
     app.kubernetes.io/name: borgwarehouse
@@ -34,7 +34,7 @@ spec:
   ports:
     - name: borgwarehouse
       port: 30022
-      targetPort: 22
+      targetPort: 30022
       nodePort: 30022
       protocol: TCP
   selector:
@@ -74,7 +74,7 @@ spec:
           ports:
             - containerPort: 3000
               name: web
-            - containerPort: 22
+            - containerPort: 30022
               name: ssh
           envFrom:
             - configMapRef:
@@ -135,6 +135,6 @@ metadata:
 data:
   UNIX_USER: "borg"
   FQDN: "borg.brhd.io"
-  SSH_SERVER_PORT: "22"
+  SSH_SERVER_PORT: "30022"
   FQDN_LAN: "borgwarehouse.default.svc.cluster.local"
   SSH_SERVER_PORT_LAN: "30022"
