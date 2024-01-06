@@ -1,5 +1,5 @@
 repositories:
-  - path: ssh://borgwarehouse@borgwarehouse.default.svc.cluster.local:30022/./024e5ec6
+  - path: ssh://borgwarehouse@borgwarehouse.default.svc.cluster.local:30022/./1d76edd9
     label: borgwarehouse
 keep_daily: 14
 keep_weekly: 8
@@ -7,6 +7,8 @@ keep_monthly: 6
 checks:
   - name: repository
     frequency: 2 weeks
+storage:
+  archive_name_format: k8s-db-{now}
 postgresql_databases:
     - name: all
       hostname: postgres.default.svc.cluster.local
