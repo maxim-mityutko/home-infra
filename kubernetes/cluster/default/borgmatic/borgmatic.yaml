@@ -40,10 +40,17 @@ spec:
           volumeMounts:
             - name: borg-repository
               mountPath: /mnt/borg-repository
+            - name: borgmatic-config-yml
+              mountPath: /etc/borgmatic.d/config.yml
+              subPath: config.yml
+              readOnly: true
       volumes:
         - name: borg-repository
           persistentVolumeClaim:
             claimName: borg-repository
+        - name: borgmatic-config-yml
+          configMap:
+            name: borgmatic-config-yml
 ---
 apiVersion: v1
 kind: ConfigMap
