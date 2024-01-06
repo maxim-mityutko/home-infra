@@ -21,32 +21,26 @@ checks:
 encryption_passphrase: ${BORG_PASSPHRASE}
 archive_name_format: k8s-db-{now}
 postgresql_databases:
-    - name: all
-      hostname: postgres.default.svc.cluster.local
-      username: ${POSTGRES_USER}
-      password: ${POSTGRES_PASSWORD}
-      format: tar
+  - name: all
+    hostname: postgres.default.svc.cluster.local
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    format: tar
 mariadb_databases:
-    - name: all
-      hostname: mariadb.default.svc.cluster.local
-      username: ${MARIADB_USER}
-      password: ${MARIADB_PASSWORD}
-      format: sql
-      add_drop_database: true
+  - name: all
+    hostname: mariadb.default.svc.cluster.local
+    username: ${MARIADB_USER}
+    password: ${MARIADB_PASSWORD}
+    format: sql
+    add_drop_database: true
 #      options: "--single-transaction --quick"
-#sqlite_databases:
-#    - name: mydb
-#      path: /var/lib/sqlite3/mydb.sqlite
 apprise:
   services:
     - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
       label: discord
   start:
-    title: Borg
     body: Backups started...
   finish:
-    title: Borg
     body: Backups succeeded!
   fail:
-    title: Borg
     body: Backups failed!

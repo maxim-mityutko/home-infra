@@ -49,6 +49,9 @@ spec:
             # PV create by the `borgwarehouse`
             - name: borg
               mountPath: /borg
+
+            - name: radarr-config
+              mountPath: /sqlite/radarr
       volumes:
         - name: borgmatic-keyfiles
           persistentVolumeClaim:
@@ -63,6 +66,11 @@ spec:
         - name: borg
           persistentVolumeClaim:
             claimName: borg
+
+        - name: radarr-config
+          persistentVolumeClaim:
+            namespace: media
+            claimName: radarr-config
 ---
 apiVersion: v1
 kind: ConfigMap
