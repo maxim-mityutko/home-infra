@@ -91,9 +91,9 @@ spec:
             periodSeconds: 10
           volumeMounts:
             - name: borgwarehouse-config
-              mountPath: /home/borgwarehous/app/config
+              mountPath: /home/borgwarehouse/app/config
             - name: borgwarehouse-ssh
-              mountPath: /home/borgwarehous/.ssh
+              mountPath: /home/borgwarehouse/.ssh
             - name: borg
               mountPath: /home/borgwarehouse/repos
       volumes:
