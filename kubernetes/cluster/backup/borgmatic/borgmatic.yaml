@@ -1,0 +1,77 @@
+# Service: Borgmatic
+# Label: app.kubernetes.io/name: Borgmatic
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: borgmatic
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: borgmatic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: borgmatic
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: backup
+      labels:
+        app.kubernetes.io/name: borgmatic
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: borgmatic
+          image: b3vis/borgmatic:1.8.5
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 50m
+            limits:
+             memory: 200Mi
+          envFrom:
+            - secretRef:
+                name: borgmatic
+            - configMapRef:
+                name: borgmatic
+          volumeMounts:
+            - name: borgmatic-keyfiles
+              mountPath: /root/.config/borg
+            - name: borgmatic-ssh
+              mountPath: /root/.ssh
+            - name: borgmatic-config-yml
+              mountPath: /etc/borgmatic.d/config.yml
+              subPath: config.yml
+              readOnly: true
+            # PV create by the `borgwarehouse`
+            - name: borg
+              mountPath: /borg
+      volumes:
+        - name: borgmatic-keyfiles
+          persistentVolumeClaim:
+            claimName: borgmatic-keyfiles
+        - name: borgmatic-ssh
+          persistentVolumeClaim:
+            claimName: borgmatic-ssh
+        - name: borgmatic-config-yml
+          configMap:
+            name: borgmatic-config-yml
+        # PV create by the `borgwarehouse`
+        - name: borg
+          persistentVolumeClaim:
+            claimName: borg
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: borgmatic
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: borgmatic
+data:
+  TZ: "Europe/Amsterdam"
+  BACKUP_CRON: "0 4 * * *"
+  RUN_ON_STARTUP: "false"
