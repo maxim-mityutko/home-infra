@@ -34,6 +34,9 @@ mariadb_databases:
     format: sql
     add_drop_database: true
 #      options: "--single-transaction --quick"
+sqlite_databases:
+  - name: readarr
+    path: /sqlite/readarr/readarr.db
 apprise:
   services:
     - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
