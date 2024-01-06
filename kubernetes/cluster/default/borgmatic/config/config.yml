@@ -26,7 +26,7 @@ mariadb_databases:
 #      path: /var/lib/sqlite3/mydb.sqlite
 apprise:
   services:
-    - url: discord://${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
+    - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
       label: discord
   start:
     title: Borg
