@@ -48,7 +48,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: borgwarehouse-tmp
+  name: borgwarehouse-temp
   labels:
     app.kubernetes.io/name: borgwarehouse
 spec:
@@ -63,7 +63,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: borgwarehouse-etc-ssh
+  name: borgwarehouse-ssh-host
   labels:
     app.kubernetes.io/name: borgwarehouse
 spec:
@@ -72,7 +72,7 @@ spec:
   storageClassName: nfs-subdir
   resources:
     requests:
-      storage: 10M
+      storage: 100M
 ---
 # Borg -- /home/borgwarehouse/repos
 kind: PersistentVolumeClaim
