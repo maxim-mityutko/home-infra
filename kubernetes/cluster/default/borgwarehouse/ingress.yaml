@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: borgwarehouse
+  namespace: default
+  labels:
+    app.kubernetes.io/name: borgwarehouse
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: borg.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: borgwarehouse
+                port:
+                  number: 3000
+  tls:
+    - hosts:
+        - borg.brhd.io

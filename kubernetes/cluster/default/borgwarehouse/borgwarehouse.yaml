@@ -1,0 +1,103 @@
+# Service: BorgWarehouse
+# Label: app.kubernetes.io/name: borgwarehouse
+# Service: postgres
+# Label: app.kubernetes.io/name: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: borgwarehouse
+  namespace: default
+  labels:
+    app.kubernetes.io/name: borgwarehouse
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000
+      targetPort: 3000
+      name: web
+    - port: 3022
+      targetPort: 22
+      name: ssh
+  selector:
+    app.kubernetes.io/name: borgwarehouse
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: borgwarehouse-ssh-external
+  namespace: default
+  labels:
+    app.kubernetes.io/name: borgwarehouse
+spec:
+  type: NodePort # 30000-32767
+  ports:
+    - name: borgwarehouse
+      port: 30022
+      targetPort: 22
+      nodePort: 30022
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: borgwarehouse
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: borgwarehouse
+  namespace: default
+  labels:
+    app.kubernetes.io/name: borgwarehouse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: borgwarehouse
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: default
+      labels:
+        app.kubernetes.io/name: borgwarehouse
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: borgwarehouse
+          image: borgwarehouse/borgwarehouse:v2.1.0
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 50m
+            limits:
+             memory: 100Mi
+          ports:
+            - containerPort: 3000
+              name: web
+            - containerPort: 22
+              name: ssh
+          envFrom:
+            - configMapRef:
+                name: borgwarehouse
+          volumeMounts:
+            - name: borg
+              mountPath: /home/borgwarehouse/repos
+            - name: borgwarehouse
+              mountPath: /home/borgwarehouse
+      volumes:
+        - name: borg
+          persistentVolumeClaim:
+            claimName: borg
+        - name: borgwarehouse
+          persistentVolumeClaim:
+            claimName: borgwarehouse
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: borgwarehouse
+  namespace: default
+  labels:
+    app.kubernetes.io/name: borgwarehouse
+data:
+  FQDN: "borg.brhd.io"

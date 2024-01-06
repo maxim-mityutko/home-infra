@@ -1,0 +1,56 @@
+---
+# Borgwarehouse -- /home/borgwarehouse
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: borgwarehouse
+  labels:
+    app.kubernetes.io/name: borgwarehouse
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1G
+---
+# Borg -- /home/borgwarehouse/repos
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: borg
+  namespace: default
+  labels:
+    app.kubernetes.io/name: borg
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: nfs
+  resources:
+    requests:
+      storage: 500G
+  selector:
+    matchLabels:
+      storage.target: borg
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: borg
+  namespace: default
+  labels:
+    app.kubernetes.io/name: borg
+    storage.target: borg
+spec:
+  accessModes:
+    - ReadWriteMany
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  capacity:
+    storage: 500G
+  nfs:
+    server: nas.brhd.io
+    path: /mnt/spin/borg
+  mountOptions:
+    - mountvers=4
