@@ -46,6 +46,9 @@ spec:
               mountPath: /etc/borgmatic.d/config.yml
               subPath: config.yml
               readOnly: true
+            # PV create by the `borgwarehouse`
+            - name: borg
+              mountPath: /borg
       volumes:
         - name: borgmatic-keyfiles
           persistentVolumeClaim:
@@ -56,6 +59,10 @@ spec:
         - name: borgmatic-config-yml
           configMap:
             name: borgmatic-config-yml
+        # PV create by the `borgwarehouse`
+        - name: borg
+          persistentVolumeClaim:
+            claimName: borg
 ---
 apiVersion: v1
 kind: ConfigMap

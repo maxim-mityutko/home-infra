@@ -1,5 +1,6 @@
 # Service: BorgWarehouse
 # Label: app.kubernetes.io/name: borgwarehouse
+# Ingress: borg.brhd.io
 ---
 apiVersion: v1
 kind: Service
