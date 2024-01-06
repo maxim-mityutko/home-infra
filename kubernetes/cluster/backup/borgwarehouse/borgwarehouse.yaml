@@ -6,7 +6,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: borgwarehouse
-  namespace: default
+  namespace: backup
   labels:
     app.kubernetes.io/name: borgwarehouse
 spec:
@@ -25,7 +25,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: borgwarehouse-ssh-external
-  namespace: default
+  namespace: backup
   labels:
     app.kubernetes.io/name: borgwarehouse
 spec:
@@ -43,7 +43,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: borgwarehouse
-  namespace: default
+  namespace: backup
   labels:
     app.kubernetes.io/name: borgwarehouse
 spec:
@@ -56,7 +56,7 @@ spec:
   revisionHistoryLimit: 1
   template:
     metadata:
-      namespace: default
+      namespace: backup
       labels:
         app.kubernetes.io/name: borgwarehouse
     spec:
@@ -128,7 +128,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: borgwarehouse
-  namespace: default
+  namespace: backup
   labels:
     app.kubernetes.io/name: borgwarehouse
 data:

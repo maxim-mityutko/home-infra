@@ -9,7 +9,7 @@ spec:
     namespace: default
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/default/borgwarehouse
+    path: kubernetes/cluster/backup/borgwarehouse
     repoURL: 'git@github.com:maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
@@ -17,3 +17,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
