@@ -110,7 +110,7 @@ spec:
         - name: borgwarehouse-ssh
           persistentVolumeClaim:
             claimName: borgwarehouse-ssh
-        - name: borgwarehouse-etc-ssh
+        - name: borgwarehouse-ssh-host
           persistentVolumeClaim:
             claimName: borgwarehouse-ssh-host
         - name: borgwarehouse-logs
