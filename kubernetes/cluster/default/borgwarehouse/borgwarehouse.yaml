@@ -1,7 +1,5 @@
 # Service: BorgWarehouse
 # Label: app.kubernetes.io/name: borgwarehouse
-# Service: postgres
-# Label: app.kubernetes.io/name: postgres
 ---
 apiVersion: v1
 kind: Service
@@ -17,7 +15,7 @@ spec:
       targetPort: 3000
       name: web
     - port: 30022
-      targetPort: 30022
+      targetPort: 22
       name: ssh
   selector:
     app.kubernetes.io/name: borgwarehouse
@@ -34,7 +32,7 @@ spec:
   ports:
     - name: borgwarehouse
       port: 30022
-      targetPort: 30022
+      targetPort: 22
       nodePort: 30022
       protocol: TCP
   selector:
@@ -74,14 +72,14 @@ spec:
           ports:
             - containerPort: 3000
               name: web
-            - containerPort: 30022
+            - containerPort: 22
               name: ssh
           envFrom:
             - configMapRef:
                 name: borgwarehouse
-          securityContext:
-            runAsUser: 1001
-            runAsGroup: 1001
+          #securityContext:
+          #  runAsUser: 1001
+          #  runAsGroup: 1001
           readinessProbe:
             tcpSocket:
               port: 3000
