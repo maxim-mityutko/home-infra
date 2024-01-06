@@ -97,6 +97,10 @@ spec:
               mountPath: /home/borgwarehouse/app/config
             - name: borgwarehouse-ssh
               mountPath: /home/borgwarehouse/.ssh
+            - name: borgwarehouse-logs
+              mountPath: /home/borgwarehouse/logs
+            - name: borgwarehouse-tmp
+              mountPath: /home/borgwarehouse/tmp
             - name: borg
               mountPath: /home/borgwarehouse/repos
       volumes:
@@ -106,6 +110,12 @@ spec:
         - name: borgwarehouse-ssh
           persistentVolumeClaim:
             claimName: borgwarehouse-ssh
+        - name: borgwarehouse-logs
+          persistentVolumeClaim:
+            claimName: borgwarehouse-logs
+        - name: borgwarehouse-tmp
+          persistentVolumeClaim:
+            claimName: borgwarehouse-tmp
         - name: borg
           persistentVolumeClaim:
             claimName: borg

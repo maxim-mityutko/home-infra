@@ -29,6 +29,36 @@ spec:
     requests:
       storage: 10M
 ---
+# Borgwarehouse -- /home/borgwarehouse/logs
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: borgwarehouse-logs
+  labels:
+    app.kubernetes.io/name: borgwarehouse
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10M
+---
+# Borgwarehouse -- /home/borgwarehouse/tmp
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: borgwarehouse-tmp
+  labels:
+    app.kubernetes.io/name: borgwarehouse
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10M
+---
 # Borg -- /home/borgwarehouse/repos
 kind: PersistentVolumeClaim
 apiVersion: v1
