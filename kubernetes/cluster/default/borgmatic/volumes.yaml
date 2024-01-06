@@ -13,3 +13,18 @@ spec:
   resources:
     requests:
       storage: 10M
+---
+# Borgmatic -- /root/.ssh
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: borgmatic-ssh
+  labels:
+    app.kubernetes.io/name: borgmatic
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10M

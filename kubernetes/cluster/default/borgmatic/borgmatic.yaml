@@ -40,6 +40,8 @@ spec:
           volumeMounts:
             - name: borgmatic-keyfiles
               mountPath: /root/.config/borg
+            - name: borgmatic-ssh
+              mountPath: /root/.ssh
             - name: borgmatic-config-yml
               mountPath: /etc/borgmatic.d/config.yml
               subPath: config.yml
@@ -48,6 +50,9 @@ spec:
         - name: borgmatic-keyfiles
           persistentVolumeClaim:
             claimName: borgmatic-keyfiles
+        - name: borgmatic-ssh
+          persistentVolumeClaim:
+            claimName: borgmatic-ssh
         - name: borgmatic-config-yml
           configMap:
             name: borgmatic-config-yml
