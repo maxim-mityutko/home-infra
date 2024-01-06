@@ -50,8 +50,8 @@ spec:
             - name: borg
               mountPath: /borg
 
-            - name: radarr-config
-              mountPath: /sqlite/radarr
+            - name: readarr-config
+              mountPath: /sqlite/readarr
       volumes:
         - name: borgmatic-keyfiles
           persistentVolumeClaim:
@@ -67,10 +67,10 @@ spec:
           persistentVolumeClaim:
             claimName: borg
 
-        - name: radarr-config
+        - name: readarr-config
           persistentVolumeClaim:
             namespace: media
-            claimName: radarr-config
+            claimName: readarr-config
 ---
 apiVersion: v1
 kind: ConfigMap
