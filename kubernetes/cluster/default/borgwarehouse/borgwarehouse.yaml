@@ -111,3 +111,5 @@ metadata:
     app.kubernetes.io/name: borgwarehouse
 data:
   FQDN: "borg.brhd.io"
+  UID: "1001"
+  GID: "1001"
