@@ -79,6 +79,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: borgwarehouse
+          securityContext:
+            runAsUser: 3000
+            runAsGroup: 3000
           readinessProbe:
             tcpSocket:
               port: 3000
@@ -116,5 +119,3 @@ metadata:
     app.kubernetes.io/name: borgwarehouse
 data:
   FQDN: "borg.brhd.io"
-  UID: "3000"
-  GID: "3000"
