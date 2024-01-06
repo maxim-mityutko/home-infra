@@ -6,7 +6,7 @@ metadata:
 spec:
   destination:
     name: ''
-    namespace: default
+    namespace: backup
     server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/backup/borgmatic
