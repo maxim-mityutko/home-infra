@@ -38,16 +38,16 @@ spec:
             - configMapRef:
                 name: borgmatic
           volumeMounts:
-            - name: borgmatic-config
+            - name: borgmatic-keyfiles
               mountPath: /root/.config/borg
             - name: borgmatic-config-yml
               mountPath: /etc/borgmatic.d/config.yml
               subPath: config.yml
               readOnly: true
       volumes:
-        - name: borgmatic-config
+        - name: borgmatic-keyfiles
           persistentVolumeClaim:
-            claimName: borg-keyfiles
+            claimName: borgmatic-keyfiles
         - name: borgmatic-config-yml
           configMap:
             name: borgmatic-config-yml

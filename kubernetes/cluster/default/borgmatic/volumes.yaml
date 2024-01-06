@@ -3,13 +3,13 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: borg-keyfiles
+  name: borgmatic-keyfiles
   labels:
-    app.kubernetes.io/name: borgmatic-config
+    app.kubernetes.io/name: borgmatic
 spec:
   accessModes:
   - ReadWriteOnce
   storageClassName: nfs-subdir
   resources:
     requests:
-      storage: 1M
+      storage: 10M
