@@ -41,7 +41,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: shinobi
-          image:  registry.gitlab.com/shinobi-systems/shinobi@latest-nvidia-no-db
+          image:  registry.gitlab.com/shinobi-systems/shinobi:latest-nvidia-no-db
           resources:
             requests:
               cpu: 500m
