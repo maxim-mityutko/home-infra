@@ -31,7 +31,7 @@ spec:
       app.kubernetes.io/name: shinobi
   strategy:
     type: Recreate
-  revisionHistoryLimit: 1
+  revisionHistoryLimit: 3
   template:
     metadata:
       namespace: smart-home
@@ -41,7 +41,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: shinobi
-          image:  registry.gitlab.com/shinobi-systems/shinobi@sha256:7ba655bcdb8f647c07f6cd10aa5c9fdd00bafad0fa800299799d5e6ec79c597c
+          image:  registry.gitlab.com/shinobi-systems/shinobi@sha256:62b647f4bd8b41797a22ef5425d27b67ae9dd7faf9f16d090f8724eeb3563939
           resources:
             requests:
               cpu: 500m
