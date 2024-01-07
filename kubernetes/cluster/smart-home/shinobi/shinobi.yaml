@@ -41,7 +41,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: shinobi
-          image:  registry.gitlab.com/shinobi-systems/shinobi@sha256:d6eb4b50bbb0f8fd192d1867b8c7cac33616ca4f2bdd13f0110021681aea70df
+          image:  registry.gitlab.com/shinobi-systems/shinobi@sha256:396214dcf158c7aead74355c0f792cfc4ff73de0852a65290a76849b198b04b2
           resources:
             requests:
               cpu: 500m
