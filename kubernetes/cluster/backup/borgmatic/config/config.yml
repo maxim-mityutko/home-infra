@@ -41,16 +41,12 @@ apprise:
   services:
     - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
       label: discord
-  start:
-    title: ⚙️ Started
-    body: Starting backup process...
   finish:
     title: ✅ SUCCESS
-    body: $(cat /tmp/backup_run.log)
+    body: Backups created successfully!
   fail:
     title: ❌ FAILED
-    body: $(cat /tmp/backup_run.log)
+    body: Backup creation failed! Check container logs for details.
   states:
-    - start
     - finish
     - fail
