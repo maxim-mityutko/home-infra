@@ -42,8 +42,15 @@ apprise:
     - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
       label: discord
   start:
-    body: Backups started...
+    title: ⚙️ Started
+    body: Starting backup process...
   finish:
-    body: Backups succeeded!
+    title: ✅ SUCCESS
+    body: $(cat /tmp/backup_run.log)
   fail:
-    body: Backups failed!
+    title: ❌ FAILED
+    body: $(cat /tmp/backup_run.log)
+  states:
+    - start
+    - finish
+    - fail
