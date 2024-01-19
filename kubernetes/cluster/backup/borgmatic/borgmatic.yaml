@@ -25,7 +25,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: borgmatic
-          image: b3vis/borgmatic:1.8.5
+          image: ghcr.io/maxim-mityutko/borgmatic-exporter:dev
           resources:
             requests:
               memory: 50Mi
