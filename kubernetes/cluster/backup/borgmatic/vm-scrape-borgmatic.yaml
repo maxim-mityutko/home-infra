@@ -10,9 +10,16 @@ metadata:
 spec:
   endpoints:
     - port: health
+      path: /metrics
+      scrapeTimeout: 60s
+      #interval: 3000s
       relabelConfigs:
         - target_label: job
           replacement: borgmatic
+#  namespaceSelector:
+#    matchNames:
+#      - backup
   selector:
     matchLabels:
      name: borgmatic
+
