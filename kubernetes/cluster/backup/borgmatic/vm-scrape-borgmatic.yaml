@@ -5,7 +5,7 @@ kind: VMPodScrape
 metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
-  name: borgmatic-pod-metrics
+  name: borgmatic-metrics
   namespace: backup
 spec:
   podMetricsEndpoints:
