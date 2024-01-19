@@ -1,6 +1,22 @@
 # Service: Borgmatic
 # Label: app.kubernetes.io/name: Borgmatic
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: borgmatic
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: borgmatic
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9996
+      targetPort: 9996
+      name: health
+  selector:
+    app.kubernetes.io/name: borgmatic
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

@@ -1,18 +1,15 @@
 # Victoria Metrics
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
-kind: VMPodScrape
+kind: VMServiceScrape
 metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
   name: borgmatic-metrics
   namespace: monitoring
 spec:
-  podMetricsEndpoints:
+  endpoints:
     - port: health
-      scheme: http
-      path: /metrics
-      interval: 60s
       relabelConfigs:
         - target_label: job
           replacement: borgmatic
@@ -21,4 +18,4 @@ spec:
       - backup
   selector:
     matchLabels:
-     name:  borgmatic
+     name: borgmatic
