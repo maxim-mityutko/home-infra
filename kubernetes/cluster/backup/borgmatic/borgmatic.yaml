@@ -37,6 +37,9 @@ spec:
                 name: borgmatic
             - configMapRef:
                 name: borgmatic
+          ports:
+            - name: health
+              containerPort: 9996
           volumeMounts:
             - name: borgmatic-keyfiles
               mountPath: /root/.config/borg
