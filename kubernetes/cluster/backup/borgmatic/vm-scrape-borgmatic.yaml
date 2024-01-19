@@ -6,16 +6,13 @@ metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
   name: borgmatic-metrics
-  namespace: monitoring
+  namespace: backup
 spec:
   endpoints:
     - port: health
       relabelConfigs:
         - target_label: job
           replacement: borgmatic
-  namespaceSelector:
-    matchNames:
-      - backup
   selector:
     matchLabels:
      name: borgmatic
