@@ -49,6 +49,8 @@ spec:
             # PV create by the `borgwarehouse`
             - name: borg
               mountPath: /borg
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
       volumes:
         - name: borgmatic-keyfiles
           persistentVolumeClaim:
