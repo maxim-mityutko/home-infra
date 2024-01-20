@@ -25,7 +25,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: borgmatic
-          image: b3vis/borgmatic:1.8.5
+          image: ghcr.io/maxim-mityutko/borgmatic-exporter:v0.1.0
           resources:
             requests:
               memory: 50Mi
@@ -37,6 +37,9 @@ spec:
                 name: borgmatic
             - configMapRef:
                 name: borgmatic
+          ports:
+            - name: health
+              containerPort: 9996
           volumeMounts:
             - name: borgmatic-keyfiles
               mountPath: /root/.config/borg
@@ -49,6 +52,8 @@ spec:
             # PV create by the `borgwarehouse`
             - name: borg
               mountPath: /borg
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
       volumes:
         - name: borgmatic-keyfiles
           persistentVolumeClaim:
@@ -75,3 +80,4 @@ data:
   TZ: "Europe/Amsterdam"
   BACKUP_CRON: "0 4 * * *"
   RUN_ON_STARTUP: "false"
+  BORGMATIC_CONFIG: "/etc/borgmatic.d/config.yml"

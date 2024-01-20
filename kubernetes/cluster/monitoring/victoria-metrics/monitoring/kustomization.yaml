@@ -6,6 +6,7 @@ resources:
   - rule-oom.yaml
   - scrape-argocd.yaml # VM Service Scrape
   - scrape-nginx-ingress.yaml # Microk8s Nginx Ingress Scrape
+  - scrape-borgmatic.yaml # Borgmatic Backups
   - secret.yaml
 helmCharts:
     - name: victoria-metrics-k8s-stack
@@ -79,6 +80,11 @@ helmCharts:
               # ArgoCD
               argocd:
                 gnetId: 14584
+                revision: 1
+                datasource: VictoriaMetrics
+              # Borgmatic
+              borgmatic:
+                gnetId: 20334
                 revision: 1
                 datasource: VictoriaMetrics
           sidecar:
