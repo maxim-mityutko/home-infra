@@ -85,7 +85,7 @@ helmCharts:
               # Borgmatic
               borgmatic:
                 gnetId: 20334
-                revision: 1
+                revision: 2
                 datasource: VictoriaMetrics
           sidecar:
             dashboards:
