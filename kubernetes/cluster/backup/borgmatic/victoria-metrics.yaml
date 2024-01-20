@@ -24,7 +24,7 @@ spec:
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMRule
 metadata:
-  name: borgmatic
+  name: borgmatic-rule
   namespace: backup
 spec:
   groups:
