@@ -5,7 +5,7 @@ resources:
   - secret.yaml
   - volumes.yaml
   - borgmatic.yaml
-  - vm-scrape-borgmatic.yaml
+  - victoria-metrics.yaml
 configMapGenerator:
   - name: borgmatic-config-yml
     files:

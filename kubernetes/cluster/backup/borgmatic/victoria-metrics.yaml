@@ -1,0 +1,40 @@
+# Victoria Metrics
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
+metadata:
+  labels:
+    app.kubernetes.io/instance: victoria-metrics
+  name: borgmatic-metrics
+  namespace: backup
+spec:
+  podMetricsEndpoints:
+    - port: health
+      scheme: http
+      path: /metrics
+      scrapeTimeout: 120s
+      interval: 3600s # every hour
+      relabelConfigs:
+        - target_label: job
+          replacement: borgmatic
+  selector:
+    matchLabels:
+     app.kubernetes.io/name: borgmatic
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: borgmatic
+  namespace: backup
+spec:
+  groups:
+  - name: "borgmatic"
+    rules:
+    - alert: "BorgmaticMissingBackup"
+      annotations:
+        description: "The instance {{ $labels.instance }} has not created a backup of the repo {{ $labels.repository }} in the last {{ $value }} seconds."
+        summary: "Borg missing backup."
+      expr: "time() - sum by (repository) (borg_last_backup_timestamp{job=\"borgmatic\"}) > 90000"
+      for: "1m"
+      labels:
+        severity: "warning"
