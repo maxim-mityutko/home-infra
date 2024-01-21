@@ -13,7 +13,7 @@ spec:
       scheme: http
       path: /metrics
       scrapeTimeout: 120s
-      interval: 3600s # every hour
+      interval: 600s
       relabelConfigs:
         - target_label: job
           replacement: borgmatic
