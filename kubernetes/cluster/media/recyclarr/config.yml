@@ -62,9 +62,6 @@ radarr:
           - eecf3a857724171f968a66cb5719e152 # IMAX
           - 9f6cbff8cfe4ebbc1bde14c7b7bec0de # IMAX Enhanced
           # HDR
-          - e23edd2482476e595fb990b12e7c609c # DV HDR10
-          - 58d6a88f13e2db7f5059c41047876f00 # DV
-          - a3e19f8f627608af0211acd02bf89735 # DV SDR
           - b974a6cd08c1066250f1f177d7aa1225 # HDR10Plus
           - dfb86d5941bc9075d6af23b09c2aeecd # HDR10
           - e61e28db95d22bedcadf030b8f156d96 # HDR
@@ -162,6 +159,12 @@ sonarr:
     quality_definition:
       type: series
     quality_profiles:
+      - name: 4k
+        reset_unmatched_scores:
+          enabled: true
+        qualities:
+          - name: WEBDL-2160p
+          - name: WEBRip-2160p
       - name: HD
         reset_unmatched_scores:
           enabled: true
@@ -182,6 +185,45 @@ sonarr:
           - name: WEBRip-480p
           - name: DVD
     custom_formats:
+      - trash_ids:
+          # HDR
+          - a3d82cbef5039f8d295478d28a887159 # HDR10+
+          - 3497799d29a085e2ac2df9d468413c94 # HDR10
+          - 3e2c4e748b64a1a1118e0ea3f4cf6875 # HDR
+          - 0dad0a507451acddd754fe6dc3a7f5e7 # HDR10+ Boost
+          - 385e9e8581d33133c3961bdcdeffb7b4 # DV HDR10+ Boost
+          # Misc
+          - ec8fa7296b64e8cd390a1600981f3923 # Repack / Proper
+          - eb3d5cc0a2be0db205fb823640db6a3c # Repack V2
+          - 44e7c4de10ae50265753082e5dc76047 # Repack V3
+          # Streaming
+          - 89358767a60cc28783cdc3d0be9388a4 # DSNP
+          - 81d1fbf600e2540cee87f3a23f9d3c1c # MAX
+          - a880d6abc21e7c16884f3ae393f84179 # HMAX
+          - d660701077794679fd59e8bdf4ce3a29 # AMZN
+          - 1656adc6d7bb2c8cca6acfb6592db421 # PCOK
+          - c67a75ae4a1715f2bb4d492755ba4195 # PMTP
+          - 7a235133c87f7da4c8cccceca7e3c7a6 # HBO
+          - f6cce30f1733d5c8194222a7507909bb # HULU
+          - 77a7b25585c18af08f60b1547bb9b4fb # CC
+          - c30d2958827d1867c73318a5a2957eb1 # RED
+          # HQ Source Groups
+          - e6258996055b9fbab7e9cb2f75819294 # WEB Tier 01
+          - 58790d4e2fdcd9733aa7ae68ba2bb503 # WEB Tier 02
+          - d84935abd3f8556dcd51d4f27e22d0a6 # WEB Tier 03
+          - d0c516558625b04b363fa6c5c2c7cfd4 # WEB Scene
+          # Excludes
+          - 9b27ab6498ec0f31a3353992e19434ca # DV (WEBDL)
+          - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
+          - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
+          - e2315f990da2e2cbfc9fa5b7a6fcfe48 # LQ (Release Title)
+          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
+          - fbcb31d8dabd2a319072b84fc0b7249c # Extras
+          - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
+          - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
+          - 06d66ab109d4d2eddb2794d21526d140 # Retags
+        quality_profiles:
+          - name: 4K
       - trash_ids:
           # Streaming
           - d660701077794679fd59e8bdf4ce3a29 # AMZN
