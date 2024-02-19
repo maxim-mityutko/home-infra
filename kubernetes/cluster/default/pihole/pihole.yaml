@@ -67,7 +67,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: pihole
-        image: pihole/pihole:2024.01.0
+        image: pihole/pihole:2024.02.0
         resources:
           requests:
             cpu: 50m
