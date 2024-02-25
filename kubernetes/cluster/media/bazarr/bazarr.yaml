@@ -52,6 +52,9 @@ spec:
               cpu: 1000m
           ports:
             - containerPort: 8787
+          envFrom:
+            - secretRef:
+                name: bazarr
           volumeMounts:
             - name: bazarr-config
               mountPath: /config
