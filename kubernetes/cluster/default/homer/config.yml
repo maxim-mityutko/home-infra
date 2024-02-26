@@ -226,6 +226,10 @@ services:
       - name: "Google Apps Admin"
         logo: "https://casa.brhd.io/icons/google.svg"
         url: "https://admin.google.com/"
+      - name: "BorgBase"
+        logo: "https://casa.brhd.io/icons/borgbase.png"
+        tag: "backup"
+        url: "https://borgbase.com/repositories"
   - name: "Development"
     icon: "fas fa-archive"
     items:
