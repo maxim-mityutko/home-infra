@@ -54,9 +54,11 @@ spec:
           ports:
             - containerPort: 80
               name: http
-          env:
-            - name: WEBSOCKET_ENABLED
-              value: 'true'
+          envFrom:
+            - configMapRef:
+                name: vaultwarden
+            - secretRef:
+                name: vaultwarden
           volumeMounts:
             - name: vaultwarden-data
               mountPath: /data
@@ -64,3 +66,13 @@ spec:
         - name: vaultwarden-data
           persistentVolumeClaim:
             claimName: vaultwarden-data
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vaultwarden
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: vaultwarden
+data:
+  WEBSOCKET_ENABLED: "true"
