@@ -3,15 +3,11 @@
 # Original connection provided by the Borgwarehouse, however replaced it with
 # local path mounted to NFS share to speed up the process and avoid bandwidth constraints
 # of the SSH protocol.
-#
-#- path: ssh://borgwarehouse@borgwarehouse.backup.svc.cluster.local:30022/./1d76edd9
-#  label: borgwarehouse
-#
-# `Borgwarehouse` runs under UID 1001, however `borgmatic` uses UID 1000 (root) and changing it to anything
-# else breaks the container, hence the temporary workaround is to CHMOD more permissions on the repo directory.
 repositories:
   - path: /borg/1d76edd9
-    label: borgwarehouse
+    label: local-db
+  - path: ${REPO_REMOTE_DB}
+    label: remote-db
 keep_daily: 14
 keep_weekly: 8
 keep_monthly: 6
