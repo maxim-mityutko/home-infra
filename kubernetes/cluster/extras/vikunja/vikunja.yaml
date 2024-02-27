@@ -59,7 +59,7 @@ spec:
                 name: vikunja
           volumeMounts:
             - name: vikunja-data
-              mountPath: /data
+              mountPath: /app/vikunja/files
       volumes:
         - name: vikunja-data
           persistentVolumeClaim:
