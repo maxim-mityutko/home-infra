@@ -62,6 +62,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Valutwarden Backup**   | Simple CRON powered backup for Vaultwarden          |      [repo](https://github.com/Bruceforce/vaultwarden-backup)      |                               [docker](https://hub.docker.com/r/bruceforce/vaultwarden-backup)                                |
 | **Renovate**             | Universal dependency update tool                    |          [repo](https://github.com/renovatebot/renovate)           |                                     [docker](https://hub.docker.com/r/renovate/renovate)                                      |
 | **IT Tools**             | Useful tools for developer and people working in IT |           [repo](https://github.com/CorentinTh/it-tools)           |                                    [docker](https://hub.docker.com/r/corentinth/it-tools)                                     |
+| **Vikunja**              | The open-source, self-hostable to-do app            |                  [docs](https://vikunja.io/docs)                   |                                      [docker](https://hub.docker.com/r/vikunja/vikunja)                                       |  
 
 ### Smart Home
 | Project            | Description                                                                     |                                          Docs / Repo                                           |                                  Docker / Helm                                  |

@@ -134,6 +134,10 @@ services:
         tag: "media"
         url: "https://yt.brhd.io"
         target: "_blank"
+      - name: "Vikunja"
+        tag: "todo"
+        logo: "https://casa.brhd.io/icons/vikunja.png"
+        url: "https://todo.brhd.io"
   - name: "Media & Downloads"
     icon: "fas fa-download"
     items:
