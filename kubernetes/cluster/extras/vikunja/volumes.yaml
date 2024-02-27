@@ -3,30 +3,14 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: vaultwarden-data
+  name: vikunja-data
   namespace: extras
   labels:
-    app.kubernetes.io/name: vaultwarden
+    app.kubernetes.io/name: vikunja
 spec:
   accessModes:
   - ReadWriteOnce
   - ReadOnlyMany
-  storageClassName: nfs-subdir
-  resources:
-    requests:
-      storage: 1G
-# Vaultwarden Backup
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: vaultwarden-backup
-  namespace: extras
-  labels:
-    app.kubernetes.io/name: vaultwarden-backup
-spec:
-  accessModes:
-  - ReadWriteOnce
   storageClassName: nfs-subdir
   resources:
     requests:
