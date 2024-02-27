@@ -20,7 +20,7 @@ spec:
               service:
                 name: vikunja
                 port:
-                  number: 3456
+                  name: http
   tls:
     - hosts:
         - todo.brhd.io

@@ -1,4 +1,4 @@
-# Vaultwarden Data
+# Vikunja Data
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1

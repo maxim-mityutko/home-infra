@@ -76,7 +76,7 @@ metadata:
     app.kubernetes.io/name: vikunja
 data:
   VIKUNJA_SERVICE_INTERFACE: "3456"
-  VIKUNJA_SERVICE_PUBLICURL: "todo.brhd.io"
+  VIKUNJA_SERVICE_PUBLICURL: "https://todo.brhd.io"
   VIKUNJA_SERVICE_TIMEZONE: "CET"
 
   VIKUNJA_SENTRY_ENABLED: "false"
