@@ -15,6 +15,7 @@ spec:
     - protocol: TCP
       port: 3456
       targetPort: 3456
+      name: http
   selector:
     app.kubernetes.io/name: vikunja
 ---
@@ -52,6 +53,7 @@ spec:
               cpu: 100m
           ports:
             - containerPort: 3456
+              name: http
           envFrom:
             - secretRef:
                 name: vikunja
