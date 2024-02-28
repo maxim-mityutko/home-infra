@@ -51,7 +51,7 @@ spec:
               readOnly: true
             # PV created by the `x-backup-shared`
             - name: borg-repo
-              mountPath: /borg
+              mountPath: /mnt/borg-repository
             - name: borg-k8s-pods
               mountPath: /mnt/k8s/pods
               readOnly: true # Read-Only is set on the PV as well

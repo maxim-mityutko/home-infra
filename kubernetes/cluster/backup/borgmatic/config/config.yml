@@ -4,7 +4,7 @@
 # local path mounted to NFS share to speed up the process and avoid bandwidth constraints
 # of the SSH protocol.
 repositories:
-  - path: /borg/1d76edd9
+  - path: /mnt/borg-repository/1d76edd9
     label: local-db
   - path: ${REPO_REMOTE_DB}
     label: remote-db
