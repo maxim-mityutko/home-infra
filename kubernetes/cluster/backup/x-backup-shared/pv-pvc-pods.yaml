@@ -1,41 +1,41 @@
+# Volume for `Borgmatic` to backup k8s data
 ---
-# Borg -- /home/borgwarehouse/repos
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: borg-repo
+  name: borg-k8s-pods
   namespace: backup
   labels:
     app.kubernetes.io/name: borg
 spec:
   accessModes:
-  - ReadWriteMany
+  - ReadOnlyMany
   storageClassName: nfs
   resources:
     requests:
-      storage: 500G
+      storage: 50G
   selector:
     matchLabels:
-      storage.target: borg-repo
+      storage.target: borg-k8s-pods
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: borg-repo
+  name: borg-k8s-pods
   namespace: backup
   labels:
     app.kubernetes.io/name: borg
-    storage.target: borg-repo
+    storage.target: borg-k8s-pods
 spec:
   accessModes:
-    - ReadWriteMany
     - ReadOnlyMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: nfs
   capacity:
-    storage: 500G
+    storage: 50G
   nfs:
     server: nas.brhd.io
-    path: /mnt/spin/borg
+    path: /mnt/master/k8s/pods
+    readOnly: true
   mountOptions:
     - mountvers=4
