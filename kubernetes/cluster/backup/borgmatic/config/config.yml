@@ -31,9 +31,9 @@ mariadb_databases:
     add_drop_database: true
 sqlite_databases:
   - name: jellyfin
-    path: /mnt/k8s/pods/jellyfin-config/jellyfin.db
+    path: /mnt/k8s/pods/jellyfin-config/data/jellyfin.db
   - name: jellyfin-library
-    path: /mnt/k8s/pods/jellyfin-config/library.db
+    path: /mnt/k8s/pods/jellyfin-config/data/library.db
   - name: jellyseerr
     path: /mnt/k8s/pods/jellyseerr-config/db/db.sqlite3
   - name: stash
