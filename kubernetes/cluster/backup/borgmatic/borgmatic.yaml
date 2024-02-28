@@ -54,6 +54,7 @@ spec:
               mountPath: /borg
             - name: borg-k8s-pods
               mountPath: /mnt/k8s/pods
+              #readOnly: true
       nodeSelector:
         beta.kubernetes.io/arch: amd64
       volumes:
