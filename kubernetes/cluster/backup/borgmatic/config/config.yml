@@ -29,10 +29,15 @@ mariadb_databases:
     password: ${MARIADB_PASSWORD}
     format: sql
     add_drop_database: true
-#      options: "--single-transaction --quick"
-#sqlite_databases:
-#  - name: readarr
-#    path: /sqlite/readarr/readarr.db
+sqlite_databases:
+  - name: jellyfin
+    path: /mnt/k8s/pods/jellyfin-config/jellyfin.db
+  - name: jellyfin-library
+    path: /mnt/k8s/pods/jellyfin-config/library.db
+  - name: jellyseerr
+    path: /mnt/k8s/pods/jellyseerr-config/db/db.sqlite3
+  - name: stash
+    path: /mnt/k8s/pods/stash-config/stash-go.sqlite
 apprise:
   services:
     - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
