@@ -63,7 +63,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: borgwarehouse
-          image: borgwarehouse/borgwarehouse:v2.1.0
+          image: borgwarehouse/borgwarehouse:v2.2.0
           resources:
             requests:
               memory: 50Mi
