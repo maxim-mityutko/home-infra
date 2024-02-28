@@ -5,9 +5,9 @@
 # of the SSH protocol.
 repositories:
   - path: /mnt/borg-repository/1d76edd9
-    label: local-db
+    label: k8s-db
   - path: ${REPO_REMOTE_DB}
-    label: remote-db
+    label: k8s-db
 keep_daily: 14
 keep_weekly: 8
 keep_monthly: 6
@@ -44,10 +44,10 @@ apprise:
       label: discord
   finish:
     title: ✅ SUCCESS
-    body: Backups created successfully!
+    body: Database backups created successfully!
   fail:
     title: ❌ FAILED
-    body: Backup creation failed! Check container logs for details.
+    body: Database backups creation failed! Check container logs for details.
   states:
     - finish
     - fail

@@ -45,9 +45,13 @@ spec:
               mountPath: /root/.config/borg
             - name: borgmatic-ssh
               mountPath: /root/.ssh
-            - name: borgmatic-config-yml
-              mountPath: /etc/borgmatic.d/config.yml
-              subPath: config.yml
+            - name: borgmatic-k8s-db-config-yml
+              mountPath: /etc/borgmatic.d/k8s-db.yml
+              subPath: k8s-db.yml
+              readOnly: true
+            - name: borgmatic-k8s-fs-config-yml
+              mountPath: /etc/borgmatic.d/k8s-fs.yml
+              subPath: k8s-fs.yml
               readOnly: true
             # PV created by the `x-backup-shared`
             - name: borg-repo
@@ -64,9 +68,13 @@ spec:
         - name: borgmatic-ssh
           persistentVolumeClaim:
             claimName: borgmatic-ssh
-        - name: borgmatic-config-yml
+        # Configurations
+        - name: borgmatic-k8s-db-config-yml
           configMap:
-            name: borgmatic-config-yml
+            name: borgmatic-k8s-db-config-yml
+        - name: borgmatic-k8s-fs-config-yml
+          configMap:
+            name: borgmatic-k8s-fs-config-yml
         # PV created by the `x-backup-shared`
         - name: borg-repo
           persistentVolumeClaim:
@@ -86,4 +94,4 @@ data:
   TZ: "Europe/Amsterdam"
   BACKUP_CRON: "0 4 * * *"
   RUN_ON_STARTUP: "false"
-  BORGMATIC_CONFIG: "/etc/borgmatic.d/config.yml"
+  BORGMATIC_CONFIG: "/etc/borgmatic.d/k8s-db.yml,/etc/borgmatic.d/k8s-fs.yml"
