@@ -1,9 +1,9 @@
 # File system backup configuration for K8s
 repositories:
   - path: /mnt/borg-repository/k8s-fs
-    label: k8s-fs
+    label: local-k8s-fs
 #  - path: ${REPO_REMOTE_K8S_FS}
-#    label: k8s-fs
+#    label: remote-k8s-fs
 keep_daily: 14
 keep_weekly: 8
 keep_monthly: 6
