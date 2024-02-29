@@ -15,8 +15,6 @@ archive_name_format: k8s-fs-{now}
 source_directories:
   - /mnt/k8s/pods
 exclude_patterns:
-
-  # All pod's data
   - '*/jupyter-home'
   - '*/mariadb-data'
   - '*/omada-cert'
@@ -25,8 +23,6 @@ exclude_patterns:
   - '*/postgres-data'
   - '*/shinobi-plugins'
   - '*/vmsingle-stack'
-
-  # Directories and file types
   - '*.log'
   - '*/log'
   - '*/logs'
