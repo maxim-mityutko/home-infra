@@ -115,5 +115,3 @@ spec:
         nameservers:
           - 127.0.0.1
           - 8.8.8.8
-      nodeSelector:
-        kubernetes.io/hostname: kcw01
