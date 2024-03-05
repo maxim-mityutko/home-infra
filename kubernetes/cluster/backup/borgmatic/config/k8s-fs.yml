@@ -29,6 +29,10 @@ exclude_patterns:
   - '*/postgres-data'
   - '*/shinobi-plugins'
   - '*/vmsingle-stack'
+  # Stash: Streaming
+  - '*/stash-cache'
+  # Stash: Generated assets that can be rebuilt
+  - '*/stash-generated'
   - '*.log'
   - '*.log.*'
   - '*/log'
