@@ -1,10 +1,6 @@
-# NOTES:
-#
-# Original connection provided by the Borgwarehouse, however replaced it with
-# local path mounted to NFS share to speed up the process and avoid bandwidth constraints
-# of the SSH protocol.
+# Database backup configuration for K8s
 repositories:
-  - path: /mnt/borg-repository/1d76edd9
+  - path: /mnt/borg-repository/k8s-db
     label: local-k8s-db
   - path: ${REPO_REMOTE_DB}
     label: remote-k8s-db
