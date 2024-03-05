@@ -14,6 +14,11 @@ encryption_passphrase: ${BORG_PASSPHRASE}
 archive_name_format: k8s-fs-{now}
 source_directories:
   - /mnt/k8s/pods
+patterns:
+  - '+ */jellyfin-config/data/jellyfin.db*'
+  - '+ */jellyfin-config/data/library.db*'
+  - '+ */jellyseerr-config/db/db.sqlite*'
+  - '+ */stash-config/stash-go.sqlite*'
 exclude_patterns:
   - '*/jupyter-home'
   - '*/mariadb-data'
@@ -32,6 +37,7 @@ exclude_patterns:
   - '*/backups'
   - '*/Backups'
   - '*.db*'
+  # This will enable backups of stash / jellyseerr SQLite databases on file system
   - '*.sqlite*'
   - '*.pid'
   - '*.pyc'
