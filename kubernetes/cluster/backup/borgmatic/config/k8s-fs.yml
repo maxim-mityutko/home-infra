@@ -24,6 +24,7 @@ exclude_patterns:
   - '*/shinobi-plugins'
   - '*/vmsingle-stack'
   - '*.log'
+  - '*.log.*'
   - '*/log'
   - '*/logs'
   - '*/backup'
