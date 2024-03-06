@@ -13,3 +13,8 @@ sudo mkdir -p /mnt/spin/torrent/downloads
 
 sudo chown -R "$u":"$g"  /mnt/spin/torrent
 sudo chmod -R 777  /mnt/spin/torrent
+
+# NVR
+sudo mkdir -p /mnt/spin/nvr
+# Backups
+sudo mkdir -p /mnt/spin/borg

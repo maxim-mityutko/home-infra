@@ -25,13 +25,13 @@ spec:
       restartPolicy: Always
       containers:
         - name: borgmatic
-          image: ghcr.io/maxim-mityutko/borgmatic-exporter:v0.2.2
+          image: ghcr.io/maxim-mityutko/borgmatic-exporter:v0.2.3
           resources:
             requests:
-              memory: 50Mi
+              memory: 100Mi
               cpu: 50m
             limits:
-             memory: 200Mi
+             memory: 500Mi
           envFrom:
             - secretRef:
                 name: borgmatic
@@ -45,13 +45,20 @@ spec:
               mountPath: /root/.config/borg
             - name: borgmatic-ssh
               mountPath: /root/.ssh
-            - name: borgmatic-config-yml
-              mountPath: /etc/borgmatic.d/config.yml
-              subPath: config.yml
+            - name: borgmatic-k8s-db-config-yml
+              mountPath: /etc/borgmatic.d/k8s-db.yml
+              subPath: k8s-db.yml
               readOnly: true
-            # PV create by the `borgwarehouse`
-            - name: borg
-              mountPath: /borg
+            - name: borgmatic-k8s-fs-config-yml
+              mountPath: /etc/borgmatic.d/k8s-fs.yml
+              subPath: k8s-fs.yml
+              readOnly: true
+            # PV created by the `x-backup-shared`
+            - name: borg-repo
+              mountPath: /mnt/borg-repository
+            - name: borg-k8s-pods
+              mountPath: /mnt/k8s/pods
+              readOnly: true # Read-Only is set on the PV as well
       nodeSelector:
         beta.kubernetes.io/arch: amd64
       volumes:
@@ -61,13 +68,20 @@ spec:
         - name: borgmatic-ssh
           persistentVolumeClaim:
             claimName: borgmatic-ssh
-        - name: borgmatic-config-yml
+        # Configurations
+        - name: borgmatic-k8s-db-config-yml
           configMap:
-            name: borgmatic-config-yml
-        # PV create by the `borgwarehouse`
-        - name: borg
+            name: borgmatic-k8s-db-config-yml
+        - name: borgmatic-k8s-fs-config-yml
+          configMap:
+            name: borgmatic-k8s-fs-config-yml
+        # PV created by the `x-backup-shared`
+        - name: borg-repo
           persistentVolumeClaim:
-            claimName: borg
+            claimName: borg-repo
+        - name: borg-k8s-pods
+          persistentVolumeClaim:
+            claimName: borg-k8s-pods
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -80,4 +94,4 @@ data:
   TZ: "Europe/Amsterdam"
   BACKUP_CRON: "0 4 * * *"
   RUN_ON_STARTUP: "false"
-  BORGMATIC_CONFIG: "/etc/borgmatic.d/config.yml"
+  BORGMATIC_CONFIG: "/etc/borgmatic.d/k8s-db.yml:/etc/borgmatic.d/k8s-fs.yml"

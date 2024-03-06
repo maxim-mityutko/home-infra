@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - _namespace.yaml
   - pv-pvc-borg.yaml
+  - pv-pvc-pods.yaml

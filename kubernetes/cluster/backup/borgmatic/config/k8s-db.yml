@@ -1,13 +1,9 @@
-# NOTES:
-#
-# Original connection provided by the Borgwarehouse, however replaced it with
-# local path mounted to NFS share to speed up the process and avoid bandwidth constraints
-# of the SSH protocol.
+# Database backup configuration for K8s
 repositories:
-  - path: /borg/1d76edd9
-    label: local-db
-  - path: ${REPO_REMOTE_DB}
-    label: remote-db
+  - path: /mnt/borg-repository/k8s-db
+    label: local-k8s-db
+  - path: ${REPO_REMOTE_K8S_DB}
+    label: remote-k8s-db
 keep_daily: 14
 keep_weekly: 8
 keep_monthly: 6
@@ -29,20 +25,25 @@ mariadb_databases:
     password: ${MARIADB_PASSWORD}
     format: sql
     add_drop_database: true
-#      options: "--single-transaction --quick"
-#sqlite_databases:
-#  - name: readarr
-#    path: /sqlite/readarr/readarr.db
+sqlite_databases:
+  - name: jellyfin
+    path: /mnt/k8s/pods/jellyfin-config/data/jellyfin.db
+  - name: jellyfin-library
+    path: /mnt/k8s/pods/jellyfin-config/data/library.db
+  - name: jellyseerr
+    path: /mnt/k8s/pods/jellyseerr-config/db/db.sqlite3
+  - name: stash
+    path: /mnt/k8s/pods/stash-config/stash-go.sqlite
 apprise:
   services:
     - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
       label: discord
   finish:
     title: ✅ SUCCESS
-    body: Backups created successfully!
+    body: Database backups created successfully!
   fail:
     title: ❌ FAILED
-    body: Backup creation failed! Check container logs for details.
+    body: Database backups creation failed! Check container logs for details.
   states:
     - finish
     - fail
