@@ -2,8 +2,8 @@
 repositories:
   - path: /mnt/borg-repository/k8s-fs
     label: local-k8s-fs
-#  - path: ${REPO_REMOTE_K8S_FS}
-#    label: remote-k8s-fs
+  - path: ${REPO_REMOTE_K8S_FS}
+    label: remote-k8s-fs
 keep_daily: 14
 keep_weekly: 8
 keep_monthly: 6

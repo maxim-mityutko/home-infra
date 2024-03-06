@@ -2,7 +2,7 @@
 repositories:
   - path: /mnt/borg-repository/k8s-db
     label: local-k8s-db
-  - path: ${REPO_REMOTE_DB}
+  - path: ${REPO_REMOTE_K8S_DB}
     label: remote-k8s-db
 keep_daily: 14
 keep_weekly: 8
