@@ -1,0 +1,63 @@
+# File system backup configuration for K8s
+repositories:
+  - path: /mnt/borg-repository/k8s-fs
+    label: local-k8s-fs
+  - path: ${REPO_REMOTE_K8S_FS}
+    label: remote-k8s-fs
+keep_daily: 14
+keep_weekly: 8
+keep_monthly: 6
+checks:
+  - name: repository
+    frequency: 2 weeks
+encryption_passphrase: ${BORG_PASSPHRASE}
+archive_name_format: k8s-fs-{now}
+source_directories:
+  - /mnt/k8s/pods
+patterns:
+  # Explicitly enable backups of SQLite databases for some pods
+  - '+ **/jellyfin-config/data/jellyfin.db*'
+  - '+ **/jellyfin-config/data/library.db*'
+  - '+ **/jellyseerr-config/db/db.sqlite*'
+  - '+ **/stash-config/stash-go.sqlite*'
+exclude_patterns:
+  - '*/jupyter-home'
+  - '*/mariadb-data'
+  - '*/omada-cert'
+  - '*/omada-data/db'
+  - '*/omada-logs'
+  - '*/postgres-data'
+  - '*/shinobi-plugins'
+  - '*/vmsingle-stack'
+  # Stash: Streaming
+  - '*/stash-cache'
+  # Stash: Generated assets that can be rebuilt
+  - '*/stash-generated'
+  - '*.log'
+  - '*.log.*'
+  - '*/log'
+  - '*/logs'
+  - '*/backup'
+  - '*/Backup'
+  - '*/backups'
+  - '*/Backups'
+  - '*.db*'
+  - '*.sqlite*'
+  - '*.pid'
+  - '*.pyc'
+exclude_if_present:
+  - .nobackup
+exclude_caches: true
+apprise:
+  services:
+    - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
+      label: discord
+  finish:
+    title: ✅ SUCCESS
+    body: Filesystem backups created successfully!
+  fail:
+    title: ❌ FAILED
+    body: Filesystem backup creation failed! Check container logs for details.
+  states:
+    - finish
+    - fail

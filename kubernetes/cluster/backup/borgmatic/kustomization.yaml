@@ -7,8 +7,13 @@ resources:
   - borgmatic.yaml
   - victoria-metrics.yaml
 configMapGenerator:
-  - name: borgmatic-config-yml
+  - name: borgmatic-k8s-db-config-yml
     files:
-    - config/config.yml
+    - config/k8s-db.yml
+    options:
+      disableNameSuffixHash: true
+  - name: borgmatic-k8s-fs-config-yml
+    files:
+      - config/k8s-fs.yml
     options:
       disableNameSuffixHash: true

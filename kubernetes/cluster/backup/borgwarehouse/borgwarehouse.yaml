@@ -102,7 +102,7 @@ spec:
               mountPath: /home/borgwarehouse/logs
             - name: borgwarehouse-temp
               mountPath: /home/borgwarehouse/tmp
-            - name: borg
+            - name: borg-repo
               mountPath: /home/borgwarehouse/repos
       volumes:
         - name: borgwarehouse-config
@@ -120,9 +120,9 @@ spec:
         - name: borgwarehouse-temp
           persistentVolumeClaim:
             claimName: borgwarehouse-temp
-        - name: borg
+        - name: borg-repo
           persistentVolumeClaim:
-            claimName: borg
+            claimName: borg-repo
 ---
 apiVersion: v1
 kind: ConfigMap
