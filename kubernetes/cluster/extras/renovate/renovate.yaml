@@ -49,5 +49,3 @@ spec:
                   cpu: 500m
                   memory: 500Mi
           restartPolicy: Never
-          nodeSelector:
-            kubernetes.io/arch: amd64
