@@ -4,5 +4,4 @@ resources:
   - volumes.yaml
   - vaultwarden.yaml
   - ingress.yaml
-  - vaultwarden-backup.yaml
   - secret.yaml
