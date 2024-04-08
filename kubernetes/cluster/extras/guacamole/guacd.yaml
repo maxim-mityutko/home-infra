@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: guacd
-          image: guacamole/guacd:1.5.4
+          image: guacamole/guacd:1.5.5
           resources:
             requests:
               cpu: 50m
