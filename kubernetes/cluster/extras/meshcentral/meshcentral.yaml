@@ -13,8 +13,8 @@ spec:
   type: ClusterIP
   ports:
     - protocol: TCP
-      port: 8086
-      targetPort: 8086
+      port: 443
+      targetPort: 443
       name: http
   selector:
     app.kubernetes.io/name: meshcentral
@@ -49,7 +49,7 @@ spec:
               memory: 150M
               cpu: 100m
           ports:
-            - containerPort: 8086
+            - containerPort: 443
               name: http
           envFrom:
             - configMapRef:
