@@ -21,6 +21,6 @@ spec:
                 name: meshcentral
                 port:
                   number: 8443
-  tls:
-    - hosts:
-        - mesh.brhd.io
+#  tls:
+#    - hosts:
+#        - mesh.brhd.io
