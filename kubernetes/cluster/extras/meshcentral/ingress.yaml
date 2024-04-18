@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: meshcentral
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: meshcentral
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: mesh.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: meshcentral
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - mesh.brhd.io
