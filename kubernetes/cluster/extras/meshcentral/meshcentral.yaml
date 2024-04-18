@@ -56,7 +56,7 @@ spec:
                 name: meshcentral
           volumeMounts:
             - name: meshcentral-data
-              mountPath: ./meshcentral/data
+              mountPath: /opt/meshcentral/meshcentral-data
       volumes:
         - name: meshcentral-data
           persistentVolumeClaim:

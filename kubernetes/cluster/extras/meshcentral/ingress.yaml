@@ -20,7 +20,7 @@ spec:
               service:
                 name: meshcentral
                 port:
-                  name: http
+                  number: 8443
   tls:
     - hosts:
         - mesh.brhd.io
