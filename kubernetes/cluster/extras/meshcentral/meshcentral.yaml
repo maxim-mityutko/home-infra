@@ -70,7 +70,7 @@ metadata:
   labels:
     app.kubernetes.io/name: meshcentral
 data:
-  HOSTNAME: mesh.brhd.io
+  # HOSTNAME: mesh.brhd.io
   REVERSE_PROXY: "false"
   IFRAME: "false"
   ALLOW_NEW_ACCOUNTS: "true"
