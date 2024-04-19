@@ -1,0 +1,77 @@
+# Service: Meshcentral
+# Ingress: mesh.brhd.io
+# Label: app.kubernetes.io/name: meshcentral
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: meshcentral
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: meshcentral
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8443
+      targetPort: 443
+      name: http
+  selector:
+    app.kubernetes.io/name: meshcentral
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meshcentral
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: meshcentral
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: meshcentral
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: extras
+      labels:
+        app.kubernetes.io/name: meshcentral
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: meshcentral
+          image: typhonragewind/meshcentral:1.1.22
+          resources:
+            requests:
+              memory: 150M
+              cpu: 100m
+          ports:
+            - containerPort: 443
+              name: http
+          envFrom:
+            - configMapRef:
+                name: meshcentral
+          volumeMounts:
+            - name: meshcentral-data
+              mountPath: /opt/meshcentral/meshcentral-data
+      volumes:
+        - name: meshcentral-data
+          persistentVolumeClaim:
+            claimName: meshcentral-data
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: meshcentral
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: meshcentral
+data:
+  HOSTNAME: mesh.brhd.io
+  REVERSE_PROXY: "false"
+  IFRAME: "false"
+  ALLOW_NEW_ACCOUNTS: "true"
+  WEBRTC: "false"
