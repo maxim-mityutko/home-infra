@@ -10,12 +10,13 @@ After the initial steps are complete, deployments are handled via ArgoCD applica
 defined in the `kubernetes\argocd`.
 
 ## Hardware:
-* VM Host: CPU Intel i5-3470 / RAM 24 GB / 2 x SSD 500 GB in RAID 0 / 2 x HDD 12TB in RAID 0 with TrueNas Scale 
+* TrueNAS Scale Host: CPU Intel i5-3470 / RAM 24 GB / 2 x SSD 500 GB MIRROR / 3 x HDD 12TB RAIDZ1 / NVIDIA Tesla P10
   * VM1: RAM 8GB
-  * VM2: RAM 4GB
+  * VM2: RAM 6GB
+* ProxMox Host:  CPU Intel i7-6700 / RAM 16 GB / 1 x NVME 500 GB
+  * VM1: RAM 8GB
 * Raspberry Pi 4B / RAM 8GB
-* ~~Raspberry Pi 4B / RAM 4GB~~
-* Upcoming: [Compute Blade](https://www.kickstarter.com/projects/uptimelab/compute-blade) with CM4 8GB and 500 GB NVME x 2
+* Upcoming: [Compute Blade](https://www.kickstarter.com/projects/uptimelab/compute-blade) with CM4 8GB and 500 GB NVME x 4
 
 ## Services
 ### Microk8s
@@ -52,14 +53,15 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Exportarr**                     | AIO Prometheus Exporter for *arr applications                                       |                     [repo](https://github.com/onedr0p/exportarr)                       |               [docker](https://github.com/onedr0p/exportarr/pkgs/container/exportarr)                |
 
 ### Extras
-| Project                  | Description                                         |                            Docs / Repo                             |                                                         Docker / Helm                                                         |
-|--------------------------|-----------------------------------------------------|:------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------:|
-| **Apache Guacamole**     | Clientless remote desktop gateway                   | [docs](https://guacamole.apache.org/doc/gug/guacamole-docker.html) | [docker-guacd](https://hub.docker.com/r/guacamole/guacd)<br/>[docker-guacamole](https://hub.docker.com/r/guacamole/guacamole) |
-| **Jupyter with PySpark** | Python and Spark Jupyter Notebook Stack             |          [repo](https://github.com/jupyter/docker-stacks)          |                                  [docker](https://hub.docker.com/r/jupyter/pyspark-notebook)                                  |
-| **Vaultwarden**          | Password management (alternative Bitwarden server)  |         [repo](https://github.com/dani-garcia/vaultwarden)         |                                     [docker](https://hub.docker.com/r/vaultwarden/server)                                     |
-| **Renovate**             | Universal dependency update tool                    |          [repo](https://github.com/renovatebot/renovate)           |                                     [docker](https://hub.docker.com/r/renovate/renovate)                                      |
-| **IT Tools**             | Useful tools for developer and people working in IT |           [repo](https://github.com/CorentinTh/it-tools)           |                                    [docker](https://hub.docker.com/r/corentinth/it-tools)                                     |
-| **Vikunja**              | The open-source, self-hostable to-do app            |                  [docs](https://vikunja.io/docs)                   |                                      [docker](https://hub.docker.com/r/vikunja/vikunja)                                       |  
+| Project                  | Description                                                                |                                           Docs / Repo                                            |                                                         Docker / Helm                                                         |
+|--------------------------|----------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------:|
+| **Apache Guacamole**     | Clientless remote desktop gateway                                          |                [docs](https://guacamole.apache.org/doc/gug/guacamole-docker.html)                | [docker-guacd](https://hub.docker.com/r/guacamole/guacd)<br/>[docker-guacamole](https://hub.docker.com/r/guacamole/guacamole) |
+| **Meshcentral**          | Web-based remote monitoring and management web site with Intel AMT support | [repo](https://github.com/Ylianst/MeshCentral)<br>[docs](https://meshcentral.com/downloads.html) |                                 [docker](https://hub.docker.com/r/typhonragewind/meshcentral)                                 |
+| **Jupyter with PySpark** | Python and Spark Jupyter Notebook Stack                                    |                         [repo](https://github.com/jupyter/docker-stacks)                         |                                  [docker](https://hub.docker.com/r/jupyter/pyspark-notebook)                                  |
+| **Vaultwarden**          | Password management (alternative Bitwarden server)                         |                        [repo](https://github.com/dani-garcia/vaultwarden)                        |                                     [docker](https://hub.docker.com/r/vaultwarden/server)                                     |
+| **Renovate**             | Universal dependency update tool                                           |                         [repo](https://github.com/renovatebot/renovate)                          |                                     [docker](https://hub.docker.com/r/renovate/renovate)                                      |
+| **IT Tools**             | Useful tools for developer and people working in IT                        |                          [repo](https://github.com/CorentinTh/it-tools)                          |                                    [docker](https://hub.docker.com/r/corentinth/it-tools)                                     |
+| **Vikunja**              | The open-source, self-hostable to-do app                                   |                                 [docs](https://vikunja.io/docs)                                  |                                      [docker](https://hub.docker.com/r/vikunja/vikunja)                                       |  
 
 ### Smart Home
 | Project            | Description                                                                     |                                          Docs / Repo                                           |                                  Docker / Helm                                  |
