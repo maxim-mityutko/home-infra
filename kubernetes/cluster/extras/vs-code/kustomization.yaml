@@ -1,40 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: extras
-helmCharts:
-  - name: code-server
-    namespace: extras
-    releaseName: ci/helm-chart
-    version: 4.23.1
-    repo: https://github.com/coder/code-server
-    valuesInline:
-      replicaCount: 1
-      ingress:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: public
-          cert-manager.io/cluster-issuer: lets-encrypt
-        hosts:
-          - vscode.brhd.io
-      resources:
-        requests:
-          cpu: 100m
-          memory: 500M
-      persistence:
-        enabled: true
-        storageClass: nfs-subdir
-        size: 10Gi
-      extraInitContainers: |
-        - name: customization
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: SERVICE_URL
-              value: https://open-vsx.org/vscode/gallery
-            - name: ITEM_URL
-              value: https://open-vsx.org/vscode/item
-          command:
-            - sh
-            - -c
-            - |
-              code-server --install-extension ms-python.python
+resources:
+  - git::https://github.com/coder/code-server@v4.23.1#ci/helm-chart
+values:
+  - values.yaml
