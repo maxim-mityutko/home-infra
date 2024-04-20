@@ -9,7 +9,7 @@ spec:
     namespace: extras
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/extras/vs-code
+    path: kubernetes/cluster/extras/code-server
     repoURL: 'git@github.com:maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
