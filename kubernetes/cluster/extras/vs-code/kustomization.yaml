@@ -3,5 +3,5 @@ kind: Kustomization
 namespace: extras
 resources:
   - git::https://github.com/coder/code-server@v4.23.1#ci/helm-chart
-values:
-  - values.yaml
+#values:
+#  - values.yaml
