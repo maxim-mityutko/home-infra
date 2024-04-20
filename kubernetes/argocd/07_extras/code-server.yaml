@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vs-code
+  name: code-server
   namespace: argocd
 spec:
   destination:
