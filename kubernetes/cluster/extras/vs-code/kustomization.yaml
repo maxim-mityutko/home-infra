@@ -4,9 +4,9 @@ namespace: extras
 helmCharts:
   - name: code-server
     namespace: extras
-    releaseName: code-server
-    version: 11.10.7
-    repo: https://charts.truecharts.org
+    releaseName: ci/helm-chart
+    version: 4.23.1
+    repo: https://github.com/coder/code-server
     valuesInline:
       replicaCount: 1
       ingress:
