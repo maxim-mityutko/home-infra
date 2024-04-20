@@ -1,0 +1,17 @@
+# Code Server Data
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: code-server-data
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: code-server
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadOnlyMany
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1G
