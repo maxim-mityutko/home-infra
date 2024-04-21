@@ -45,6 +45,9 @@ helmCharts:
             }
         hosts:
           - nc.brhd.io
+      phpClientHttpsFix:
+        enabled: true
+        protocol: https
       nextcloud:
         host: nc.brhd.io
         strategy: 
