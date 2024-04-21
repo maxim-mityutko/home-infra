@@ -94,7 +94,7 @@ helmCharts:
           databaseKey: DB_DATABASE
       # Peristence
       persistence:
-        enabled: false
+        enabled: true
         storageClass: nfs-subdir
         size: 10G
         nextcloudData:
