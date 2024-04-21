@@ -67,8 +67,12 @@ helmCharts:
         # Probes
         livenessProbe:
           enabled: true
+          initialDelaySeconds: 30
+          periodSeconds: 60
         readinessProbe:
           enabled: true
+          initialDelaySeconds: 30
+          periodSeconds: 60
         startupProbe:
           enabled: false
         # Metrics
@@ -87,6 +91,7 @@ helmCharts:
             passwordKey: DB_PASSWORD
             hostKey: DB_HOST
             databaseKey: DB_DATABASE
+        # Peristence
         persistence:
           enabled: true
           storageClass: nfs-subdir
