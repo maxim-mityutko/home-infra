@@ -4,6 +4,7 @@ namespace: extras
 resources:
   - secret.yaml
   - pv-pvc-data.yaml
+  - vm-service-scrape.yaml
 helmCharts:
   - name: nextcloud
     namespace: extras
