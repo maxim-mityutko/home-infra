@@ -66,14 +66,16 @@ helmCharts:
       cronjob:
         enabled: false
       # Probes
+      # Setting large initial delays to ensure Nextcloud can initialize properly
+      # due to issues described in this thread: https://github.com/nextcloud/helm/issues/10
       livenessProbe:
-        enabled: false
-        initialDelaySeconds: 30
-        periodSeconds: 60
+        enabled: true
+        initialDelaySeconds: 600
+        periodSeconds: 120
       readinessProbe:
-        enabled: false
-        initialDelaySeconds: 30
-        periodSeconds: 60
+        enabled: true
+        initialDelaySeconds: 600
+        periodSeconds: 120
       startupProbe:
         enabled: false
       # Metrics
