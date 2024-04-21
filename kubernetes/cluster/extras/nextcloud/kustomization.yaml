@@ -45,7 +45,6 @@ helmCharts:
         host: nc.brhd.io
         strategy: 
           type: Recreate
-        extraEnv:
         resources:
           requests:
             cpu: 250m
