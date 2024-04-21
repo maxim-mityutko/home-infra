@@ -16,8 +16,10 @@ helmCharts:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
           nginx.ingress.kubernetes.io/server-snippet: |-
-            client_max_body_size 16G;
-            client_body_buffer_size 500M;
+            client_max_body_size 512M;
+            client_body_timeout 300s;
+            fastcgi_buffers 64 4K;
+            
             server_tokens off;
             proxy_hide_header X-Powered-By;
             rewrite ^/.well-known/webfinger /index.php/.well-known/webfinger last;
