@@ -67,11 +67,11 @@ helmCharts:
         enabled: false
       # Probes
       livenessProbe:
-        enabled: true
+        enabled: false
         initialDelaySeconds: 30
         periodSeconds: 60
       readinessProbe:
-        enabled: true
+        enabled: false
         initialDelaySeconds: 30
         periodSeconds: 60
       startupProbe:
