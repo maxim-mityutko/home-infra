@@ -8,6 +8,7 @@ metadata:
 spec:
   endpoints:
     - port: metrics
+      interval: 180s
   namespaceSelector:
     matchNames:
       - extras
