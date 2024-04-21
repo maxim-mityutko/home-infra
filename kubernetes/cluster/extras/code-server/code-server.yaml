@@ -1,0 +1,60 @@
+# Service: Code Server
+# Ingress: vs.brhd.io
+# Label: app.kubernetes.io/name: code-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: code-server
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: code-server
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      name: http
+  selector:
+    app.kubernetes.io/name: code-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-server
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: code-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: code-server
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: extras
+      labels:
+        app.kubernetes.io/name: code-server
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: code-server
+          image: ghcr.io/coder/code-server:4.23.1
+          resources:
+            requests:
+              memory: 500M
+              cpu: 100m
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: code-server-data
+              mountPath: /home/coder
+      volumes:
+        - name: code-server-data
+          persistentVolumeClaim:
+            claimName: code-server-data
