@@ -50,15 +50,6 @@ helmCharts:
           secretName: nextcloud
           usernameKey: NC_USERNAME
           passwordKey: NC_PASSWORD
-          configs:
-            logging.config.php: |-
-              <?php
-              $CONFIG = array (
-                'log_type' => 'file',
-                'logfile' => 'nextcloud.log',
-                'loglevel' => 0,
-                'logdateformat' => 'F d, Y H:i:s'
-                );
       # Services
       nginx:
         enabled: false
