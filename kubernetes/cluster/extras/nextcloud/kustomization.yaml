@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: extras
 resources:
   - secret.yaml
+  - pv-pvc-data.yaml
 helmCharts:
   - name: nextcloud
     namespace: extras
@@ -91,11 +92,11 @@ helmCharts:
           hostKey: DB_HOST
           databaseKey: DB_DATABASE
       # Peristence
-      # persistence:
-      #   enabled: true
-      #   storageClass: nfs-subdir
-      #   size: 1G
-      #   nextcloudData:
-      #     enabled: true
-      #     storageClass: nfs-subdir
-      #     size: 10G
+      persistence:
+        enabled: true
+        storageClass: nfs-subdir
+        size: 10G
+        nextcloudData:
+          enabled: true
+          existingClaim: nextcloud-data
+          size: 1000G
