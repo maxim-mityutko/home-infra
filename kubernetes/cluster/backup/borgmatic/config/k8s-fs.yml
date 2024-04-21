@@ -20,6 +20,8 @@ patterns:
   - '+ **/jellyfin-config/data/library.db*'
   - '+ **/jellyseerr-config/db/db.sqlite*'
   - '+ **/stash-config/stash-go.sqlite*'
+  - '+ **/code-server-data/.config/*'
+  - '+ **/meshcentral-data/meshcentral.db*'
 exclude_patterns:
   - '*/jupyter-home'
   - '*/mariadb-data'
@@ -29,6 +31,7 @@ exclude_patterns:
   - '*/postgres-data'
   - '*/shinobi-plugins'
   - '*/vmsingle-stack'
+  - '*/code-server-data'
   # Stash: Streaming
   - '*/stash-cache'
   # Stash: Generated assets that can be rebuilt
