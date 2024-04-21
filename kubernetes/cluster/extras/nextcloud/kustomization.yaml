@@ -79,9 +79,9 @@ helmCharts:
           enabled: true
         # Database
         internalDatabase:
-          enabled: false
+          enabled: "false"
         externalDatabase:
-          enabled: true
+          enabled: "true"
           type: postgresql
           existingSecret:
             enabled: true
