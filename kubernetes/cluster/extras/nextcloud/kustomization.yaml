@@ -62,6 +62,7 @@ helmCharts:
           cpu: 150m
           memory: 500M
       lifecycle:
+        # Install `ffmpeg` to enable preview creation for videos and proper playback
         postStartCommand: 
           - "/bin/bash"
           - "-c"
