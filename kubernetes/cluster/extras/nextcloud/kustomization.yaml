@@ -61,6 +61,11 @@ helmCharts:
         requests:
           cpu: 150m
           memory: 500M
+      lifecycle:
+        postStartCommand: 
+          - "/bin/bash"
+          - "-c"
+          - "apt update -y && apt install ffmpeg -y"
       # Services
       nginx:
         enabled: false
