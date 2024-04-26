@@ -57,6 +57,23 @@ helmCharts:
           secretName: nextcloud
           usernameKey: NC_USERNAME
           passwordKey: NC_PASSWORD
+        configs:
+          preview.config.php: |-
+            <?php
+            $CONFIG = array (
+              'enabledPreviewProviders' => array(
+                'OC\Preview\JPEG',
+                'OC\Preview\GIF',
+                'OC\Preview\PNG',
+                'OC\Preview\SVG',
+                'OC\Preview\HEIC',
+                'OC\Preview\BMP',
+                'OC\Preview\MarkDown',
+                'OC\Preview\TXT',
+                'OC\Preview\PDF',
+                'OC\Preview\Movie'
+              ),
+            );
       resources:
         requests:
           cpu: 150m
