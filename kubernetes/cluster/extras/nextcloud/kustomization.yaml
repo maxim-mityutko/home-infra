@@ -104,8 +104,9 @@ helmCharts:
           - "/bin/bash"
           - "-c"
           - >
-            "apt update -y && apt install ffmpeg sudo -y;"
-            "sudo -u www-data php -d memory_limit=50M php occ app:install previewgenerator && sudo -u www-data php -d memory_limit=50M app:enable previewgenerator;
+            apt update -y && apt install ffmpeg sudo -y;
+            sudo -u www-data php -d memory_limit=50M php occ app:install previewgenerator && sudo -u www-data php -d memory_limit=50M app:enable previewgenerator;
+
       # Services
       nginx:
         enabled: false
