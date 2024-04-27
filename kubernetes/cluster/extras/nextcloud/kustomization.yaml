@@ -90,8 +90,11 @@ helmCharts:
       lifecycle:
         # NOTES:
         # - Install dependecy: `ffmpeg` to enable preview creation for videos and proper playback
-        # - Install app: `maps` 
-        # - Install app: `previewgenerator` (Use: "sudo -u www-data php -d memory_limit=512M -f  /var/www/html/occ preview:generate-all -vvv")
+        # - Install app: `memories`
+        #       Run once: sudo -u www-data php -d memory_limit=512M -f /var/www/html/occ memories:places-setup
+        # - Install app: `previewgenerator`
+        #       Link: https://apps.nextcloud.com/apps/previewgenerator / https://github.com/nextcloud/previewgenerator
+        #       Use: sudo -u www-data php -d memory_limit=512M -f  /var/www/html/occ preview:generate-all -vvv
         # - Install app: `facerecognition`
         #       Container with model and dependencies installed in sidecar:
         #           https://github.com/matiasdelellis/facerecognition-external-model
@@ -102,8 +105,8 @@ helmCharts:
           - "-c"
           - >
             apt update -y && apt install ffmpeg -y;
-            php /var/www/html/occ app:install maps &&  php /var/www/html/occ app:enable maps;
             php /var/www/html/occ app:install previewgenerator && php /var/www/html/occ app:enable previewgenerator;
+            php /var/www/html/occ app:install memories && php /var/www/html/occ app:enable memories;
 
             php /var/www/html/occ app:install facerecognition && php /var/www/html/occ app:enable facerecognition; 
             php /var/www/html/occ config:system:set facerecognition.external_model_url --value facerecognition-external-model:5000;
