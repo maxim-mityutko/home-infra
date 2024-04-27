@@ -75,7 +75,8 @@ helmCharts:
               ),
             );
         extraEnv:
-          NEXTCLOUD_ENABLE_DRI_DEVICE: "true"
+          - name: NEXTCLOUD_ENABLE_DRI_DEVICE 
+            value: "true"
         extraSidecarContainers:
           - name: facerecognition-external-model
             image: matiasdelellis/facerecognition-external-model:v1
