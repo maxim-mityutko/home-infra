@@ -30,7 +30,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: homer
   strategy:
-    type: Recreate
+    type: RollingUpdate
   revisionHistoryLimit: 1
   template:
     metadata:
