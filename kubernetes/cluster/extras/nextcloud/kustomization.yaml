@@ -77,7 +77,7 @@ helmCharts:
         extraEnv:
       resources:
         requests:
-          cpu: 150m
+          cpu: 200m
           memory: 500M
       lifecycle:
         postStartCommand: 
