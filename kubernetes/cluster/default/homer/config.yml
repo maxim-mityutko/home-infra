@@ -123,6 +123,10 @@ services:
   - name: "Security / Privacy / Backups"
     icon: "fas fa-shield"
     items:
+      - name: "Nextcloud"
+        tag: "drive"
+        logo: "https://casa.brhd.io/icons/nextcloud.png"
+        url: "https://nc.brhd.io"
       - name: "Vault Warden"
         tag: "vault"
         logo: "https://casa.brhd.io/icons/vaultwarden.png"
