@@ -75,57 +75,15 @@ helmCharts:
               ),
             );
         extraEnv:
-          - name: NEXTCLOUD_ENABLE_DRI_DEVICE 
-            value: "true"
-        extraSidecarContainers:
-          - name: facerecognition-external-model
-            image: matiasdelellis/facerecognition-external-model:v1
-            env:
-              - name: API_KEY
-                value: facerecognition-api-key
-            ports:
-              - containerPort: 5000
-
       resources:
         requests:
           cpu: 150m
           memory: 500M
       lifecycle:
-        # NOTES:
-        # - Install dependecy: `ffmpeg` to enable preview creation for videos and proper playback
-        # - Install app: `memories`
-        #       Run once: sudo -u www-data php -d memory_limit=512M -f /var/www/html/occ memories:places-setup
-        # - Install app: `previewgenerator`
-        #       Link: https://apps.nextcloud.com/apps/previewgenerator / https://github.com/nextcloud/previewgenerator
-        #       Use: sudo -u www-data php -d memory_limit=512M -f  /var/www/html/occ preview:generate-all -vvv
-        # - Install app: `facerecognition`
-        #       Container with model and dependencies installed in sidecar:
-        #           https://github.com/matiasdelellis/facerecognition-external-model
-        #       Configuration is taken from the AIO community container: 
-        #           https://github.com/nextcloud/all-in-one/blob/main/community-containers/facerecognition/facerecognition.json
-        # TODO: need to change python memory limit
         postStartCommand: 
           - "/bin/bash"
           - "-c"
           - "apt update -y && apt install ffmpeg sudo -y;"
-          # - "sudo -u www-data php -d memory_limit=512M occ app:install previewgenerator;"
-
-          # - "sudo -u www-data php -d memory_limit=512M occ app:install memories;"
-          # - "sudo -u www-data php -d memory_limit=512M occ memories:places-setup;"
-
-          # - sudo -u www-data php -d memory_limit=512M occ app:install recognize;
-
-          # - "sudo -u www-data php -d memory_limit=512M occ app:install facerecognition;"
-          # - "sudo -u www-data php -d memory_limit=512M occ config:system:set facerecognition.external_model_url --value localhost:5000;"
-          # - "sudo -u www-data php -d memory_limit=512M occ config:system:set facerecognition.external_model_api_key --value facerecognition-api-key;"
-          # - "sudo -u www-data php -d memory_limit=512M occ config:system:set enabledFaceRecognitionMimetype 0 --value image/jpeg;"
-          # - "sudo -u www-data php -d memory_limit=512M occ config:system:set enabledFaceRecognitionMimetype 1 --value image/png;"
-          # - "sudo -u www-data php -d memory_limit=512M occ config:system:set enabledFaceRecognitionMimetype 2 --value image/heic;"
-          # - "sudo -u www-data php -d memory_limit=512M occ face:setup --model=5;"         # enabling external model (choice: 5)
-          # - "sudo -u www-data php -d memory_limit=2048M occ face:setup --memory 2048M;"   # might need to increase to 4G
-          # - "sudo -u www-data php -d memory_limit=512M occ config:app:set facerecognition analysis_image_area --value 4320000;"
-
-          # - "sudo -u www-data php -d memory_limit=512M occ face:background_job --defer-clustering;" # ???
       # Services
       nginx:
         enabled: false
