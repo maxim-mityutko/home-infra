@@ -1,0 +1,134 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: extras
+resources:
+  - secret.yaml
+  - pv-pvc-data.yaml
+  - vm-service-scrape.yaml
+helmCharts:
+  - name: nextcloud
+    namespace: extras
+    releaseName: nextcloud
+    version: 4.6.6
+    repo: https://nextcloud.github.io/helm/
+    valuesInline:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+          # Increase to allow upload of bigger files through ingress
+          nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+          nginx.ingress.kubernetes.io/server-snippet: |-
+            server_tokens off;
+            proxy_hide_header X-Powered-By;
+            rewrite ^/.well-known/webfinger /index.php/.well-known/webfinger last;
+            rewrite ^/.well-known/nodeinfo /index.php/.well-known/nodeinfo last;
+            rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+            rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json;
+            location = /.well-known/carddav {
+              return 301 $scheme://$host/remote.php/dav;
+            }
+            location = /.well-known/caldav {
+              return 301 $scheme://$host/remote.php/dav;
+            }
+            location = /robots.txt {
+              allow all;
+              log_not_found off;
+              access_log off;
+            }
+            location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+              deny all;
+            }
+            location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
+              deny all;
+            }
+        hosts:
+          - nc.brhd.io
+      phpClientHttpsFix:
+        enabled: true
+        protocol: https
+      nextcloud:
+        host: nc.brhd.io
+        strategy: 
+          type: RollingUpdate
+        existingSecret:
+          enabled: true
+          secretName: nextcloud
+          usernameKey: NC_USERNAME
+          passwordKey: NC_PASSWORD
+        configs:
+          preview.config.php: |-
+            <?php
+            $CONFIG = array (
+              'enabledPreviewProviders' => array(
+                'OC\Preview\JPEG',
+                'OC\Preview\GIF',
+                'OC\Preview\PNG',
+                'OC\Preview\SVG',
+                'OC\Preview\HEIC',
+                'OC\Preview\BMP',
+                'OC\Preview\MarkDown',
+                'OC\Preview\TXT',
+                'OC\Preview\PDF',
+                'OC\Preview\Movie'
+              ),
+            );
+        extraEnv:
+      resources:
+        requests:
+          cpu: 200m
+          memory: 500M
+      lifecycle:
+        postStartCommand: 
+          - "/bin/bash"
+          - "-c"
+          - "apt update -y && apt install ffmpeg sudo -y;"
+      # Services
+      nginx:
+        enabled: false
+      redis:
+        enabled: false
+      cronjob:
+        enabled: true
+      # Probes
+      # Setting large initial delays to ensure Nextcloud can initialize properly
+      # due to issues described in this thread: https://github.com/nextcloud/helm/issues/10
+      livenessProbe:
+        enabled: true
+        initialDelaySeconds: 600
+        periodSeconds: 120
+      readinessProbe:
+        enabled: true
+        initialDelaySeconds: 600
+        periodSeconds: 120
+      startupProbe:
+        enabled: false
+      # Metrics
+      metrics:
+        enabled: true
+      # Database
+      internalDatabase:
+        enabled: false
+      externalDatabase:
+        enabled: true
+        type: postgresql
+        existingSecret:
+          enabled: true
+          secretName: nextcloud
+          usernameKey: DB_USERNAME
+          passwordKey: DB_PASSWORD
+          hostKey: DB_HOST
+          databaseKey: DB_DATABASE
+      # Peristence
+      persistence:
+        enabled: true
+        storageClass: nfs-subdir
+        size: 10G
+        nextcloudData:
+          enabled: true
+          existingClaim: nextcloud-data
+          size: 1000G
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        nvidia.com/gpu.present: "true"
