@@ -103,8 +103,9 @@ helmCharts:
         postStartCommand: 
           - "/bin/bash"
           - "-c"
-          - "apt update -y && apt install ffmpeg -y;"
-            # php /var/www/html/occ app:install previewgenerator && php /var/www/html/occ app:enable previewgenerator;
+          - >
+            "apt update -y && apt install ffmpeg sudo -y;"
+            "sudo -u www-data php -d memory_limit=50M php occ app:install previewgenerator && sudo -u www-data php -d memory_limit=50M app:enable previewgenerator;
             # php /var/www/html/occ app:install memories && php /var/www/html/occ app:enable memories;
 
             # php /var/www/html/occ app:install facerecognition && php /var/www/html/occ app:enable facerecognition; 
