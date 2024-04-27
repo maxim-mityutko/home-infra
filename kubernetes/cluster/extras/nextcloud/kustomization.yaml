@@ -51,7 +51,7 @@ helmCharts:
       nextcloud:
         host: nc.brhd.io
         strategy: 
-          type: Recreate
+          type: RollingUpdate
         existingSecret:
           enabled: true
           secretName: nextcloud
