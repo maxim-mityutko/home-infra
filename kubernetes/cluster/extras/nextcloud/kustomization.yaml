@@ -9,7 +9,7 @@ helmCharts:
   - name: nextcloud
     namespace: extras
     releaseName: nextcloud
-    version: 4.6.6
+    version: 4.6.7
     repo: https://nextcloud.github.io/helm/
     valuesInline:
       ingress:
