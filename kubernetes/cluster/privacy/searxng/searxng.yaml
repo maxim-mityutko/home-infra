@@ -56,6 +56,16 @@ spec:
           ports:
             - containerPort: 8080
               name: http
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 60
           volumeMounts:
             - name: searxng-config
               mountPath: /etc/searxng
@@ -72,4 +82,4 @@ metadata:
   labels:
     app.kubernetes.io/name: searxng
 data:
-  SEARXNG_URL: "https://search.brhd.io"
+  BASE_URL: "https://search.brhd.io"
