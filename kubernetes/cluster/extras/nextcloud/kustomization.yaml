@@ -74,6 +74,14 @@ helmCharts:
                 'OC\Preview\Movie'
               ),
             );
+          # Set below to 'false' to solve the 'code: 499' exception while syncing data via the NextCloud app
+          # Reference: https://help.nextcloud.com/t/how-to-fix-file-is-locked-error/180356
+          sync.config.php: |-
+            <?php
+            $CONFIG = array (
+              'filelocking.enabled' => true,
+              'bulkupload.enabled' => true,
+            );
         extraEnv:
       resources:
         requests:
