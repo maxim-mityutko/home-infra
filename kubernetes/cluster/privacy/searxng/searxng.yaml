@@ -1,0 +1,63 @@
+# Service: searxng
+# Ingress: search.brhd.io
+# Label: app.kubernetes.io/name: searxng
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: searxng
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: searxng
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      name: http
+  selector:
+    app.kubernetes.io/name: searxng
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: searxng
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: searxng
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: searxng
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: privacy
+      labels:
+        app.kubernetes.io/name: searxng
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: searxng
+          image: searxng/searxng:2024.4.29-e45a7cc06
+          resources:
+            requests:
+              memory: 100M
+              cpu: 50m
+            limits:
+              memory: 150M
+              cpu: 150m
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: searxng-config
+              mountPath: /etc/searxng
+      volumes:
+        - name: searxng-config
+          persistentVolumeClaim:
+            claimName: searxng-config
