@@ -1,0 +1,17 @@
+# Code Server Data
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: searxng-config
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: searxng
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadOnlyMany
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 100M

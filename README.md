@@ -72,6 +72,12 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **NanoMQ**         | An Ultra-lightweight and Blazing-fast MQTT Broker for IoT Edge                  |      [docs](https://nanomq.io/docs/en/latest/)<br/>[repo](https://github.com/emqx/nanomq)      |                 [docker](https://hub.docker.com/r/emqx/nanomq)                  |
 | **Shinobi**        | Open source network video recorder (NVR)                                        |   [docs](https://docs.shinobi.video/)<br/>[repo](https://gitlab.com/Shinobi-Systems/Shinobi)   | [docker](https://gitlab.com/Shinobi-Systems/Shinobi/container_registry/2430788) |
 
+
+### Privacy
+| Project   | Description                                    | Docs / Repo                                | Docker / Helm                                      |
+|-----------|------------------------------------------------|--------------------------------------------|----------------------------------------------------|
+| **SearXNG | Privacy-respecting, hackable metasearch engine | [repo](https://github.com/searxng/searxng) | [docker](https://hub.docker.com/r/searxng/searxng) |
+
 ### Media
 A lot of general information on the topic: [TRaSH Guides](https://trash-guides.info/)
 
