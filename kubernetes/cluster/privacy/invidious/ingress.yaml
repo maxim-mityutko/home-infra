@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: invidious
-  namespace: media
+  namespace: privacy
   labels:
     app.kubernetes.io/name: invidious
   annotations:
