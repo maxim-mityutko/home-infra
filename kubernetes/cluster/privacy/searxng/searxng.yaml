@@ -59,12 +59,12 @@ spec:
           readinessProbe:
             tcpSocket:
               port: 8080
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
             tcpSocket:
               port: 8080
-            initialDelaySeconds: 15
+            initialDelaySeconds: 10
             periodSeconds: 60
           volumeMounts:
             - name: searxng-config
