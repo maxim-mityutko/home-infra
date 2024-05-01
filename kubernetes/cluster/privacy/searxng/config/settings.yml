@@ -1,3 +1,4 @@
+# Default settings file is available here: https://github.com/searxng/searxng/blob/master/searx/settings.yml
 general:
   debug: false
   instance_name: "searxng"

@@ -76,7 +76,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 ### Privacy
 | Project   | Description                                    | Docs / Repo                                | Docker / Helm                                      |
 |-----------|------------------------------------------------|--------------------------------------------|----------------------------------------------------|
-| **SearXNG** | Privacy-respecting, hackable metasearch engine | [repo](https://github.com/searxng/searxng) | [docker](https://hub.docker.com/r/searxng/searxng) |
+| **SearXNG** | Privacy-respecting, hackable metasearch engine | [repo](https://github.com/searxng/searxng)<br>[docs](https://docs.searxng.org/index.html) | [docker](https://hub.docker.com/r/searxng/searxng) |
 | **Invidious**         | Invidious is an open source alternative front-end to YouTube                            |                        [repo](https://github.com/iv-org/invidious)<br>[docs](https://docs.invidious.io/)                        |     [docker](https://quay.io/repository/invidious/invidious?tab=info)     |
 
 ### Media
