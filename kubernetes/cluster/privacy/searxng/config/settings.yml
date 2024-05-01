@@ -47,10 +47,10 @@ search:
 server:
   port: 8080                        # Env: SEARXNG_PORT
   bind_address: "127.0.0.1"         # Env: SEARXNG_BIND_ADDRESS
-  base_url:                         # Env: SEARXNG_URL
+  base_url: false                   # Env: SEARXNG_URL
   limiter: false
   public_instance: false
-  secret_key:                       # Env: SEARXNG_SECRET
+  secret_key: false                 # Env: SEARXNG_SECRET
   image_proxy: false
   http_protocol_version: "1.0"
   method: "POST"
