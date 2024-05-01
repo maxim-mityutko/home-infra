@@ -5,3 +5,10 @@ resources:
   - searxng.yaml
   - ingress.yaml
   - volumes.yaml
+  - secret.yaml
+configMapGenerator:
+  - name: searxng-config-settings
+    files:
+    - settings.yml
+    options:
+      disableNameSuffixHash: true
