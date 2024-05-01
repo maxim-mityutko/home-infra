@@ -53,6 +53,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: searxng
+            - secretRef:
+                name: searxng
           ports:
             - containerPort: 8080
               name: http
@@ -69,10 +71,17 @@ spec:
           volumeMounts:
             - name: searxng-config
               mountPath: /etc/searxng
+            - name: searxng-config-settings
+              mountPath: /etc/searxng/settings.yml
+              subPath: settings.yml
+              readOnly: true
       volumes:
         - name: searxng-config
           persistentVolumeClaim:
             claimName: searxng-config
+        - name: searxng-config-settings
+          configMap:
+            name: searxng-config-settings
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -82,4 +91,8 @@ metadata:
   labels:
     app.kubernetes.io/name: searxng
 data:
-  BASE_URL: "https://search.brhd.io"
+  # This is redundant for now, however keeping it here in
+  # case 
+  SEARXNG_DEBUG: "false"
+  SEARXNG_URL: "https://search.brhd.io"
+  SEARXNG_PORT: "8080"
