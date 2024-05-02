@@ -11,10 +11,12 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - protocol: TCP
+    - name: vnc-web
+      protocol: TCP
       port: 5800
       targetPort: 5800
-    - protocol: TCP
+    - name: vnc
+      protocol: TCP
       port: 5900
       targetPort: 5900
   selector:
@@ -59,7 +61,9 @@ spec:
                 name: backblaze
           ports:
             - containerPort: 5800
+              name: vnc-web
             - containerPort: 5900
+              name: vnc
           readinessProbe:
             httpGet:
               path: /

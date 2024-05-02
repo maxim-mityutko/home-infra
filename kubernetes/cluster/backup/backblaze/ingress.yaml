@@ -20,7 +20,7 @@ spec:
               service:
                 name: backblaze
                 port:
-                  number: 5800
+                  name: vnc-web
   tls:
     - hosts:
         - bb.brhd.io
