@@ -50,6 +50,8 @@ spec:
               memory: 1Gi
               cpu: 1000m
           envFrom:
+            - secretRef:
+                name: backblaze
             - configMapRef:
                 name: backblaze
           ports:
