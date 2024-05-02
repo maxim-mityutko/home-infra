@@ -13,7 +13,8 @@
     "kubernetes/cluster/media/**",
     "kubernetes/cluster/monitoring/**",
     "kubernetes/cluster/smart-home/**",
-    "kubernetes/cluster/backup/**"
+    "kubernetes/cluster/backup/**",
+    "kubernetes/cluster/privacy/**"
   ],
   "packageRules": [
     {

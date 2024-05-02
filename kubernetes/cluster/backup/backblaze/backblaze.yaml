@@ -1,0 +1,99 @@
+# Service: Backblaze
+# Label: app.kubernetes.io/name: backblaze
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backblaze
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: backblaze
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 5800
+      targetPort: 5800
+  selector:
+    app.kubernetes.io/name: backblaze
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backblaze
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: backblaze
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backblaze
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: backup
+      labels:
+        app.kubernetes.io/name: backblaze
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: backblaze
+          image: tessypowder/backblaze-personal-wine:latest
+          resources:
+            requests:
+              memory: 250Mi
+              cpu: 250m
+            limits:
+              memory: 1Gi
+              cpu: 1000m
+          envFrom:
+            - configMapRef:
+                name: backblaze
+          ports:
+            - containerPort: 5800
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 3000
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 60
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 3000
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 120
+          volumeMounts:
+            - name: backblaze-config
+              mountPath: /config
+            # PV created by the `x-backup-shared`
+            # - name: borg-repo
+            #   mountPath: /mnt/borg-repository
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+      volumes:
+        - name: backblaze-config
+          persistentVolumeClaim:
+            claimName: backblaze-config
+        # PV created by the `x-backup-shared`
+        # - name: borg-repo
+        #   persistentVolumeClaim:
+        #     claimName: borg-repo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backblaze
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: backblaze
+data:
+  DISABLE_VIRTUAL_DESKTOP: "false"
+  DISABLE_AUTOUPDATE: "true"
+  FORCE_LATEST_UPDATE: "false"
+  TZ: "Europe/Amsterdam"
+  DISPLAY_WIDTH: "900"
+  DISPLAY_HEIGHT: "700"
