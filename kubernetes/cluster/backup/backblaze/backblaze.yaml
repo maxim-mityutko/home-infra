@@ -11,14 +11,14 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - name: vnc-web
-      protocol: TCP
+    - protocol: TCP
       port: 5800
       targetPort: 5800
-    - name: vnc
-      protocol: TCP
+      name: vnc-web
+    - protocol: TCP
       port: 5900
       targetPort: 5900
+      name: vnc
   selector:
     app.kubernetes.io/name: backblaze
 ---
