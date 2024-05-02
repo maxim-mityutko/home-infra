@@ -14,6 +14,9 @@ spec:
     - protocol: TCP
       port: 5800
       targetPort: 5800
+    - protocol: TCP
+      port: 5900
+      targetPort: 5900
   selector:
     app.kubernetes.io/name: backblaze
 ---
@@ -56,6 +59,7 @@ spec:
                 name: backblaze
           ports:
             - containerPort: 5800
+            - containerPort: 5900
           readinessProbe:
             httpGet:
               path: /
