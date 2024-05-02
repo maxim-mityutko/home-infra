@@ -36,6 +36,8 @@ exclude_patterns:
   - '*/stash-cache'
   # Stash: Generated assets that can be rebuilt
   - '*/stash-generated'
+  # Backblaze: Will be backed up by the app itself as drive 'C:'
+  - '*/backblaze-config'
   - '*.log'
   - '*.log.*'
   - '*/log'
