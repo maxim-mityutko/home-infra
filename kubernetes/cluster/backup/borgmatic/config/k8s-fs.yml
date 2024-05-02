@@ -36,7 +36,7 @@ exclude_patterns:
   - '*/stash-cache'
   # Stash: Generated assets that can be rebuilt
   - '*/stash-generated'
-  # Backblaze: Will be backed up by the app itself as drive 'C:'
+  # Backblaze: Backing up the whole Wine setup is an overkill
   - '*/backblaze-config'
   - '*.log'
   - '*.log.*'

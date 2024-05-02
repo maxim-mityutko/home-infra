@@ -4,3 +4,4 @@ resources:
   - _namespace.yaml
   - pv-pvc-borg.yaml
   - pv-pvc-pods.yaml
+  - pv-pvc-spin-service.yaml

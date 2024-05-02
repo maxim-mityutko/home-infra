@@ -1,0 +1,40 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: spin-service
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: x-backup-shared
+spec:
+  accessModes:
+  - ReadOnlyMany
+  storageClassName: nfs
+  resources:
+    requests:
+      storage: 20T
+  selector:
+    matchLabels:
+      storage.target: spin-service
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: spin-service
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: x-backup-shared
+    storage.target: spin-service
+spec:
+  accessModes:
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  capacity:
+    storage: 20T
+  nfs:
+    server: nas.brhd.io
+    path: /mnt/spin/service
+  mountOptions:
+    - mountvers=4
+    - ro

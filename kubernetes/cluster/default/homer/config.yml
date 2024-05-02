@@ -238,6 +238,10 @@ services:
         logo: "https://casa.brhd.io/icons/borgbase.png"
         tag: "backup"
         url: "https://borgbase.com/repositories"
+      - name: "Backblaze"
+        logo: "https://casa.brhd.io/icons/backblaze.png"
+        tag: "backup"
+        url: "https://secure.backblaze.com/user_overview.htm"
   - name: "Development"
     icon: "fas fa-archive"
     items:

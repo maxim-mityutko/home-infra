@@ -12,10 +12,6 @@ spec:
   type: ClusterIP
   ports:
     - protocol: TCP
-      port: 5800
-      targetPort: 5800
-      name: vnc-web
-    - protocol: TCP
       port: 5900
       targetPort: 5900
       name: vnc
@@ -60,28 +56,14 @@ spec:
             - configMapRef:
                 name: backblaze
           ports:
-            - containerPort: 5800
-              name: vnc-web
             - containerPort: 5900
               name: vnc
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 5800
-            initialDelaySeconds: 30
-            periodSeconds: 30
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 5800
-            initialDelaySeconds: 30
-            periodSeconds: 120
           volumeMounts:
             - name: backblaze-config
               mountPath: /config
             # PV created by the `x-backup-shared`
-            # - name: borg-repo
-            #   mountPath: /mnt/borg-repository
+            - name: spin-service
+              mountPath: /drive_d
       nodeSelector:
         beta.kubernetes.io/arch: amd64
       volumes:
@@ -89,9 +71,9 @@ spec:
           persistentVolumeClaim:
             claimName: backblaze-config
         # PV created by the `x-backup-shared`
-        # - name: borg-repo
-        #   persistentVolumeClaim:
-        #     claimName: borg-repo
+        - name: spin-service
+          persistentVolumeClaim:
+            claimName: spin-service
 ---
 apiVersion: v1
 kind: ConfigMap
