@@ -11,4 +11,4 @@ spec:
   storageClassName: nfs-subdir
   resources:
     requests:
-      storage: 100M
+      storage: 10G

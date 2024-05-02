@@ -41,7 +41,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: backblaze
-          image: tessypowder/backblaze-personal-wine:latest
+          image: tessypowder/backblaze-personal-wine:v1.9
           resources:
             requests:
               memory: 250Mi
@@ -54,18 +54,18 @@ spec:
                 name: backblaze
           ports:
             - containerPort: 5800
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: 3000
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 60
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: 3000
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 120
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5800
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5800
+            initialDelaySeconds: 30
+            periodSeconds: 120
           volumeMounts:
             - name: backblaze-config
               mountPath: /config

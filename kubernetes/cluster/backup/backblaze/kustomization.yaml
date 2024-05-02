@@ -5,3 +5,4 @@ resources:
   - ingress.yaml
   - volumes.yaml
   - backblaze.yaml
+  - secret.yaml
