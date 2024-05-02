@@ -37,4 +37,3 @@ spec:
     path: /mnt/spin/service
   mountOptions:
     - mountvers=4
-    - ro
