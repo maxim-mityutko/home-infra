@@ -31,9 +31,10 @@ helmCharts:
               paths:
                 - path: "/"
                   pathType: Prefix
-        envFrom:
-          - secretRef:
-              name: authentik
+        global:
+          envFrom:
+            - secretRef:
+                name: authentik
         prometheus:
           rules:
             enabled: false
