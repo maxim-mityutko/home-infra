@@ -20,6 +20,8 @@ helmCharts:
           configMaps: []
         redis: 
           enabled: true
+          global:
+            storageClass: nfs-subdir
         global:
           envFrom:
             - secretRef:
