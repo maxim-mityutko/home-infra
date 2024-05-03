@@ -29,7 +29,7 @@ helmCharts:
             annotations:
               kubernetes.io/ingress.class: public
               cert-manager.io/cluster-issuer: lets-encrypt
-            ingressClassName: nginx
+            ingressClassName: public
             hosts:
               - host: auth.brhd.io
                 paths:
