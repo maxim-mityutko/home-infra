@@ -23,6 +23,7 @@ helmCharts:
           global:
             storageClass: nfs-subdir
         global:
+          deploymentStrategy: Recreate
           envFrom:
             - secretRef:
                 name: authentik-postgres
@@ -35,6 +36,8 @@ helmCharts:
               cert-manager.io/cluster-issuer: lets-encrypt
             hosts:
               - auth.brhd.io
+        worker:
+          replicas: 1
         prometheus:
           rules:
             enabled: false
