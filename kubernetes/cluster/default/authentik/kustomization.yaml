@@ -19,7 +19,7 @@ helmCharts:
         blueprints:
           configMaps: []
         redis: 
-          enabled: false
+          enabled: true
         global:
           envFrom:
             - secretRef:
