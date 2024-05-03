@@ -7,7 +7,7 @@ helmCharts:
     - name: authentik
       namespace: default
       releaseName: authentik
-      version: 2023.8.0
+      version: 2024.4.1
       repo: https://charts.goauthentik.io
       valuesInline:
         authentik:
@@ -27,6 +27,7 @@ helmCharts:
             - secretRef:
                 name: authentik-postgres
         server:
+          replicas: 1
           ingress:
             enabled: true
             annotations:
