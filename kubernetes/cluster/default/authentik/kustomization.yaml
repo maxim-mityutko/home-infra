@@ -22,11 +22,14 @@ helmCharts:
           enabled: true
           global:
             storageClass: nfs-subdir
-        global:
+        worker:
           envFrom:
             - secretRef:
                 name: authentik-postgres
         server:
+          envFrom:
+            - secretRef:
+                name: authentik-postgres
           ingress:
             enabled: true
             annotations:
