@@ -7,7 +7,7 @@ helmCharts:
     - name: authentik
       namespace: default
       releaseName: authentik
-      version: 2024.4.1
+      version: 2023.8.0
       repo: https://charts.goauthentik.io
       valuesInline:
         authentik:
@@ -22,14 +22,11 @@ helmCharts:
           enabled: true
           global:
             storageClass: nfs-subdir
-        worker:
+        global:
           envFrom:
             - secretRef:
                 name: authentik-postgres
         server:
-          envFrom:
-            - secretRef:
-                name: authentik-postgres
           ingress:
             enabled: true
             annotations:
