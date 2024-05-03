@@ -20,10 +20,11 @@ helmCharts:
           configMaps: []
         redis: 
           enabled: false
-        server:
+        global:
           envFrom:
             - secretRef:
                 name: authentik
+        server:
           ingress:
             enabled: true
             annotations:
