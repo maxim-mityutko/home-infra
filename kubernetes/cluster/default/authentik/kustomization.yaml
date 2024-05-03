@@ -1,0 +1,41 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - secret.yaml
+helmCharts:
+    - name: authentik
+      namespace: default
+      releaseName: authentik
+      version: 2024.4.1
+      repo: https://charts.goauthentik.io
+      valuesInline:
+        authentik:
+          error_reporting:
+            enabled: false
+          log_level: info
+          postgresql:
+            host: postgres.default.svc.cluster.local
+        blueprints:
+          configMaps: []
+        redis: 
+          enabled: false
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: public
+            cert-manager.io/cluster-issuer: lets-encrypt
+          ingressClassName: nginx
+          hosts:
+            - host: auth.brhd.io
+              paths:
+                - path: "/"
+                  pathType: Prefix
+        envFrom:
+          - secretRef:
+              name: authentik
+        prometheus:
+          rules:
+            enabled: false
+            labels: {}
+            annotations: {}
