@@ -20,21 +20,21 @@ helmCharts:
           configMaps: []
         redis: 
           enabled: false
-        ingress:
-          enabled: true
-          annotations:
-            kubernetes.io/ingress.class: public
-            cert-manager.io/cluster-issuer: lets-encrypt
-          ingressClassName: nginx
-          hosts:
-            - host: auth.brhd.io
-              paths:
-                - path: "/"
-                  pathType: Prefix
-        global:
+        server:
           envFrom:
             - secretRef:
                 name: authentik
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public
+              cert-manager.io/cluster-issuer: lets-encrypt
+            ingressClassName: nginx
+            hosts:
+              - host: auth.brhd.io
+                paths:
+                  - path: "/"
+                    pathType: Prefix
         prometheus:
           rules:
             enabled: false
