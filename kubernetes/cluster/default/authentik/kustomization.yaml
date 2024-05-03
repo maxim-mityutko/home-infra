@@ -33,7 +33,7 @@ helmCharts:
             hosts:
               - host: auth.brhd.io
                 paths:
-                  - path: "/"
+                  - path: /
                     pathType: Prefix
         prometheus:
           rules:
