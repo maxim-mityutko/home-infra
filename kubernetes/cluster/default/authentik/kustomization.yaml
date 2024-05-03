@@ -23,7 +23,7 @@ helmCharts:
         global:
           envFrom:
             - secretRef:
-                name: authentik
+                name: authentik-postgres
         server:
           ingress:
             enabled: true
