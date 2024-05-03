@@ -13,7 +13,7 @@ helmCharts:
         authentik:
           error_reporting:
             enabled: false
-          log_level: info
+          log_level: warning
           postgresql:
             host: postgres.default.svc.cluster.local
         blueprints:
