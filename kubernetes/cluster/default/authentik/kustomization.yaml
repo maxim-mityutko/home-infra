@@ -23,7 +23,8 @@ helmCharts:
           global:
             storageClass: nfs-subdir
         global:
-          deploymentStrategy: Recreate
+          deploymentStrategy: 
+            type: Recreate
           envFrom:
             - secretRef:
                 name: authentik-postgres
