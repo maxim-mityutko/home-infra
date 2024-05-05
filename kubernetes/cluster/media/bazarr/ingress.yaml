@@ -15,8 +15,6 @@ metadata:
       https://bazarr.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
     nginx.ingress.kubernetes.io/auth-snippet: |
       proxy_set_header X-Forwarded-Host $http_host;
-      proxy_set_header Authorization $authentik_authorization;
-      auth_request_set $authentik_auth $upstream_http_authorization;
     nginx.ingress.kubernetes.io/auth-url: >-
       http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
 spec:
