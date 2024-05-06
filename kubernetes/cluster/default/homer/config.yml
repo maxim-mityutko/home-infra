@@ -123,6 +123,11 @@ services:
   - name: "Security / Privacy / Backups"
     icon: "fas fa-shield"
     items:
+      - name: "Authentik"
+        tag: "iam"
+        logo: "https://casa.brhd.io/icons/authentik.png"
+        url: "https://auth.brhd.io"
+        target: "_blank"
       - name: "Nextcloud"
         tag: "drive"
         logo: "https://casa.brhd.io/icons/nextcloud.png"
@@ -238,9 +243,6 @@ services:
         logo: "https://casa.brhd.io/icons/borgbase.png"
         tag: "backup"
         url: "https://borgbase.com/repositories"
-  - name: "Development"
-    icon: "fas fa-archive"
-    items:
       - name: "GitHub"
         logo: "https://casa.brhd.io/icons/github.svg"
         tag: "development"
@@ -248,7 +250,10 @@ services:
       - name: "DockerHub"
         logo: "https://casa.brhd.io/icons/docker.svg"
         tag: "development"
-        url: "https://github.com/maxim-mityutko"
+        url: "https://hub.docker.com/repositories/beerhead"
+  - name: "Development"
+    icon: "fas fa-archive"
+    items:
       - name: "Code Server"
         logo: "https://casa.brhd.io/icons/vs.png"
         tag: "development"
