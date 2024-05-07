@@ -23,7 +23,7 @@ spec:
       http:
         paths:
           - pathType: Prefix
-            path: /admin  # how to protect only Admin endpoint
+            path: /
             backend:
               service:
                 name: pihole-ui
