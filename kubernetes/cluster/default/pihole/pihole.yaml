@@ -78,8 +78,9 @@ spec:
         env:
         - name: TZ
           value: Europe/Amsterdam
+          # Removing the password, security is forced through Authentik
         - name: WEBPASSWORD
-          value: QB3K2UPt3edZRe3G
+          value: "" 
         - name: WEBTHEME
           value: default-darker
         - name: DHCP_ACTIVE
