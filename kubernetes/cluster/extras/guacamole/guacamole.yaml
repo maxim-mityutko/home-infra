@@ -53,6 +53,8 @@ spec:
           envFrom:
             - secretRef:
                 name: guacamole
+            - secretRef:
+                name: guacamole-authentik
             - configMapRef:
                 name: guacamole
           ports:
