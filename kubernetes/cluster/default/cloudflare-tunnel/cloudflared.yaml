@@ -38,14 +38,14 @@ spec:
               mountPath: /etc/cloudflared/config/tunnel.yaml
               subPath: tunnel.yaml
               readOnly: true
-            # - name: cloudflared-credentials
-            #   mountPath: /etc/cloudflared/config/credentials.json
-            #   subPath: credentials.json
-            #   readOnly: true
+            - name: cloudflared-credentials
+              mountPath: /etc/cloudflared/config/credentials.json
+              subPath: credentials.json
+              readOnly: true
       volumes:
         - name: cloudflared-tunnel
           configMap:
             name: cloudflared
-        # - name: cloudflared-credentials
-        #   secret:
-        #     secretName: cloudflared
+        - name: cloudflared-credentials
+          secret:
+            secretName: cloudflared
