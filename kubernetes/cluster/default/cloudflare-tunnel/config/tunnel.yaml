@@ -10,5 +10,5 @@ ingress:
   - hostname: hello.brhd.io
     service: hello_world
   - hostname: nc.brhd.io
-    service: http://nc.brhd.io
+    service: http://nextcloud.extras.svc.cluster.local:8080
   - service: http_status:404
