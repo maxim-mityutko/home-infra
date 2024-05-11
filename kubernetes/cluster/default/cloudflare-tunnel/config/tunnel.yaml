@@ -14,4 +14,6 @@ ingress:
     service: https://nc.brhd.io
     originRequest:
       originServerName: nc.brhd.io
+  - hostname: home.brhd.io
+    service: https://home.brhd.io
   - service: http_status:404
