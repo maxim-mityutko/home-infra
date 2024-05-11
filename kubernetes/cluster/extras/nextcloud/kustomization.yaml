@@ -82,6 +82,17 @@ helmCharts:
               'filelocking.enabled' => true,
               'bulkupload.enabled' => true,
             );
+          # Extra configurations for OpenID backend extension
+          auth.config.php: |-
+            <?php
+            $CONFIG = array (
+              'allow_local_remote_servers' => true,
+              'user_oidc' => [
+                'single_logout' => false,
+                'auto_provision' => true, // default: true
+                'soft_auto_provision' => true, // default: true
+              ],
+            );
         extraEnv:
       resources:
         requests:
