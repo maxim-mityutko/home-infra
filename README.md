@@ -72,6 +72,13 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **NanoMQ**         | An Ultra-lightweight and Blazing-fast MQTT Broker for IoT Edge                  |      [docs](https://nanomq.io/docs/en/latest/)<br/>[repo](https://github.com/emqx/nanomq)      |                 [docker](https://hub.docker.com/r/emqx/nanomq)                  |
 | **Shinobi**        | Open source network video recorder (NVR)                                        |   [docs](https://docs.shinobi.video/)<br/>[repo](https://gitlab.com/Shinobi-Systems/Shinobi)   | [docker](https://gitlab.com/Shinobi-Systems/Shinobi/container_registry/2430788) |
 
+
+### Privacy
+| Project   | Description                                    | Docs / Repo                                | Docker / Helm                                      |
+|-----------|------------------------------------------------|--------------------------------------------|----------------------------------------------------|
+| **SearXNG** | Privacy-respecting, hackable metasearch engine | [repo](https://github.com/searxng/searxng)<br>[docs](https://docs.searxng.org/index.html) | [docker](https://hub.docker.com/r/searxng/searxng) |
+| **Invidious**         | Invidious is an open source alternative front-end to YouTube                            |                        [repo](https://github.com/iv-org/invidious)<br>[docs](https://docs.invidious.io/)                        |     [docker](https://quay.io/repository/invidious/invidious?tab=info)     |
+
 ### Media
 A lot of general information on the topic: [TRaSH Guides](https://trash-guides.info/)
 
@@ -89,7 +96,6 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | **qBit Manage**       | Manage qBittorrent instances with ease                                                  |                                      [repo](https://github.com/StuffAnThings/qbit_manage)                                       |            [docker](https://hotio.dev/containers/qbitmanage/)             |
 | **Unpackerr**         |                                                                                         |                                         [repo](https://github.com/Unpackerr/unpackerr)                                          |            [docker](https://hotio.dev/containers/qbittorrent/)            |
 | **Stash**             |                                                                                         | [repo](https://github.com/stashapp/stash)<br>[docs](https://github.com/stashapp/stash/blob/develop/docker/production/README.md) |             [docker](https://hub.docker.com/r/stashapp/stash)             |
-| **Invidious**         | Invidious is an open source alternative front-end to YouTube                            |                        [repo](https://github.com/iv-org/invidious)<br>[docs](https://docs.invidious.io/)                        |     [docker](https://quay.io/repository/invidious/invidious?tab=info)     |
 
 #### Plugins and Extras
 | Project            | Description                                                                | Link                                                                                                                                     |

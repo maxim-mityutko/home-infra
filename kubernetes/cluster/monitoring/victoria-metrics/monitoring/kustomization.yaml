@@ -11,7 +11,7 @@ helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring
       releaseName: victoria-metrics
-      version: 0.21.3
+      version: 0.22.0
       repo: https://victoriametrics.github.io/helm-charts/
       valuesInline:
         defaultDashboardEnabled: true
@@ -108,6 +108,14 @@ helmCharts:
             annotations:
               kubernetes.io/ingress.class: public
               cert-manager.io/cluster-issuer: lets-encrypt
+              nginx.ingress.kubernetes.io/auth-response-headers: >-
+                Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+              nginx.ingress.kubernetes.io/auth-signin: >-
+                https://alert-manager.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+              nginx.ingress.kubernetes.io/auth-snippet: |
+                proxy_set_header X-Forwarded-Host $http_host;
+              nginx.ingress.kubernetes.io/auth-url: >-
+                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - alert-manager.brhd.io
           spec:
@@ -129,6 +137,14 @@ helmCharts:
             annotations:
               kubernetes.io/ingress.class: public
               cert-manager.io/cluster-issuer: lets-encrypt
+              nginx.ingress.kubernetes.io/auth-response-headers: >-
+                Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+              nginx.ingress.kubernetes.io/auth-signin: >-
+                https://vmsingle.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+              nginx.ingress.kubernetes.io/auth-snippet: |
+                proxy_set_header X-Forwarded-Host $http_host;
+              nginx.ingress.kubernetes.io/auth-url: >-
+                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - vmsingle.brhd.io
         vmalert:
@@ -146,6 +162,14 @@ helmCharts:
             annotations:
               kubernetes.io/ingress.class: public
               cert-manager.io/cluster-issuer: lets-encrypt
+              nginx.ingress.kubernetes.io/auth-response-headers: >-
+                Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+              nginx.ingress.kubernetes.io/auth-signin: >-
+                https://vmalert.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+              nginx.ingress.kubernetes.io/auth-snippet: |
+                proxy_set_header X-Forwarded-Host $http_host;
+              nginx.ingress.kubernetes.io/auth-url: >-
+                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - vmalert.brhd.io
         vmagent:
@@ -164,6 +188,14 @@ helmCharts:
             annotations:
               kubernetes.io/ingress.class: public
               cert-manager.io/cluster-issuer: lets-encrypt
+              nginx.ingress.kubernetes.io/auth-response-headers: >-
+                Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+              nginx.ingress.kubernetes.io/auth-signin: >-
+                https://vmagent.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+              nginx.ingress.kubernetes.io/auth-snippet: |
+                proxy_set_header X-Forwarded-Host $http_host;
+              nginx.ingress.kubernetes.io/auth-url: >-
+                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - vmagent.brhd.io
 

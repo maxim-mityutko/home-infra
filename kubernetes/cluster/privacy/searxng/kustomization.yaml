@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: privacy
+resources:
+  - searxng.yaml
+  - ingress.yaml
+  - volumes.yaml
+  - secret.yaml
+configMapGenerator:
+  - name: searxng-config-settings
+    files:
+    - config/settings.yml
+    options:
+      disableNameSuffixHash: true

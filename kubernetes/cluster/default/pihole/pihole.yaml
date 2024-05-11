@@ -67,7 +67,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: pihole
-        image: pihole/pihole:2024.03.2
+        image: pihole/pihole:2024.05.0
         resources:
           requests:
             cpu: 50m
@@ -78,8 +78,9 @@ spec:
         env:
         - name: TZ
           value: Europe/Amsterdam
+          # Removing the password, security is forced through Authentik
         - name: WEBPASSWORD
-          value: QB3K2UPt3edZRe3G
+          value: "" 
         - name: WEBTHEME
           value: default-darker
         - name: DHCP_ACTIVE

@@ -6,7 +6,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: invidious
-  namespace: media
+  namespace: privacy
   labels:
     app.kubernetes.io/name: invidious
 spec:
@@ -22,7 +22,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: invidious
-  namespace: media
+  namespace: privacy
   labels:
     app.kubernetes.io/name: invidious
 spec:
@@ -35,14 +35,14 @@ spec:
   revisionHistoryLimit: 1
   template:
     metadata:
-      namespace: media
+      namespace: privacy
       labels:
         app.kubernetes.io/name: invidious
     spec:
       restartPolicy: Always
       containers:
         - name: invidious
-          image: quay.io/invidious/invidious:2023.12.18-97c4165
+          image: quay.io/invidious/invidious:2024.04.26-eda7444
           resources:
             requests:
               memory: 100Mi
@@ -75,7 +75,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: invidious
-  namespace: media
+  namespace: privacy
   labels:
     app.kubernetes.io/name: invidious
 data:
