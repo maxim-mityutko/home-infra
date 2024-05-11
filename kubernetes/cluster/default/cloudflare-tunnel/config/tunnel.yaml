@@ -15,5 +15,5 @@ ingress:
     originRequest:
       originServerName: nc.brhd.io
   - hostname: home.brhd.io
-    service: https://home.brhd.io
+    service: http://homer.default.svc.cluster.local:8080
   - service: http_status:404
