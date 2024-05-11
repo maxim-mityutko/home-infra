@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: cloudflared
+      app.kubernetes.io/name: cloudflared
   template:
     metadata:
       labels:
