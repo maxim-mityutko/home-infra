@@ -90,13 +90,12 @@ helmCharts:
             dashboards:
               enabled: true
               label: grafana-dashboard
-          persistence:
-            extraSecretMounts:
-              - name: auth-generic-oauth-secret-mount
-                secretName: grafana
-                defaultMode: 0440
-                mountPath: /etc/secrets/auth_generic_oauth
-                readOnly: true
+          extraSecretMounts:
+            - name: auth-generic-oauth-secret-mount
+              secretName: grafana
+              defaultMode: 0440
+              mountPath: /etc/secrets/auth_generic_oauth
+              readOnly: true
           grafana.ini:
             auth:
                 signout_redirect_url: "https://auth.brhd.io/application/o/grafana/end-session/"
