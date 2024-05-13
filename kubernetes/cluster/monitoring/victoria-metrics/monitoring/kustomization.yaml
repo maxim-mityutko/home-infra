@@ -112,7 +112,7 @@ helmCharts:
                 token_url: "https://auth.brhd.io/application/o/token/"
                 api_url: "https://auth.brhd.io/application/o/userinfo/"
                 # Optionally map user groups to Grafana roles
-                role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
+                role_attribute_path: contains(groups, 'Authentik Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
             # auth.anonymous:
             #   enabled: true
             #   org_role: Editor
