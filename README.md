@@ -63,6 +63,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Renovate**             | Universal dependency update tool                                           |                          [repo](https://github.com/renovatebot/renovate)                          |                                            [docker](https://hub.docker.com/r/renovate/renovate)                                            |
 | **IT Tools**             | Useful tools for developer and people working in IT                        |                          [repo](https://github.com/CorentinTh/it-tools)                           |                                           [docker](https://hub.docker.com/r/corentinth/it-tools)                                           |
 | **Nextcloud**            | Nextcloud file hosting services, similar to Google Drive / Photos          |                          [repo](https://github.com/nextcloud/all-in-one)                          | [helm](https://github.com/nextcloud/helm/tree/main)<br>[helm-docs](https://github.com/nextcloud/helm/blob/main/charts/nextcloud/README.md) |
+| **CloudBeaver** | Cloud Database Manager | [repo](https://github.com/dbeaver/cloudbeaver) | [docker](https://hub.docker.com/r/dbeaver/cloudbeaver) |
 
 ### Smart Home
 | Project            | Description                                                                     |                                          Docs / Repo                                           |                                  Docker / Helm                                  |

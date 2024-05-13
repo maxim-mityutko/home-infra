@@ -1,0 +1,17 @@
+# Code Server Data
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: cloud-beaver-data
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: cloud-beaver
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadOnlyMany
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1G

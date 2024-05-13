@@ -1,0 +1,34 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cloud-beaver
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: cloud-beaver
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+    nginx.ingress.kubernetes.io/auth-response-headers: >-
+      Set-Cookie,X-User,X-Team
+    nginx.ingress.kubernetes.io/auth-signin: >-
+      https://cb.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+    nginx.ingress.kubernetes.io/auth-snippet: |
+      proxy_set_header X-Forwarded-Host $http_host;
+    nginx.ingress.kubernetes.io/auth-url: >-
+      http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+spec:
+  rules:
+    - host: cb.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: cloud-beaver
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - cb.brhd.io
