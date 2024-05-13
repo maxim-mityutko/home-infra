@@ -90,6 +90,13 @@ helmCharts:
             dashboards:
               enabled: true
               label: grafana-dashboard
+          persistence:
+            extraSecretMounts:
+              - name: auth-generic-oauth-secret-mount
+                secretName: grafana
+                defaultMode: 0440
+                mountPath: /etc/secrets/auth_generic_oauth
+                readOnly: true
           grafana.ini:
             auth:
                 signout_redirect_url: "https://auth.brhd.io/application/o/grafana/end-session/"
@@ -97,8 +104,8 @@ helmCharts:
             auth.generic_oauth:
                 name: authentik
                 enabled: true
-                # client_id: "<Client ID from above>"
-                # client_secret: "<Client Secret from above>"
+                client_id: $__file{/etc/secrets/auth_generic_oauth/client_id}
+                client_secret: $__file{/etc/secrets/auth_generic_oauth/client_secret}
                 scopes: "openid profile email"
                 auth_url: "https://auth.brhd.io/application/o/authorize/"
                 token_url: "https://auth.brhd.io/application/o/token/"
