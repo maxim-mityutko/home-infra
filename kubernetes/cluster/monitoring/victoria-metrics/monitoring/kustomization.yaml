@@ -97,6 +97,8 @@ helmCharts:
               mountPath: /etc/secrets/auth_generic_oauth
               readOnly: true
           grafana.ini:
+            server:
+              root_url: https://grafana.brhd.io
             auth:
                 signout_redirect_url: "https://auth.brhd.io/application/o/grafana/end-session/"
                 oauth_auto_login: true
