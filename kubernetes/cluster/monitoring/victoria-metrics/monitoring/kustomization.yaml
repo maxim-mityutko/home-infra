@@ -97,8 +97,8 @@ helmCharts:
             auth.generic_oauth:
                 name: authentik
                 enabled: true
-                client_id: "<Client ID from above>"
-                client_secret: "<Client Secret from above>"
+                # client_id: "<Client ID from above>"
+                # client_secret: "<Client Secret from above>"
                 scopes: "openid profile email"
                 auth_url: "https://auth.brhd.io/application/o/authorize/"
                 token_url: "https://auth.brhd.io/application/o/token/"
