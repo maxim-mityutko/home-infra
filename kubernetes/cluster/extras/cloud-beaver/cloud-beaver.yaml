@@ -1,0 +1,63 @@
+# Service: cloud-beaver
+# Ingress: cb.brhd.io
+# Label: app.kubernetes.io/name: cloud-beaver
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-beaver
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: cloud-beaver
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8978
+      targetPort: 8978
+      name: http
+  selector:
+    app.kubernetes.io/name: cloud-beaver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-beaver
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: cloud-beaver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cloud-beaver
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: extras
+      labels:
+        app.kubernetes.io/name: cloud-beaver
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: cloud-beaver
+          image: dbeaver/cloudbeaver:24.0.4
+          resources:
+            requests:
+              memory: 100M
+              cpu: 100m
+            limits:
+              memory: 500M
+              cpu: 1000m
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: cloud-beaver-data
+              mountPath: /opt/cloudbeaver/workspace
+      volumes:
+        - name: cloud-beaver-data
+          persistentVolumeClaim:
+            claimName: cloud-beaver-data
