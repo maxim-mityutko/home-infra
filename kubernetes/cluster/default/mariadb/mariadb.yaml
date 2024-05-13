@@ -13,10 +13,6 @@ spec:
   type: ClusterIP
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 8080
-      name: adminer
-    - protocol: TCP
       port: 3306
       targetPort: 3306
       name: db
@@ -63,22 +59,6 @@ spec:
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
-        - name: adminer
-          image: adminer:4.8.1-standalone
-          env:
-            - name: ADMINER_DEFAULT_SERVER
-              value: 'mariadb'
-            - name: ADMINER_DESIGN
-              value: 'pepa-linha-dark'
-          resources:
-            requests:
-              memory: 10M
-              cpu: 10m
-            limits:
-              memory: 100M
-              cpu: 100m
-          ports:
-            - containerPort: 8080
       volumes:
         - name: mariadb-data
           persistentVolumeClaim:

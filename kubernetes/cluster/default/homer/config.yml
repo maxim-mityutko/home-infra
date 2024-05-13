@@ -220,15 +220,6 @@ services:
       - name: "Garden Camera (IPC01)"
         logo: "https://casa.brhd.io/icons/cctv-1.png"
         url: "https://ipc01.brhd.io/"
-  - name: "Database"
-    icon: "fas fa-database"
-    items:
-      - name: "Adminer"
-        tag: "db"
-        subtitle: "Database host: mariadb"
-        logo: "https://casa.brhd.io/icons/adminer.png"
-        url: "https://sql.brhd.io"
-        target: "_blank"
   - name: "External Services"
     icon: "fas fa-cloud"
     items:
