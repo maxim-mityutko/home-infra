@@ -35,7 +35,6 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Omada Controller**       | TP-Link Omada Controller                                                                           |        [repo](https://github.com/mbentley/docker-omada-controller)         |      [docker](https://hub.docker.com/r/mbentley/omada-controller)      |
 | **PiHole**                 | Network-wide ad blocking and DNS                                                                   |                 [repo](https://github.com/pi-hole/pi-hole)                 |            [docker](https://hub.docker.com/r/pihole/pihole)            |
 | **MariaDB**                | MariaDB Server is a high performing open source relational database, forked from MySQL             |             [repo](https://github.com/MariaDB/mariadb-docker)              |               [docker](https://hub.docker.com/_/mariadb)               |
-| **MariaDB - Adminer**      | Database management in a single PHP file                                                           |                  [repo](https://github.com/vrana/adminer)                  |               [docker](https://hub.docker.com/_/adminer)               |
 | **PostgreSQL**             | The PostgreSQL object-relational database system provides reliability and data integrity           |                                                                            |              [docker](https://hub.docker.com/_/postgres)               |
 
 ### Backup
