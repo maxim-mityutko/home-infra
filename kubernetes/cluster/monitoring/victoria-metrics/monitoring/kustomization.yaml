@@ -90,10 +90,32 @@ helmCharts:
             dashboards:
               enabled: true
               label: grafana-dashboard
+          extraSecretMounts:
+            - name: auth-generic-oauth-secret-mount
+              secretName: grafana
+              defaultMode: 0440
+              mountPath: /etc/secrets/auth_generic_oauth
+              readOnly: true
           grafana.ini:
-            auth.anonymous:
-              enabled: true
-              org_role: Editor
+            server:
+              root_url: https://grafana.brhd.io
+            auth:
+                signout_redirect_url: "https://auth.brhd.io/application/o/grafana/end-session/"
+                oauth_auto_login: true
+            auth.generic_oauth:
+                name: authentik
+                enabled: true
+                client_id: $__file{/etc/secrets/auth_generic_oauth/client_id}
+                client_secret: $__file{/etc/secrets/auth_generic_oauth/client_secret}
+                scopes: "openid profile email"
+                auth_url: "https://auth.brhd.io/application/o/authorize/"
+                token_url: "https://auth.brhd.io/application/o/token/"
+                api_url: "https://auth.brhd.io/application/o/userinfo/"
+                # Optionally map user groups to Grafana roles
+                role_attribute_path: contains(groups, 'Authentik Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
+            # auth.anonymous:
+            #   enabled: true
+            #   org_role: Editor
           ingress:
             enabled: true
             annotations:
