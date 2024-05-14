@@ -10,6 +10,7 @@ metadata:
 data:
   kustomize.buildOptions: --enable-helm
   # Authentik Auth
+  admin.enabled: "false"
   url: https://argocd.brhd.io
   dex.config: |
       connectors:
@@ -25,7 +26,6 @@ data:
               - openid
               - profile
               - email
-
 ---
 apiVersion: v1
 kind: ConfigMap
