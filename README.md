@@ -100,5 +100,4 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 #### Plugins and Extras
 | Project            | Description                                                                | Link                                                                                                                                     |
 |--------------------|----------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| **Jellyscrub**     | Plugin generates "trickplay" files for bufferless scrubbing image previews | [repo](https://github.com/nicknsy/jellyscrub)                                                                                            |
-| **Jellyfin Tizen** | Builds for the Jellyfin Tizen application for the Samsung smart TVs        | [repo-builds](https://github.com/jeppevinkel/jellyfin-tizen-builds)<br>[repo-jellyfin-tizen](https://github.com/jellyfin/jellyfin-tizen) |
+| **Jellyfin Tizen** | Builds for the Jellyfin Tizen application for the Samsung smart TVs        | [docker-builds](https://github.com/babagreensheep/jellyfin-tizen-docker)<br>[repo-jellyfin-tizen](https://github.com/jellyfin/jellyfin-tizen) |
