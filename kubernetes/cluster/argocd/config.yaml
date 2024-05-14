@@ -9,3 +9,32 @@ metadata:
     app.kubernetes.io/part-of: argocd
 data:
   kustomize.buildOptions: --enable-helm
+  # Authentik Auth
+  url: https://argocd.brhd.io
+  dex.config: |
+      connectors:
+      - config:
+          issuer: http://authentik.company/application/o/argocd/
+          clientID: $dex.authentik.clientId
+          clientSecret: $dex.authentik.clientSecret
+          insecureEnableGroups: true
+          scopes:
+            - openid
+            - profile
+            - email
+        name: authentik
+        type: oidc
+        id: authentik
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  # Authentik Auth
+  policy.csv: |
+    g, Authentik Admins, role:admin
