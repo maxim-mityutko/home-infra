@@ -13,18 +13,19 @@ data:
   url: https://argocd.brhd.io
   dex.config: |
       connectors:
-      - config:
-          issuer: http://authentik.company/application/o/argocd/
-          clientID: $dex.authentik.clientId
-          clientSecret: $dex.authentik.clientSecret
-          insecureEnableGroups: true
-          scopes:
-            - openid
-            - profile
-            - email
-        name: authentik
-        type: oidc
-        id: authentik
+        - type: oidc
+          id: authentik
+          name: Authentik
+          config:
+            issuer: http://auth.brhd.io/application/o/argocd/
+            clientID: $argocd-authentik:client_id
+            clientSecret: $argocd-authentik:client_secret
+            insecureEnableGroups: true
+            scopes:
+              - openid
+              - profile
+              - email
+
 ---
 apiVersion: v1
 kind: ConfigMap
