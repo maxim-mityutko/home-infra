@@ -150,7 +150,7 @@ helmCharts:
         vmsingle:
           enabled: true
           spec:
-            retentionPeriod: "14"
+            retentionPeriod: "6"
             storage:
               # Use custom storage class to leverage automatic PV creation
               storageClassName: nfs-subdir
