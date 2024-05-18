@@ -56,11 +56,11 @@ spec:
             - secretRef:
                 name: shinobi
           volumeMounts:
-            - name: shinobi-config-conf.json
+            - name: shinobi-config
               mountPath: /home/Shinobi/conf.json
               subPath: conf.json
               readOnly: true
-            - name: shinobi-config-super.json
+            - name: shinobi-config
               mountPath: /home/Shinobi/super.json
               subPath: super.json
               readOnly: true
