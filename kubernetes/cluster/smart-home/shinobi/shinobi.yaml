@@ -57,9 +57,13 @@ spec:
                 name: shinobi
           volumeMounts:
             - name: shinobi-config
-              mountPath: /config
-            - name: shinobi-plugins
-              mountPath: /home/Shinobi/plugins
+              mountPath: /home/Shinobi/conf.json
+              subPath: conf.json
+              readOnly: true
+            - name: shinobi-config
+              mountPath: /home/Shinobi/super.json
+              subPath: super.json
+              readOnly: true
             - name: shinobi-streams
               mountPath: /dev/shm/Shinobi/streams
             - name: shinobi-videos
@@ -68,7 +72,7 @@ spec:
             tcpSocket:
               port: 8080
             initialDelaySeconds: 30
-            periodSeconds: 10
+            periodSeconds: 30
           livenessProbe:
             tcpSocket:
               port: 8080
@@ -76,11 +80,8 @@ spec:
             periodSeconds: 30
       volumes:
         - name: shinobi-config
-          persistentVolumeClaim:
-            claimName: shinobi-config
-        - name: shinobi-plugins
-          persistentVolumeClaim:
-            claimName: shinobi-plugins
+          secret:
+            secretName: shinobi-config
         - name: shinobi-streams
           emptyDir:
             medium: Memory
@@ -103,5 +104,5 @@ data:
   DB_HOST: mariadb.default.svc.cluster.local
   DB_PORT: "3306"
   DB_DATABASE: shinobi
-
-
+  SHINOBI_UPDATE: "false"
+  HOME: /home/Shinobi
