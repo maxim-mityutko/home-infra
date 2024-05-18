@@ -56,8 +56,9 @@ spec:
             - secretRef:
                 name: shinobi
           volumeMounts:
-            - name: shinobi-home
+            - name: shinobi-config
               mountPath: /home/Shinobi
+              readOnly: true
             - name: shinobi-streams
               mountPath: /dev/shm/Shinobi/streams
             - name: shinobi-videos
@@ -73,9 +74,9 @@ spec:
             initialDelaySeconds: 120
             periodSeconds: 30
       volumes:
-        - name: shinobi-home
-          persistentVolumeClaim:
-            claimName: shinobi-home
+        - name: shinobi-config
+          secret:
+            secretName: shinobi-config
         - name: shinobi-streams
           emptyDir:
             medium: Memory
