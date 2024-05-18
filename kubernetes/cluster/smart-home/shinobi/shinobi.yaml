@@ -62,16 +62,16 @@ spec:
               mountPath: /dev/shm/Shinobi/streams
             - name: shinobi-videos
               mountPath: /home/Shinobi/videos
-          # readinessProbe:
-          #   tcpSocket:
-          #     port: 8080
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 10
-          # livenessProbe:
-          #   tcpSocket:
-          #     port: 8080
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 30
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 30
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 30
       volumes:
         - name: shinobi-home
           persistentVolumeClaim:
