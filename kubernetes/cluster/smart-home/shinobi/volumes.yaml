@@ -1,9 +1,9 @@
 ---
-# Shinobi - Config
+# Shinobi - Home
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: shinobi-config
+  name: shinobi-home
   labels:
     app.kubernetes.io/name: shinobi
 spec:
@@ -12,19 +12,4 @@ spec:
   storageClassName: nfs-subdir
   resources:
     requests:
-      storage: 10M
----
-# Shinobi - Plugins
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: shinobi-plugins
-  labels:
-    app.kubernetes.io/name: shinobi
-spec:
-  accessModes:
-  - ReadWriteOnce
-  storageClassName: nfs-subdir
-  resources:
-    requests:
-      storage: 100M
+      storage: 10G
