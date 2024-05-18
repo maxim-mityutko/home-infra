@@ -56,8 +56,13 @@ spec:
             - secretRef:
                 name: shinobi
           volumeMounts:
-            - name: shinobi-config
-              mountPath: /home/Shinobi
+            - name: shinobi-config-conf.json
+              mountPath: /home/Shinobi/conf.json
+              subPath: conf.json
+              readOnly: true
+            - name: shinobi-config-super.json
+              mountPath: /home/Shinobi/super.json
+              subPath: super.json
               readOnly: true
             - name: shinobi-streams
               mountPath: /dev/shm/Shinobi/streams
