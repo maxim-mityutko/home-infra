@@ -71,12 +71,12 @@ spec:
           readinessProbe:
             tcpSocket:
               port: 8080
-            initialDelaySeconds: 120
+            initialDelaySeconds: 30
             periodSeconds: 30
           livenessProbe:
             tcpSocket:
               port: 8080
-            initialDelaySeconds: 120
+            initialDelaySeconds: 30
             periodSeconds: 30
       volumes:
         - name: shinobi-config
