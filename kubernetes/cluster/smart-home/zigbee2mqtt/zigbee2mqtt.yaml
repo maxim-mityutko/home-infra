@@ -38,7 +38,6 @@ spec:
         app.kubernetes.io/name: zigbee2mqtt
     spec:
       restartPolicy: Always
-      hostNetwork: true
       containers:
         - image: koenkk/zigbee2mqtt:1.37.1
           name: zigbee2mqtt
@@ -49,6 +48,11 @@ spec:
             limits:
               cpu: 100m
               memory: 150Mi
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TZ
+              value: Europe/Amsterdam
           volumeMounts:
             - name: zigbee2mqtt-data
               mountPath: /app/data
