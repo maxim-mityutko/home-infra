@@ -1,0 +1,15 @@
+---
+# Zigbee2MQTT - Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: zigbee2mqtt-data
+  labels:
+    app.kubernetes.io/name: zigbee2mqtt
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1G

@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zigbee2mqtt
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: zigbee2mqtt
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: zmqtt.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: zigbee2mqtt
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - zmqtt.brhd.io
