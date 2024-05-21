@@ -45,7 +45,7 @@ helmCharts:
         replicas: 1
       metrics:
         serviceMonitor:
-          enabled: true
+          enabled: false
       # Disabling and replacing with standalone ingress config because annotations are not applied
       # ingress:
       #   enabled: true
