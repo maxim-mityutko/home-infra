@@ -38,6 +38,9 @@ helmCharts:
         reclaimPolicy: Delete   # or "Retain"
         migratable: true
         nfsOptions: vers=4.1
+      preUpgradeChecker:
+        jobEnabled: false
+        upgradeVersionCheck: false
       csi:
         attacherReplicaCount: 3
         provisionerReplicaCount: 3
