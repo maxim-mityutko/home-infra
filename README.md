@@ -38,7 +38,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **MariaDB - Adminer**      | Database management in a single PHP file                                                           |                           [repo](https://github.com/vrana/adminer)                            |               [docker](https://hub.docker.com/_/adminer)               |
 | **PostgreSQL**             | The PostgreSQL object-relational database system provides reliability and data integrity           |                                                                                               |              [docker](https://hub.docker.com/_/postgres)               |
 | **Authentik**              | Identity Provider that emphasizes flexibility and versatility                                      | [docs](https://docs.goauthentik.io/docs/)<br>[repo](https://github.com/goauthentik/authentik) |   [helm](https://artifacthub.io/packages/helm/goauthentik/authentik)   |
-
+| **Longhorn**                | Longhorn is a lightweight, reliable and easy-to-use distributed block storage system for Kubernetes | [docs](https://longhorn.io) | [helm](https://github.com/longhorn/charts/tree/master) |
 
 ### Backup
 | Project                | Description                                                                                       |                                                                                                     Docs / Repo                                                                                                      |                                          Docker / Helm                                           |
