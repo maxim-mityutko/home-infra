@@ -42,6 +42,7 @@ helmCharts:
         jobEnabled: false
         upgradeVersionCheck: false
       csi:
+        kubeletRootDir: /var/snap/microk8s/common/var/lib/kubelet # This should be changed specifically for Microk8s
         attacherReplicaCount: 3
         provisionerReplicaCount: 3
         resizerReplicaCount: 1 
