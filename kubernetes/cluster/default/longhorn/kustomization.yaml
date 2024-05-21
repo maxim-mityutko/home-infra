@@ -1,0 +1,56 @@
+# Automatic provisioner of NFS subdirs from PVs via PVCs
+# Usage:
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: pvc
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   storageClassName: nfs-subdir
+#   resources:
+#     requests:
+#       storage: 1Gi
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: longhorn
+helmCharts:
+  - name: longhorn
+    namespace: longhorn
+    releaseName: longhorn
+    version: 1.6.1
+    repo: https://charts.longhorn.io
+    valuesInline:
+      defaultSettings:
+        backupTarget: NFS
+        replicaAutoBalance: true
+        storageOverProvisioningPercentage: 50
+        storageMinimalAvailablePercentage: 20
+        upgradeChecker: false
+        defaultReplicaCount: 3  # For Kubernetes configuration, modify the `numberOfReplicas` field in the StorageClass.
+        autoDeletePodWhenVolumeDetachedUnexpectedly: true
+        disableSchedulingOnCordonedNode: true
+        orphanAutoDeletion: true
+        logLevel: Info
+      persistence:
+        reclaimPolicy: Delete   # or "Retain"
+        migratable: true
+        nfsOptions: vers=4.1
+      csi:
+        attacherReplicaCount: 3
+        provisionerReplicaCount: 3
+        resizerReplicaCount: 1 
+        snapshotterReplicaCount: 1
+      longhornUI:
+        replicas: 1
+      ingress:
+        enabled: true
+        host: longhorn.brhd.io
+        path: /
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+      openshift:
+        enabled: true
