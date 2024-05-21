@@ -48,5 +48,13 @@ helmCharts:
         annotations:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
+          nginx.ingress.kubernetes.io/auth-response-headers: >-
+            Set-Cookie
+          nginx.ingress.kubernetes.io/auth-signin: >-
+            https://longhorn.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+          nginx.ingress.kubernetes.io/auth-snippet: |
+            proxy_set_header X-Forwarded-Host $http_host;
+          nginx.ingress.kubernetes.io/auth-url: >-
+            http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
       openshift:
         enabled: false
