@@ -5,6 +5,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: longhorn-system
+resources:
+  - ingress.yaml
 helmCharts:
   - name: longhorn
     namespace: longhorn-system
@@ -42,7 +44,7 @@ helmCharts:
       longhornUI:
         replicas: 1
       ingress:
-        enabled: true
+        enabled: false
         host: longhorn.brhd.io
         path: /
         annotations:
