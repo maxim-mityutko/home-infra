@@ -1,4 +1,6 @@
-# To uninstall follow: https://longhorn.io/docs/1.6.1/deploy/uninstall/#uninstalling-longhorn-using-argo-cd
+# NOTES:
+# - To uninstall follow: https://longhorn.io/docs/1.6.1/deploy/uninstall/#uninstalling-longhorn-using-argo-cd
+# - If there is an error in defaultSettings, none will be applied. Check "Longhorn Manager" pod for logs
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
