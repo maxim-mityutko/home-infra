@@ -12,16 +12,18 @@ helmCharts:
     valuesInline:
       defaultSettings:
         backupTarget: nfs://nas.brhd.io:/mnt/spin/backup/longhorn
-        replicaAutoBalance: true
+        replicaAutoBalance: least-effort
         storageOverProvisioningPercentage: 50
         storageMinimalAvailablePercentage: 20
         upgradeChecker: false
         defaultReplicaCount: 3  # For Kubernetes configuration, modify the `numberOfReplicas` field in the StorageClass.
         autoDeletePodWhenVolumeDetachedUnexpectedly: true
+        detachManuallyAttachedVolumesWhenCordoned: true
         disableSchedulingOnCordonedNode: true
-        orphanAutoDeletion: true
+        orphanAutoDeletion: false
         logLevel: Info
         deletingConfirmationFlag: true
+        allowCollectingLonghornUsageMetrics: false
       persistence:
         reclaimPolicy: Delete   # or "Retain"
         migratable: true
