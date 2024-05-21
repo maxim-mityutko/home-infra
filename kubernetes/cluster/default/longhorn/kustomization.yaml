@@ -24,7 +24,7 @@ helmCharts:
     repo: https://charts.longhorn.io
     valuesInline:
       defaultSettings:
-        backupTarget: NFS
+        backupTarget: nfs://nas.brhd.io:/mnt/spin/backup/longhorn
         replicaAutoBalance: true
         storageOverProvisioningPercentage: 50
         storageMinimalAvailablePercentage: 20
