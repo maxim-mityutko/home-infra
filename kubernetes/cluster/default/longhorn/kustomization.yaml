@@ -43,6 +43,7 @@ helmCharts:
         snapshotterReplicaCount: 1
       longhornUI:
         replicas: 1
+      # Disabling and replacing with standalone ingress config because annotations are not applied
       ingress:
         enabled: false
         host: longhorn.brhd.io

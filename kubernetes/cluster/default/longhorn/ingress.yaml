@@ -1,4 +1,4 @@
-# Creating custom Ingress, because in Helm annotations are not applied
+# Creating standalone ingress config because annotations are not applied
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
