@@ -86,6 +86,11 @@ helmCharts:
                 gnetId: 20334
                 revision: 5
                 datasource: VictoriaMetrics
+              # Longhorn
+              longhorn:
+                gnetId: 16888
+                revision: 9
+                datasource: VictoriaMetrics
           sidecar:
             dashboards:
               enabled: true

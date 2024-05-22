@@ -76,6 +76,10 @@ services:
         logo: "https://casa.brhd.io/icons/mesh.png"
         url: "https://mesh.brhd.io"
         target: "_blank"
+      - name: "Longhorn"
+        logo: "https://casa.brhd.io/icons/longhorn.png"
+        url: "https://longhorn.brhd.io"
+        target: "_blank"
   - name: "Monitoring"
     icon: "fas fa-telescope"
     items:
