@@ -7,6 +7,7 @@ kind: Kustomization
 namespace: longhorn-system
 resources:
   - ingress.yaml
+  - victoria-metrics.yaml
 helmCharts:
   - name: longhorn
     namespace: longhorn-system
