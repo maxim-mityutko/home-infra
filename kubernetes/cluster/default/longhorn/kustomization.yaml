@@ -15,7 +15,6 @@ helmCharts:
     repo: https://charts.longhorn.io
     valuesInline:
       defaultSettings:
-        backupTarget: nfs://nas.brhd.io:/mnt/spin/backup/longhorn
         replicaAutoBalance: least-effort
         storageOverProvisioningPercentage: 50
         storageMinimalAvailablePercentage: 20
@@ -28,7 +27,16 @@ helmCharts:
         logLevel: Info
         deletingConfirmationFlag: true
         allowCollectingLonghornUsageMetrics: false
+        # Snapshots and Backups
+        backupTarget: nfs://nas.brhd.io:/mnt/spin/backup/longhorn
+        recurringSuccessfulJobsHistoryLimit: 10
+        recurringFailedJobsHistoryLimit: 10
+        recurringJobMaxRetention: 10
+        snapshotMaxCount: 10
       persistence:
+        defaultClass: true
+        defaultFsType: ext4
+        defaultClassReplicaCount: 3
         reclaimPolicy: Delete   # or "Retain"
         migratable: true
         nfsOptions: vers=4.1
@@ -40,7 +48,7 @@ helmCharts:
         attacherReplicaCount: 3
         provisionerReplicaCount: 3
         resizerReplicaCount: 1 
-        snapshotterReplicaCount: 1
+        snapshotterReplicaCount: 3
       longhornUI:
         replicas: 1
       metrics:
