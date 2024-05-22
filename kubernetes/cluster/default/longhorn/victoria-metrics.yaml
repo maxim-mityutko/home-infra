@@ -22,7 +22,7 @@ spec:
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMRule
 metadata:
-  name: longhorn-rule
+  name: longhorn-rules
   namespace: longhorn-system
 spec:
   groups:
