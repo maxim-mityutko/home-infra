@@ -28,7 +28,7 @@ spec:
       volumes:
         - name: old-vol
           persistentVolumeClaim:
-            claimName: omada-data # change to data source pvc
+            claimName: mariadb-data # change to data source pvc
         - name: new-vol
           persistentVolumeClaim:
-            claimName: omada-data-v2 # change to data target pvc
+            claimName: mariadb-data-v2 # change to data target pvc

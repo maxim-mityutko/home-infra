@@ -3,15 +3,14 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mariadb-data
+  name: mariadb-data-v2
   namespace: default
   labels:
     app.kubernetes.io/name: mariadb
 spec:
   accessModes:
   - ReadWriteOnce
-  - ReadOnlyMany
-  storageClassName: nfs-subdir
+  storageClassName: longhorn
   resources:
     requests:
-      storage: 10G
+      storage: 1G
