@@ -14,6 +14,21 @@ spec:
     requests:
       storage: 5G
 ---
+# Omada Controller -- Data
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: omada-data-v2
+  labels:
+    app.kubernetes.io/name: omada
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 5G
+---
 # Omada Controller -- Logs
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -27,13 +42,13 @@ spec:
   storageClassName: nfs-subdir
   resources:
     requests:
-      storage: 10G
+      storage: 100M
 ---
-# Omada Controller -- Cert
+# Omada Controller -- Autobackup
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: omada-cert
+  name: omada-autobackup
   labels:
     app.kubernetes.io/name: omada
 spec:
@@ -42,4 +57,4 @@ spec:
   storageClassName: nfs-subdir
   resources:
     requests:
-      storage: 1M
+      storage: 100M
