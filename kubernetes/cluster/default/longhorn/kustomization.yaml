@@ -51,7 +51,7 @@ helmCharts:
         resizerReplicaCount: 1 
         snapshotterReplicaCount: 3
       longhornUI:
-        replicas: 1
+        replicas: 2
       metrics:
         serviceMonitor:
           enabled: false
