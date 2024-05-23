@@ -57,18 +57,18 @@ spec:
               mountPath: /opt/tplink/EAPController/data
             - name: omada-logs
               mountPath: /opt/tplink/EAPController/logs
-            - name: omada-cert
-              mountPath: /cert
+            - name: omada-autobackup
+              mountPath: /opt/tplink/EAPController/data/autobackup
       volumes:
         - name: omada-data
           persistentVolumeClaim:
-            claimName: omada-data
+            claimName: omada-data-v2
         - name: omada-logs
           persistentVolumeClaim:
             claimName: omada-logs
-        - name: omada-cert # Let's Encrypt Cert from cert-manager
+        - name: omada-autobackup
           persistentVolumeClaim:
-            claimName: omada-cert
+            claimName: omada-autobackup
 ---
 apiVersion: v1
 kind: ConfigMap
