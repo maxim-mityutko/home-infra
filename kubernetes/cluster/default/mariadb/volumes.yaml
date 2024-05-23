@@ -15,3 +15,20 @@ spec:
   resources:
     requests:
       storage: 10G
+# MariaDB Data
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mariadb-data-v2
+  namespace: default
+  labels:
+    app.kubernetes.io/name: mariadb
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadOnlyMany
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 1G
