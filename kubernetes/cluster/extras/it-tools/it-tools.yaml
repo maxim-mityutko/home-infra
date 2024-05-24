@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: it-tools
-          image: corentinth/it-tools:2023.8.21-6f93cba
+          image: corentinth/it-tools:latest
           resources:
             requests:
               memory: 10Mi
