@@ -1,5 +1,6 @@
-# Creating standalone ingress config because annotations are not applied
-# Ingress docs: https://longhorn.io/docs/1.6.1/deploy/accessing-the-ui/longhorn-ingress/
+# NOTE:
+#   - creating standalone ingress config because annotations are not applied
+#   - ingress docs: https://longhorn.io/docs/1.6.1/deploy/accessing-the-ui/longhorn-ingress/
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
