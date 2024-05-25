@@ -8,6 +8,7 @@ namespace: longhorn-system
 resources:
   - ingress.yaml
   - victoria-metrics.yaml
+  - recurring-job.yaml
 helmCharts:
   - name: longhorn
     namespace: longhorn-system
