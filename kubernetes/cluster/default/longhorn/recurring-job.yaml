@@ -1,3 +1,6 @@
+# NOTE:
+#   - job docs: https://longhorn.io/docs/1.6.1/snapshots-and-backups/scheduling-backups-and-snapshots/
+#
 # Weekly Backup (default)
 ---
 apiVersion: longhorn.io/v1beta1
