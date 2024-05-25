@@ -1,0 +1,44 @@
+# NOTE:
+#   - job docs: https://longhorn.io/docs/1.6.1/snapshots-and-backups/scheduling-backups-and-snapshots/
+#
+# Weekly Backup (default)
+---
+apiVersion: longhorn.io/v1beta1
+kind: RecurringJob
+metadata:
+  name: weekly-backup
+  namespace: longhorn-system
+spec:
+  cron: "0 4 ? * SAT"
+  task: "backup"
+  retain: 8
+  concurrency: 2
+  labels:
+    backup-type: weekly
+# Daily Backup
+---
+apiVersion: longhorn.io/v1beta1
+kind: RecurringJob
+metadata:
+  name: daily-backup
+  namespace: longhorn-system
+spec:
+  cron: "0 6 * * ?"
+  task: "backup"
+  retain: 14
+  concurrency: 2
+  labels:
+    backup-type: daily
+# Monthly Trim
+---
+apiVersion: longhorn.io/v1beta1
+kind: RecurringJob
+metadata:
+  name: filesystem-trim
+  namespace: longhorn-system
+spec:
+  cron: "0 22 1 * ?"
+  task: "filesystem-trim"
+  groups:
+    - maintenance
+  concurrency: 2
