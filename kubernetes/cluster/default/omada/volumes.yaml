@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: omada
     recurring-job.longhorn.io/source: enabled
     recurring-job.longhorn.io/weekly-backup: enabled
-    recurring-job-group.longhorn.io/default: enabled
+    recurring-job-group.longhorn.io/maintenance: enabled
 spec:
   accessModes:
   - ReadWriteOnce

@@ -40,5 +40,5 @@ spec:
   cron: "0 22 1 * ?"
   task: "filesystem-trim"
   groups:
-    - default
+    - maintenance
   concurrency: 2
