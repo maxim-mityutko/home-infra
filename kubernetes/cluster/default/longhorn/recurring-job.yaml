@@ -11,8 +11,6 @@ metadata:
 spec:
   cron: "0 4 ? * SAT"
   task: "backup"
-  groups:
-    - default
   retain: 8
   concurrency: 2
   labels:
@@ -27,8 +25,6 @@ metadata:
 spec:
   cron: "0 6 * * ?"
   task: "backup"
-  groups:
-    - prio-1
   retain: 14
   concurrency: 2
   labels:
@@ -45,5 +41,4 @@ spec:
   task: "filesystem-trim"
   groups:
     - default
-    - prio-1
-  concurrency: 1
+  concurrency: 2
