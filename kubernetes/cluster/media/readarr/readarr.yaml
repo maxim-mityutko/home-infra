@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: readarr
-          image: ghcr.io/hotio/readarr:testing-0.3.26.2526
+          image: ghcr.io/hotio/readarr:testing-0.3.27.2538
           resources:
             requests:
               memory: 500Mi
