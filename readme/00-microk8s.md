@@ -21,6 +21,7 @@ or [these](https://microk8s.io/) instuctions to install `microk8s`:
 
 __Important__, when prepping a new node, make sure to:
 * Install NFS dependencies: `sudo apt install nfs-common`
+* Add convinience alias to kubectl `sudo snap alias microk8s.kubectl kubectl`
 * Configure DNS resolvers (see Troubleshooting section)
 * Configure volatile storage for logs (see Troubleshhoting section)
 
@@ -96,6 +97,14 @@ NFS should be configured separately before it can be used in PV.
     sudo mount -t nfs -o vers=4 <server>:/srv/nfs/<folder> /<local>/<path>
     ```
 * Mount in Windows: https://graspingtech.com/mount-nfs-share-windows-10/
+
+### Longhorn
+* Installation prerequisites: https://longhorn.io/docs/1.6.2/deploy/install/#installation-requirements
+* Installation with ArgoCD: https://longhorn.io/docs/1.6.2/deploy/install/install-with-argocd/
+* Uninstall Longhorn: https://longhorn.io/docs/1.6.2/deploy/uninstall/
+
+* Data migration example: https://github.com/longhorn/longhorn/blob/master/examples/data_migration.yaml
+* Various examples: https://github.com/longhorn/longhorn/tree/v1.6.2/examples
 ## Services
 * Commands
   * List services: `microk8s kubectl -n k<namespace> get services`
@@ -144,14 +153,10 @@ NFS should be configured separately before it can be used in PV.
   
   systemctl restart systemd-resolved
   ```
-
-## TODO:
-* Slack Notifications - [kubewatch](https://github.com/bitnami-labs/kubewatch)
-* Extend NodePort range to get rid of 
-* Change HostPort / Service ingress implementations
-* home-assistant - Home Automation
-* kodi-headless - Centralised Kodi Library indexer
-* nginx-ingress - Ingress controller [available out of the box in microk8s]
+* Logs are not displayed with x509 certificate validation error
+  ```sh
+  sudo microk8s refresh-certs --cert server.crt
+  ```
 
 ## Useful Links
 * docker - [Hub](https://hub.docker.com/)
@@ -169,7 +174,6 @@ NFS should be configured separately before it can be used in PV.
     # Run at location of `docker-compose.yaml` file
     kompose convert
     ```
-* inspiration - [vaskozl | Home Infra](https://github.com/vaskozl/home-infra)
 * k8s - [Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 * k8s - [Commands](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
 * k9s - [Installation](https://github.com/derailed/k9s#installation)
