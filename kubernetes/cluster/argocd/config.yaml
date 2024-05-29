@@ -10,7 +10,7 @@ metadata:
 data:
   kustomize.buildOptions: --enable-helm
   # Authentik Auth
-  admin.enabled: "false"
+  admin.enabled: "true" # keep the possibility of normal auth
   url: https://argocd.brhd.io
   dex.config: |
       connectors:

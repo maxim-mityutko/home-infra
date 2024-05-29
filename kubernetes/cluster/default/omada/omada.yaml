@@ -62,7 +62,7 @@ spec:
       volumes:
         - name: omada-data
           persistentVolumeClaim:
-            claimName: omada-data-v2
+            claimName: omada-data
         - name: omada-logs
           persistentVolumeClaim:
             claimName: omada-logs
