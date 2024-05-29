@@ -3,16 +3,18 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: omada-data-v2
+  # name: omada-data-v2
+  name: omada-data
   labels:
     app.kubernetes.io/name: omada
-    recurring-job.longhorn.io/source: enabled
-    recurring-job.longhorn.io/weekly-backup: enabled
-    recurring-job-group.longhorn.io/maintenance: enabled
+    # recurring-job.longhorn.io/source: enabled
+    # recurring-job.longhorn.io/weekly-backup: enabled
+    # recurring-job-group.longhorn.io/maintenance: enabled
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: longhorn
+  # storageClassName: longhorn
+  storageClassName: nfs-subdir
   resources:
     requests:
       storage: 5G
