@@ -25,7 +25,7 @@ spec:
         - name: kubeseal
           image: bitnami/sealed-secrets-kubeseal:0.26.3
           command: ["kubeseal"]
-          args: ["--controller-namespace=default"]
+          args: ["--controller-namespace=default --controller-name=sealed-secrets"]
           resources:
             requests:
               cpu: 10m
