@@ -6,13 +6,14 @@ metadata:
   name: pihole-etc
   labels:
     app.kubernetes.io/name: pihole
-    recurring-job.longhorn.io/source: enabled
-    recurring-job.longhorn.io/weekly-backup: enabled
-    recurring-job-group.longhorn.io/maintenance: enabled
+    # recurring-job.longhorn.io/source: enabled
+    # recurring-job.longhorn.io/weekly-backup: enabled
+    # recurring-job-group.longhorn.io/maintenance: enabled
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: longhorn
+  # storageClassName: longhorn
+  storageClassName: nfs-subdir
   resources:
     requests:
       storage: 1G
@@ -24,13 +25,14 @@ metadata:
   name: pihole-dnsmasqd
   labels:
     app.kubernetes.io/name: pihole
-    recurring-job.longhorn.io/source: enabled
-    recurring-job.longhorn.io/weekly-backup: enabled
-    recurring-job-group.longhorn.io/maintenance: enabled
+    # recurring-job.longhorn.io/source: enabled
+    # recurring-job.longhorn.io/weekly-backup: enabled
+    # recurring-job-group.longhorn.io/maintenance: enabled
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: longhorn
+  # storageClassName: longhorn
+  storageClassName: nfs-subdir
   resources:
     requests:
       storage: 20M
