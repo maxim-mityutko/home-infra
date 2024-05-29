@@ -4,7 +4,7 @@ namespace: extras
 resources:
   - secret.yaml
   - pv-pvc-data.yaml
-  - vm-service-scrape.yaml
+  # - vm-service-scrape.yaml
 helmCharts:
   - name: nextcloud
     namespace: extras
@@ -125,7 +125,7 @@ helmCharts:
         enabled: false
       # Metrics
       metrics:
-        enabled: true
+        enabled: false
       # Database
       internalDatabase:
         enabled: false
