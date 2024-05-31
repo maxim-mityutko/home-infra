@@ -24,3 +24,16 @@ spec:
   tls:
     - hosts:
         - request.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: request.brhd.io
+  namespace: media
+spec:
+  endpoints:
+    - dnsName: request.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

@@ -32,3 +32,16 @@ spec:
   tls:
     - hosts:
         - radarr.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: radarr.brhd.io
+  namespace: media
+spec:
+  endpoints:
+    - dnsName: radarr.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

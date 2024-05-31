@@ -1,0 +1,50 @@
+# Examples:
+#
+# - DNSEndpoint
+#
+# apiVersion: externaldns.k8s.io/v1alpha1
+# kind: DNSEndpoint
+# metadata:
+#   name: radarr.brhd.io
+#   namespace: media
+# spec:
+#   endpoints:
+#     - dnsName: radarr.brhd.io
+#       recordTTL: 86400
+#       recordType: CNAME
+#       targets:
+#         - casa.brhd.io
+#
+# - Ingress Annotations
+#   external-dns.alpha.kubernetes.io/hostname: radarr.brhd.io
+#   external-dns.alpha.kubernetes.io/ttl: "1d"
+#   external-dns.alpha.kubernetes.io/target: "casa.brhd.io"
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - secret.yaml
+helmCharts:
+  - name: external-dns
+    namespace: default
+    # WARN: Cannot rollout latest wuth 0.14.2 due to: https://github.com/kubernetes-sigs/external-dns/issues/4487
+    releaseName: external-dns
+    version: 7.3.2
+    repo: oci://registry-1.docker.io/bitnamicharts
+    valuesInline:
+      sources:
+        - crd
+        # - ingress
+      provider: cloudflare
+      cloudflare:
+        secretName: cloudflare-external-dns
+        proxied: false
+      domainFilters:
+        - brhd.io
+      crd:
+        create: true
+      interval: 5m
+      resourcesPreset: nano
+      metrics:
+        enabled: true
+      revisionHistoryLimit: 1

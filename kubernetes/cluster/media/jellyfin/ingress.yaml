@@ -24,3 +24,16 @@ spec:
   tls:
     - hosts:
         - media.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: media.brhd.io
+  namespace: media
+spec:
+  endpoints:
+    - dnsName: media.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
