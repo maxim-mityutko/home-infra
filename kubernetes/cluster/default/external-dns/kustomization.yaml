@@ -6,9 +6,9 @@ resources:
 helmCharts:
   - name: external-dns
     namespace: default
-    releaseName: sealed-secrets
+    releaseName: external-dns
     version: 7.5.2
-    repo: oci://registry-1.docker.io/bitnamicharts/external-dns
+    repo: registry-1.docker.io/bitnamicharts/external-dns
     valuesInline:
       sources:
         - crd
