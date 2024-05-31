@@ -47,3 +47,4 @@ helmCharts:
       resourcesPreset: nano
       metrics:
         enabled: true
+      revisionHistoryLimit: 1
