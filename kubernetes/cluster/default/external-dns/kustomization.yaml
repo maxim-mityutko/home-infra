@@ -34,7 +34,7 @@ helmCharts:
     valuesInline:
       sources:
         - crd
-        - ingress
+        # - ingress
       provider: cloudflare
       cloudflare:
         secretName: cloudflare-external-dns
