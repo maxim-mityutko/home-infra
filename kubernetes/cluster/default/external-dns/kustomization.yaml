@@ -8,7 +8,7 @@ helmCharts:
     namespace: default
     releaseName: external-dns
     version: 7.5.2
-    repo: registry-1.docker.io/bitnamicharts/external-dns
+    repo: oci://registry-1.docker.io/bitnamicharts
     valuesInline:
       sources:
         - crd
