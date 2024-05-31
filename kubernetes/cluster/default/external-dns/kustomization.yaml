@@ -7,7 +7,7 @@ helmCharts:
   - name: external-dns
     namespace: default
     releaseName: sealed-secrets
-    version: 0.14.2
+    version: 7.5.2
     repo: oci://registry-1.docker.io/bitnamicharts/external-dns
     valuesInline:
       sources:
@@ -19,5 +19,6 @@ helmCharts:
         proxied: false
       crd:
         create: true
+      resourcesPreset: nano
       metrics:
         enabled: true
