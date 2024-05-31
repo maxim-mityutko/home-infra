@@ -7,7 +7,7 @@ helmCharts:
   - name: external-dns
     namespace: default
     releaseName: external-dns
-    version: 7.5.2
+    version: 7.3.2
     repo: oci://registry-1.docker.io/bitnamicharts
     valuesInline:
       sources:
@@ -17,6 +17,8 @@ helmCharts:
       cloudflare:
         secretName: cloudflare-external-dns
         proxied: false
+      domainFilters:
+        - brhd.io
       crd:
         create: true
       resourcesPreset: nano
