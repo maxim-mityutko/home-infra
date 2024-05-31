@@ -43,6 +43,7 @@ helmCharts:
         - brhd.io
       crd:
         create: true
+      interval: 5m
       resourcesPreset: nano
       metrics:
         enabled: true
