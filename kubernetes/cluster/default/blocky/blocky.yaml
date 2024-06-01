@@ -61,10 +61,10 @@ spec:
           resources:
             requests:
               cpu: 10m
-              memory: 50Mi
-            limits:
-              cpu: 100m
               memory: 100Mi
+            limits:
+              cpu: 500m
+              memory: 250Mi
           ports:
             - name: dns-tcp
               protocol: TCP
