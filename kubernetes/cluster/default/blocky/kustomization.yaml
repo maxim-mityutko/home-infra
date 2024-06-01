@@ -4,8 +4,8 @@ namespace: default
 resources:
   - blocky.yaml
 configMapGenerator:
-- name: blocky-config
-  files:
-    - config/config.yml
-  options:
-    disableNameSuffixHash: true
+  - name: blocky-config
+    files:
+      - config/config.yml
+    options:
+      disableNameSuffixHash: true
