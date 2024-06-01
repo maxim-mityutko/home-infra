@@ -31,10 +31,10 @@ blocking:
       - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt
       # Threat Intelligence Feeds - Medium version
       - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/tif.medium.txt
-    hagezi-extra:
-      - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.plus.txt 
+    # hagezi-extra:
+    #   - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.plus.txt 
     adult:
-      - https://v.firebog.net/hosts/Prigent-Adult.txt
+      - https://nsfw.oisd.nl/domainswild
   clientGroupsBlock:
     default:
       - hagezi
