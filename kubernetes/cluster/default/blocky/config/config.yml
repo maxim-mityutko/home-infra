@@ -46,6 +46,7 @@ blocking:
     default:
       - hagezi
     # TODO: replace ingress for port 53 as it does not preserve origin address
+    # TODO: or use DoH on clients and create an ingress for port 4000
     family:
       - hagezi
       - adult
