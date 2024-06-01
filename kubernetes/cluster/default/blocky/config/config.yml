@@ -1,0 +1,61 @@
+ports:
+  dns: 53
+  http: 4000
+log:
+  level: info
+  format: text
+  timestamp: true
+  privacy: false
+upstreams:
+  init:
+    strategy: fast
+  strategy: strict
+  groups:
+    default:
+      - https://dns.cloudflare.com/dns-query
+      # - https://dns.google/dns-query
+      # - https://dns.digitale-gesellschaft.ch/dns-query
+    family:
+      - https://doh.cleanbrowsing.org/doh/family-filter/
+      - 208.67.222.123  # OpenDNS
+      - 208.67.220.123  # OpenDNS
+  timeout: 2s
+bootstrapDns:
+  - tcp+udp:1.1.1.1
+  - tcp+udp:1.0.0.1
+blocking:
+  denylists:
+    # NOTE: More details at https://github.com/hagezi/dns-blocklists
+    hagezi:
+      # Multi PRO - Extended protection
+      - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt
+      # Threat Intelligence Feeds - Medium version
+      - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/tif.medium.txt
+    hagezi-extra:
+      - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.plus.txt 
+    adult:
+      - https://v.firebog.net/hosts/Prigent-Adult.txt
+  clientGroupsBlock:
+    default:
+      - hagezi
+    family:
+      - hagezi
+      - hagezi-extra
+      - adult
+  loading:
+    refreshPeriod: 8h
+    concurrency: 1
+    downloads:
+      timeout: 10m
+      cooldown: 10s
+      attempts: 5
+caching:
+  maxItemsCount: 10000
+  prefetching: true
+  prefetchMaxItemsCount: 1000
+  cacheTimeNegative: 30s
+redis:
+  required: false
+prometheus:
+  enable: true
+  path: /metrics

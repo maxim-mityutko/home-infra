@@ -1,0 +1,87 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky-dns
+  labels:
+    app.kubernetes.io/name: blocky
+spec:
+  selector:
+    app.kubernetes.io/name: blocky
+  ports:
+    - port: 53
+      targetPort: 53
+      name: dns-tcp
+      protocol: TCP
+    - port: 53
+      targetPort: 53
+      name: dns-udp
+      protocol: UDP
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky
+  labels:
+    app.kubernetes.io/name: blocky
+spec:
+  selector:
+    app.kubernetes.io/name: blocky
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 4000
+      targetPort: 4000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blocky
+  labels:
+    app.kubernetes.io/name: blocky
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: blocky
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: blocky
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: blocky
+          image: spx01/blocky:v0.24
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          ports:
+            - name: dns-tcp
+              protocol: TCP
+              containerPort: 53
+            - name: dns-udp
+              protocol: UDP
+              containerPort: 53
+            - name: http
+              protocol: TCP
+              containerPort: 4000
+          env:
+            - TZ=Europe/Amsterdam
+          volumeMounts:
+            - name: blocky-config
+              mountPath: /app/config.yml
+              subPath: config.yml
+      volumes:
+        - name: blocky-config
+          configMap:
+            name: blocky-config
