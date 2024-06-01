@@ -3,9 +3,10 @@ kind: Kustomization
 namespace: default
 resources:
   - blocky.yaml
+  # - service-scrape.yaml
 configMapGenerator:
   - name: blocky-config
     files:
       - config/config.yml
-    options:
-      disableNameSuffixHash: true
+    # options:
+    #   disableNameSuffixHash: true

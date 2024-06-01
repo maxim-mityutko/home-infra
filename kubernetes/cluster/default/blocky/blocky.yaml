@@ -62,6 +62,8 @@ spec:
             requests:
               cpu: 10m
               memory: 100Mi
+            # The actual memory and CPU usage is much lower, however ample memory
+            # is required to load block lists and avoid OOMKill errors.
             limits:
               cpu: 500m
               memory: 450Mi

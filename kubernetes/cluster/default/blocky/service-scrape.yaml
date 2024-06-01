@@ -1,0 +1,18 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  labels:
+    app.kubernetes.io/instance: victoria-metrics
+  name: blocky-metrics
+  namespace: default
+spec:
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 300s
+  namespaceSelector:
+    matchNames:
+      - default
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: blocky

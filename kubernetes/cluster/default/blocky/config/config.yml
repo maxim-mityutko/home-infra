@@ -8,17 +8,20 @@ log:
   privacy: false
 upstreams:
   init:
+    # Start serving DNS before initialization is complete
     strategy: fast
   strategy: strict
   groups:
     default:
       - https://dns.cloudflare.com/dns-query
+      - 1.1.1.1
+      - 1.0.0.1
       # - https://dns.google/dns-query
       # - https://dns.digitale-gesellschaft.ch/dns-query
     family:
       - https://doh.cleanbrowsing.org/doh/family-filter/
-      - 208.67.222.123  # OpenDNS
-      - 208.67.220.123  # OpenDNS
+      - 208.67.222.123  # OpenDNS - FamilyFilter
+      - 208.67.220.123  # OpenDNS - FamilyFilter
   timeout: 2s
 bootstrapDns:
   - tcp+udp:1.1.1.1
@@ -42,6 +45,7 @@ blocking:
   clientGroupsBlock:
     default:
       - hagezi
+    # TODO: replace ingress for port 53 as it does not preserve origin address
     family:
       - hagezi
       - adult
