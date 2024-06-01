@@ -10,18 +10,20 @@ metadata:
     argocd.argoproj.io/sync-options: Validate=false
 spec:
   template:
-    spec:
-      containers:
-        - name: nginx-ingress-microk8s
-          ports:
-          - containerPort: 53
-            name: dns-tcp
-            hostPort: 53
-            protocol: TCP
-          - containerPort: 53
-            name: dns-udp
-            hostPort: 53
-            protocol: UDP
+    selector:	
+      matchLabels:	
+        name: nginx-ingress-microk8s
+    containers:
+      - name: nginx-ingress-microk8s
+        ports:
+        - containerPort: 53
+          name: dns-tcp
+          hostPort: 53
+          protocol: TCP
+        - containerPort: 53
+          name: dns-udp
+          hostPort: 53
+          protocol: UDP
 ---
 apiVersion: v1
 kind: ConfigMap
