@@ -6,6 +6,8 @@ metadata:
   namespace: ingress
   labels:
     microk8s-application: nginx-ingress-microk8s
+  annotations:
+    argocd.argoproj.io/sync-options: Validate=false
 spec:
   template:
     spec:
