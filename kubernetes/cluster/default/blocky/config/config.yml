@@ -14,13 +14,13 @@ upstreams:
   groups:
     default:
       # Cloudflare
-      - https://dns.cloudflare-dns.com/dns-query
+      - https://cloudflare-dns.com/dns-query
       - 1.1.1.1
       - 1.0.0.1
       # Other
       # - https://dns.google/dns-query
       # - https://dns.digitale-gesellschaft.ch/dns-query
-    family:
+    192.168.1.58:
       # Cloudflare
       - https://family.cloudflare-dns.com/dns-query
       - 1.1.1.3
@@ -64,10 +64,6 @@ blocking:
       timeout: 120s
       cooldown: 10s
       attempts: 5
-clientLookup:
-  clients:
-    family:
-      - 192.168.1.58
 caching:
   maxItemsCount: 10000
   prefetching: true
