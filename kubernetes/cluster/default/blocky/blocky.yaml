@@ -84,6 +84,13 @@ spec:
             - name: blocky-config
               mountPath: /app/config.yml
               subPath: config.yml
+          readinessProbe:
+            tcpSocket:
+              port: dns-tcp
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 1
+            failureThreshold: 5
       volumes:
         - name: blocky-config
           configMap:
