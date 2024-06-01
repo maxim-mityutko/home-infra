@@ -64,7 +64,7 @@ spec:
               memory: 100Mi
             limits:
               cpu: 500m
-              memory: 350Mi
+              memory: 450Mi
           ports:
             - name: dns-tcp
               protocol: TCP
