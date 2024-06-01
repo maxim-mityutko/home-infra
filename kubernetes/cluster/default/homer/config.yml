@@ -118,12 +118,6 @@ services:
         tag: "network"
         url: "https://omada.brhd.io"
         target: "_blank"
-      - name: "PiHole"
-        logo: "https://casa.brhd.io/icons/pihole.svg"
-        tag: "dns"
-        url: "https://pihole.brhd.io/admin"
-        target: "_blank"
-        type: "PiHole"
   - name: "Security / Privacy / Backups"
     icon: "fas fa-shield"
     items:
