@@ -2,7 +2,7 @@ Ingress is configured out of the box with the following command:
 `microk8s enable ingress:default-ssl-certificate=default/brhd-io-tls`
 
 However, a few custom configs have to be applied using `Server-Side Apply` feature:
-* enabling ingress for DNS ports for the `pihole`
+* enabling ingress for DNS ports for the `pihole` or any other DNS server / proxy
     ```shell
     # This script is replaced with Server-Side Apply approach
     echo "Adding DNS TCP port to \"nginx-ingress\" for PiHole..."
