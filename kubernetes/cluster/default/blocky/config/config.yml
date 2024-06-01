@@ -1,3 +1,5 @@
+# TODO: replace ingress for port 53 as it does not preserve origin address
+# TODO: or use DoH on clients and create an ingress for port 4000
 ports:
   dns: 53
   http: 4000
@@ -20,7 +22,7 @@ upstreams:
       # Other
       # - https://dns.google/dns-query
       # - https://dns.digitale-gesellschaft.ch/dns-query
-    192.168.1.58:
+    family:
       # Cloudflare
       - https://family.cloudflare-dns.com/dns-query
       - 1.1.1.3
@@ -52,8 +54,6 @@ blocking:
   clientGroupsBlock:
     default:
       - hagezi
-    # TODO: replace ingress for port 53 as it does not preserve origin address
-    # TODO: or use DoH on clients and create an ingress for port 4000
     family:
       - hagezi
       - adult
