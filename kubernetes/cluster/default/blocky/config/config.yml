@@ -8,7 +8,7 @@ log:
   privacy: false
 upstreams:
   init:
-    # Start serving DNS before initialization is complete t
+    # Start serving DNS before initialization is complete
     strategy: fast
   strategy: strict
   groups:
