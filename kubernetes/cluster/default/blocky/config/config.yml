@@ -25,28 +25,31 @@ bootstrapDns:
   - tcp+udp:1.0.0.1
 blocking:
   denylists:
-    # NOTE: More details at https://github.com/hagezi/dns-blocklists
+    # Blocklists
+    #   - Hagezi: https://github.com/hagezi/dns-blocklists
+    #   - OISD:   https://oisd.nl/setup/blocky
     hagezi:
       # Multi PRO - Extended protection
       - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt
       # Threat Intelligence Feeds - Medium version
       - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/tif.medium.txt
-    # hagezi-extra:
-    #   - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.plus.txt 
     adult:
       - https://nsfw.oisd.nl/domainswild
+  allowlists:
+    self:
+      - |
+        *.brhd.io
   clientGroupsBlock:
     default:
       - hagezi
     family:
       - hagezi
-      - hagezi-extra
       - adult
   loading:
     refreshPeriod: 8h
     concurrency: 1
     downloads:
-      timeout: 10m
+      timeout: 120s
       cooldown: 10s
       attempts: 5
 caching:
