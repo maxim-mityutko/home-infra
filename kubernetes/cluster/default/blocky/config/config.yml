@@ -30,9 +30,9 @@ blocking:
     #   - OISD:   https://oisd.nl/setup/blocky
     hagezi:
       # Multi PRO - Extended protection
-      - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt
       # Threat Intelligence Feeds - Medium version
-      - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/tif.medium.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.medium.txt
     adult:
       - https://nsfw.oisd.nl/domainswild
   allowlists:
