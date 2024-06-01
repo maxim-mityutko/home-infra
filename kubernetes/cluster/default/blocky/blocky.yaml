@@ -75,8 +75,9 @@ spec:
             - name: http
               protocol: TCP
               containerPort: 4000
-          # env:
-          #   - TZ=Europe/Amsterdam
+          env:
+            - name: TZ
+              value: Europe/Amsterdam
           volumeMounts:
             - name: blocky-config
               mountPath: /app/config.yml
