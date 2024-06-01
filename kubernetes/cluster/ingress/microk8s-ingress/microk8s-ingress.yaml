@@ -9,10 +9,10 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: Validate=false
 spec:
+  selector:	
+    matchLabels:	
+      name: nginx-ingress-microk8s
   template:
-    selector:	
-      matchLabels:	
-        name: nginx-ingress-microk8s
     containers:
       - name: nginx-ingress-microk8s
         ports:
