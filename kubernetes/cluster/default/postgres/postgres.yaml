@@ -47,7 +47,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: postgres
   strategy:
-    type: RollingUpdate
+    type: Recreate
   revisionHistoryLimit: 1
   template:
     metadata:
