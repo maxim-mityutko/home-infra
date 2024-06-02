@@ -32,7 +32,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: mariadb
   strategy:
-    type: RollingUpdate
+    type: Recreate
   revisionHistoryLimit: 1
   template:
     metadata:
@@ -56,6 +56,18 @@ spec:
           envFrom:
             - secretRef:
                 name: mariadb
+          readinessProbe:
+            exec:
+              command: ["mysql", "-u", "probe", "-e", "select 1"]
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+            periodSeconds: 30
+          livenessProbe:
+            exec:
+              command: ["mysqladmin", "-u", "probe", "ping"]
+            initialDelaySeconds: 45
+            timeoutSeconds: 2
+            periodSeconds: 30
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
