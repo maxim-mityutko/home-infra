@@ -26,3 +26,16 @@ spec:
   tls:
     - hosts:
         - omada.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: omada.brhd.io
+  namespace: default
+spec:
+  endpoints:
+    - dnsName: omada.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

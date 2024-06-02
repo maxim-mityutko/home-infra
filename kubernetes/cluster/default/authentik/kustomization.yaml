@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: default
 resources:
   - secret.yaml
+  - ingress.yaml
 helmCharts:
     - name: authentik
       namespace: default
