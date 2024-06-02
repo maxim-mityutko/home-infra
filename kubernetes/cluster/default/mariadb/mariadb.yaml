@@ -32,7 +32,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: mariadb
   strategy:
-    type: Recreate
+    type: RollingUpdate
   revisionHistoryLimit: 1
   template:
     metadata:

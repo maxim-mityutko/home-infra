@@ -47,7 +47,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: postgres
   strategy:
-    type: Recreate
+    type: RollingUpdate
   revisionHistoryLimit: 1
   template:
     metadata:
@@ -71,6 +71,16 @@ spec:
           envFrom:
             - secretRef:
                 name: postgres
+          readinessProbe:
+            exec:
+              command: ["psql", "-w", "-U", "probe", "-d", "postgres", "-c", "select 1"]
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+          livenessProbe:
+            exec:
+              command: ["psql", "-w", "-U", "probe", "-d", "postgres", "-c", "select 1"]
+            initialDelaySeconds: 45
+            timeoutSeconds: 2
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
