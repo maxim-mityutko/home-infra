@@ -82,4 +82,3 @@ data:
   SHOW_SERVER_LOGS: "false"
   SHOW_MONGODB_LOGS: "false"
   MANAGE_HTTPS_PORT: "8043"
-
