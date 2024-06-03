@@ -24,3 +24,16 @@ spec:
   tls:
     - hosts:
         - yt.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: yt.brhd.io
+  namespace: default
+spec:
+  endpoints:
+    - dnsName: yt.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
