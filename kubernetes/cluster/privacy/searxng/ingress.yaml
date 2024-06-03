@@ -29,7 +29,7 @@ apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: search.brhd.io
-  namespace: default
+  namespace: privacy
 spec:
   endpoints:
     - dnsName: search.brhd.io

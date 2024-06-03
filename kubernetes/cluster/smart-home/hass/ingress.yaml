@@ -29,7 +29,7 @@ apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: hass.brhd.io
-  namespace: default
+  namespace: smart-home
 spec:
   endpoints:
     - dnsName: hass.brhd.io
