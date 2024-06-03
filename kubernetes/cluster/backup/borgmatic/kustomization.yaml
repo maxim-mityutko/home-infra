@@ -15,5 +15,5 @@ configMapGenerator:
   - name: borgmatic-k8s-fs-config-yml
     files:
       - config/k8s-fs.yml
-    options:
-      disableNameSuffixHash: true
+    # options:
+    #   disableNameSuffixHash: true
