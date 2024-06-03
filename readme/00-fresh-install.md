@@ -9,6 +9,57 @@
 - select **microk8s** during Ubuntu installation
 - use LVM while setting up volumes
 
+### (Optional) Post-Installation RPi
+- configure **network**
+
+  ```shell
+  sudo nano /etc/netplan/00-installer-config.yaml
+  # use the below template
+  sudo chmod u=rw,g=,o= /etc/netplan/00-installer-config.yaml
+  sudo netplan try
+  ```
+  
+  Config template:
+  ```yaml
+    network:
+      ethernets:
+        eth0:
+          addresses:
+          - x.x.x.x/x        # node ip and mask
+          nameservers:
+            addresses:
+            - x.x.x.x        # gateway ip
+            search:
+            - brhd.io
+          routes:
+          - to: default
+            via: x.x.x.x    # gateway ip
+      version: 2
+    ```
+
+- enable **cgroups**
+
+  ```shell
+  sudo nano /boot/firmware/cmdline.txt
+  ```
+  Add options `cgroup_enable=memory cgroup_memory=1`
+
+- install **rpi kernel modules**
+
+  ```shell
+  sudo apt install linux-modules-extra-raspi
+
+  # On Ubuntu 24.04 the package with extra modules is not yet(?) available
+  sudo apt install linux-raspi
+  ```
+
+- install **microk8s**
+
+  ```shell
+  # Version 1.29 or whatever is currently installed on the master nodes
+  snap install microk8s --channel=1.29/stable --classic
+  ```
+
 ### Post-Installation
 - install dependencies
 
@@ -23,7 +74,7 @@
 - grant permissions on **microk8s** command
 
     ```shell
-    mdir ~/.kube
+    mkdir ~/.kube
     microk8s config > ~/.kube/config
 
     sudo usermod -a -G microk8s <user>
@@ -53,15 +104,6 @@
 
     sudo systemctl restart systemd-resolved
     ```
-
-### (Optional) Post-Installation RPi
-
-- enable **cgroups**
-
-  ```shell
-  sudo nano /boot/firmware/cmdline.txt
-  ```
-  Add options `cgroup_enable=memory cgroup_memory=1`
 
 ## Microk8s
 
