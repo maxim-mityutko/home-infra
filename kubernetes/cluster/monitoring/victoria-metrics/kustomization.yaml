@@ -64,11 +64,11 @@ helmCharts:
                 gnetId: 12124
                 revision: 1
                 datasource: VictoriaMetrics
-              # # Ingress
-              # nginx-ingress-controller:
-              #   gnetId: 9614
-              #   revision: 1
-              #   datasource: VictoriaMetrics
+              # Ingress
+              nginx-ingress-controller:
+                gnetId: 9614
+                revision: 1
+                datasource: VictoriaMetrics
               # Cluster
               nodeexporter:
                 gnetId: 1860
