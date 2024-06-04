@@ -6,6 +6,5 @@ configMapGenerator:
     files:
       - blocky.json # Ref: https://0xerr0r.github.io/blocky/latest/prometheus_grafana/
 generatorOptions:
-  disableNameSuffixHash: true
   labels:
     grafana-dashboard: "true"
