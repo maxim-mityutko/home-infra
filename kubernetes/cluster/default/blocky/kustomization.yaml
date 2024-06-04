@@ -4,7 +4,7 @@ namespace: default
 resources:
   - blocky.yaml
   - ingress.yaml
-  # - service-scrape.yaml
+  - service-scrape.yaml
 configMapGenerator:
   - name: blocky-config
     files:

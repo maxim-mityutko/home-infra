@@ -22,14 +22,14 @@ helmCharts:
           dashboards:
             default:
               # Kubernetes
-              k8s-system-api-server:
-                gnetId: 15761
-                revision: 16
-                datasource: VictoriaMetrics
-              k8s-system-coredns:
-                gnetId: 15762
-                revision: 18
-                datasource: VictoriaMetrics
+              # k8s-system-api-server:
+              #   gnetId: 15761
+              #   revision: 16
+              #   datasource: VictoriaMetrics
+              # k8s-system-coredns:
+              #   gnetId: 15762
+              #   revision: 18
+              #   datasource: VictoriaMetrics
               k8s-views-global:
                 gnetId: 15757
                 revision: 37
@@ -84,6 +84,11 @@ helmCharts:
                 gnetId: 20334
                 revision: 5
                 datasource: VictoriaMetrics
+              # Blocky
+              blocky:
+                gnetId: 13768
+                revision: 4
+                datasource: VictoriaMetrics
               # Longhorn
               # longhorn:
               #   gnetId: 16888
@@ -102,6 +107,8 @@ helmCharts:
           grafana.ini:
             server:
               root_url: https://grafana.brhd.io
+            panels:
+              disable_sanitize_html: true # pre-requisite Blocky
             auth:
                 signout_redirect_url: "https://auth.brhd.io/application/o/grafana/end-session/"
                 oauth_auto_login: true
@@ -244,14 +251,15 @@ helmCharts:
           enabled: true
           spec:
             interval: 60s
+        # Service Scrape (disabled)
         kubeApiServer:
-          enabled: true
+          enabled: false
           spec:
-            interval: 60s
             endpoints:
               - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
                 port: https
                 scheme: https
+                interval: 60s
                 tlsConfig:
                   caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
                   serverName: kubernetes
@@ -264,7 +272,7 @@ helmCharts:
                     regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
                     action: drop
         coreDns:
-          enabled: true
+          enabled: false
           service:
             enabled: false
           spec:
@@ -272,6 +280,15 @@ helmCharts:
               matchNames:
                 - kube-system
             selector:
+              # This config does not work with default CoreDNS deployment because
+              # 'matchLabels' are always configured to:
+              #   - app: stack-coredns
+              #   - app.kubernetes.io/instance: victoria-metrics
+              # Possible solutions are:
+              #   - deploy the service as part of VM deployment 'coreDns.service.enabled: true'
+              #   - create new service in 'kube-system' with required labels
+              #         https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/templates/servicemonitors/coredns.yaml
+              #   - create the fix for chart
               matchLabels:
                 k8s-app: kube-dns
             endpoints:
@@ -293,7 +310,6 @@ helmCharts:
                     replacement: coredns
                   - target_label: job
                     replacement: coredns
-        # Service Scrape (disabled)
         kubeScheduler:
           enabled: false
         kubeControllerManager:
