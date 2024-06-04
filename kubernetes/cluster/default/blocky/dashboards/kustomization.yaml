@@ -4,7 +4,7 @@ namespace: default
 configMapGenerator:
   - name: blocky-dashboard
     files:
-      - dashboards/blocky.json # Ref: https://0xerr0r.github.io/blocky/latest/prometheus_grafana/
+      - blocky.json # Ref: https://0xerr0r.github.io/blocky/latest/prometheus_grafana/
 generatorOptions:
   disableNameSuffixHash: true
   labels:
