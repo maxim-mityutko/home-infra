@@ -97,6 +97,7 @@ helmCharts:
           sidecar:
             dashboards:
               enabled: true
+              searchNamespace: ALL
               label: grafana-dashboard
           extraSecretMounts:
             - name: auth-generic-oauth-secret-mount

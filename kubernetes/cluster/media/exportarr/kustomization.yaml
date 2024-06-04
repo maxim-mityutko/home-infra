@@ -9,11 +9,9 @@ resources:
   - secret.yaml
 configMapGenerator:
   - name: media-dashboard
-    namespace: monitoring
     files:
       - dashboards/media.json # Ref: https://github.com/onedr0p/exportarr/blob/master/examples/grafana/dashboard2.json
 generatorOptions:
   disableNameSuffixHash: true
   labels:
     grafana-dashboard: "true"
-  
