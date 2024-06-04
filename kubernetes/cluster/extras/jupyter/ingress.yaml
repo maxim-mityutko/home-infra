@@ -34,3 +34,16 @@ spec:
   tls:
     - hosts:
         - jupyter.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: jupyter.brhd.io
+  namespace: extras
+spec:
+  endpoints:
+    - dnsName: jupyter.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
