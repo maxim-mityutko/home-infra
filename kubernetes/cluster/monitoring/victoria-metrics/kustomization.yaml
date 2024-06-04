@@ -64,21 +64,21 @@ helmCharts:
                 gnetId: 12124
                 revision: 1
                 datasource: VictoriaMetrics
-              # Ingress
-              nginx-ingress-controller:
-                gnetId: 9614
-                revision: 1
-                datasource: VictoriaMetrics
+              # # Ingress
+              # nginx-ingress-controller:
+              #   gnetId: 9614
+              #   revision: 1
+              #   datasource: VictoriaMetrics
               # Cluster
               nodeexporter:
                 gnetId: 1860
                 revision: 37
                 datasource: VictoriaMetrics
               # ArgoCD
-              argocd:
-                gnetId: 14584
-                revision: 1
-                datasource: VictoriaMetrics
+              # argocd:
+              #   gnetId: 14584
+              #   revision: 1
+              #   datasource: VictoriaMetrics
               # Borgmatic
               borgmatic:
                 gnetId: 20334
@@ -268,10 +268,16 @@ helmCharts:
           service:
             enabled: false
           spec:
-            interval: 60s
+            namespaceSelector:
+              matchNames:
+                - kube-system
+            selector:
+              matchLabels:
+                k8s-app: kube-dns
             endpoints:
               - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-                port: http-metrics
+                port: metrics
+                interval: 60s
                 relabelConfigs:
                   - source_labels: [ __meta_kubernetes_endpoint_port_name ]
                     target_label: endpoint
