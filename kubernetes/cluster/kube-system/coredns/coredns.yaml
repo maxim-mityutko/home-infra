@@ -4,7 +4,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: monitoring-coredns
+  name: coredns-metrics
   namespace: kube-system
   labels:
     app: stack-coredns
