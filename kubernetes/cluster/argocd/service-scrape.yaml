@@ -4,7 +4,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
   name: argocd-metrics
-  namespace: monitoring
+  namespace: argocd
 spec:
   endpoints:
     - port: metrics
