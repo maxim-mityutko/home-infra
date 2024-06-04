@@ -5,6 +5,7 @@ resources:
   - blocky.yaml
   - ingress.yaml
   - service-scrape.yaml
+  - dashboards/
 configMapGenerator:
   - name: blocky-config
     files:

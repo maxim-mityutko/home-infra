@@ -84,11 +84,6 @@ helmCharts:
                 gnetId: 20334
                 revision: 5
                 datasource: VictoriaMetrics
-              # Blocky
-              blocky:
-                gnetId: 13768
-                revision: 4
-                datasource: VictoriaMetrics
               # Longhorn
               # longhorn:
               #   gnetId: 16888
