@@ -4,6 +4,7 @@ namespace: monitoring
 resources:
   - rule-oom.yaml
   - secret.yaml
+  - dns-endpoint.yaml
 helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring
