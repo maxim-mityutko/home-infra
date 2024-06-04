@@ -1,0 +1,52 @@
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: alert-manager.brhd.io
+  namespace: monitoring
+spec:
+  endpoints:
+    - dnsName: alert-manager.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: vmsingle.brhd.io
+  namespace: monitoring
+spec:
+  endpoints:
+    - dnsName: vmsingle.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: vmalert.brhd.io
+  namespace: monitoring
+spec:
+  endpoints:
+    - dnsName: vmalert.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: vmagent.brhd.io
+  namespace: monitoring
+spec:
+  endpoints:
+    - dnsName: vmagent.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
