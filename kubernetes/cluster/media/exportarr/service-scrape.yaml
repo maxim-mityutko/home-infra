@@ -5,10 +5,10 @@ metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
   name: exportarr-radarr-metrics
-  namespace: monitoring
+  namespace: media
 spec:
   endpoints:
-    - port: monitoring
+    - port: metrics
       path: /metrics
       interval: 300s
       scrapeTimeout: 30s
@@ -22,10 +22,10 @@ metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
   name: exportarr-sonarr-metrics
-  namespace: monitoring
+  namespace: media
 spec:
   endpoints:
-    - port: monitoring
+    - port: metrics
       path: /metrics
       interval: 300s
       scrapeTimeout: 30s
@@ -39,10 +39,10 @@ metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
   name: exportarr-prowlarr-metrics
-  namespace: monitoring
+  namespace: media
 spec:
   endpoints:
-    - port: monitoring
+    - port: metrics
       path: /metrics
       interval: 300s
       scrapeTimeout: 30s

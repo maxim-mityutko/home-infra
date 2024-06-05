@@ -24,3 +24,16 @@ spec:
   tls:
     - hosts:
         - it-tools.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: it-tools.brhd.io
+  namespace: extras
+spec:
+  endpoints:
+    - dnsName: it-tools.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

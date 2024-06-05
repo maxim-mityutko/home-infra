@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: exportarr-prowlarr
-  namespace: monitoring
+  namespace: media
   labels:
     app.kubernetes.io/name: exportarr-prowlarr
 spec:
@@ -11,14 +11,14 @@ spec:
   selector:
     app.kubernetes.io/name: exportarr-prowlarr
   ports:
-    - name: monitoring
+    - name: metrics
       port: 9707
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: exportarr-prowlarr
-  namespace: monitoring
+  namespace: media
   labels:
     app.kubernetes.io/name: exportarr-prowlarr
 spec:
@@ -31,7 +31,7 @@ spec:
   revisionHistoryLimit: 1
   template:
     metadata:
-      namespace: monitoring
+      namespace: media
       labels:
         app.kubernetes.io/name: exportarr-prowlarr
     spec:
@@ -42,7 +42,7 @@ spec:
           args:
             - prowlarr
           ports:
-            - name: monitoring
+            - name: metrics
               containerPort: 9707
           resources:
             requests:
@@ -64,12 +64,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /healthz
-              port: monitoring
+              port: metrics
             failureThreshold: 5
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /healthz
-              port: monitoring
+              port: metrics
             failureThreshold: 5
             periodSeconds: 10

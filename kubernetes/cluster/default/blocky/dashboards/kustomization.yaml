@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+configMapGenerator:
+  - name: blocky-dashboard
+    files:
+      - blocky.json # Ref: https://0xerr0r.github.io/blocky/latest/prometheus_grafana/
+generatorOptions:
+  labels:
+    grafana-dashboard: "true"

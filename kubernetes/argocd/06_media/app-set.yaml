@@ -6,7 +6,7 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: git@github.com:maxim-mityutko/home-infra.git
+        repoURL: https://github.com/maxim-mityutko/home-infra.git
         revision: main
         directories:
           - path: kubernetes/cluster/media/*
@@ -22,7 +22,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: git@github.com:maxim-mityutko/home-infra.git
+        repoURL: https://github.com/maxim-mityutko/home-infra.git
         targetRevision: main
         path: "{{path}}"
       destination:

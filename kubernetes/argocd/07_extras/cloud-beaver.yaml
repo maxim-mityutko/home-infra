@@ -10,7 +10,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/extras/cloud-beaver
-    repoURL: 'git@github.com:maxim-mityutko/home-infra.git'
+    repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
   syncPolicy:

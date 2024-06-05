@@ -8,7 +8,8 @@ kind: Kustomization
 namespace: longhorn-system
 resources:
   - ingress.yaml
-  - victoria-metrics.yaml
+  # TODO: Enable service scrape if necessary
+  # - service-scrape.yaml
   - recurring-job.yaml
 helmCharts:
   - name: longhorn

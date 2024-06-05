@@ -25,3 +25,16 @@ spec:
   tls:
     - hosts:
         - speed.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: speed.brhd.io
+  namespace: monitoring
+spec:
+  endpoints:
+    - dnsName: speed.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

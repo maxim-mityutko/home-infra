@@ -26,3 +26,16 @@ spec:
   tls:
     - hosts:
         - mesh.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: mesh.brhd.io
+  namespace: extras
+spec:
+  endpoints:
+    - dnsName: mesh.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
