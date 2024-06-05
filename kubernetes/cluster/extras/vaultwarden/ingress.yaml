@@ -24,3 +24,16 @@ spec:
   tls:
     - hosts:
         - vault.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: vault.brhd.io
+  namespace: extras
+spec:
+  endpoints:
+    - dnsName: vault.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

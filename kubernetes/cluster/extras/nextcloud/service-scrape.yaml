@@ -3,15 +3,16 @@ kind: VMServiceScrape
 metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
-  name: argocd-metrics
-  namespace: monitoring
+  name: nextcloud-metrics
+  namespace: extras
 spec:
   endpoints:
     - port: metrics
+      interval: 300s
   namespaceSelector:
     matchNames:
-      - argocd
+      - extras
   selector:
     matchLabels:
       app.kubernetes.io/component: metrics
-      app.kubernetes.io/name: argocd-metrics
+      app.kubernetes.io/name: nextcloud
