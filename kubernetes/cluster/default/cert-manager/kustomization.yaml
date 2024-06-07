@@ -9,7 +9,7 @@ helmCharts:
     - name: cert-manager
       namespace: default
       releaseName: cert-manager
-      version: v1.14.5
+      version: v1.15.0
       repo: https://charts.jetstack.io
       # Values: https://artifacthub.io/packages/helm/cert-manager/cert-manager
       # Args:
