@@ -15,8 +15,11 @@ helmCharts:
         defaultDashboardEnabled: true
         fullnameOverride: stack
         victoria-metrics-operator:
+          enabled: true
           createCRD: true
           cleanupCRD: true
+        prometheus-operator-crds:
+          enabled: false
         grafana:
           enabled: true
           dashboards:
