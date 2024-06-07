@@ -9,14 +9,17 @@ helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring
       releaseName: victoria-metrics
-      version: 0.22.1
+      version: 0.23.0
       repo: https://victoriametrics.github.io/helm-charts/
       valuesInline:
         defaultDashboardEnabled: true
         fullnameOverride: stack
         victoria-metrics-operator:
+          enabled: true
           createCRD: true
           cleanupCRD: true
+        prometheus-operator-crds:
+          enabled: false
         grafana:
           enabled: true
           dashboards:
