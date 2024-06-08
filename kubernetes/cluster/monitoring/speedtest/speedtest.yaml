@@ -55,12 +55,9 @@ spec:
             limits:
               cpu: 500m
               memory: 200Mi
-          env:
-            - name: PGID
-              value: "1000"
-            - name: PUID
-              value: "1000"
           envFrom:
+            - configMapRef:
+                name: speedtest
             - secretRef:
                 name: speedtest
           ports:
@@ -69,9 +66,23 @@ spec:
           volumeMounts:
             - name: speedtest-config
               mountPath: /config
-      nodeSelector:
-        beta.kubernetes.io/arch: amd64
       volumes:
         - name: speedtest-config
           persistentVolumeClaim:
             claimName: speedtest-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: speedtest
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: speedtest
+data:
+  APP_TIMEZONE: "Europe/Amsterdam"
+  DISPLAY_TIMEZONE: "Europe/Amsterdam"
+  SPEEDTEST_SCHEDULE: "0 */6 * * *"
+  SPEEDTEST_SERVERS: "52365"
+  PRUNE_RESULTS_OLDER_THAN: "0"
+  PGID: "1000"
+  PUID: "1000"
