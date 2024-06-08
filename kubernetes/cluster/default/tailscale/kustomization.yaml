@@ -4,7 +4,6 @@ namespace: tailscale
 resources:
   - secret.yaml
   - connector.yaml
-  - volumes.yaml
 helmCharts:
   - name:  tailscale-operator
     namespace: tailscale
