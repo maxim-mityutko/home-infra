@@ -21,7 +21,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: subnet-router
-          image: tailscale/tailscale
+          image: tailscale/tailscale:v1.66.4
           resources:
             requests:
               cpu: 50m
