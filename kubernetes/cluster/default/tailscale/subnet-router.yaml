@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subnet-router
+  labels:
+    app.kubernetes.io/name: subnet-router
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: subnet-router
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: subnet-router
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: subnet-router
+          image: tailscale/tailscale
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            # limits:
+            #   cpu: 100m
+            #   memory: 50Mi
+          envFrom:
+            - configMapRef:
+                name: subnet-router
+            - secretRef:
+                name: subnet-router
+          volumeMounts:
+            - name: tailscale-subnet-router-data
+              mountPath: /var/lib/tailscale
+      volumes:
+        - name: tailscale-subnet-router-data
+          persistentVolumeClaim:
+            claimName: tailscale-subnet-router-data
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: subnet-router
+  namespace: tailscale
+  labels:
+    app.kubernetes.io/name: subnet-router
+data:
+  TS_ACCEPT_DNS: "false"
+  TS_AUTH_ONCE: "false"
+  TS_KUBE_SECRET: "subnet-router"
+  TS_STATE_DIR: "/var/lib/tailscale"

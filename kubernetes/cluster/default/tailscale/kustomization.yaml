@@ -3,6 +3,8 @@ kind: Kustomization
 namespace: tailscale
 resources:
   - secret.yaml
+  - subnet-router.yaml
+  - volumes.yaml
 helmCharts:
   - name:  tailscale-operator
     namespace: tailscale
