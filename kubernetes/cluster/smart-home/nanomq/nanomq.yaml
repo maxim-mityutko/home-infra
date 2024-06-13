@@ -67,6 +67,7 @@ spec:
               memory: 10Mi
             limits:
               memory: 50Mi
+              cpu: 50m
           ports:
             - containerPort: 1883 # mqtt-tcp-listener
 #            - containerPort: 8083 # mqtt-websocket-listener
@@ -86,17 +87,12 @@ spec:
               port: 1883
             initialDelaySeconds: 30
             periodSeconds: 10
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: nanomq
-  namespace: smart-home
-  labels:
-    app.kubernetes.io/name: nanomq
-data:
-  NANOMQ_LOG_LEVEL: "error"
-  NANOMQ_ALLOW_ANONYMOUS: "True"
-  NANOMQ_WEBSOCKET_ENABLE: "False"
-  NANOMQ_TLS_ENABLE: "False"
-  NANOMQ_HTTP_SERVER_ENABLE: "False"
+          volumeMounts:
+            - name: nanomq-config
+              mountPath: /etc/nanomq.conf
+              subPath: nanomq.conf
+              readOnly: true
+      volumes:
+        - name: nanomq-config
+          configMap:
+            name: nanomq
