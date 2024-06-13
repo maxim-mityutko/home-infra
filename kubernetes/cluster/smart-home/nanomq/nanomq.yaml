@@ -4,7 +4,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mqtt-tcp-listener
+  name: mqtt
   namespace: smart-home
   labels:
     app.kubernetes.io/name: nanomq
