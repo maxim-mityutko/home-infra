@@ -21,7 +21,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mqtt-tcp-listener-external
+  name: mqtt-external
   namespace: smart-home
   labels:
     app.kubernetes.io/name: nanomq
