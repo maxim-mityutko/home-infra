@@ -23,16 +23,16 @@ spec:
                   number: 8080
   tls:
     - hosts:
-        - zmqtt.brhd.io
+        - z2m.brhd.io
 ---
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: zmqtt.brhd.io
+  name: z2m.brhd.io
   namespace: default
 spec:
   endpoints:
-    - dnsName: zmqtt.brhd.io
+    - dnsName: z2m.brhd.io
       recordTTL: 86400
       recordType: CNAME
       targets:
