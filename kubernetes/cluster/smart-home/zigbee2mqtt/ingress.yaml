@@ -11,7 +11,7 @@ metadata:
     cert-manager.io/cluster-issuer: lets-encrypt
 spec:
   rules:
-    - host: zmqtt.brhd.io
+    - host: z2m.brhd.io
       http:
         paths:
           - pathType: Prefix
