@@ -76,6 +76,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Home Assistant** | Central control system for smart home with a focus on local control and privacy | [docs](https://www.home-assistant.io/docs/)<br/>[repo](https://github.com/home-assistant/core) | [docker](https://github.com/home-assistant/core/pkgs/container/home-assistant) |
 | **NanoMQ**         | An Ultra-lightweight and Blazing-fast MQTT Broker for IoT Edge                  |      [docs](https://nanomq.io/docs/en/latest/)<br/>[repo](https://github.com/emqx/nanomq)      |                 [docker](https://hub.docker.com/r/emqx/nanomq)                 |
 | **Shinobi**        | Open source network video recorder (NVR)                                        |   [docs](https://docs.shinobi.video/)<br/>[repo](https://gitlab.com/Shinobi-Systems/Shinobi)   |           [docker](https://gitlab.com/Shinobi-Systems/ShinobiDocker)           |
+| **Zigbee2MQTT**    | Zigbee to MQTT bridge                                                           |      [docs](https://www.zigbee2mqtt.io)<br/>[repo](https://github.com/Koenkk/zigbee2mqtt)      |             [docker](https://hub.docker.com/r/koenkk/zigbee2mqtt)              |
 
 
 ### Privacy
