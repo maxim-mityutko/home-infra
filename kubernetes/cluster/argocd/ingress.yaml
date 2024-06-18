@@ -27,3 +27,16 @@ spec:
   - hosts:
     - argocd.brhd.io
     secretName: argocd-secret # do not change, this is provided by Argo CD
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: argocd.brhd.io
+  namespace: argocd
+spec:
+  endpoints:
+    - dnsName: argocd.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

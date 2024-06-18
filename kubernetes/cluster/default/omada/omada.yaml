@@ -44,8 +44,8 @@ spec:
           name: omada
           resources:
             requests:
-              cpu: 400m
-              memory: 400Mi
+              cpu: 100m
+              memory: 1Gi
             limits:
               cpu: 1
               memory: 1.5Gi
@@ -57,8 +57,8 @@ spec:
               mountPath: /opt/tplink/EAPController/data
             - name: omada-logs
               mountPath: /opt/tplink/EAPController/logs
-            - name: omada-cert
-              mountPath: /cert
+            - name: omada-autobackup
+              mountPath: /opt/tplink/EAPController/data/autobackup
       volumes:
         - name: omada-data
           persistentVolumeClaim:
@@ -66,9 +66,9 @@ spec:
         - name: omada-logs
           persistentVolumeClaim:
             claimName: omada-logs
-        - name: omada-cert # Let's Encrypt Cert from cert-manager
+        - name: omada-autobackup
           persistentVolumeClaim:
-            claimName: omada-cert
+            claimName: omada-autobackup
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -82,4 +82,3 @@ data:
   SHOW_SERVER_LOGS: "false"
   SHOW_MONGODB_LOGS: "false"
   MANAGE_HTTPS_PORT: "8043"
-

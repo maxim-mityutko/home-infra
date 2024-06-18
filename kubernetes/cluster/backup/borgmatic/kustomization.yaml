@@ -5,15 +5,11 @@ resources:
   - secret.yaml
   - volumes.yaml
   - borgmatic.yaml
-  - victoria-metrics.yaml
+  - pod-scrape.yaml
 configMapGenerator:
   - name: borgmatic-k8s-db-config-yml
     files:
     - config/k8s-db.yml
-    options:
-      disableNameSuffixHash: true
   - name: borgmatic-k8s-fs-config-yml
     files:
       - config/k8s-fs.yml
-    options:
-      disableNameSuffixHash: true

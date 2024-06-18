@@ -24,3 +24,16 @@ spec:
   tls:
     - hosts:
         - nvr.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: nvr.brhd.io
+  namespace: smart-home
+spec:
+  endpoints:
+    - dnsName: nvr.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

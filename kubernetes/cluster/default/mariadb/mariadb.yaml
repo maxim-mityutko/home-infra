@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: db
-          image: mariadb:10.11.7
+          image: mariadb:10.11.8
           resources:
             requests:
               memory: 200M
@@ -56,6 +56,18 @@ spec:
           envFrom:
             - secretRef:
                 name: mariadb
+          readinessProbe:
+            exec:
+              command: ["mysql", "-u", "probe", "-e", "select 1"]
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+            periodSeconds: 30
+          livenessProbe:
+            exec:
+              command: ["mysqladmin", "-u", "probe", "ping"]
+            initialDelaySeconds: 45
+            timeoutSeconds: 2
+            periodSeconds: 30
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql

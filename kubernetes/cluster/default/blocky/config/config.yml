@@ -1,0 +1,74 @@
+ports:
+  dns: 53
+  http: 4000
+log:
+  level: info
+  format: text
+  timestamp: true
+  privacy: false
+upstreams:
+  init:
+    # Start serving DNS before initialization is complete
+    strategy: fast
+  strategy: strict
+  groups:
+    default:
+      # Cloudflare
+      - https://cloudflare-dns.com/dns-query
+      - 1.1.1.1
+      - 1.0.0.1
+      # Other
+      # - https://dns.google/dns-query
+      # - https://dns.digitale-gesellschaft.ch/dns-query
+    family:
+      # Cloudflare
+      - https://family.cloudflare-dns.com/dns-query
+      - 1.1.1.3
+      - 1.0.0.3
+      # Other
+      # - https://doh.cleanbrowsing.org/doh/family-filter/
+      # - 208.67.222.123  # OpenDNS - FamilyFilter
+      # - 208.67.220.123  # OpenDNS - FamilyFilter
+  timeout: 2s
+bootstrapDns:
+  - tcp+udp:1.1.1.1
+  - tcp+udp:1.0.0.1
+blocking:
+  denylists:
+    # Blocklists
+    #   - Hagezi: https://github.com/hagezi/dns-blocklists
+    #   - OISD:   https://oisd.nl/setup/blocky
+    hagezi:
+      # Multi PRO - Extended protection
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt
+      # Threat Intelligence Feeds - Medium version
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.medium.txt
+    adult:
+      - https://nsfw.oisd.nl/domainswild
+  allowlists:
+    self:
+      - |
+        *.brhd.io
+  clientGroupsBlock:
+    default:
+      - hagezi
+    family:
+      - hagezi
+      - adult
+  loading:
+    refreshPeriod: 8h
+    concurrency: 1
+    downloads:
+      timeout: 120s
+      cooldown: 10s
+      attempts: 5
+caching:
+  maxItemsCount: 10000
+  prefetching: true
+  prefetchMaxItemsCount: 1000
+  cacheTimeNegative: 30s
+redis:
+  required: false
+prometheus:
+  enable: true
+  path: /metrics

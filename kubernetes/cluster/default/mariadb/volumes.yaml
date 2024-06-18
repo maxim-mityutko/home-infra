@@ -3,15 +3,19 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
+  # name: mariadb-data-v2
   name: mariadb-data
   namespace: default
   labels:
     app.kubernetes.io/name: mariadb
+    # recurring-job.longhorn.io/source: enabled
+    # recurring-job.longhorn.io/weekly-backup: enabled
+    # recurring-job-group.longhorn.io/maintenance: enabled
 spec:
   accessModes:
   - ReadWriteOnce
-  - ReadOnlyMany
+  # storageClassName: longhorn
   storageClassName: nfs-subdir
   resources:
     requests:
-      storage: 10G
+      storage: 954Mi

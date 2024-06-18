@@ -1,5 +1,319 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: monitoring
 resources:
-  - monitoring
-  - kube-system
+  - rule-oom.yaml
+  - secret.yaml
+  - dns-endpoint.yaml
+helmCharts:
+    - name: victoria-metrics-k8s-stack
+      namespace: monitoring
+      releaseName: victoria-metrics
+      version: 0.23.2
+      repo: https://victoriametrics.github.io/helm-charts/
+      valuesInline:
+        defaultDashboardEnabled: true
+        fullnameOverride: stack
+        victoria-metrics-operator:
+          enabled: true
+          createCRD: true
+          cleanupCRD: true
+        prometheus-operator-crds:
+          enabled: false
+        grafana:
+          enabled: true
+          dashboards:
+            default:
+              # Kubernetes
+              # k8s-system-api-server:
+              #   gnetId: 15761
+              #   revision: 16
+              #   datasource: VictoriaMetrics
+              # k8s-system-coredns:
+              #   gnetId: 15762
+              #   revision: 18
+              #   datasource: VictoriaMetrics
+              k8s-views-global:
+                gnetId: 15757
+                revision: 37
+                datasource: VictoriaMetrics
+              k8s-views-namespaces:
+                gnetId: 15758
+                revision: 34
+                datasource: VictoriaMetrics
+              k8s-views-nodes:
+                gnetId: 15759
+                revision: 29
+                datasource: VictoriaMetrics
+              k8s-views-pods:
+                gnetId: 15760
+                revision: 28
+                datasource: VictoriaMetrics
+              # Persistent Volumes
+              k8s-storage-volumes-namespace:
+                gnetId: 11455
+                revision: 6
+                datasource: VictoriaMetrics
+              k8s-storage-volumes-cluster:
+                gnetId: 11454
+                revision: 14
+                datasource: VictoriaMetrics
+              # Network
+              kubernetes-networking-namespace-pods:
+                gnetId: 12125
+                revision: 1
+                datasource: VictoriaMetrics
+              kubernetes-networking-namespace-cluster:
+                gnetId: 12124
+                revision: 1
+                datasource: VictoriaMetrics
+              # Ingress
+              nginx-ingress-controller:
+                gnetId: 9614
+                revision: 1
+                datasource: VictoriaMetrics
+              # Cluster
+              nodeexporter:
+                gnetId: 1860
+                revision: 37
+                datasource: VictoriaMetrics
+              # ArgoCD
+              # argocd:
+              #   gnetId: 14584
+              #   revision: 1
+              #   datasource: VictoriaMetrics
+              # Borgmatic
+              borgmatic:
+                gnetId: 20334
+                revision: 5
+                datasource: VictoriaMetrics
+              # Longhorn
+              # longhorn:
+              #   gnetId: 16888
+              #   revision: 9
+              #   datasource: VictoriaMetrics
+          sidecar:
+            dashboards:
+              enabled: true
+              searchNamespace: ALL
+              label: grafana-dashboard
+          extraSecretMounts:
+            - name: auth-generic-oauth-secret-mount
+              secretName: grafana
+              defaultMode: 0440
+              mountPath: /etc/secrets/auth_generic_oauth
+              readOnly: true
+          grafana.ini:
+            server:
+              root_url: https://grafana.brhd.io
+            panels:
+              disable_sanitize_html: true # pre-requisite Blocky
+            auth:
+                signout_redirect_url: "https://auth.brhd.io/application/o/grafana/end-session/"
+                oauth_auto_login: true
+            auth.generic_oauth:
+                name: authentik
+                enabled: true
+                client_id: $__file{/etc/secrets/auth_generic_oauth/client_id}
+                client_secret: $__file{/etc/secrets/auth_generic_oauth/client_secret}
+                scopes: "openid profile email"
+                auth_url: "https://auth.brhd.io/application/o/authorize/"
+                token_url: "https://auth.brhd.io/application/o/token/"
+                api_url: "https://auth.brhd.io/application/o/userinfo/"
+                # Optionally map user groups to Grafana roles
+                role_attribute_path: contains(groups, 'Authentik Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
+            # auth.anonymous:
+            #   enabled: true
+            #   org_role: Editor
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public
+              cert-manager.io/cluster-issuer: lets-encrypt
+            hosts:
+              - grafana.brhd.io
+        alertmanager:
+          enabled: true
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public
+              cert-manager.io/cluster-issuer: lets-encrypt
+              nginx.ingress.kubernetes.io/auth-response-headers: >-
+                Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+              nginx.ingress.kubernetes.io/auth-signin: >-
+                https://alert-manager.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+              nginx.ingress.kubernetes.io/auth-snippet: |
+                proxy_set_header X-Forwarded-Host $http_host;
+              nginx.ingress.kubernetes.io/auth-url: >-
+                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+            hosts:
+              - alert-manager.brhd.io
+          spec:
+            externalURL: "https://alert-manager.brhd.io"
+            configSecret: alertmanager-config
+          monzoTemplate:
+            enabled: false
+
+        # VM Infra
+        vmsingle:
+          enabled: true
+          spec:
+            retentionPeriod: "6"
+            storage:
+              # Use custom storage class to leverage automatic PV creation
+              storageClassName: nfs-subdir
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public
+              cert-manager.io/cluster-issuer: lets-encrypt
+              nginx.ingress.kubernetes.io/auth-response-headers: >-
+                Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+              nginx.ingress.kubernetes.io/auth-signin: >-
+                https://vmsingle.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+              nginx.ingress.kubernetes.io/auth-snippet: |
+                proxy_set_header X-Forwarded-Host $http_host;
+              nginx.ingress.kubernetes.io/auth-url: >-
+                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+            hosts:
+              - vmsingle.brhd.io
+        vmalert:
+          enabled: true
+          spec:
+            resources:
+              requests:
+                cpu: 100m
+                memory: 200Mi
+              limits:
+                cpu: 200m
+                memory: 500Mi
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public
+              cert-manager.io/cluster-issuer: lets-encrypt
+              nginx.ingress.kubernetes.io/auth-response-headers: >-
+                Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+              nginx.ingress.kubernetes.io/auth-signin: >-
+                https://vmalert.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+              nginx.ingress.kubernetes.io/auth-snippet: |
+                proxy_set_header X-Forwarded-Host $http_host;
+              nginx.ingress.kubernetes.io/auth-url: >-
+                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+            hosts:
+              - vmalert.brhd.io
+        vmagent:
+          enabled: true
+          spec:
+            scrapeInterval: 60s
+            resources:
+              requests:
+                cpu: 100m
+                memory: 200Mi
+              limits:
+                cpu: 400m
+                memory: 500Mi
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: public
+              cert-manager.io/cluster-issuer: lets-encrypt
+              nginx.ingress.kubernetes.io/auth-response-headers: >-
+                Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+              nginx.ingress.kubernetes.io/auth-signin: >-
+                https://vmagent.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+              nginx.ingress.kubernetes.io/auth-snippet: |
+                proxy_set_header X-Forwarded-Host $http_host;
+              nginx.ingress.kubernetes.io/auth-url: >-
+                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+            hosts:
+              - vmagent.brhd.io
+
+        # Service Scrape
+        kubelet:
+          enabled: true
+          spec:
+            interval: 60s
+            relabelConfigs:
+              - source_labels: [ __metrics_path__ ]
+                target_label: metrics_path
+              - source_labels: [ __meta_kubernetes_node_name ]
+                target_label: node
+              - target_label: job
+                replacement: kubelet
+              - action: labeldrop # Drop labels created after roll out of GPU operator
+                regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
+        kube-state-metrics:
+          enabled: true
+        prometheus-node-exporter:
+          enabled: true
+          spec:
+            interval: 60s
+        # Service Scrape (disabled)
+        kubeApiServer:
+          enabled: false
+          spec:
+            endpoints:
+              - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+                port: https
+                scheme: https
+                interval: 60s
+                tlsConfig:
+                  caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                  serverName: kubernetes
+                # Drop high cardinality metrics
+                metricRelabelConfigs:
+                  - sourceLabels: ["__name__"]
+                    regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+                    action: drop
+                  - sourceLabels: ["__name__"]
+                    regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
+                    action: drop
+        coreDns:
+          enabled: false
+          service:
+            enabled: false
+          spec:
+            namespaceSelector:
+              matchNames:
+                - kube-system
+            selector:
+              # This config does not work with default CoreDNS deployment because
+              # 'matchLabels' are always configured to:
+              #   - app: stack-coredns
+              #   - app.kubernetes.io/instance: victoria-metrics
+              # Possible solutions are:
+              #   - deploy the service as part of VM deployment 'coreDns.service.enabled: true'
+              #   - create new service in 'kube-system' with required labels
+              #         https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/templates/servicemonitors/coredns.yaml
+              #   - create the fix for chart
+              matchLabels:
+                k8s-app: kube-dns
+            endpoints:
+              - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+                port: metrics
+                interval: 60s
+                relabelConfigs:
+                  - source_labels: [ __meta_kubernetes_endpoint_port_name ]
+                    target_label: endpoint
+                  - source_labels: [ __meta_kubernetes_endpoint_node_name ]
+                    target_label: node
+                  - source_labels: [ __meta_kubernetes_pod_name ]
+                    target_label: pod
+                  - source_labels: [ __meta_kubernetes_pod_container_name ]
+                    target_label: container
+                  - source_labels: [ __meta_kubernetes_namespace ]
+                    target_label: namespace
+                  - target_label: service
+                    replacement: coredns
+                  - target_label: job
+                    replacement: coredns
+        kubeScheduler:
+          enabled: false
+        kubeControllerManager:
+          enabled: false
+        kubeEtcd:
+          enabled: false
+        kubeProxy:
+          enabled: false

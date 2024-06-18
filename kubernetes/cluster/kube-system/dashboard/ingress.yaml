@@ -30,3 +30,16 @@ spec:
   tls:
     - hosts:
         - k8s.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: k8s.brhd.io
+  namespace: monitoring
+spec:
+  endpoints:
+    - dnsName: k8s.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

@@ -4,12 +4,14 @@ namespace: extras
 resources:
   - secret.yaml
   - pv-pvc-data.yaml
-  - vm-service-scrape.yaml
+  - dns-endpoint.yaml
+  # TODO: Enable service scrape if necessary
+  # - service-scrape.yaml
 helmCharts:
   - name: nextcloud
     namespace: extras
     releaseName: nextcloud
-    version: 4.6.8
+    version: 5.0.0
     repo: https://nextcloud.github.io/helm/
     valuesInline:
       ingress:
@@ -125,7 +127,7 @@ helmCharts:
         enabled: false
       # Metrics
       metrics:
-        enabled: true
+        enabled: false
       # Database
       internalDatabase:
         enabled: false
