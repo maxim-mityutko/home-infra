@@ -1,0 +1,40 @@
+---
+# Downloads
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: frigate-media
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: frigate
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: nfs
+  resources:
+    requests:
+      storage: 100G
+  selector:
+    matchLabels:
+      storage.target: frigate-media
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: frigate-media
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: frigate
+spec:
+  accessModes:
+    - ReadWriteMany
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  capacity:
+    storage: 100G
+  nfs:
+    server: nas.brhd.io
+    path: /mnt/spin/service/frigate
+  mountOptions:
+    - mountvers=4

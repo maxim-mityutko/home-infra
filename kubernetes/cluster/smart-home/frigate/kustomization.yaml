@@ -1,0 +1,134 @@
+# Ref: https://github.com/blakeblackshear/blakeshome-charts/blob/master/charts/frigate/values.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: smart-home
+resources:
+  - secret.yaml
+  - volume.yaml
+  - dns-endpoint.yaml
+helmCharts:
+  - name:  frigate
+    namespace: smart-home
+    releaseName:  frigate
+    version: 7.5.1
+    repo: https://blakeblackshear.github.io/blakeshome-charts/
+    valuesInline:
+      # Container and Environment
+      strategyType: Recreate
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        nvidia.com/gpu.present: "true"
+      image:
+        tag: 0.13.2-tensorrt # ??? amd64nvidia
+      env:
+        TZ: Europe/Amsterdam
+        YOLO_MODELS: yolov7-320
+        USE_FP16: "false"
+      envFromSecrets: frigate
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100M
+        # limits:
+      shmSize: 1Gi
+
+      # Hardware
+      coral:
+        enabled: false
+        # hostPath: "/dev/..."
+      gpu:
+        nvidia:
+          enabled: true
+
+      # Frigate Config
+      config: |
+        mqtt:
+          enabled: False
+          host: mqtt.smart-home.svc.cluster.local
+          port: 1883
+          topic_prefix: frigate
+          stats_interval: 60
+
+        detectors:
+          # coral:
+          #   type: edgetpu
+          #   device: usb
+          # https://docs.frigate.video/configuration/object_detectors/#nvidia-tensorrt-detector
+          tensor:
+            type: 0.13.2-tensorrt
+            device: 0
+        
+        model:
+          path: /config/model_cache/tensorrt/yolov7-320.trt
+          input_tensor: nchw
+          input_pixel_format: rgb
+          width: 320
+          height: 320
+
+        snapshots:
+          enabled: True
+          retain:
+            default: 30
+
+        record:
+          enabled: True
+          retain:
+            days: 7
+            mode: motion
+          events:
+            retain:
+              default: 30
+              mode: motion
+
+        cameras:
+          garden:
+            ffmpeg:
+              hwaccel_args: preset-nvidia-h264
+              inputs:
+                - path: rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream2
+                  roles:
+                    - detect
+                - path: rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream1
+                  roles:
+                    - record
+
+      # Ingress
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        annotations: 
+            kubernetes.io/ingress.class: public
+            cert-manager.io/cluster-issuer: lets-encrypt
+        hosts:
+          - host: frigate.brhd.io
+            paths: 
+              - "/"
+
+      # Persistence
+      persistence:
+        config:
+          enabled: true
+          storageClass: nfs-subdir
+          size: 10Gi
+          skipuninstall: true
+          accessMode: ReadWriteOnce
+        media:
+          enabled: true
+          existingClaim: frigate-media
+
+      # Probes
+      probes:
+        liveness:
+          enabled: true
+          initialDelaySeconds: 30
+          failureThreshold: 5
+          timeoutSeconds: 10
+        readiness:
+          enabled: true
+          initialDelaySeconds: 30
+          failureThreshold: 5
+          timeoutSeconds: 10
+        startup:
+          enabled: false
+          failureThreshold: 30
+          periodSeconds: 10
