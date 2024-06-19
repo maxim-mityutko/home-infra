@@ -81,7 +81,7 @@ helmCharts:
           enabled: True
           retain:
             days: 0   # No continuous recordings
-            mode: motion
+            mode: all
           events:
             retain:
               default: 30
