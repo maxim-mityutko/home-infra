@@ -80,7 +80,7 @@ helmCharts:
         record:
           enabled: True
           retain:
-            days: 7
+            days: 7   # TODO: potentially change to 0 to disable and focus on events only
             mode: motion
           events:
             retain:
@@ -93,6 +93,14 @@ helmCharts:
           enabled: False
           mode: continuous
 
+        go2rtc:
+          streams:
+            garden: 
+              - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream1
+            garden_substream:
+              - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream2
+
+
         # Ref: 
         #   - Camera Configuration:   https://docs.frigate.video/configuration/cameras
         #   - Hardware Acceleration:  https://docs.frigate.video/configuration/hardware_acceleration#nvidia-gpus
@@ -101,12 +109,12 @@ helmCharts:
             ffmpeg:
               hwaccel_args: preset-nvidia-h264
               inputs:
-                - path: rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream2
-                  roles:
-                    - detect
-                - path: rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream1
+                - path: rtsp://127.0.0.1:8554/garden
                   roles:
                     - record
+                - path: rtsp://127.0.0.1:8554/garden_substream
+                  roles:
+                    - detect
 
       # Ingress
       ingress:
