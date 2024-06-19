@@ -62,7 +62,7 @@ helmCharts:
           #   device: usb
           # https://docs.frigate.video/configuration/object_detectors/#nvidia-tensorrt-detector
           tensor:
-            type: 0.13.2-tensorrt
+            type: tensorrt
             device: 0
         
         model:
