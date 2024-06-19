@@ -24,7 +24,8 @@ helmCharts:
         TZ: Europe/Amsterdam
         YOLO_MODELS: yolov7-320
         USE_FP16: "false"
-      envFromSecrets: frigate
+      envFromSecrets: 
+        - frigate
       resources:
         requests:
           cpu: 100m
