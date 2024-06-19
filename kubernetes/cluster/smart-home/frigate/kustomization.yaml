@@ -96,7 +96,6 @@ helmCharts:
       # Ingress
       ingress:
         enabled: true
-        ingressClassName: nginx
         annotations: 
             kubernetes.io/ingress.class: public
             cert-manager.io/cluster-issuer: lets-encrypt
