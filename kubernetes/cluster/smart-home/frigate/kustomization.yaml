@@ -146,9 +146,9 @@ helmCharts:
           timeoutSeconds: 10
         readiness:
           enabled: true
-          initialDelaySeconds: 60
+          initialDelaySeconds: 10
           periodSeconds: 60
-          failureThreshold: 5
+          failureThreshold: 10
           timeoutSeconds: 10
         startup:
           enabled: false
