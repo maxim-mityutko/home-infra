@@ -24,6 +24,7 @@ metadata:
   namespace: smart-home
   labels:
     app.kubernetes.io/name: frigate
+    storage.target: frigate-media
 spec:
   accessModes:
     - ReadWriteMany
