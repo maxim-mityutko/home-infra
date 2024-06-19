@@ -80,7 +80,7 @@ helmCharts:
         record:
           enabled: True
           retain:
-            days: 7   # TODO: potentially change to 0 to disable and focus on events only
+            days: 0   # No continuous recordings
             mode: motion
           events:
             retain:
