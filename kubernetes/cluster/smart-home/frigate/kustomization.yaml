@@ -87,6 +87,12 @@ helmCharts:
               default: 30
               mode: motion
 
+        # Ref:
+        #   - Birdseye: https://docs.frigate.video/configuration/birdseye/
+        birdseye:
+          enabled: True
+          mode: continuous
+
         # Ref: 
         #   - Camera Configuration:   https://docs.frigate.video/configuration/cameras
         #   - Hardware Acceleration:  https://docs.frigate.video/configuration/hardware_acceleration#nvidia-gpus
