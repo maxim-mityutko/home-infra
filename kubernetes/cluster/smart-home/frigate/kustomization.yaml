@@ -50,7 +50,7 @@ helmCharts:
       #   - Full Reference Config: https://docs.frigate.video/configuration/reference/
       config: |
         mqtt:
-          enabled: False
+          enabled: True
           host: mqtt.smart-home.svc.cluster.local
           port: 1883
           topic_prefix: frigate
@@ -90,7 +90,7 @@ helmCharts:
         # Ref:
         #   - Birdseye: https://docs.frigate.video/configuration/birdseye/
         birdseye:
-          enabled: True
+          enabled: False
           mode: continuous
 
         # Ref: 
