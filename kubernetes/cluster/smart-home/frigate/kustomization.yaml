@@ -22,7 +22,7 @@ helmCharts:
         beta.kubernetes.io/arch: amd64
         nvidia.com/gpu.present: "true"
       image:
-        tag: 0.13.2-tensorrt # ??? amd64nvidia
+        tag: 0.13.2-tensorrt
       env:
         TZ: Europe/Amsterdam
         YOLO_MODELS: yolov7-320
@@ -116,7 +116,6 @@ helmCharts:
                   roles:
                     - detect
 
-      # Ingress
       ingress:
         enabled: true
         annotations: 
@@ -127,7 +126,6 @@ helmCharts:
             paths: 
               - "/"
 
-      # Persistence
       persistence:
         config:
           enabled: true
@@ -139,16 +137,17 @@ helmCharts:
           enabled: true
           existingClaim: frigate-media
 
-      # Probes
       probes:
         liveness:
-          enabled: false
-          initialDelaySeconds: 30
+          enabled: true
+          initialDelaySeconds: 60
+          periodSeconds: 60
           failureThreshold: 5
           timeoutSeconds: 10
         readiness:
-          enabled: false
-          initialDelaySeconds: 30
+          enabled: true
+          initialDelaySeconds: 60
+          periodSeconds: 60
           failureThreshold: 5
           timeoutSeconds: 10
         startup:
