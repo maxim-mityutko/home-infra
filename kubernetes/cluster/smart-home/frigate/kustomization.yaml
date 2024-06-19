@@ -1,4 +1,7 @@
-# Ref: https://github.com/blakeblackshear/blakeshome-charts/blob/master/charts/frigate/values.yaml
+# Ref:
+#   - Helm Chart:   https://github.com/blakeblackshear/blakeshome-charts/tree/master/charts/frigate
+#   - Helm Values:  https://github.com/blakeblackshear/blakeshome-charts/blob/master/charts/frigate/values.yaml
+#   - Containers:   https://github.com/blakeblackshear/frigate/pkgs/container/frigate
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: smart-home
@@ -42,6 +45,9 @@ helmCharts:
           enabled: true
 
       # Frigate Config
+      # Ref:
+      #   - Basic Configuration: https://docs.frigate.video/configuration/
+      #   - Full Reference Config: https://docs.frigate.video/configuration/reference/
       config: |
         mqtt:
           enabled: False
@@ -81,6 +87,9 @@ helmCharts:
               default: 30
               mode: motion
 
+        # Ref: 
+        #   - Camera Configuration:   https://docs.frigate.video/configuration/cameras
+        #   - Hardware Acceleration:  https://docs.frigate.video/configuration/hardware_acceleration#nvidia-gpus
         cameras:
           garden:
             ffmpeg:
@@ -119,12 +128,12 @@ helmCharts:
       # Probes
       probes:
         liveness:
-          enabled: true
+          enabled: false
           initialDelaySeconds: 30
           failureThreshold: 5
           timeoutSeconds: 10
         readiness:
-          enabled: true
+          enabled: false
           initialDelaySeconds: 30
           failureThreshold: 5
           timeoutSeconds: 10
