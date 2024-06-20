@@ -79,6 +79,11 @@ helmCharts:
           filters:
             person:
               threshold: 0.76
+        
+        motion:
+          mask:
+            - 640,480,557,480,486,287,491,0,640,0
+            - 0,324,88,130,213,75,217,0,0,0
 
         snapshots:
           enabled: True
@@ -92,8 +97,8 @@ helmCharts:
             days: 0   # No continuous recordings
             mode: all
           events:
-            pre_capture: 5
-            post_capture: 5
+            pre_capture: 10
+            post_capture: 10
             retain:
               default: 30
               mode: motion
