@@ -58,7 +58,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: postgres
-          image: postgres:15.7
+          image: postgres:16.3
           resources:
             requests:
               memory: 50Mi
