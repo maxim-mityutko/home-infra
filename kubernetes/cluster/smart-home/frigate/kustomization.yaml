@@ -72,8 +72,17 @@ helmCharts:
           width: 320
           height: 320
 
+        objects:
+          track:
+            - person
+            - cat
+          filters:
+            person:
+              threshold: 0.76
+
         snapshots:
           enabled: True
+          bounding_box: True
           retain:
             default: 30
 
@@ -83,6 +92,8 @@ helmCharts:
             days: 0   # No continuous recordings
             mode: all
           events:
+            pre_capture: 5
+            post_capture: 5
             retain:
               default: 30
               mode: motion
