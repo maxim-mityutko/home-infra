@@ -1,0 +1,14 @@
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  # TODO: change to NVR when Shinobi is decomissioned
+  name: frigate.brhd.io
+  namespace: extras
+spec:
+  endpoints:
+    - dnsName: frigate.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
