@@ -5,7 +5,7 @@ helmCharts:
   - name: sealed-secrets
     namespace: default
     releaseName: sealed-secrets
-    version: 2.15.4
+    version: 2.16.0
     repo: https://bitnami-labs.github.io/sealed-secrets
     includeCRDs: true
     valuesInline:
