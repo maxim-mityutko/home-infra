@@ -124,6 +124,10 @@ helmCharts:
         #   - Hardware Acceleration:  https://docs.frigate.video/configuration/hardware_acceleration#nvidia-gpus
         cameras:
           garden:
+            record:
+              events:
+                required_zones:
+                  - entire_garden
             motion:
               mask:
                 - 640,480,557,480,486,287,491,0,640,0
