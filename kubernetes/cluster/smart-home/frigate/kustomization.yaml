@@ -71,6 +71,9 @@ helmCharts:
           input_pixel_format: rgb
           width: 320
           height: 320
+        
+        ffmpeg:
+          hwaccel_args: preset-nvidia-h264
 
         objects:
           track:
@@ -80,14 +83,11 @@ helmCharts:
             person:
               threshold: 0.76
         
-        motion:
-          mask:
-            - 640,480,557,480,486,287,491,0,640,0
-            - 0,324,88,130,213,75,217,0,0,0
-
         snapshots:
           enabled: True
           bounding_box: True
+          required_zones:
+            - entire_garden
           retain:
             default: 30
 
@@ -99,6 +99,8 @@ helmCharts:
           events:
             pre_capture: 5
             post_capture: 10
+            required_zones:
+              - entire_garden
             retain:
               default: 30
               mode: motion
@@ -122,8 +124,17 @@ helmCharts:
         #   - Hardware Acceleration:  https://docs.frigate.video/configuration/hardware_acceleration#nvidia-gpus
         cameras:
           garden:
+            motion:
+              mask:
+                - 640,480,557,480,486,287,491,0,640,0
+                - 0,324,88,130,213,75,217,0,0,0
+            zones:
+              entire_garden:
+                coordinates: 132,295,326,250,410,169,475,193,640,346,640,480,157,480
+            mqtt:
+              required_zones:
+                - entire_garden
             ffmpeg:
-              hwaccel_args: preset-nvidia-h264
               inputs:
                 - path: rtsp://127.0.0.1:8554/garden
                   roles:
