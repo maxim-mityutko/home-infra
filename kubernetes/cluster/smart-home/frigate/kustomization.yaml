@@ -80,11 +80,6 @@ helmCharts:
             person:
               threshold: 0.76
         
-        motion:
-          mask:
-            - 640,480,557,480,486,287,491,0,640,0
-            - 0,324,88,130,213,75,217,0,0,0
-
         snapshots:
           enabled: True
           bounding_box: True
@@ -122,6 +117,20 @@ helmCharts:
         #   - Hardware Acceleration:  https://docs.frigate.video/configuration/hardware_acceleration#nvidia-gpus
         cameras:
           garden:
+            motion:
+              mask:
+                - 640,480,557,480,486,287,491,0,640,0
+                - 0,324,88,130,213,75,217,0,0,0
+            zones:
+              entire_garden:
+                coordinates: 132,295,416,219,640,346,640,480,157,480
+            record:
+              events:
+                required_zones:
+                  - entire_garden
+              snapshots:
+                required_zones:
+                  - entire_garden
             ffmpeg:
               hwaccel_args: preset-nvidia-h264
               inputs:
