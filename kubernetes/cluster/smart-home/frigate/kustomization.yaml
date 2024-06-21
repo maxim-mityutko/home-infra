@@ -131,6 +131,9 @@ helmCharts:
             zones:
               entire_garden:
                 coordinates: 132,295,326,250,410,169,475,193,640,346,640,480,157,480
+            mqtt:
+              required_zones:
+                - entire_garden
             ffmpeg:
               inputs:
                 - path: rtsp://127.0.0.1:8554/garden
