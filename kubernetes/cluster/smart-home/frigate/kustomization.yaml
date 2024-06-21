@@ -71,6 +71,9 @@ helmCharts:
           input_pixel_format: rgb
           width: 320
           height: 320
+        
+        ffmpeg:
+          hwaccel_args: preset-nvidia-h264
 
         objects:
           track:
@@ -127,9 +130,8 @@ helmCharts:
                 - 0,324,88,130,213,75,217,0,0,0
             zones:
               entire_garden:
-                coordinates: 132,295,416,219,640,346,640,480,157,480
+                coordinates: 132,295,326,250,410,169,475,193,640,346,640,480,157,480
             ffmpeg:
-              hwaccel_args: preset-nvidia-h264
               inputs:
                 - path: rtsp://127.0.0.1:8554/garden
                   roles:
