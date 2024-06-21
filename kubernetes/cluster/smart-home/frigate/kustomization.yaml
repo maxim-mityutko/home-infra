@@ -86,8 +86,8 @@ helmCharts:
         snapshots:
           enabled: True
           bounding_box: True
-          # required_zones:
-          #   - entire_garden
+          required_zones:
+            - entire_garden
           retain:
             default: 30
 
@@ -99,8 +99,8 @@ helmCharts:
           events:
             pre_capture: 5
             post_capture: 10
-            # required_zones:
-            #   - entire_garden
+            required_zones:
+              - entire_garden
             retain:
               default: 30
               mode: motion
@@ -124,10 +124,6 @@ helmCharts:
         #   - Hardware Acceleration:  https://docs.frigate.video/configuration/hardware_acceleration#nvidia-gpus
         cameras:
           garden:
-            record:
-              events:
-                required_zones:
-                  - entire_garden
             motion:
               mask:
                 - 640,480,557,480,486,287,491,0,640,0
