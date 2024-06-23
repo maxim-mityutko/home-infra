@@ -9,6 +9,7 @@ resources:
   - secret.yaml
   - volume.yaml
   - dns-endpoint.yaml
+  - service.yaml
 helmCharts:
   - name:  frigate
     namespace: smart-home
