@@ -48,6 +48,9 @@ spec:
               memory: 700Mi
             limits:
               memory: 1200Mi
+          envFrom:
+            - configMapRef:
+                name: home-assistant
           volumeMounts:
             - name: home-assistant-config
               mountPath: /config
@@ -62,3 +65,13 @@ spec:
         - name: home-assistant-secret
           secret:
             secretName: home-assistant
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: home-assistant
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: home-assistant
+data:
+  TZ: Europe/Amsterdam
