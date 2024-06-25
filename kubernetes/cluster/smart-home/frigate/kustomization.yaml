@@ -76,6 +76,11 @@ helmCharts:
         ffmpeg:
           hwaccel_args: preset-nvidia-h264
 
+        detect:
+          enabled: True
+          fps: 5
+          max_disappeared: 30
+
         objects:
           track:
             - person
@@ -131,7 +136,7 @@ helmCharts:
                 - 0,324,88,130,213,75,217,0,0,0
             zones:
               entire_garden:
-                coordinates: 132,295,326,250,410,169,475,193,640,346,640,480,157,480
+                coordinates: 126,282,318,247,419,99,479,98,640,346,640,480,133,480
             mqtt:
               required_zones:
                 - entire_garden
