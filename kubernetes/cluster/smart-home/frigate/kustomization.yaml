@@ -60,7 +60,7 @@ helmCharts:
         detectors:
           coral:
             type: edgetpu
-            device: pci:0
+            # device: pci:0
           # https://docs.frigate.video/configuration/object_detectors/#nvidia-tensorrt-detector
           # tensor:
           #   type: tensorrt
