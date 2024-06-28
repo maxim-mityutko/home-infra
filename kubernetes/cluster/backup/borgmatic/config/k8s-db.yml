@@ -18,13 +18,13 @@ postgresql_databases:
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     format: tar
-mariadb_databases:
-  - name: all
-    hostname: mariadb.default.svc.cluster.local
-    username: ${MARIADB_USER}
-    password: ${MARIADB_PASSWORD}
-    format: sql
-    add_drop_database: true
+# mariadb_databases:
+#   - name: all
+#     hostname: mariadb.default.svc.cluster.local
+#     username: ${MARIADB_USER}
+#     password: ${MARIADB_PASSWORD}
+#     format: sql
+#     add_drop_database: true
 sqlite_databases:
   - name: jellyfin
     path: /mnt/k8s/pods/jellyfin-config/data/jellyfin.db
@@ -34,6 +34,8 @@ sqlite_databases:
     path: /mnt/k8s/pods/jellyseerr-config/db/db.sqlite3
   - name: stash
     path: /mnt/k8s/pods/stash-config/stash-go.sqlite
+  - name: stash
+    path: /mnt/k8s/pods/frigate-config/frigate.db
 apprise:
   services:
     - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
