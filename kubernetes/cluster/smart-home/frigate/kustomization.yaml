@@ -23,6 +23,7 @@ helmCharts:
         beta.kubernetes.io/arch: amd64
         nvidia.com/gpu.present: "true"
       image:
+        # GPU: If Coral TPU is used `tensorrt` image is unnecessary
         tag: 0.13.2-tensorrt
       env:
         TZ: Europe/Amsterdam
@@ -41,6 +42,7 @@ helmCharts:
       coral:
         enabled: true
         hostPath: "/dev/apex_0"
+      # GPU: If Coral TPU is used NVIDIA drivers are unnecessary
       gpu:
         nvidia:
           enabled: true
@@ -58,22 +60,31 @@ helmCharts:
           stats_interval: 60
 
         detectors:
+          # Coral TPU
           coral:
             type: edgetpu
+
+          # GPU
           # https://docs.frigate.video/configuration/object_detectors/#nvidia-tensorrt-detector
           # tensor:
           #   type: tensorrt
           #   device: 0
         
         model:
+          # GPU
           # path: /config/model_cache/tensorrt/yolov7-320.trt
           # input_tensor: nchw
+
+          # Coral TPU
           path: /edgetpu_model.tflite
           input_tensor: nhwc
+
+          # General Config
           input_pixel_format: rgb
           width: 320
           height: 320
         
+        # GPU
         # ffmpeg:
           # hwaccel_args: preset-nvidia-h264
 
