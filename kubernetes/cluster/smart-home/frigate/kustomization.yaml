@@ -39,8 +39,8 @@ helmCharts:
 
       # Hardware
       coral:
-        enabled: false
-        # hostPath: "/dev/..."
+        enabled: true
+        hostPath: "/dev/apex_0"
       gpu:
         nvidia:
           enabled: true
@@ -58,13 +58,13 @@ helmCharts:
           stats_interval: 60
 
         detectors:
-          # coral:
-          #   type: edgetpu
-          #   device: usb
+          coral:
+            type: edgetpu
+            device: pci:0
           # https://docs.frigate.video/configuration/object_detectors/#nvidia-tensorrt-detector
-          tensor:
-            type: tensorrt
-            device: 0
+          # tensor:
+          #   type: tensorrt
+          #   device: 0
         
         model:
           path: /config/model_cache/tensorrt/yolov7-320.trt
@@ -74,7 +74,8 @@ helmCharts:
           height: 320
         
         ffmpeg:
-          hwaccel_args: preset-nvidia-h264
+          # hwaccel_args: preset-nvidia-h264
+          hwaccel_args: preset-vaapi
 
         detect:
           enabled: True
