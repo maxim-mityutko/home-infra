@@ -67,8 +67,9 @@ helmCharts:
           #   device: 0
         
         model:
-          path: /config/model_cache/tensorrt/yolov7-320.trt
-          input_tensor: nchw
+          # path: /config/model_cache/tensorrt/yolov7-320.trt
+          path: /edgetpu_model.tflite
+          # input_tensor: nchw
           input_pixel_format: rgb
           width: 320
           height: 320
