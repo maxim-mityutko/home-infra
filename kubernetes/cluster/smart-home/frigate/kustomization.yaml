@@ -74,7 +74,7 @@ helmCharts:
           width: 320
           height: 320
         
-        ffmpeg:
+        # ffmpeg:
           # hwaccel_args: preset-nvidia-h264
 
         detect:
