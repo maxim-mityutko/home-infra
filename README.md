@@ -10,12 +10,12 @@ After the initial steps are complete, deployments are handled via ArgoCD applica
 defined in the `kubernetes\argocd`.
 
 ## Hardware:
-* TrueNAS Scale Host: CPU Intel i5-3470 / RAM 24 GB / 2 x SSD 500 GB MIRROR / 3 x HDD 12TB RAIDZ1 / NVIDIA Tesla P10
+* TrueNAS Scale Host: CPU Intel i5-3470 / RAM 24 GB / 2 x SSD 500 GB MIRROR / 3 x HDD 12TB RAIDZ1 / NVIDIA Tesla P4 / Google Coral TPU M.2
   * VM1: RAM 8GB
   * VM2: RAM 6GB
-* ProxMox Host:  CPU Intel i7-6700 / RAM 16 GB / 1 x NVME 500 GB
+* (Spare) ProxMox Host:  CPU Intel i7-6700 / RAM 16 GB / 1 x NVME 500 GB
   * VM1: RAM 8GB
-* Raspberry Pi 4B / RAM 8GB
+* Raspberry Pi 4B 8GB
 * Upcoming: [Compute Blade](https://www.kickstarter.com/projects/uptimelab/compute-blade) with CM4 8GB and 500 GB NVME x 4
 
 ## Services
