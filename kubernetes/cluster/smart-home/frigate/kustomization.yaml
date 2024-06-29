@@ -99,7 +99,7 @@ helmCharts:
             - cat
           filters:
             person:
-              threshold: 0.76
+              threshold: 0.70
         
         snapshots:
           enabled: True
