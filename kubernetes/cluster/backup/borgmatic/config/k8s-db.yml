@@ -34,7 +34,7 @@ sqlite_databases:
     path: /mnt/k8s/pods/jellyseerr-config/db/db.sqlite3
   - name: stash
     path: /mnt/k8s/pods/stash-config/stash-go.sqlite
-  - name: stash
+  - name: frigate
     path: /mnt/k8s/pods/frigate-config/frigate.db
 apprise:
   services:
