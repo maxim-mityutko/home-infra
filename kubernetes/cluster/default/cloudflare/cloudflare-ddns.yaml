@@ -1,6 +1,5 @@
 # Service: Cloudflare DDNS
 # Label: app.kubernetes.io/name: cloudflare-ddns
-# Comment: Current version has placeholders for secrets (base64 encoded) within this manifest
 # T-Mobile Ranges: https://ipinfo.io/AS50266
 # Cloudflare token is usable from: 5.132.0.0/17
 ---
@@ -49,4 +48,4 @@ metadata:
     app.kubernetes.io/name: cloudflare-ddns
 data:
   ZONE: brhd.io
-  CRON: 0 * * * *
+  CRON: 0 0/6 * * *
