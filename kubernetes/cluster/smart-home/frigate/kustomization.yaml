@@ -23,6 +23,7 @@ helmCharts:
         beta.kubernetes.io/arch: amd64
         nvidia.com/gpu.present: "true"
       image:
+        # GPU: If Coral TPU is used `tensorrt` image is unnecessary
         tag: 0.13.2-tensorrt
       env:
         TZ: Europe/Amsterdam
@@ -34,13 +35,13 @@ helmCharts:
         requests:
           cpu: 100m
           memory: 100M
-        # limits:
       shmSize: 1Gi
 
       # Hardware
       coral:
-        enabled: false
-        # hostPath: "/dev/..."
+        enabled: true
+        hostPath: "/dev/apex_0"
+      # GPU: If Coral TPU is used NVIDIA drivers are unnecessary
       gpu:
         nvidia:
           enabled: true
@@ -58,23 +59,33 @@ helmCharts:
           stats_interval: 60
 
         detectors:
-          # coral:
-          #   type: edgetpu
-          #   device: usb
+          # Coral TPU
+          coral:
+            type: edgetpu
+
+          # GPU
           # https://docs.frigate.video/configuration/object_detectors/#nvidia-tensorrt-detector
-          tensor:
-            type: tensorrt
-            device: 0
+          # tensor:
+          #   type: tensorrt
+          #   device: 0
         
         model:
-          path: /config/model_cache/tensorrt/yolov7-320.trt
-          input_tensor: nchw
+          # Coral TPU
+          path: /edgetpu_model.tflite
+          input_tensor: nhwc
+
+          # GPU
+          # path: /config/model_cache/tensorrt/yolov7-320.trt
+          # input_tensor: nchw
+
+          # General Config
           input_pixel_format: rgb
           width: 320
           height: 320
         
-        ffmpeg:
-          hwaccel_args: preset-nvidia-h264
+        ffmpeg: {}
+          # GPU
+          # hwaccel_args: preset-nvidia-h264
 
         detect:
           enabled: True
@@ -87,7 +98,7 @@ helmCharts:
             - cat
           filters:
             person:
-              threshold: 0.76
+              threshold: 0.70
         
         snapshots:
           enabled: True
@@ -123,7 +134,6 @@ helmCharts:
               - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream1
             garden_substream:
               - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream2
-
 
         # Ref: 
         #   - Camera Configuration:   https://docs.frigate.video/configuration/cameras
