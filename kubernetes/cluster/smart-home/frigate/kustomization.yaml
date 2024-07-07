@@ -35,7 +35,6 @@ helmCharts:
         requests:
           cpu: 100m
           memory: 100M
-        # limits:
       shmSize: 1Gi
 
       # Hardware
@@ -71,21 +70,21 @@ helmCharts:
           #   device: 0
         
         model:
-          # GPU
-          # path: /config/model_cache/tensorrt/yolov7-320.trt
-          # input_tensor: nchw
-
           # Coral TPU
           path: /edgetpu_model.tflite
           input_tensor: nhwc
+
+          # GPU
+          # path: /config/model_cache/tensorrt/yolov7-320.trt
+          # input_tensor: nchw
 
           # General Config
           input_pixel_format: rgb
           width: 320
           height: 320
         
-        # GPU
-        # ffmpeg:
+        ffmpeg: {}
+          # GPU
           # hwaccel_args: preset-nvidia-h264
 
         detect:
@@ -135,7 +134,6 @@ helmCharts:
               - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream1
             garden_substream:
               - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream2
-
 
         # Ref: 
         #   - Camera Configuration:   https://docs.frigate.video/configuration/cameras
