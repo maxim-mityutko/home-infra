@@ -10,12 +10,12 @@ After the initial steps are complete, deployments are handled via ArgoCD applica
 defined in the `kubernetes\argocd`.
 
 ## Hardware:
-* TrueNAS Scale Host: CPU Intel i5-3470 / RAM 24 GB / 2 x SSD 500 GB MIRROR / 3 x HDD 12TB RAIDZ1 / NVIDIA Tesla P10
+* TrueNAS Scale Host: CPU Intel i5-3470 / RAM 24 GB / 2 x SSD 500 GB MIRROR / 3 x HDD 12TB RAIDZ1 / NVIDIA Tesla P4 / Google Coral TPU M.2
   * VM1: RAM 8GB
   * VM2: RAM 6GB
-* ProxMox Host:  CPU Intel i7-6700 / RAM 16 GB / 1 x NVME 500 GB
+* (Spare) ProxMox Host:  CPU Intel i7-6700 / RAM 16 GB / 1 x NVME 500 GB
   * VM1: RAM 8GB
-* Raspberry Pi 4B / RAM 8GB
+* Raspberry Pi 4B 8GB
 * Upcoming: [Compute Blade](https://www.kickstarter.com/projects/uptimelab/compute-blade) with CM4 8GB and 500 GB NVME x 4
 
 ## Services
@@ -75,7 +75,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Tuya Gateway**   | Lightweight gateway for Tuya / Smartlife                                        |                     [repo](https://github.com/maxim-mityutko/tuya-gateway)                     |            [docker](https://hub.docker.com/r/beerhead/tuya-gateway)            |
 | **Home Assistant** | Central control system for smart home with a focus on local control and privacy | [docs](https://www.home-assistant.io/docs/)<br/>[repo](https://github.com/home-assistant/core) | [docker](https://github.com/home-assistant/core/pkgs/container/home-assistant) |
 | **NanoMQ**         | An Ultra-lightweight and Blazing-fast MQTT Broker for IoT Edge                  |      [docs](https://nanomq.io/docs/en/latest/)<br/>[repo](https://github.com/emqx/nanomq)      |                 [docker](https://hub.docker.com/r/emqx/nanomq)                 |
-| **Shinobi**        | Open source network video recorder (NVR)                                        |   [docs](https://docs.shinobi.video/)<br/>[repo](https://gitlab.com/Shinobi-Systems/Shinobi)   |           [docker](https://gitlab.com/Shinobi-Systems/ShinobiDocker)           |
+| **Frigate**        | Open source NVR built around real-time AI object detection                                        |   [docs](https://docs.frigate.video)<br/>[repo](https://github.com/blakeblackshear/frigate)   |           [helm](https://github.com/blakeblackshear/blakeshome-charts/tree/master)           |
 | **Zigbee2MQTT**    | Zigbee to MQTT bridge                                                           |      [docs](https://www.zigbee2mqtt.io)<br/>[repo](https://github.com/Koenkk/zigbee2mqtt)      |             [docker](https://hub.docker.com/r/koenkk/zigbee2mqtt)              |
 
 

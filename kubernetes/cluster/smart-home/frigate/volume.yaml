@@ -1,12 +1,11 @@
-# NVR
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: nvr
+  name: frigate-media
   namespace: smart-home
   labels:
-    app.kubernetes.io/name: nvr
+    app.kubernetes.io/name: frigate
 spec:
   accessModes:
   - ReadWriteMany
@@ -16,16 +15,16 @@ spec:
       storage: 100G
   selector:
     matchLabels:
-      storage.target: nvr
+      storage.target: frigate-media
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nvr
+  name: frigate-media
   namespace: smart-home
   labels:
-    app.kubernetes.io/name: nvr
-    storage.target: nvr
+    app.kubernetes.io/name: frigate
+    storage.target: frigate-media
 spec:
   accessModes:
     - ReadWriteMany
@@ -36,6 +35,6 @@ spec:
     storage: 100G
   nfs:
     server: nas.brhd.io
-    path: /mnt/spin/nvr
+    path: /mnt/spin/service/frigate
   mountOptions:
     - mountvers=4

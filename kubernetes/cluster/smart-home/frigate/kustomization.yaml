@@ -1,0 +1,199 @@
+# Ref:
+#   - Helm Chart:   https://github.com/blakeblackshear/blakeshome-charts/tree/master/charts/frigate
+#   - Helm Values:  https://github.com/blakeblackshear/blakeshome-charts/blob/master/charts/frigate/values.yaml
+#   - Containers:   https://github.com/blakeblackshear/frigate/pkgs/container/frigate
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: smart-home
+resources:
+  - secret.yaml
+  - volume.yaml
+  - dns-endpoint.yaml
+  - service.yaml
+helmCharts:
+  - name:  frigate
+    namespace: smart-home
+    releaseName:  frigate
+    version: 7.5.1
+    repo: https://blakeblackshear.github.io/blakeshome-charts/
+    valuesInline:
+      # Container and Environment
+      strategyType: Recreate
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        nvidia.com/gpu.present: "true"
+      image:
+        # GPU: If Coral TPU is used `tensorrt` image is unnecessary
+        tag: 0.13.2-tensorrt
+      env:
+        TZ: Europe/Amsterdam
+        YOLO_MODELS: yolov7-320
+        USE_FP16: "false"
+      envFromSecrets: 
+        - frigate
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100M
+      shmSize: 1Gi
+
+      # Hardware
+      coral:
+        enabled: true
+        hostPath: "/dev/apex_0"
+      # GPU: If Coral TPU is used NVIDIA drivers are unnecessary
+      gpu:
+        nvidia:
+          enabled: true
+
+      # Frigate Config
+      # Ref:
+      #   - Basic Configuration: https://docs.frigate.video/configuration/
+      #   - Full Reference Config: https://docs.frigate.video/configuration/reference/
+      config: |
+        mqtt:
+          enabled: True
+          host: mqtt.smart-home.svc.cluster.local
+          port: 1883
+          topic_prefix: frigate
+          stats_interval: 60
+
+        detectors:
+          # Coral TPU
+          coral:
+            type: edgetpu
+
+          # GPU
+          # https://docs.frigate.video/configuration/object_detectors/#nvidia-tensorrt-detector
+          # tensor:
+          #   type: tensorrt
+          #   device: 0
+        
+        model:
+          # Coral TPU
+          path: /edgetpu_model.tflite
+          input_tensor: nhwc
+
+          # GPU
+          # path: /config/model_cache/tensorrt/yolov7-320.trt
+          # input_tensor: nchw
+
+          # General Config
+          input_pixel_format: rgb
+          width: 320
+          height: 320
+        
+        ffmpeg: {}
+          # GPU
+          # hwaccel_args: preset-nvidia-h264
+
+        detect:
+          enabled: True
+          fps: 5
+          max_disappeared: 30
+
+        objects:
+          track:
+            - person
+            - cat
+          filters:
+            person:
+              threshold: 0.70
+        
+        snapshots:
+          enabled: True
+          bounding_box: True
+          required_zones:
+            - entire_garden
+          retain:
+            default: 30
+
+        record:
+          enabled: True
+          retain:
+            days: 0   # No continuous recordings
+            mode: all
+          events:
+            pre_capture: 5
+            post_capture: 10
+            required_zones:
+              - entire_garden
+            retain:
+              default: 30
+              mode: motion
+
+        # Ref:
+        #   - Birdseye: https://docs.frigate.video/configuration/birdseye/
+        birdseye:
+          enabled: False
+          mode: continuous
+
+        go2rtc:
+          streams:
+            garden: 
+              - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream1
+            garden_substream:
+              - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream2
+
+        # Ref: 
+        #   - Camera Configuration:   https://docs.frigate.video/configuration/cameras
+        #   - Hardware Acceleration:  https://docs.frigate.video/configuration/hardware_acceleration#nvidia-gpus
+        cameras:
+          garden:
+            motion:
+              mask:
+                - 640,480,557,480,486,287,491,0,640,0
+                - 0,324,88,130,213,75,217,0,0,0
+            zones:
+              entire_garden:
+                coordinates: 126,282,318,247,419,99,479,98,640,346,640,480,133,480
+            mqtt:
+              required_zones:
+                - entire_garden
+            ffmpeg:
+              inputs:
+                - path: rtsp://127.0.0.1:8554/garden
+                  roles:
+                    - record
+                - path: rtsp://127.0.0.1:8554/garden_substream
+                  roles:
+                    - detect
+
+      ingress:
+        enabled: true
+        annotations: 
+            kubernetes.io/ingress.class: public
+            cert-manager.io/cluster-issuer: lets-encrypt
+        hosts:
+          - host: frigate.brhd.io
+            paths: 
+              - "/"
+
+      persistence:
+        config:
+          enabled: true
+          storageClass: nfs-subdir
+          size: 10Gi
+          skipuninstall: true
+          accessMode: ReadWriteOnce
+        media:
+          enabled: true
+          existingClaim: frigate-media
+
+      probes:
+        liveness:
+          enabled: true
+          initialDelaySeconds: 60
+          periodSeconds: 60
+          failureThreshold: 5
+          timeoutSeconds: 10
+        readiness:
+          enabled: true
+          initialDelaySeconds: 10
+          periodSeconds: 60
+          failureThreshold: 10
+          timeoutSeconds: 10
+        startup:
+          enabled: false
+          failureThreshold: 30
+          periodSeconds: 10
