@@ -76,6 +76,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Home Assistant** | Central control system for smart home with a focus on local control and privacy | [docs](https://www.home-assistant.io/docs/)<br/>[repo](https://github.com/home-assistant/core) | [docker](https://github.com/home-assistant/core/pkgs/container/home-assistant) |
 | **NanoMQ**         | An Ultra-lightweight and Blazing-fast MQTT Broker for IoT Edge                  |      [docs](https://nanomq.io/docs/en/latest/)<br/>[repo](https://github.com/emqx/nanomq)      |                 [docker](https://hub.docker.com/r/emqx/nanomq)                 |
 | **Frigate**        | Open source NVR built around real-time AI object detection                                        |   [docs](https://docs.frigate.video)<br/>[repo](https://github.com/blakeblackshear/frigate)   |           [helm](https://github.com/blakeblackshear/blakeshome-charts/tree/master)           |
+| **Zigbee2MQTT**    | Zigbee to MQTT bridge                                                           |      [docs](https://www.zigbee2mqtt.io)<br/>[repo](https://github.com/Koenkk/zigbee2mqtt)      |             [docker](https://hub.docker.com/r/koenkk/zigbee2mqtt)              |
 
 
 ### Privacy
