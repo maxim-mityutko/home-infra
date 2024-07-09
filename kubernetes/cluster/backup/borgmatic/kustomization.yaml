@@ -6,6 +6,7 @@ resources:
   - volumes.yaml
   - borgmatic.yaml
   - pod-scrape.yaml
+  - dashboards/
 configMapGenerator:
   - name: borgmatic-k8s-db-config-yml
     files:
