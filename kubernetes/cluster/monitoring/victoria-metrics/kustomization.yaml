@@ -82,11 +82,6 @@ helmCharts:
               #   gnetId: 14584
               #   revision: 1
               #   datasource: VictoriaMetrics
-              # Borgmatic
-              borgmatic:
-                gnetId: 20334
-                revision: 5
-                datasource: VictoriaMetrics
               # Longhorn
               # longhorn:
               #   gnetId: 16888
