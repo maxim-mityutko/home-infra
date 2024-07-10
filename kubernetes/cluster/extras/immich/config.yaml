@@ -8,6 +8,6 @@ metadata:
     app.kubernetes.io/name: immich
 data:
   TZ: Europe/Amsterdam
-  CPU_CORES: 1
+  CPU_CORES: "1"
   DB_HOSTNAME: postgres.default.svc.cluster.local
   REDIS_HOSTNAME: "redis-master.default.svc.cluster.local"
