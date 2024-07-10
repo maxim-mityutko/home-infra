@@ -58,7 +58,9 @@ spec:
       restartPolicy: Always
       containers:
         - name: postgres
-          image: postgres:15.7
+          # PostgreSQL with pgvecto-rs extension
+          image: tensorchord/pgvecto-rs:pg15-v0.3.0
+          # image: postgres:15.7
           resources:
             requests:
               memory: 50Mi
