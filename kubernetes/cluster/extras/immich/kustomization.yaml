@@ -7,6 +7,7 @@ kind: Kustomization
 namespace: extras
 resources:
   - secret.yaml
+  - config.yaml
   - pv-pvc-data.yaml
   - dns-endpoint.yaml
 helmCharts:
@@ -18,7 +19,7 @@ helmCharts:
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
       env:
-        TZ: Europe/Amsterdam
+        # TZ: Europe/Amsterdam
         # DB_HOSTNAME: "postgres.default.svc.cluster.local"
         # DB_USERNAME:
         #   valueFrom:
@@ -37,6 +38,8 @@ helmCharts:
         #       key: DB_DATABASE_NAME
       #   # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
       envFrom:
+        - configMapRef:
+            name: immich
         - secretRef: 
             name: immich
       immich:
