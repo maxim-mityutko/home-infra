@@ -17,25 +17,24 @@ helmCharts:
     repo: https://immich-app.github.io/immich-charts
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
-      # t
-      env:
-        TZ: Europe/Amsterdam
-        DB_HOSTNAME: "postgres.default.svc.cluster.local"
-        DB_USERNAME:
-          valueFrom:
-            secretKeyRef:
-              name: immich
-              key: DB_USERNAME
-        DB_PASSWORD:
-          valueFrom:
-            secretKeyRef:
-              name: immich
-              key: DB_PASSWORD
-        DB_DATABASE_NAME:
-          valueFrom:
-            secretKeyRef:
-              name: immich
-              key: DB_DATABASE_NAME
+      env: {}
+        # TZ: Europe/Amsterdam
+        # DB_HOSTNAME: "postgres.default.svc.cluster.local"
+        # DB_USERNAME:
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: immich
+        #       key: DB_USERNAME
+        # DB_PASSWORD:
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: immich
+        #       key: DB_PASSWORD
+        # DB_DATABASE_NAME:
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: immich
+        #       key: DB_DATABASE_NAME
       #   # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
 
       immich:
