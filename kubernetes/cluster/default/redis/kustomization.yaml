@@ -17,16 +17,20 @@ helmCharts:
         revisionHistoryLimit: 1
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 50m
+            memory: 50Mi
           limits:
             cpu: 200m
             memory: 200Mi
         startupProbe:
           enabled: false
         livenessProbe:
-          enabled: false
+          enabled: true
+          initialDelaySeconds: 20
+          periodSeconds: 10
         readinessProbe:
-          enabled: false
+          enabled: true
+          initialDelaySeconds: 20
+          periodSeconds: 10
         persistence:
           enabled: false
