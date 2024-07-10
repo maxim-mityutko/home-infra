@@ -1,6 +1,4 @@
-# TODO: Homer update
 # TODO: custom configuration and OAuth
-# TODO: finally deploy own REDIS instance and transition all services
 # TODO: move Nextcloud / Google apps alternatives into separate namespace
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
