@@ -22,7 +22,9 @@ helmCharts:
         DB_HOSTNAME: "postgres.default.svc.cluster.local"
         # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
       envFrom:
-        - secret: immich
+        - secretRef: 
+            identifier: immich
+
       immich:
         metrics:
           enabled: false
@@ -57,12 +59,12 @@ helmCharts:
       server:
         enabled: true
         probes:
-        liveness:
-          spec:
-            initialDelaySeconds: 120
-        readiness:
-          spec:
-            initialDelaySeconds: 120
+          liveness:
+            spec:
+              initialDelaySeconds: 120
+          readiness:
+            spec:
+              initialDelaySeconds: 120
         ingress:
           main:
             enabled: true
