@@ -45,12 +45,12 @@ helmCharts:
       postgresql:
         enabled: false
       redis:
-        enabled: true
-        architecture: standalone
-        global:
-          storageClass: nfs-subdir
-        auth:
-          enabled: false
+        enabled: false
+        # architecture: standalone
+        # global:
+        #   storageClass: nfs-subdir
+        # auth:
+        #   enabled: false
 
       # Immich Components
       server:
