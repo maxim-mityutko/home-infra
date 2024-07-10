@@ -7,5 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/name: immich
 data:
-  TZ: "Europe/Amsterdam"
-  DB_HOSTNAME: "postgres.default.svc.cluster.local"
+  TZ: Europe/Amsterdam
+  DB_HOSTNAME: postgres.default.svc.cluster.local
+  REDIS_HOSTNAME: immich-redis-master
+  # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
