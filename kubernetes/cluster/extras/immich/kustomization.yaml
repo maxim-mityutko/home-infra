@@ -70,7 +70,8 @@ helmCharts:
       # Immich Components
       server:
         enabled: true
-        env: {}
+        env:
+          TZ: Europe/Amsterdam
         envFrom:
           - secretRef: 
               name: immich
