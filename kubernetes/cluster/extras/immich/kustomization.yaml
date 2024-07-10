@@ -46,7 +46,10 @@ helmCharts:
       redis:
         enabled: true
         architecture: standalone
-        storageClass: nfs-subdir
+        # storageClass: nfs-subdir
+        master:
+          persistence:
+            storageClass: nfs-subdir
         auth:
           enabled: false
 
