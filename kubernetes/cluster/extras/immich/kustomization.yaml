@@ -18,6 +18,7 @@ helmCharts:
     repo: https://immich-app.github.io/immich-charts
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
+      # Ref: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
       env:
         # TZ: Europe/Amsterdam
         # DB_HOSTNAME: "postgres.default.svc.cluster.local"
@@ -42,6 +43,8 @@ helmCharts:
             name: immich
         - secretRef: 
             name: immich
+      revisionHistoryLimit: 1
+
       immich:
         metrics:
           enabled: false
@@ -75,7 +78,6 @@ helmCharts:
       # Immich Components
       server:
         enabled: true
-        revisionHistoryLimit: 1
         probes:
           liveness:
             spec:
