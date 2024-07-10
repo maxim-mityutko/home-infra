@@ -17,7 +17,7 @@ helmCharts:
     repo: https://immich-app.github.io/immich-charts
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
-      env: {}
+      env:
         # TZ: Europe/Amsterdam
         # DB_HOSTNAME: "postgres.default.svc.cluster.local"
         # DB_USERNAME:
@@ -36,7 +36,9 @@ helmCharts:
         #       name: immich
         #       key: DB_DATABASE_NAME
       #   # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
-
+      envFrom:
+        - secretRef: 
+            name: immich
       immich:
         metrics:
           enabled: false
@@ -70,10 +72,6 @@ helmCharts:
       # Immich Components
       server:
         enabled: true
-        env: {}
-        envFrom:
-          - secretRef: 
-              name: immich
         probes:
           liveness:
             spec:
