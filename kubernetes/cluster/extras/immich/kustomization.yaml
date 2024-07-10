@@ -37,9 +37,6 @@ helmCharts:
               name: immich
               key: DB_DATABASE_NAME
       #   # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
-      envFrom:
-        - secretRef: 
-            name: immich
 
       immich:
         metrics:
@@ -74,6 +71,9 @@ helmCharts:
       # Immich Components
       server:
         enabled: true
+        envFrom:
+          - secretRef: 
+              name: immich
         probes:
           liveness:
             spec:
