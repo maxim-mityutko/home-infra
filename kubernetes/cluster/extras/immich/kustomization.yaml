@@ -22,7 +22,8 @@ helmCharts:
         DB_HOSTNAME: "postgres.default.svc.cluster.local"
         # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
       envFrom:
-        - immich
+        - secretRef:
+          name: immich
       probes:
         liveness:
           enabled: false
