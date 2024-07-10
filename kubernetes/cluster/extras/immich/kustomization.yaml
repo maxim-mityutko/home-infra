@@ -24,13 +24,6 @@ helmCharts:
       envFrom:
         - secretRef:
             name: immich
-      probes:
-        liveness:
-          enabled: false
-        readiness:
-          enabled: false
-        startup:
-          enabled: false
       immich:
         metrics:
           enabled: false
@@ -64,6 +57,13 @@ helmCharts:
       # Immich Components
       server:
         enabled: true
+        probes:
+        liveness:
+          spec:
+            initialDelaySeconds: 120
+        readiness:
+          spec:
+            initialDelaySeconds: 120
         ingress:
           main:
             enabled: true
