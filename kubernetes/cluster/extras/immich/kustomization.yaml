@@ -18,13 +18,9 @@ helmCharts:
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
       env:
-        # REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
-        DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
-        DB_USERNAME: "{{ .Values.postgresql.global.postgresql.auth.username }}"
-        DB_DATABASE_NAME: "{{ .Values.postgresql.global.postgresql.auth.database }}"
-        # -- You should provide your own secret outside of this helm-chart and use `postgresql.global.postgresql.auth.existingSecret` to provide credentials to the postgresql instance
-        DB_PASSWORD: "{{ .Values.postgresql.global.postgresql.auth.password }}"
-        IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
+        TZ: Europe/Amsterdam
+        DB_HOSTNAME: "postgres.default.svc.cluster.local"
+        # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
       immich:
         metrics:
           enabled: false
@@ -46,7 +42,7 @@ helmCharts:
         global:
           postgresql:
             auth:
-              existingSecret: # TODO
+              existingSecret: immich
       redis:
         enabled: true
         architecture: standalone
