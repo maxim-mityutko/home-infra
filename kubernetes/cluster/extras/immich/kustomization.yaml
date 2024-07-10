@@ -70,6 +70,7 @@ helmCharts:
       # Immich Components
       server:
         enabled: true
+        env: {}
         envFrom:
           - secretRef: 
               name: immich
