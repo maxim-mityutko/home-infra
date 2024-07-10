@@ -23,7 +23,7 @@ helmCharts:
         # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
       envFrom:
         - secretRef: 
-            identifier: immich
+            name: immich
 
       immich:
         metrics:
