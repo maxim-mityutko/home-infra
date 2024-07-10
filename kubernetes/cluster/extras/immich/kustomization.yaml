@@ -21,6 +21,15 @@ helmCharts:
         TZ: Europe/Amsterdam
         DB_HOSTNAME: "postgres.default.svc.cluster.local"
         # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
+      envFrom:
+        - immich
+      probes:
+        liveness:
+          enabled: false
+        readiness:
+          enabled: false
+        startup:
+          enabled: false
       immich:
         metrics:
           enabled: false
