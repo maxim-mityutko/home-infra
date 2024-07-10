@@ -17,10 +17,10 @@ helmCharts:
     repo: https://immich-app.github.io/immich-charts
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
-      env:
-        TZ: Europe/Amsterdam
-        DB_HOSTNAME: "postgres.default.svc.cluster.local"
-        # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
+      # env:
+      #   TZ: Europe/Amsterdam
+      #   DB_HOSTNAME: "postgres.default.svc.cluster.local"
+      #   # REDIS_HOSTNAME: "redis.default.svc.cluster.local"
       envFrom:
         - secretRef: 
             name: immich
