@@ -18,7 +18,7 @@ helmCharts:
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
       env:
-        # TZ: Europe/Amsterdam
+        TZ: Europe/Amsterdam
         # DB_HOSTNAME: "postgres.default.svc.cluster.local"
         # DB_USERNAME:
         #   valueFrom:
