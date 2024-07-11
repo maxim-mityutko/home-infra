@@ -24,7 +24,8 @@ helmCharts:
             name: immich
         - secretRef: 
             name: immich
-
+      revisionHistoryLimit: 1
+      
       immich:
         metrics:
           enabled: false
@@ -71,7 +72,6 @@ helmCharts:
         enabled: true
         env:
           TRANSFORMERS_CACHE: /cache
-        revisionHistoryLimit: 1
         resources:
           limits:
             cpu: 500m
