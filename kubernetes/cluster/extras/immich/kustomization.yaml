@@ -25,10 +25,6 @@ helmCharts:
         - secretRef: 
             name: immich
       
-      controllers:
-        main:
-          revisionHistoryLimit: 1
-
       immich:
         metrics:
           enabled: false
