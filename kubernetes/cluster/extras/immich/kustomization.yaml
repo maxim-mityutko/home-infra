@@ -42,9 +42,9 @@ helmCharts:
       server:
         enabled: true
         resources:
-        limits:
-          cpu: 500m
-          memory: 1Gi
+          limits:
+            cpu: 500m
+            memory: 1Gi
         probes:
           liveness:
             spec:
