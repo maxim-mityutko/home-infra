@@ -67,6 +67,14 @@ helmCharts:
         nodeSelector:
           beta.kubernetes.io/arch: amd64
           nvidia.com/gpu.present: "true"
+        probes:
+          liveness:
+            spec:
+              initialDelaySeconds: 120
+          readiness:
+            spec:
+              initialDelaySeconds: 60
+              failureThreshold: 5
         persistence:
           cache:
             enabled: true
