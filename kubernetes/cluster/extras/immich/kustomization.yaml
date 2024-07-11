@@ -41,6 +41,10 @@ helmCharts:
       # Immich Components
       server:
         enabled: true
+        resources:
+        limits:
+          cpu: 500m
+          memory: 1Gi
         probes:
           liveness:
             spec:
@@ -64,9 +68,10 @@ helmCharts:
         enabled: true
         env:
           TRANSFORMERS_CACHE: /cache
-        nodeSelector:
-          beta.kubernetes.io/arch: amd64
-          nvidia.com/gpu.present: "true"
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
         probes:
           liveness:
             spec:
@@ -83,3 +88,6 @@ helmCharts:
             # type: emptyDir
             accessMode: ReadWriteMany
             storageClass: nfs-subdir
+        nodeSelector:
+          beta.kubernetes.io/arch: amd64
+          nvidia.com/gpu.present: "true"
