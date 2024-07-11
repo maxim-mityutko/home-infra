@@ -35,13 +35,13 @@ helmCharts:
           library:
             existingClaim: immich-data
         # Ref: https://immich.app/docs/install/config-file/
-        configuration:
-          trash:
-            enabled: true
-            days: 30
-          storageTemplate:
-            enabled: true
-            template: "{{y}}/{{MM}}/{{filename}}"
+        # configuration:
+        #   trash:
+        #     enabled: true
+        #     days: 30
+        #   storageTemplate:
+        #     enabled: true
+        #     template: "{{y}}/{{MM}}/{{filename}}"
       
       # Dependencies
       postgresql:
