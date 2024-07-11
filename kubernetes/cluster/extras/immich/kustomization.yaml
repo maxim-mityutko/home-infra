@@ -48,11 +48,11 @@ helmCharts:
         probes:
           liveness:
             spec:
-              initialDelaySeconds: 120
+              initialDelaySeconds: 90
               periodSeconds: 30
           readiness:
             spec:
-              initialDelaySeconds: 60
+              initialDelaySeconds: 30
               periodSeconds: 30
               failureThreshold: 5
         ingress:
@@ -66,6 +66,7 @@ helmCharts:
               - host: photos.brhd.io
                 paths:
                   - path: "/"
+
       machine-learning:
         enabled: true
         env:
@@ -77,11 +78,11 @@ helmCharts:
         probes:
           liveness:
             spec:
-              initialDelaySeconds: 120
+              initialDelaySeconds: 90
               periodSeconds: 30
           readiness:
             spec:
-              initialDelaySeconds: 60
+              initialDelaySeconds: 30
               periodSeconds: 30
               failureThreshold: 5
         persistence:
