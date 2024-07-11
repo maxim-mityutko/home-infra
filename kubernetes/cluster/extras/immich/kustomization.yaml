@@ -71,10 +71,12 @@ helmCharts:
         enabled: true
         env:
           TRANSFORMERS_CACHE: /cache
+        image:
+          repository: ghcr.io/immich-app/immich-machine-learning:v1.106.1-cuda
         resources:
           limits:
             cpu: 500m
-            memory: 1Gi
+            # memory: 1Gi
         probes:
           liveness:
             spec:
