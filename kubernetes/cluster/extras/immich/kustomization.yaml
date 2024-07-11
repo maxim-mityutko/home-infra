@@ -71,6 +71,7 @@ helmCharts:
         enabled: true
         env:
           TRANSFORMERS_CACHE: /cache
+        revisionHistoryLimit: 1
         resources:
           limits:
             cpu: 500m
