@@ -1,9 +1,6 @@
 # IMPORTANT
 # Immich requires 'pgvecto-rs' extension for PostgreSQL, which might require
 # some level of maintenance, check: https://immich.app/docs/administration/postgres-standalone/
-
-# TODO: custom configuration and OAuth
-# TODO: move Nextcloud / Google apps alternatives into separate namespace
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: extras
@@ -34,14 +31,6 @@ helmCharts:
         persistence:
           library:
             existingClaim: immich-data
-        # Ref: https://immich.app/docs/install/config-file/
-        # configuration:
-        #   trash:
-        #     enabled: true
-        #     days: 30
-        #   storageTemplate:
-        #     enabled: true
-        #     template: "{{y}}/{{MM}}/{{filename}}"
       
       # Dependencies
       postgresql:
@@ -58,7 +47,8 @@ helmCharts:
               initialDelaySeconds: 120
           readiness:
             spec:
-              initialDelaySeconds: 120
+              initialDelaySeconds: 60
+              failureThreshold: 5
         ingress:
           main:
             enabled: true
@@ -71,9 +61,12 @@ helmCharts:
                 paths:
                   - path: "/"
       machine-learning:
-        enabled: false
+        enabled: true
         env:
           TRANSFORMERS_CACHE: /cache
+        nodeSelector:
+          beta.kubernetes.io/arch: amd64
+          nvidia.com/gpu.present: "true"
         persistence:
           cache:
             enabled: true
