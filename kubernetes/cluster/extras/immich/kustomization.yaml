@@ -24,9 +24,9 @@ helmCharts:
             name: immich
         - secretRef: 
             name: immich
-      revisionHistoryLimit: 1
       
       immich:
+        revisionHistoryLimit: 1
         metrics:
           enabled: false
         persistence:
