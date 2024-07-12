@@ -76,14 +76,6 @@ helmCharts:
                 paths:
                   - path: "/"
 
-      microservices:
-        enabled: true
-        persistence:
-          external:
-            enabled: true
-            existingClaim: immich-external
-            readOnly: true
-
       machine-learning:
         enabled: true
         env:
