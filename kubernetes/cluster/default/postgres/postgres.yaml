@@ -58,7 +58,10 @@ spec:
       restartPolicy: Always
       containers:
         - name: postgres
-          image: postgres:15.7
+          # NOTE: PostgreSQL with pgvecto-rs extension 
+          # Pre-requisite for Immich
+          image: tensorchord/pgvecto-rs:pg15-v0.2.1
+          # image: postgres:15.7
           resources:
             requests:
               memory: 50Mi
