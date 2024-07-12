@@ -71,7 +71,7 @@ helmCharts:
                 paths:
                   - path: "/"
 
-      microservices:
+      server-2:
         enabled: true
         env:
           IMMICH_WORKERS_EXCLUDE: 'api'
