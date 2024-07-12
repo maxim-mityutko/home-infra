@@ -39,10 +39,9 @@ helmCharts:
         enabled: false
 
       # Immich Components
+      # TODO: possibility to separate API and WORKERS: https://immich.app/docs/administration/jobs-workers/
       server:
         enabled: true
-        env:
-          IMMICH_WORKERS_EXCLUDE: api
         resources:
           requests:
             cpu: 200m
