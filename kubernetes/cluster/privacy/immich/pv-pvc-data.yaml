@@ -1,0 +1,81 @@
+# Immich - Library
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: immich-data
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: immich
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs
+  resources:
+    requests:
+      storage: 1000G
+  selector:
+    matchLabels:
+      storage.target:  immich-data
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name:  immich-data
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name:  immich
+    storage.target:  immich-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  capacity:
+    storage: 1000G
+  nfs:
+    server: nas.brhd.io
+    path: /mnt/spin/service/photos/immich
+  mountOptions:
+    - mountvers=4
+# Immich - External Library
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: immich-external
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: immich
+spec:
+  accessModes:
+  - ReadOnlyMany
+  storageClassName: nfs
+  resources:
+    requests:
+      storage: 1000G
+  selector:
+    matchLabels:
+      storage.target:  immich-external
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name:  immich-external
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name:  immich
+    storage.target:  immich-external
+spec:
+  accessModes:
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  capacity:
+    storage: 1000G
+  nfs:
+    server: nas.brhd.io
+    path: /mnt/spin/service/photos/external
+  mountOptions:
+    - mountvers=4
