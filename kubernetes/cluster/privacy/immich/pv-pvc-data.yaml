@@ -36,7 +36,7 @@ spec:
     storage: 1000G
   nfs:
     server: nas.brhd.io
-    path: /mnt/spin/service/photos
+    path: /mnt/spin/service/photos/immich
   mountOptions:
     - mountvers=4
 # Immich - External Library
