@@ -77,6 +77,7 @@ helmCharts:
                   - path: "/"
 
       microservices:
+        enabled: true
         persistence:
           external:
             enabled: true
