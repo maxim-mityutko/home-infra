@@ -50,9 +50,11 @@ helmCharts:
             cpu: 1000m
             memory: 2Gi
         persistence:
+          # External Library
           external:
             enabled: true
             existingClaim: immich-external
+            mountPath: /media/external
             readOnly: true
         probes:
           liveness:
