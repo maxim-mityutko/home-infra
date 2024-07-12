@@ -82,7 +82,7 @@ helmCharts:
             memory: 150Mi
           limits:
             cpu: 500m
-            memory: 1.5Gi
+            memory: 2Gi
         probes:
           liveness:
             spec:
