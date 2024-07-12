@@ -131,7 +131,7 @@ services:
         logo: "https://casa.brhd.io/icons/nextcloud.png"
         url: "https://nc.brhd.io"
       - name: "Immich"
-        logo: "https://casa.brhd.io/icons/immich.svg"
+        logo: "https://casa.brhd.io/icons/immich.png"
         url: "https://photos.brhd.io"
       - name: "Vault Warden"
         tag: "vault"
