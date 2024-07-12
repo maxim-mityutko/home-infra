@@ -41,6 +41,8 @@ helmCharts:
       # Immich Components
       server:
         enabled: true
+        env:
+          IMMICH_WORKERS_EXCLUDE: api
         resources:
           requests:
             cpu: 200m
