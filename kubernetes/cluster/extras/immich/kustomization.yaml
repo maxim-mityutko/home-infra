@@ -42,8 +42,11 @@ helmCharts:
       server:
         enabled: true
         resources:
+          requests:
+            cpu: 200m
+            memory: 250Mi
           limits:
-            cpu: 500m
+            cpu: 2000m
             memory: 1Gi
         probes:
           liveness:
@@ -74,9 +77,12 @@ helmCharts:
         image:
           tag: v1.106.1-cuda
         resources:
+          requests:
+            cpu: 100m
+            memory: 150Mi
           limits:
             cpu: 500m
-            # memory: 1Gi
+            memory: 1.5Gi
         probes:
           liveness:
             spec:
@@ -91,10 +97,8 @@ helmCharts:
           cache:
             enabled: true
             size: 10Gi
-            # Optional: Set this to pvc to avoid downloading the ML models every start.
             type: pvc
             accessMode: ReadWriteMany
             storageClass: nfs-subdir
         nodeSelector:
-          beta.kubernetes.io/arch: amd64
           nvidia.com/gpu.present: "true"
