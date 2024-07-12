@@ -3,7 +3,7 @@
 # some level of maintenance, check: https://immich.app/docs/administration/postgres-standalone/
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: extras
+namespace: privacy
 resources:
   - secret.yaml
   - config.yaml
@@ -11,7 +11,7 @@ resources:
   - dns-endpoint.yaml
 helmCharts:
   - name: immich
-    namespace: extras
+    namespace: privacy
     releaseName: immich
     version: 0.7.0
     repo: https://immich-app.github.io/immich-charts
