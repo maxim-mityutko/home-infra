@@ -49,6 +49,11 @@ helmCharts:
           limits:
             cpu: 1000m
             memory: 2Gi
+        persistence:
+          external:
+            enabled: true
+            existingClaim: immich-external
+            readOnly: true
         probes:
           liveness:
             spec:
@@ -70,6 +75,13 @@ helmCharts:
               - host: photos.brhd.io
                 paths:
                   - path: "/"
+
+      microservices:
+        persistence:
+          external:
+            enabled: true
+            existingClaim: immich-external
+            readOnly: true
 
       machine-learning:
         enabled: true
