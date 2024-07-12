@@ -71,6 +71,18 @@ helmCharts:
                 paths:
                   - path: "/"
 
+      microservices:
+        enabled: true
+        env:
+          IMMICH_WORKERS_EXCLUDE: 'api'
+        resources:
+          requests:
+            cpu: 200m
+            memory: 250Mi
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+
       machine-learning:
         enabled: true
         env:
