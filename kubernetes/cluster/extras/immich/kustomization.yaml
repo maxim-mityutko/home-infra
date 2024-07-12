@@ -46,7 +46,7 @@ helmCharts:
             cpu: 200m
             memory: 250Mi
           limits:
-            cpu: 2000m
+            cpu: 1000m
             memory: 1Gi
         probes:
           liveness:
