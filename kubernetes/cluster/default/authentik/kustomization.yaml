@@ -17,12 +17,10 @@ helmCharts:
           log_level: warning
           postgresql:
             host: postgres.default.svc.cluster.local
+          redis:
+            host: redis-master.default.svc.cluster.local
         blueprints:
           configMaps: []
-        redis: 
-          enabled: true
-          global:
-            storageClass: nfs-subdir
         global:
           revisionHistoryLimit: 1
           deploymentStrategy: 
