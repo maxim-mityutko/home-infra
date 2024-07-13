@@ -42,6 +42,8 @@ helmCharts:
       # TODO: possibility to separate API and WORKERS: https://immich.app/docs/administration/jobs-workers/
       server:
         enabled: true
+        image:
+          tag: v1.108.0
         resources:
           requests:
             cpu: 200m
@@ -83,7 +85,7 @@ helmCharts:
         env:
           TRANSFORMERS_CACHE: /cache
         image:
-          tag: v1.106.1-cuda
+          tag: v1.108.0-cuda
         resources:
           requests:
             cpu: 100m
