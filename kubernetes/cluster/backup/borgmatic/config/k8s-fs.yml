@@ -53,7 +53,7 @@ exclude_if_present:
 exclude_caches: true
 apprise:
   services:
-    - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
+    - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}/
       label: discord
   finish:
     title: ✅ SUCCESS

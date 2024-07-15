@@ -31,7 +31,7 @@ spec:
               memory: 100Mi
               cpu: 50m
             limits:
-             memory: 1Gi
+             memory: 2Gi
           envFrom:
             - secretRef:
                 name: borgmatic

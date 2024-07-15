@@ -12,6 +12,7 @@ checks:
     frequency: 2 weeks
 encryption_passphrase: ${BORG_PASSPHRASE}
 archive_name_format: k8s-db-{now}
+read_special: true
 postgresql_databases:
   - name: all
     hostname: postgres.default.svc.cluster.local
@@ -38,7 +39,7 @@ sqlite_databases:
     path: /mnt/k8s/pods/frigate-config/frigate.db
 apprise:
   services:
-    - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
+    - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}/
       label: discord
   finish:
     title: ✅ SUCCESS
