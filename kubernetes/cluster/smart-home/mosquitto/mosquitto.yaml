@@ -1,5 +1,5 @@
-# Service: NanoMQ
-# Label: app.kubernetes.io/name: nanomq
+# Service: Mosquitto
+# Label: app.kubernetes.io/name: mosquitto
 ---
 apiVersion: v1
 kind: Service
@@ -7,7 +7,7 @@ metadata:
   name: mqtt
   namespace: smart-home
   labels:
-    app.kubernetes.io/name: nanomq
+    app.kubernetes.io/name: mosquitto
 spec:
   type: ClusterIP
   ports:
@@ -16,7 +16,7 @@ spec:
       targetPort: 1883
       name: mqtt-tcp-listener
   selector:
-    app.kubernetes.io/name: nanomq
+    app.kubernetes.io/name: mosquitto
 ---
 apiVersion: v1
 kind: Service
@@ -24,7 +24,7 @@ metadata:
   name: mqtt-external
   namespace: smart-home
   labels:
-    app.kubernetes.io/name: nanomq
+    app.kubernetes.io/name: mosquitto
 spec:
   type: NodePort # 30000-32767
   ports:
@@ -34,20 +34,20 @@ spec:
       nodePort: 31883
       protocol: TCP
   selector:
-    app.kubernetes.io/name: nanomq
+    app.kubernetes.io/name: mosquitto
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nanomq
+  name: mosquitto
   namespace: smart-home
   labels:
-    app.kubernetes.io/name: nanomq
+    app.kubernetes.io/name: mosquitto
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: nanomq
+      app.kubernetes.io/name: mosquitto
   strategy:
     type: RollingUpdate
   revisionHistoryLimit: 1
@@ -55,12 +55,12 @@ spec:
     metadata:
       namespace: smart-home
       labels:
-        app.kubernetes.io/name: nanomq
+        app.kubernetes.io/name: mosquitto
     spec:
       restartPolicy: Always
       containers:
-        - name: nanomq
-          image: emqx/nanomq:0.22.2-slim
+        - name: mosquitto
+          image: eclipse-mosquitto:2.0.18
           resources:
             requests:
               cpu: 10m
@@ -69,14 +69,10 @@ spec:
               memory: 50Mi
               cpu: 50m
           ports:
-            - containerPort: 1883 # mqtt-tcp-listener
-#            - containerPort: 8083 # mqtt-websocket-listener
-#            - containerPort: 8883 # mqtt-ssl-listener
-#            - containerPort: 8084 # mqtt-secure-websocket-listener
-#            - containerPort: 8081 # nanomq-api-server
+            - containerPort: 1883
           envFrom:
             - configMapRef:
-                name: nanomq
+                name: mosquitto
           readinessProbe:
             tcpSocket:
               port: 1883
@@ -88,11 +84,11 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 10
           volumeMounts:
-            - name: nanomq-config
-              mountPath: /etc/nanomq.conf
-              subPath: nanomq.conf
+            - name: mosquitto-config
+              mountPath: /mosquitto/config/mosquitto.conf
+              subPath: mosquitto.conf
               readOnly: true
       volumes:
-        - name: nanomq-config
+        - name: mosquitto-config
           configMap:
-            name: nanomq
+            name: mosquitto
