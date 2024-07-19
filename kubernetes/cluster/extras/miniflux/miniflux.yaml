@@ -55,7 +55,7 @@ spec:
             - containerPort: 8080
           envFrom:
             - configMapRef:
-              name: miniflux
+                name: miniflux
             - secretRef:
                 name: miniflux
 ---
