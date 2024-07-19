@@ -1,0 +1,73 @@
+# Service: Miniflux
+# Ingress: rss.brhd.io
+# Label: app.kubernetes.io/name: miniflux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: miniflux
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: miniflux
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: miniflux
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miniflux
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: miniflux
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: miniflux
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: extras
+      labels:
+        app.kubernetes.io/name: miniflux
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: miniflux
+          image: miniflux/miniflux:2.1.4
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 10m
+            limits:
+              memory: 100Mi
+              cpu: 100m
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: miniflux
+            - secretRef:
+                name: miniflux
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: miniflux
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: miniflux
+data:
+  TZ: "Europe/Amsterdam"
+  RUN_MIGRATIONS: "1"
+  OAUTH2_PROVIDER: oidc
+  OAUTH2_USER_CREATION: "1"

@@ -148,6 +148,11 @@ services:
         tag: "search"
         url: "https://search.brhd.io"
         target: "_blank"
+      - name: "Miniflux"
+        logo: "https://casa.brhd.io/icons/rss.png"
+        tag: "rss"
+        url: "https://rss.brhd.io"
+        target: "_blank"
   - name: "Media & Downloads"
     icon: "fas fa-download"
     items:
