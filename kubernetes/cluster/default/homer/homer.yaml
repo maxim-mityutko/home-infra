@@ -66,5 +66,3 @@ spec:
         - name: homer-config
           configMap:
             name: homer-config
-      nodeSelector:
-        beta.kubernetes.io/arch: amd64
