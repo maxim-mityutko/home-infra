@@ -88,5 +88,3 @@ spec:
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads
-      nodeSelector:
-        beta.kubernetes.io/arch: amd64
