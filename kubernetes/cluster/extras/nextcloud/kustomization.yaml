@@ -101,7 +101,10 @@ helmCharts:
       resources:
         requests:
           cpu: 200m
-          memory: 500M
+          memory: 300M
+        limits:
+          cpu: 2000m
+          memort: 1000M
       lifecycle:
         postStartCommand: 
           - "/bin/bash"
