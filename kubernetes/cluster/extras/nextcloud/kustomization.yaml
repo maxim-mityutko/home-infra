@@ -104,7 +104,7 @@ helmCharts:
           memory: 300M
         limits:
           cpu: 2000m
-          memort: 1000M
+          memory: 1000M
       lifecycle:
         postStartCommand: 
           - "/bin/bash"
