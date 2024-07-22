@@ -19,8 +19,8 @@ helmCharts:
         annotations:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
-          # Increase to allow upload of bigger files through ingress
-          nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+          # Increase to allow upload of bigger files through ingress (0 - no limit)
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
           nginx.ingress.kubernetes.io/server-snippet: |-
             server_tokens off;
             proxy_hide_header X-Powered-By;
@@ -95,6 +95,16 @@ helmCharts:
                 'soft_auto_provision' => true, // default: true
               ],
             );
+          redis.config.php: |-
+            <?php
+            $CONFIG = array (
+              'memcache.distributed' => '\OC\Memcache\Redis',
+              'memcache.locking' => '\OC\Memcache\Redis',
+              'redis' => array(
+                'host' => 'redis-master.default.svc.cluster.local',
+                'timeout' => 5.0,
+              ),
+            );
         extraEnv:
       resources:
         requests:
@@ -150,6 +160,3 @@ helmCharts:
           enabled: true
           existingClaim: nextcloud-data
           size: 1000G
-      nodeSelector:
-        beta.kubernetes.io/arch: amd64
-        nvidia.com/gpu.present: "true"
