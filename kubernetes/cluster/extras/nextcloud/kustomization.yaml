@@ -95,17 +95,9 @@ helmCharts:
                 'soft_auto_provision' => true, // default: true
               ],
             );
-          redis.config.php: |-
-            <?php
-            $CONFIG = array (
-              'memcache.distributed' => '\OC\Memcache\Redis',
-              'memcache.locking' => '\OC\Memcache\Redis',
-              'redis' => array(
-                'host' => 'redis-master.default.svc.cluster.local',
-                'timeout' => 5.0,
-              ),
-            );
         extraEnv:
+          - name: REDIS_HOST
+            value: redis-master.default.svc.cluster.local
       resources:
         requests:
           cpu: 200m
