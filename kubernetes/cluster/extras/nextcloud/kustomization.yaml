@@ -123,8 +123,9 @@ helmCharts:
         periodSeconds: 120
       readinessProbe:
         enabled: true
-        initialDelaySeconds: 600
+        initialDelaySeconds: 180
         periodSeconds: 120
+        failureThreshold: 5
       startupProbe:
         enabled: false
       # Metrics
