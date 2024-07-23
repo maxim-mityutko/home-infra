@@ -4,14 +4,14 @@ metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
   name: nextcloud-metrics
-  namespace: extras
+  namespace: privacy
 spec:
   endpoints:
     - port: metrics
       interval: 300s
   namespaceSelector:
     matchNames:
-      - extras
+      - privacy
   selector:
     matchLabels:
       app.kubernetes.io/component: metrics
