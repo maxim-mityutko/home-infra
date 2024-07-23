@@ -158,3 +158,5 @@ helmCharts:
           size: 1000G
       nodeSelector:
         beta.kubernetes.io/arch: arm64
+patches:
+  - path: patch-deployment.yaml

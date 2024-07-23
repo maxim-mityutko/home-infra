@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud
+spec:
+  template:
+    spec:
+      volumes:
+        - name: photos
+          persistentVolumeClaim:
+            claimName: photos
+      containers:
+        - name: nextcloud
+          volumeMounts:
+            - mountPath: /media/photos/external
+              name: photos
+              subPath: external
+            - mountPath: /media/photos/immich
+              name: photos
+              subpath: immich
+              readOnly: true
