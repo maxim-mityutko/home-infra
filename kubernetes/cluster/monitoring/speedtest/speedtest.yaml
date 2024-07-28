@@ -47,7 +47,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: speedtest
-          image: lscr.io/linuxserver/speedtest-tracker:0.20.7
+          image: lscr.io/linuxserver/speedtest-tracker:0.20.8
           resources:
             requests:
               cpu: 50m
