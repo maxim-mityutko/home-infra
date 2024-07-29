@@ -1,41 +1,41 @@
+# Photos
 ---
-# Data
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: nextcloud-data
-  namespace: extras
+  name: photos
+  namespace: privacy
   labels:
-    app.kubernetes.io/name: nextcloud
+    app.kubernetes.io/name: x-privacy-shared
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   storageClassName: nfs
   resources:
     requests:
       storage: 1000G
   selector:
     matchLabels:
-      storage.target:  nextcloud-data
+      storage.target:  photos
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name:  nextcloud-data
-  namespace: extras
+  name:  photos
+  namespace: privacy
   labels:
-    app.kubernetes.io/name:  nextcloud
-    storage.target:  nextcloud-data
+    app.kubernetes.io/name: x-privacy-shared
+    storage.target: photos
 spec:
   accessModes:
-    - ReadWriteOnce
     - ReadOnlyMany
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: nfs
   capacity:
     storage: 1000G
   nfs:
     server: nas.brhd.io
-    path: /mnt/spin/service/nextcloud
+    path: /mnt/spin/service/photos
   mountOptions:
     - mountvers=4
