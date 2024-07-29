@@ -3,7 +3,7 @@ apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: nc.brhd.io
-  namespace: extras
+  namespace: privacy
 spec:
   endpoints:
     - dnsName: nc.brhd.io

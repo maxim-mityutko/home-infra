@@ -1,0 +1,28 @@
+# Mounting external locations for the photos handled by Immich.
+# 1.  The `/media/photos/immich` points to the Immich data path with library, previews, etc.
+#     Because this path should only be handled by Immich, it is mounted as read-only.
+# 2.  The `/media/photos/external` points to what Immich calls external libraries. This path
+#     is periodically scanned by Immich and can contain files that are manually added by the
+#     user. This will be exposed in Nextcloud.
+# TODO: figure out execution context and permissions. NextCloud is running under `www-data` (33) user by default.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud
+spec:
+  template:
+    spec:
+      volumes:
+        - name: photos
+          persistentVolumeClaim:
+            claimName: photos
+      containers:
+        - name: nextcloud
+          volumeMounts:
+            - mountPath: /media/photos/external
+              name: photos
+              subPath: external
+            - mountPath: /media/photos/immich
+              name: photos
+              subPath: immich
+              readOnly: true

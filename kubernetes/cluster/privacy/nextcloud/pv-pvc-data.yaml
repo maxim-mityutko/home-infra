@@ -1,0 +1,41 @@
+---
+# Data
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nextcloud-data
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: nextcloud
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs
+  resources:
+    requests:
+      storage: 1000G
+  selector:
+    matchLabels:
+      storage.target:  nextcloud-data
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name:  nextcloud-data
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name:  nextcloud
+    storage.target:  nextcloud-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  capacity:
+    storage: 1000G
+  nfs:
+    server: nas.brhd.io
+    path: /mnt/spin/service/nextcloud
+  mountOptions:
+    - mountvers=4

@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: extras
+namespace: privacy
 resources:
   - secret.yaml
   - pv-pvc-data.yaml
@@ -9,7 +9,7 @@ resources:
   # - service-scrape.yaml
 helmCharts:
   - name: nextcloud
-    namespace: extras
+    namespace: privacy
     releaseName: nextcloud
     version: 5.4.0
     repo: https://nextcloud.github.io/helm/
@@ -19,8 +19,8 @@ helmCharts:
         annotations:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
-          # Increase to allow upload of bigger files through ingress
-          nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+          # Increase to allow upload of bigger files through ingress (0 - no limit)
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
           nginx.ingress.kubernetes.io/server-snippet: |-
             server_tokens off;
             proxy_hide_header X-Powered-By;
@@ -96,10 +96,15 @@ helmCharts:
               ],
             );
         extraEnv:
+          - name: REDIS_HOST
+            value: redis-master.default.svc.cluster.local
       resources:
         requests:
           cpu: 200m
-          memory: 500M
+          memory: 300M
+        limits:
+          cpu: 2000m
+          memory: 1500M
       lifecycle:
         postStartCommand: 
           - "/bin/bash"
@@ -111,7 +116,7 @@ helmCharts:
       redis:
         enabled: false
       cronjob:
-        enabled: true
+        enabled: false
       # Probes
       # Setting large initial delays to ensure Nextcloud can initialize properly
       # due to issues described in this thread: https://github.com/nextcloud/helm/issues/10
@@ -121,8 +126,9 @@ helmCharts:
         periodSeconds: 120
       readinessProbe:
         enabled: true
-        initialDelaySeconds: 600
+        initialDelaySeconds: 180
         periodSeconds: 120
+        failureThreshold: 5
       startupProbe:
         enabled: false
       # Metrics
@@ -151,5 +157,6 @@ helmCharts:
           existingClaim: nextcloud-data
           size: 1000G
       nodeSelector:
-        beta.kubernetes.io/arch: amd64
-        nvidia.com/gpu.present: "true"
+        beta.kubernetes.io/arch: arm64
+patches:
+  - path: patch-deployment.yaml
