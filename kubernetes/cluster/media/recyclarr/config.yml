@@ -72,13 +72,13 @@ radarr:
           - b8cd450cbfa689c0259a01d9e29ba3d6 # 3D
           - bfd8eb01832d646a0a89c4deb46f8564 # Upscaled
           - 9c38ebb7384dada637be8899efa68e6f # SDR
-        quality_profiles:
+        assign_scores_to:
           - name: 4K
       - trash_ids:
           - 3a3ff47579026e76d6504ebea39390de # Remux Tier 1
           - 9f98181fe5a3fbeb0cc29340da2a468a # Remux Tier 2
           - 8baaf0b3142bf4d94c42a724f034e27a # Remux Tier 3
-        quality_profiles:
+        assign_scores_to:
           - name: HD (Remux)
       - trash_ids:
           # HQ Release Groups
@@ -111,7 +111,7 @@ radarr:
           - ae43b294509409a6a13919dedd4764c4 # Repack2
           - 2899d84dc9372de3408e6d8cc18e9666 # x264
           - 9170d55c319f4fe40da8711ba9d8050d # x265
-        quality_profiles:
+        assign_scores_to:
           - name: HD (Remux)
           - name: HD
           - name: SD
@@ -142,7 +142,7 @@ radarr:
           - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - c465ccc73923871b3eb1802042331306 # Line / Mic Dubbed
-        quality_profiles:
+        assign_scores_to:
           - name: HD (Remux)
             score: -10000
           - name: HD
@@ -222,7 +222,7 @@ sonarr:
           - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
           - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
           - 06d66ab109d4d2eddb2794d21526d140 # Retags
-        quality_profiles:
+        assign_scores_to:
           - name: 4K
       - trash_ids:
           # Streaming
@@ -255,7 +255,7 @@ sonarr:
           - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
           - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
           - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
-        quality_profiles:
+        assign_scores_to:
           - name: Any
           - name: HD
           - name: SD
