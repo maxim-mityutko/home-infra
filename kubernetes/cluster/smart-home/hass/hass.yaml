@@ -40,7 +40,7 @@ spec:
       restartPolicy: Always
       hostNetwork: true
       containers:
-        - image: ghcr.io/home-assistant/home-assistant:2024.7.3
+        - image: ghcr.io/home-assistant/home-assistant:2024.7.4
           name: home-assistant
           resources:
             requests:
