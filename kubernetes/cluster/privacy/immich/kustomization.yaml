@@ -43,7 +43,7 @@ helmCharts:
       server:
         enabled: true
         image:
-          tag: v1.109.2
+          tag: v1.111.0
         resources:
           requests:
             cpu: 200m
@@ -85,7 +85,7 @@ helmCharts:
         env:
           TRANSFORMERS_CACHE: /cache
         image:
-          tag: v1.109.2-cuda
+          tag: v1.111.0-cuda
         resources:
           requests:
             cpu: 100m
