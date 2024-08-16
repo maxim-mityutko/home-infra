@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frigate
+spec:
+  template:
+    spec:
+      containers:
+        - name: frigate
+          ports:
+            - containerPort: 8971
+              name: http-auth
+              protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frigate
+spec:
+  rules:
+    - host: frigate.brhd.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: frigate-auth
+                port:
+                  name: http-auth
