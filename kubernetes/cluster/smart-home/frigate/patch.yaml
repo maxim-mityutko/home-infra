@@ -27,3 +27,5 @@ spec:
                 name: frigate-auth
                 port:
                   name: http-auth
+            path: /
+            pathType: ImplementationSpecific
