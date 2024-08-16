@@ -9,5 +9,5 @@ spec:
         - name: frigate
           ports:
             - containerPort: 8971
-              name: http
+              name: http-auth
               protocol: TCP
