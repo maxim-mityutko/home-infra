@@ -24,7 +24,7 @@ helmCharts:
         nvidia.com/gpu.present: "true"
       image:
         # GPU: If Coral TPU is used `tensorrt` image is unnecessary
-        tag: 0.13.2-tensorrt
+        tag: 0.14.0-tensorrt
       env:
         TZ: Europe/Amsterdam
         YOLO_MODELS: yolov7-320
