@@ -27,7 +27,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - name: auth
+    - name: http
       port: 8971
       targetPort: 8971
       protocol: TCP
