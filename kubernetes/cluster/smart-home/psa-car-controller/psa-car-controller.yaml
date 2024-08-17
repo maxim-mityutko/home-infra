@@ -1,0 +1,72 @@
+# TODO: - homer; - README
+# Service: PSA Car Controller
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: psa-car-controller
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: psa-car-controller
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      name: http
+  selector:
+    app.kubernetes.io/name: psa-car-controller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psa-car-controller
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: psa-car-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: psa-car-controller
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: smart-home
+      labels:
+        app.kubernetes.io/name: psa-car-controller
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: psa-car-controller
+          image: flobz/psa_car_controller:v3.5.1
+          resources:
+            # requests:
+            #   cpu: 10m
+            #   memory: 10Mi
+            limits:
+              memory: 1000Gi
+              # cpu: 50m
+          ports:
+            - containerPort: 5000 
+          readinessProbe:
+            tcpSocket:
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          volumeMounts:
+            - name: psa-car-controller-config
+              mountPath: /config
+      volumes:
+        - name: psa-car-controller-config
+          persistentVolumeClaim:
+            claimName: psa-car-controller-config
+
