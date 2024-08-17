@@ -28,4 +28,4 @@ spec:
               service:
                 name: frigate
                 port:
-                  number: http-auth
+                  name: http-auth
