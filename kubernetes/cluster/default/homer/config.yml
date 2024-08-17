@@ -219,7 +219,7 @@ services:
       - name: "Frigate"
         logo: "https://casa.brhd.io/icons/frigate.svg"
         tag: "smart-home"
-        url: "https://frigate.brhd.io"
+        url: "https://nvr.brhd.io"
       - name: "Zigbee2MQTT"
         logo: "https://casa.brhd.io/icons/z2m.png"
         tag: "smart-home"

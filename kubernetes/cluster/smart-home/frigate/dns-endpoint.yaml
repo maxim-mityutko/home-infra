@@ -11,3 +11,8 @@ spec:
       recordType: CNAME
       targets:
         - casa.brhd.io
+    - dnsName: nvr.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

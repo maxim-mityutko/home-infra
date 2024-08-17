@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frigate
+spec:
+  template:
+    spec:
+      containers:
+        - name: frigate
+          ports:
+            - containerPort: 8971
+              name: http-auth
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frigate
+spec:
+  ports:
+    - name: http-auth
+      port: 8971
+      targetPort: 8971
+      protocol: TCP
