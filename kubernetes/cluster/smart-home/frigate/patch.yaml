@@ -12,21 +12,14 @@ spec:
             - containerPort: 8971
               name: http-auth
               protocol: TCP
-# TODO: uncomment after hostNetwork is disabled for HASS
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: frigate
-# spec:
-#   rules:
-#     - host: frigate.brhd.io
-#       http:
-#         paths:
-#           - backend:
-#               service:
-#                 name: frigate-auth
-#                 port:
-#                   name: http-auth
-#             path: /
-#             pathType: ImplementationSpecific
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frigate
+spec:
+  ports:
+    - name: http-auth
+      port: 8971
+      targetPort: 8971
+      protocol: TCP

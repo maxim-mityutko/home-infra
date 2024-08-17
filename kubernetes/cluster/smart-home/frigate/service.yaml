@@ -16,20 +16,3 @@ spec:
       protocol: TCP
   selector:
     app.kubernetes.io/name: frigate
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frigate-auth
-  namespace: smart-home
-  labels:
-    app.kubernetes.io/name: frigate
-spec:
-  type: ClusterIP
-  ports:
-    - name: http-auth
-      port: 8971
-      targetPort: 8971
-      protocol: TCP
-  selector:
-    app.kubernetes.io/name: frigate
