@@ -162,7 +162,6 @@ helmCharts:
             required_zones:
               - entire_garden
 
-        # TODO: uncomment after hostNetwork is disabled for HASS
         auth:
           enabled: false
         proxy:
