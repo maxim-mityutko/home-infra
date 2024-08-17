@@ -15,8 +15,7 @@ helmCharts:
     namespace: smart-home
     releaseName:  frigate
     version: 7.5.1
-    # repo: https://blakeblackshear.github.io/blakeshome-charts/
-    repo: https://github.com/maxim-mityutko/blakeshome-charts/
+    repo: https://blakeblackshear.github.io/blakeshome-charts/
     valuesInline:
       # Container and Environment
       strategyType: Recreate
