@@ -10,6 +10,7 @@ resources:
   - volume.yaml
   - dns-endpoint.yaml
   - service.yaml
+  - ingress.yaml
 helmCharts:
   - name:  frigate
     namespace: smart-home
@@ -24,7 +25,7 @@ helmCharts:
         nvidia.com/gpu.present: "true"
       image:
         # GPU: If Coral TPU is used `tensorrt` image is unnecessary
-        tag: 0.13.2-tensorrt
+        tag: 0.14.0-tensorrt
       env:
         TZ: Europe/Amsterdam
         YOLO_MODELS: yolov7-320
@@ -52,7 +53,7 @@ helmCharts:
       #   - Full Reference Config: https://docs.frigate.video/configuration/reference/
       config: |
         mqtt:
-          enabled: True
+          enabled: true
           host: mqtt.smart-home.svc.cluster.local
           port: 1883
           topic_prefix: frigate
@@ -68,7 +69,7 @@ helmCharts:
           # tensor:
           #   type: tensorrt
           #   device: 0
-        
+
         model:
           # Coral TPU
           path: /edgetpu_model.tflite
@@ -82,13 +83,13 @@ helmCharts:
           input_pixel_format: rgb
           width: 320
           height: 320
-        
-        ffmpeg: {}
-          # GPU
-          # hwaccel_args: preset-nvidia-h264
+
+        ffmpeg:
+          hwaccel_args: "" # force software decoding
+          # hwaccel_args: preset-nvidia-h264 # GPU
 
         detect:
-          enabled: True
+          enabled: true
           fps: 5
           max_disappeared: 30
 
@@ -99,25 +100,23 @@ helmCharts:
           filters:
             person:
               threshold: 0.70
-        
+
         snapshots:
-          enabled: True
-          bounding_box: True
+          enabled: true
+          bounding_box: true
           required_zones:
             - entire_garden
           retain:
             default: 30
 
         record:
-          enabled: True
+          enabled: true
           retain:
             days: 0   # No continuous recordings
             mode: all
           events:
             pre_capture: 5
             post_capture: 10
-            required_zones:
-              - entire_garden
             retain:
               default: 30
               mode: motion
@@ -125,17 +124,17 @@ helmCharts:
         # Ref:
         #   - Birdseye: https://docs.frigate.video/configuration/birdseye/
         birdseye:
-          enabled: False
+          enabled: false
           mode: continuous
 
         go2rtc:
           streams:
-            garden: 
+            garden:
               - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream1
             garden_substream:
               - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@{FRIGATE_CAM_01_IP}:554/stream2
 
-        # Ref: 
+        # Ref:
         #   - Camera Configuration:   https://docs.frigate.video/configuration/cameras
         #   - Hardware Acceleration:  https://docs.frigate.video/configuration/hardware_acceleration#nvidia-gpus
         cameras:
@@ -158,12 +157,26 @@ helmCharts:
                 - path: rtsp://127.0.0.1:8554/garden_substream
                   roles:
                     - detect
+        review:
+          alerts:
+            required_zones:
+              - entire_garden
+
+        auth:
+          enabled: false
+        proxy:
+          header_map:
+            user: X-authentik-username
+        tls:
+          enabled: false
+
+        version: 0.14
 
       ingress:
         enabled: true
         annotations: 
-            kubernetes.io/ingress.class: public
-            cert-manager.io/cluster-issuer: lets-encrypt
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
         hosts:
           - host: frigate.brhd.io
             paths: 
@@ -197,3 +210,5 @@ helmCharts:
           enabled: false
           failureThreshold: 30
           periodSeconds: 10
+patches:
+  - path: patch.yaml
