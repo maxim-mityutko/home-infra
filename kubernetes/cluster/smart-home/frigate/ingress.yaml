@@ -26,6 +26,6 @@ spec:
             path: /
             backend:
               service:
-                name: frigate-auth
+                name: frigate
                 port:
                   number: http-auth
