@@ -64,7 +64,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: qbittorrent
-          image: ghcr.io/hotio/qbittorrent:release-4.6.5
+          image: ghcr.io/hotio/qbittorrent:release-4.6.6
           resources:
             requests:
               memory: 100Mi
