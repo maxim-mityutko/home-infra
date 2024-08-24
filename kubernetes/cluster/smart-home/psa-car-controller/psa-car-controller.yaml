@@ -62,11 +62,11 @@ spec:
               port: 5000
             initialDelaySeconds: 30
             periodSeconds: 10
-          nodeSelector:
-            beta.kubernetes.io/arch: amd64
           volumeMounts:
             - name: psa-car-controller-config
               mountPath: /config
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
       volumes:
         - name: psa-car-controller-config
           persistentVolumeClaim:
