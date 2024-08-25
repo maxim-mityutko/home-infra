@@ -1,6 +1,6 @@
----
 apiVersion: apps/v1
 kind: Deployment
+namespace: kube-system
 metadata:
   name: descheduler
 spec:
