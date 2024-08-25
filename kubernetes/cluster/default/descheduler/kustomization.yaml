@@ -59,7 +59,7 @@ helmCharts:
           enabled: false
         
         resources:
-          request: 
+          requests: 
             cpu: 50m
             memory: 100m
           limits:
