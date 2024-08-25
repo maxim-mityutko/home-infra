@@ -66,8 +66,8 @@ helmCharts:
             cpu: 100m
             memory: 100m
         securityContext:
-          runAsNonRoot: false
-          # runAsUser: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
 
         livenessProbe:
           failureThreshold: 3
@@ -77,3 +77,5 @@ helmCharts:
             scheme: HTTPS
           initialDelaySeconds: 5
           periodSeconds: 60
+patches:
+  - path: patch.yaml
