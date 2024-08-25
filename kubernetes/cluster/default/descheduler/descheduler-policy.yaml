@@ -1,0 +1,35 @@
+apiVersion: descheduler/v1alpha2
+kind: DeschedulerPolicy
+profiles:
+  - name: BalanceNodeUtilization
+    pluginConfig:
+      - name: DefaultEvictor
+        args:
+          nodeFit: true
+      - name: LowNodeUtilization
+        args:
+          thresholds:
+            cpu: 40
+            memory: 60
+          targetThresholds:
+            cpu : 60
+            memory: 70
+    plugins:
+      balance:
+        enabled:
+          - LowNodeUtilization
+  - name: EvictCrashLoopBackOff
+    pluginConfig:
+      - name: DefaultEvictor
+        args:
+          nodeFit: true
+      - name: RemovePodsHavingTooManyRestarts
+        args:
+          podRestartThreshold: 5
+          includingInitContainers: true
+          states: 
+            - CrashLoopBackOff
+    plugins:
+      deschedule:
+        enabled:
+          - RemovePodsHavingTooManyRestarts

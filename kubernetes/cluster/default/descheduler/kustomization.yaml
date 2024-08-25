@@ -1,0 +1,45 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - descheduler-policy.yaml
+helmCharts:
+    - name: descheduler
+      namespace: default
+      releaseName: descheduler
+      version: v0.30.1
+      repo: https://kubernetes-sigs.github.io/descheduler/
+      valuesInline:
+        kind: Deployment
+        replicas: 1
+        deschedulingInterval: 15m
+        deschedulerPolicyAPIVersion: descheduler/v1alpha2
+
+        rbac:
+          create: true
+        serviceAccount:
+          create: false
+        service:
+          enabled: true
+        serviceMonitor:
+          enabled: false
+        
+        resources:
+          request: 
+            cpu: 50m
+            memory: 100m
+          limits:
+            cpu: 100m
+            memory: 100m
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 10258
+            scheme: https
+          initialDelaySeconds: 5
+          periodSeconds: 60
