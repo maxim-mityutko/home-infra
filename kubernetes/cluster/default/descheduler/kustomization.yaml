@@ -52,7 +52,7 @@ helmCharts:
         rbac:
           create: true
         serviceAccount:
-          create: false
+          create: true
         service:
           enabled: true
         serviceMonitor:
