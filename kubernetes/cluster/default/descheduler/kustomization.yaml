@@ -52,7 +52,7 @@ helmCharts:
         rbac:
           create: true
         serviceAccount:
-          create: true
+          create: false
         service:
           enabled: true
         serviceMonitor:
@@ -66,8 +66,8 @@ helmCharts:
             cpu: 100m
             memory: 100m
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 1000
+          runAsNonRoot: false
+          # runAsUser: 1000
 
         livenessProbe:
           failureThreshold: 3
