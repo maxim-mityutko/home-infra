@@ -74,6 +74,6 @@ helmCharts:
           httpGet:
             path: /healthz
             port: 10258
-            scheme: https
+            scheme: http
           initialDelaySeconds: 5
           periodSeconds: 60
