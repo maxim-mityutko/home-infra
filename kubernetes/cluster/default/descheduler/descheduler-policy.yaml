@@ -1,5 +1,7 @@
 apiVersion: descheduler/v1alpha2
 kind: DeschedulerPolicy
+metadata:
+  name: default-policy
 profiles:
   - name: BalanceNodeUtilization
     pluginConfig:
