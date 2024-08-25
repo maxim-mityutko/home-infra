@@ -77,5 +77,5 @@ helmCharts:
             scheme: HTTPS
           initialDelaySeconds: 5
           periodSeconds: 60
-# patches:
-#   - path: patch.yaml
+patches:
+  - path: patch.yaml
