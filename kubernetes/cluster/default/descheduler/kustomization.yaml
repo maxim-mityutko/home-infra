@@ -65,7 +65,14 @@ helmCharts:
           limits:
             cpu: 100m
             memory: 100m
+            
         securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
           runAsNonRoot: true
           runAsUser: 1000
 
@@ -77,5 +84,5 @@ helmCharts:
             scheme: HTTPS
           initialDelaySeconds: 5
           periodSeconds: 60
-patches:
-  - path: patch.yaml
+# patches:
+#   - path: patch.yaml
