@@ -61,10 +61,10 @@ helmCharts:
         resources:
           requests: 
             cpu: 50m
-            memory: 100m
+            memory: 100Mi
           limits:
             cpu: 100m
-            memory: 100m
+            memory: 100Mi
             
         securityContext:
           allowPrivilegeEscalation: false
