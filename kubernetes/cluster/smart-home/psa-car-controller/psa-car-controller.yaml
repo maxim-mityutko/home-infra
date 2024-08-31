@@ -44,12 +44,12 @@ spec:
         - name: psa-car-controller
           image: flobz/psa_car_controller:v3.5.3
           resources:
-            # requests:
-            #   cpu: 10m
-            #   memory: 10Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
             limits:
+              cpu: 500m
               memory: 500Mi
-              # cpu: 50m
           ports:
             - containerPort: 5000 
           readinessProbe:
