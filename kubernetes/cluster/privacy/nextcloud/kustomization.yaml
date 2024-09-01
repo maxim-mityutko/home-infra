@@ -116,7 +116,7 @@ helmCharts:
       redis:
         enabled: false
       cronjob:
-        enabled: false
+        enabled: true
       # Probes
       # Setting large initial delays to ensure Nextcloud can initialize properly
       # due to issues described in this thread: https://github.com/nextcloud/helm/issues/10
