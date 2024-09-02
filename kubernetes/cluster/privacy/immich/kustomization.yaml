@@ -13,7 +13,7 @@ helmCharts:
   - name: immich
     namespace: privacy
     releaseName: immich
-    version: 0.7.0
+    version: 0.7.2
     repo: https://immich-app.github.io/immich-charts
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
@@ -43,7 +43,7 @@ helmCharts:
       server:
         enabled: true
         image:
-          tag: v1.111.0
+          tag: v1.113.0
         resources:
           requests:
             cpu: 200m
@@ -85,7 +85,7 @@ helmCharts:
         env:
           TRANSFORMERS_CACHE: /cache
         image:
-          tag: v1.111.0-cuda
+          tag: v1.113.0-cuda
         resources:
           requests:
             cpu: 100m
