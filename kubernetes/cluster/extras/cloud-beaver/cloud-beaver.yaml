@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: cloud-beaver
-          image: dbeaver/cloudbeaver:24.1.5
+          image: dbeaver/cloudbeaver:24.2.0
           resources:
             requests:
               memory: 100M
