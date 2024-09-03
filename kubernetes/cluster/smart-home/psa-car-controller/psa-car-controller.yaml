@@ -1,5 +1,3 @@
-# TODO: - homer; - README
-# Service: PSA Car Controller
 ---
 apiVersion: v1
 kind: Service
@@ -15,6 +13,24 @@ spec:
       port: 5000
       targetPort: 5000
       name: http
+  selector:
+    app.kubernetes.io/name: psa-car-controller
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: psa-car-controller-external
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: psa-car-controller
+spec:
+  type: NodePort # 30000-32767
+  ports:
+    - name: psa-car-controller
+      port: 31500
+      targetPort: 5000
+      nodePort: 31500
+      protocol: TCP
   selector:
     app.kubernetes.io/name: psa-car-controller
 ---
