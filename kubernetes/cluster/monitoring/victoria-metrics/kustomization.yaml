@@ -27,46 +27,6 @@ helmCharts:
         grafana:
           enabled: true
           revisionHistoryLimit: 1
-          dashboards:
-            default:
-              # Persistent Volumes
-              k8s-storage-volumes-namespace:
-                gnetId: 11455
-                revision: 6
-                datasource: VictoriaMetrics
-              k8s-storage-volumes-cluster:
-                gnetId: 11454
-                revision: 14
-                datasource: VictoriaMetrics
-              # Network
-              kubernetes-networking-namespace-pods:
-                gnetId: 12125
-                revision: 1
-                datasource: VictoriaMetrics
-              kubernetes-networking-namespace-cluster:
-                gnetId: 12124
-                revision: 1
-                datasource: VictoriaMetrics
-              # Ingress
-              nginx-ingress-controller:
-                gnetId: 21336
-                revision: 1
-                datasource: VictoriaMetrics
-              # Cluster
-              # nodeexporter:
-              #   gnetId: 1860
-              #   revision: 37
-              #   datasource: VictoriaMetrics
-              # ArgoCD
-              # argocd:
-              #   gnetId: 14584
-              #   revision: 1
-              #   datasource: VictoriaMetrics
-              # Longhorn
-              # longhorn:
-              #   gnetId: 16888
-              #   revision: 9
-              #   datasource: VictoriaMetrics
           sidecar:
             dashboards:
               enabled: true
