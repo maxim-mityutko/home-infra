@@ -2,12 +2,19 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: monitoring
 configMapGenerator:
+  # Kubernetes
   - name: k8s-views-nodes
     files:
       - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
-  - name: k8s-storage-volumes-cluster
-    files: 
-      - https://grafana.com/api/dashboards/11454/revisions/14/download
+  # - name: k8s-system-api-server
+  #   files:
+  #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+  # - name: k8s-system-coredns
+  #   files:
+  #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+  - name: nginx
+    files:
+      - https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
 generatorOptions:
   labels:
     grafana-dashboard: "true"
