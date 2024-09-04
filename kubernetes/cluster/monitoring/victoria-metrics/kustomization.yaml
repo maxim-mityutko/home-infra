@@ -28,15 +28,15 @@ helmCharts:
             dashboardproviders.yaml:
               apiVersion: 1
               providers:
-              - name: 'default'
+              - name: 'extras'
                 orgId: 1
                 type: file
                 disableDeletion: true
                 editable: false
                 options:
-                  path: /var/lib/grafana/dashboards/default
+                  path: /var/lib/grafana/dashboards/extras
           dashboards:
-            default:
+            extras:
               # Kubernetes
               # k8s-system-api-server:
               #   gnetId: 15761
@@ -62,7 +62,7 @@ helmCharts:
                 gnetId: 15760
                 revision: 29
                 datasource: VictoriaMetrics
-              # Persistent Volumes ???
+              # Persistent Volumes
               k8s-storage-volumes-namespace:
                 gnetId: 11455
                 revision: 6
@@ -71,7 +71,7 @@ helmCharts:
                 gnetId: 11454
                 revision: 14
                 datasource: VictoriaMetrics
-              # Network ???
+              # Network
               kubernetes-networking-namespace-pods:
                 gnetId: 12125
                 revision: 1
