@@ -28,16 +28,16 @@ helmCharts:
             dashboardproviders.yaml:
               apiVersion: 1
               providers:
-              - name: 'default'
+              - name: 'extras'
                 orgId: 1
                 folder: ''
                 type: file
                 disableDeletion: false
                 editable: true
                 options:
-                  path: /var/lib/grafana/dashboards/default
+                  path: /var/lib/grafana/dashboards/extras
           dashboards:
-            default:
+            extras:
               # Kubernetes
               # k8s-system-api-server:
               #   gnetId: 15761
