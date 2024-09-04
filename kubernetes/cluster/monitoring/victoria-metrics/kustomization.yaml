@@ -24,19 +24,8 @@ helmCharts:
           enabled: false
         grafana:
           enabled: true
-          dashboardProviders:
-            dashboardproviders.yaml:
-              apiVersion: 1
-              providers:
-              - name: 'extras'
-                orgId: 1
-                type: file
-                disableDeletion: true
-                editable: false
-                options:
-                  path: /var/lib/grafana/dashboards/extras
           dashboards:
-            extras:
+            default:
               # Kubernetes
               # k8s-system-api-server:
               #   gnetId: 15761
