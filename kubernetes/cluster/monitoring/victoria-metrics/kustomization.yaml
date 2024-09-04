@@ -13,6 +13,7 @@ helmCharts:
       repo: https://victoriametrics.github.io/helm-charts/
       valuesInline:
         defaultDashboardEnabled: true
+        experimentalDashboardsEnabled: true
         fullnameOverride: stack
         victoria-metrics-operator:
           enabled: true
@@ -24,18 +25,7 @@ helmCharts:
           enabled: false
         grafana:
           enabled: true
-          dashboardProviders:
-            dashboardproviders.yaml:
-              apiVersion: 1
-              providers:
-              - name: 'default'
-                orgId: 1
-                folder: ''
-                type: file
-                disableDeletion: false
-                editable: true
-                options:
-                  path: /var/lib/grafana/dashboards/default
+          revisionHistoryLimit: 1
           dashboards:
             default:
               # Kubernetes
