@@ -15,7 +15,7 @@ helmCharts:
   - name: longhorn
     namespace: longhorn-system
     releaseName: longhorn
-    version: 1.7.0
+    version: 1.7.1
     repo: https://charts.longhorn.io
     valuesInline:
       defaultSettings:
