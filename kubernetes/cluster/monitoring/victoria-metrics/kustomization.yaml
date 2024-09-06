@@ -170,17 +170,18 @@ helmCharts:
         # Service Scrape
         kubelet:
           enabled: true
-          spec:
-            interval: 60s
-            relabelConfigs:
-              - source_labels: [ __metrics_path__ ]
-                target_label: metrics_path
-              - source_labels: [ __meta_kubernetes_node_name ]
-                target_label: node
-              - target_label: job
-                replacement: kubelet
-              - action: labeldrop # Drop labels created after roll out of GPU operator
-                regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
+          vmScrape:
+            spec:
+              interval: 60s
+              relabelConfigs:
+                - source_labels: [ __metrics_path__ ]
+                  target_label: metrics_path
+                - source_labels: [ __meta_kubernetes_node_name ]
+                  target_label: node
+                - target_label: job
+                  replacement: kubelet
+                - action: labeldrop # Drop labels created after roll out of GPU operator
+                  regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
         kube-state-metrics:
           enabled: true
         prometheus-node-exporter:
@@ -190,62 +191,64 @@ helmCharts:
         # Service Scrape (disabled)
         kubeApiServer:
           enabled: false
-          spec:
-            endpoints:
-              - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-                port: https
-                scheme: https
-                interval: 60s
-                tlsConfig:
-                  caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-                  serverName: kubernetes
-                # Drop high cardinality metrics
-                metricRelabelConfigs:
-                  - sourceLabels: ["__name__"]
-                    regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
-                    action: drop
-                  - sourceLabels: ["__name__"]
-                    regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
-                    action: drop
+          vmScrape:
+            spec:
+              endpoints:
+                - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+                  port: https
+                  scheme: https
+                  interval: 60s
+                  tlsConfig:
+                    caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                    serverName: kubernetes
+                  # Drop high cardinality metrics
+                  metricRelabelConfigs:
+                    - sourceLabels: ["__name__"]
+                      regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+                      action: drop
+                    - sourceLabels: ["__name__"]
+                      regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
+                      action: drop
         coreDns:
           enabled: false
           service:
             enabled: false
-          spec:
-            namespaceSelector:
-              matchNames:
-                - kube-system
-            selector:
-              # This config does not work with default CoreDNS deployment because
-              # 'matchLabels' are always configured to:
-              #   - app: stack-coredns
-              #   - app.kubernetes.io/instance: victoria-metrics
-              # Possible solutions are:
-              #   - deploy the service as part of VM deployment 'coreDns.service.enabled: true'
-              #   - create new service in 'kube-system' with required labels
-              #         https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/templates/servicemonitors/coredns.yaml
-              #   - create the fix for chart
-              matchLabels:
-                k8s-app: kube-dns
-            endpoints:
-              - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-                port: metrics
-                interval: 60s
-                relabelConfigs:
-                  - source_labels: [ __meta_kubernetes_endpoint_port_name ]
-                    target_label: endpoint
-                  - source_labels: [ __meta_kubernetes_endpoint_node_name ]
-                    target_label: node
-                  - source_labels: [ __meta_kubernetes_pod_name ]
-                    target_label: pod
-                  - source_labels: [ __meta_kubernetes_pod_container_name ]
-                    target_label: container
-                  - source_labels: [ __meta_kubernetes_namespace ]
-                    target_label: namespace
-                  - target_label: service
-                    replacement: coredns
-                  - target_label: job
-                    replacement: coredns
+          vmScrape:
+            spec:
+              namespaceSelector:
+                matchNames:
+                  - kube-system
+              selector:
+                # This config does not work with default CoreDNS deployment because
+                # 'matchLabels' are always configured to:
+                #   - app: stack-coredns
+                #   - app.kubernetes.io/instance: victoria-metrics
+                # Possible solutions are:
+                #   - deploy the service as part of VM deployment 'coreDns.service.enabled: true'
+                #   - create new service in 'kube-system' with required labels
+                #         https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/templates/servicemonitors/coredns.yaml
+                #   - create the fix for chart
+                matchLabels:
+                  k8s-app: kube-dns
+              endpoints:
+                - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+                  port: metrics
+                  interval: 60s
+                  relabelConfigs:
+                    - source_labels: [ __meta_kubernetes_endpoint_port_name ]
+                      target_label: endpoint
+                    - source_labels: [ __meta_kubernetes_endpoint_node_name ]
+                      target_label: node
+                    - source_labels: [ __meta_kubernetes_pod_name ]
+                      target_label: pod
+                    - source_labels: [ __meta_kubernetes_pod_container_name ]
+                      target_label: container
+                    - source_labels: [ __meta_kubernetes_namespace ]
+                      target_label: namespace
+                    - target_label: service
+                      replacement: coredns
+                    - target_label: job
+                      replacement: coredns
         kubeScheduler:
           enabled: false
         kubeControllerManager:
