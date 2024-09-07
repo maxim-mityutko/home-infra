@@ -83,7 +83,7 @@ spec:
             #portals: ['192.168.1.222:3260']
             iqn: iqn.2005-10.org.freenas.ctl:k8s-jellyfin
             lun: 0
-            fsType: ext4
+            fsType: ext2
             readOnly: false
         - name: jellyfin-cache
           emptyDir: {}
