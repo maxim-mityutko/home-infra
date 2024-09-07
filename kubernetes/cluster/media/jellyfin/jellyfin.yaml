@@ -67,8 +67,8 @@ spec:
           volumeMounts:
             - name: jellyfin-config
               mountPath: /config
-            # - name: jellyfin-data
-            #   mountPath: /media/test
+            - name: jellyfin-data
+              mountPath: /media/test
             - name: jellyfin-cache
               mountPath: /cache
             - name: downloads
@@ -77,14 +77,13 @@ spec:
         - name: jellyfin-config
           persistentVolumeClaim:
             claimName: jellyfin-config
-        # - name: jellyfin-data
-        #   iscsi:
-        #     targetPortal: 192.168.1.222:3260
-        #     #portals: ['192.168.1.222:3260']
-        #     iqn: iqn.2005-10.org.freenas.ctl:k8s-jellyfin
-        #     lun: 0
-        #     fsType: ext4
-        #     readOnly: false
+        - name: jellyfin-data
+          iscsi:
+            targetPortal: 192.168.1.222
+            iqn: iqn.2005-10.org.freenas.ctl:k8s.jellyfin
+            lun: 0
+            fsType: ext4
+            readOnly: false
         - name: jellyfin-cache
           emptyDir: {}
         - name: downloads
