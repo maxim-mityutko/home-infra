@@ -68,7 +68,7 @@ spec:
             - name: jellyfin-config
               mountPath: /config
             - name: jellyfin-data
-              mountPath: /media/test
+              mountPath: /config/data
             - name: jellyfin-cache
               mountPath: /cache
             - name: downloads
