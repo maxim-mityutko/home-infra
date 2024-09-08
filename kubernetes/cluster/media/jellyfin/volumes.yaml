@@ -14,3 +14,43 @@ spec:
   resources:
     requests:
       storage: 50G
+---
+# Jellyfin -- Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: jellyfin-config-iscsi
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyfin
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      storage.target: jellyfin-config-iscsi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jellyfin-config-iscsi
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyfin
+    storage.target: jellyfin-config-iscsi
+spec:
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  capacity:
+    storage: 10Gi
+  iscsi:
+    targetPortal: 192.168.1.222
+    iqn: iqn.2005-10.org.freenas.ctl:k8s.jellyfin
+    lun: 0
+    fsType: ext4
+    readOnly: false
