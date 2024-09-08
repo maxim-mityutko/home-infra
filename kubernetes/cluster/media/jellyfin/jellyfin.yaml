@@ -65,32 +65,16 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 120
           volumeMounts:
-            - name: jellyfin-config
-              mountPath: /config
             - name: jellyfin-config-iscsi
-              mountPath: /media/temp
-            # - name: jellyfin-data
-            #   mountPath: /config/data
-            #   subPath: data
+              mountPath: /config
             - name: jellyfin-cache
               mountPath: /cache
             - name: downloads
               mountPath: /downloads
       volumes:
-        - name: jellyfin-config
-          persistentVolumeClaim:
-            claimName: jellyfin-config
         - name: jellyfin-config-iscsi
           persistentVolumeClaim:
             claimName: jellyfin-config-iscsi
-        # - name: jellyfin-data
-        #   # Ref: https://github.com/kubernetes/examples/blob/master/volumes/iscsi/README.md
-        #   iscsi:
-        #     targetPortal: 192.168.1.222
-        #     iqn: iqn.2005-10.org.freenas.ctl:k8s.jellyfin
-        #     lun: 0
-        #     fsType: ext4
-        #     readOnly: false
         - name: jellyfin-cache
           emptyDir: {}
         - name: downloads
