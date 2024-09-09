@@ -65,16 +65,16 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 120
           volumeMounts:
-            - name: jellyfin-config
+            - name: jellyfin-config-iscsi
               mountPath: /config
             - name: jellyfin-cache
               mountPath: /cache
             - name: downloads
               mountPath: /downloads
       volumes:
-        - name: jellyfin-config
+        - name: jellyfin-config-iscsi
           persistentVolumeClaim:
-            claimName: jellyfin-config
+            claimName: jellyfin-config-iscsi
         - name: jellyfin-cache
           emptyDir: {}
         - name: downloads
