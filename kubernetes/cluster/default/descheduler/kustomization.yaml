@@ -41,7 +41,7 @@ helmCharts:
                   evictDaemonSetPods: true
               - name: RemoveFailedPods
                 args:
-                  states:
+                  reasons:
                     - BackOff
                   includingInitContainers: true
                   minPodLifetimeSeconds: 600
