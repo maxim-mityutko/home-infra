@@ -41,13 +41,11 @@ helmCharts:
                   evictDaemonSetPods: true
               - name: RemoveFailedPods
                 args:
-                  reasons:
-                    - BackOff
                   includingInitContainers: true
                   minPodLifetimeSeconds: 600
               - name: RemovePodsHavingTooManyRestarts
                 args:
-                  podRestartThreshold: 9
+                  podRestartThreshold: 10
                   includingInitContainers: true
               plugins:
                 deschedule:
