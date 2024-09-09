@@ -11,6 +11,8 @@ helmCharts:
         kind: Deployment
         replicas: 1
         
+        cmdOptions:
+          v: 4
         deschedulingInterval: 15m
         deschedulerPolicyAPIVersion: descheduler/v1alpha2
         deschedulerPolicy:
