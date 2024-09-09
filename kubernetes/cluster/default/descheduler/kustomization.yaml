@@ -12,7 +12,7 @@ helmCharts:
         replicas: 1
         
         cmdOptions:
-          v: 4  # log level
+          v: 4  # verbosity: log all reasons why any pod is not evictable
         deschedulingInterval: 15m
         deschedulerPolicyAPIVersion: descheduler/v1alpha2
         deschedulerPolicy:
