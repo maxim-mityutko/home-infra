@@ -14,7 +14,6 @@ helmCharts:
         deschedulingInterval: 15m
         deschedulerPolicyAPIVersion: descheduler/v1alpha2
         deschedulerPolicy:
-          evictDaemonSetPods: true
           profiles:
             - name: balancing
               pluginConfig:
@@ -38,6 +37,7 @@ helmCharts:
               - name: DefaultEvictor
                 args:
                   nodeFit: false
+                  evictSystemCriticalPods: true
                   evictDaemonSetPods: true
               - name: RemoveFailedPods
                 args:
