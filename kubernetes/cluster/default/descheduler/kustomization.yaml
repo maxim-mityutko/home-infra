@@ -31,6 +31,7 @@ helmCharts:
                     targetThresholds:
                       # cpu : 60
                       memory: 70
+                      pods: 35
               plugins:
                 balance:
                   enabled:
