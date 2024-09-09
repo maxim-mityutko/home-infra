@@ -13,7 +13,7 @@ helmCharts:
         
         cmdOptions:
           v: 4  # verbosity: log all reasons why any pod is not evictable
-        deschedulingInterval: 15m
+        deschedulingInterval: 60m
         deschedulerPolicyAPIVersion: descheduler/v1alpha2
         deschedulerPolicy:
           profiles:
