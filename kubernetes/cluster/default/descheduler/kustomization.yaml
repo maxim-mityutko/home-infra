@@ -25,10 +25,10 @@ helmCharts:
                 - name: LowNodeUtilization
                   args:
                     thresholds:
-                      cpu: 40
+                      # cpu: 40
                       memory: 60
                     targetThresholds:
-                      cpu : 60
+                      # cpu : 60
                       memory: 70
               plugins:
                 balance:
