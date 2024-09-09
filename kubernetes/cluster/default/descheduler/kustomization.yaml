@@ -37,10 +37,6 @@ helmCharts:
               pluginConfig:
               - name: RemoveFailedPods
                 args:
-                  reasons:
-                    - BackOff
-                    - Error
-                    - Unhealthy
                   includingInitContainers: true
                   minPodLifetimeSeconds: 600
               - name: RemovePodsHavingTooManyRestarts
