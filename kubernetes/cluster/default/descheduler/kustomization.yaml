@@ -38,7 +38,10 @@ helmCharts:
                 args:
                   nodeFit: false
                   evictSystemCriticalPods: true
+                  evictFailedBarePods: true
                   evictDaemonSetPods: true
+                  evictLocalStoragePods: true
+                  ignorePvcPods: false
               - name: RemoveFailedPods
                 args:
                   includingInitContainers: true
