@@ -35,8 +35,14 @@ helmCharts:
                     - LowNodeUtilization
             - name: health
               pluginConfig:
+              - name: DefaultEvictor
+                args:
+                  nodeFit: false
+                  evictDaemonSetPods: true
               - name: RemoveFailedPods
                 args:
+                  states:
+                    - BackOff
                   includingInitContainers: true
                   minPodLifetimeSeconds: 600
               - name: RemovePodsHavingTooManyRestarts
