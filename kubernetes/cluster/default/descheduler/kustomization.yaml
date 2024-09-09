@@ -35,15 +35,20 @@ helmCharts:
                     - LowNodeUtilization
             - name: health
               pluginConfig:
+              - name: RemoveFailedPods
+                args:
+                  reasons:
+                    - BackOff
+                  includingInitContainers: true
+                  minPodLifetimeSeconds: 600
               - name: RemovePodsHavingTooManyRestarts
                 args:
-                  podRestartThreshold: 5
+                  podRestartThreshold: 10
                   includingInitContainers: true
-                  states: 
-                    - CrashLoopBackOff
               plugins:
                 deschedule:
                   enabled:
+                    - RemoveFailedPods
                     - RemovePodsHavingTooManyRestarts
 
         rbac:
