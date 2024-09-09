@@ -47,7 +47,7 @@ helmCharts:
                   minPodLifetimeSeconds: 600
               - name: RemovePodsHavingTooManyRestarts
                 args:
-                  podRestartThreshold: 10
+                  podRestartThreshold: 9
                   includingInitContainers: true
               plugins:
                 deschedule:
