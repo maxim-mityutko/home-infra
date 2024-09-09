@@ -35,15 +35,12 @@ helmCharts:
                     - LowNodeUtilization
             - name: health
               pluginConfig:
-                - name: DefaultEvictor
-                  args:
-                    nodeFit: true
-                - name: RemovePodsHavingTooManyRestarts
-                  args:
-                    podRestartThreshold: 5
-                    includingInitContainers: true
-                    states: 
-                      - CrashLoopBackOff
+              - name: RemovePodsHavingTooManyRestarts
+                args:
+                  podRestartThreshold: 5
+                  includingInitContainers: true
+                  states: 
+                    - CrashLoopBackOff
               plugins:
                 deschedule:
                   enabled:
