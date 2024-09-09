@@ -23,6 +23,7 @@ helmCharts:
                   args:
                     evictLocalStoragePods: true
                     nodeFit: true
+                    minPodAge: 3600
                 - name: LowNodeUtilization
                   args:
                     thresholds:
