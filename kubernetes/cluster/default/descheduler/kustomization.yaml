@@ -21,17 +21,18 @@ helmCharts:
               pluginConfig:
                 - name: DefaultEvictor
                   args:
+                    evictLocalStoragePods: true
                     nodeFit: true
                 - name: LowNodeUtilization
                   args:
                     thresholds:
                       # cpu: 40
-                      memory: 60
+                      memory: 50
                       pods: 25
                     targetThresholds:
                       # cpu : 60
-                      memory: 70
-                      pods: 35
+                      memory: 60
+                      pods: 30
               plugins:
                 balance:
                   enabled:
