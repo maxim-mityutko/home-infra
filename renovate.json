@@ -6,14 +6,9 @@
   "kubernetes": {
     "fileMatch": ["kubernetes/cluster/.+\\.ya?ml$"]
   },
-  "prHourlyLimit": 10,
+  "prHourlyLimit": 15,
   "includePaths": [
-    "kubernetes/cluster/default/**",
-    "kubernetes/cluster/extras/**",
-    "kubernetes/cluster/media/**",
-    "kubernetes/cluster/monitoring/**",
-    "kubernetes/cluster/smart-home/**",
-    "kubernetes/cluster/backup/**"
+    "kubernetes/cluster/**/**"
   ],
   "packageRules": [
     {

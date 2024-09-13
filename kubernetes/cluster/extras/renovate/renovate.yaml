@@ -30,7 +30,7 @@ spec:
     spec:
 #      successfulJobsHistoryLimit: 1
 #      failedJobsHistoryLimit: 2
-      ttlSecondsAfterFinished: 259200 # 3 days
+      ttlSecondsAfterFinished: 86400 # 1 day
       template:
         spec:
           containers:
