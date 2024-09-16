@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: bazarr
-          image: ghcr.io/hotio/bazarr:release-1.4.3
+          image: ghcr.io/hotio/bazarr:release-1.4.4
           resources:
             requests:
               memory: 500Mi
