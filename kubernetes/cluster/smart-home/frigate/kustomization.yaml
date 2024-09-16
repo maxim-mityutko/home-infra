@@ -22,7 +22,7 @@ helmCharts:
       strategyType: Recreate
       nodeSelector:
         beta.kubernetes.io/arch: amd64
-        nvidia.com/gpu.present: true
+        #nvidia.com/gpu.present: 'true'
       image:
         # GPU: If Coral TPU is used `tensorrt` image is unnecessary
         tag: 0.14.0-tensorrt
