@@ -40,7 +40,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: stash
-          image: stashapp/stash:v0.26.2
+          image: stashapp/stash:v0.27.0
           resources:
             requests:
               memory: 1000Mi
