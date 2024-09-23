@@ -60,6 +60,13 @@
   snap install microk8s --channel=1.29/stable --classic
   ```
 
+### (Optional) Post-Installation Proxmox
+- install **qemu-guest-agent** to enable proper management of the node from Proxmox, refer to [docs](https://pve.proxmox.com/wiki/Qemu-guest-agent)
+
+  ```
+  sudo apt install qemu-guest-agent
+  ```
+
 ### Post-Installation
 - install dependencies
 
