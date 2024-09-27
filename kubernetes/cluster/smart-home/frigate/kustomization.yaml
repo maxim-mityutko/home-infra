@@ -10,6 +10,7 @@ resources:
   - volume.yaml
   - dns-endpoint.yaml
   - service.yaml
+  - ingress.yaml
 helmCharts:
   - name:  frigate
     namespace: smart-home
@@ -185,10 +186,6 @@ helmCharts:
           nginx.ingress.kubernetes.io/auth-url: >-
             http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
         hosts:
-          - host: frigate.brhd.io
-            paths: 
-              - path: "/"
-                portName: http
           - host: nvr.brhd.io
             paths:
               - path: "/"
