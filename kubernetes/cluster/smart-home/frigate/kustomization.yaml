@@ -10,7 +10,6 @@ resources:
   - volume.yaml
   - dns-endpoint.yaml
   - service.yaml
-  - ingress.yaml
 helmCharts:
   - name:  frigate
     namespace: smart-home
@@ -223,5 +222,3 @@ helmCharts:
           enabled: false
           failureThreshold: 30
           periodSeconds: 10
-patches:
-  - path: patch.yaml
