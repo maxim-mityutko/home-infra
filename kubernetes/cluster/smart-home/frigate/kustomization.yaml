@@ -177,10 +177,19 @@ helmCharts:
         annotations: 
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
+          nginx.ingress.kubernetes.io/auth-response-headers: >-
+            Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+          nginx.ingress.kubernetes.io/auth-signin: >-
+            https://nvr.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+          nginx.ingress.kubernetes.io/auth-snippet: |
+            proxy_set_header X-Forwarded-Host $http_host;
+          nginx.ingress.kubernetes.io/auth-url: >-
+            http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
         hosts:
-          - host: frigate.brhd.io
-            paths: 
-              - "/"
+          - host: nvr.brhd.io
+            paths:
+              - path: "/"
+                portName: http-auth
 
       persistence:
         config:
@@ -210,5 +219,3 @@ helmCharts:
           enabled: false
           failureThreshold: 30
           periodSeconds: 10
-patches:
-  - path: patch.yaml
