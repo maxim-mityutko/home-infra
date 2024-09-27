@@ -188,11 +188,11 @@ helmCharts:
           - host: frigate.brhd.io
             paths: 
               - path: "/"
-                port-name: http
+                portName: http
           - host: nvr.brhd.io
             paths:
               - path: "/"
-                port-name: http-auth
+                portName: http-auth
 
       persistence:
         config:
