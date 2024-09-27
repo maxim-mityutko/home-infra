@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: frigate-auth
+  name: frigate-anonymous
   namespace: privacy
   labels:
     app.kubernetes.io/name: frigate
