@@ -43,7 +43,7 @@ helmCharts:
       server:
         enabled: true
         image:
-          tag: v1.115.0
+          tag: v1.116.2
         resources:
           requests:
             cpu: 200m
@@ -85,7 +85,8 @@ helmCharts:
         env:
           TRANSFORMERS_CACHE: /cache
         image:
-          tag: v1.115.0-cuda
+          tag: v1.116.2
+          # tag: v1.116.2-cuda
         resources:
           requests:
             cpu: 100m
@@ -111,5 +112,5 @@ helmCharts:
             accessMode: ReadWriteMany
             storageClass: nfs-subdir
         nodeSelector:
-          feature.node.kubernetes.io/igpu.present: "true"
+          kubernetes.io/node-size: large
 
