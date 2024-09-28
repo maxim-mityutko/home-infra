@@ -24,8 +24,9 @@ helmCharts:
         kubernetes.io/node-size: large
         # feature.node.kubernetes.io/tpu.present: true
       image:
+        tag: 0.14.1
         # GPU: If Coral TPU is used `tensorrt` image is unnecessary
-        tag: 0.14.1-tensorrt
+        # tag: 0.14.1-tensorrt
       env:
         TZ: Europe/Amsterdam
         YOLO_MODELS: yolov7-320
