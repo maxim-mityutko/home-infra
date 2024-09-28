@@ -113,4 +113,5 @@ helmCharts:
             storageClass: nfs-subdir
         nodeSelector: {}
           # kubernetes.io/node-size: large
-
+patches:
+  - path: patch.yaml  # Patch is required to enable Intel iGPU within the container for hardware decoding
