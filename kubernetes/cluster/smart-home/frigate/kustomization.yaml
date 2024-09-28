@@ -99,9 +99,10 @@ helmCharts:
           # height: 320
 
         ffmpeg:
-          hwaccel_args: ""                  # force software decoding
+          # hwaccel_args: ""                  # force software decoding
           # hwaccel_args: preset-nvidia-h264  # GPU
-          # hwaccel_args: preset-vaapi          # CPU
+          # hwaccel_args: preset-vaapi        # CPU
+          hwaccel_args: preset-intel-qsv-h264
 
         detect:
           enabled: true
