@@ -50,7 +50,7 @@ helmCharts:
             memory: 250Mi
           limits:
             cpu: 2000m
-            memory: 4Gi
+            memory: 2Gi
         persistence:
           # External Library
           external:
@@ -111,6 +111,6 @@ helmCharts:
             type: pvc
             accessMode: ReadWriteMany
             storageClass: nfs-subdir
-        nodeSelector:
-          kubernetes.io/node-size: large
+        nodeSelector: {}
+          # kubernetes.io/node-size: large
 
