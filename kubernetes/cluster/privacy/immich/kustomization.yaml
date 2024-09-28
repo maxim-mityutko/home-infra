@@ -79,8 +79,8 @@ helmCharts:
               - host: photos.brhd.io
                 paths:
                   - path: "/"
-          nodeSelector:
-            feature.node.kubernetes.io/igpu.present: "true"
+        nodeSelector:
+          feature.node.kubernetes.io/igpu.present: "true"
 
       machine-learning:
         enabled: true
