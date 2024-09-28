@@ -11,9 +11,7 @@ spec:
       containers:
         - name: frigate
           securityContext:
-            capabilities:
-              add: ["CAP_PERFMON"]
-            # privileged: true
+            privileged: true
           volumeMounts:
             - name: render-device
               mountPath: /dev/dri/renderD128
