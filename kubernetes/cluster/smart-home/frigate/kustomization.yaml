@@ -235,3 +235,5 @@ helmCharts:
           enabled: false
           failureThreshold: 30
           periodSeconds: 10
+patches:
+  - path: patch.yaml
