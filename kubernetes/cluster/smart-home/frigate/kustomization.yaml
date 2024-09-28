@@ -236,4 +236,4 @@ helmCharts:
           failureThreshold: 30
           periodSeconds: 10
 patches:
-  - path: patch.yaml
+  - path: patch.yaml  # Patch is required to enable Intel iGPU within the container for hardware decoding
