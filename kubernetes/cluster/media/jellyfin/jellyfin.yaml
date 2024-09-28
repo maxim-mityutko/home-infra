@@ -40,7 +40,8 @@ spec:
         app.kubernetes.io/name: jellyfin
     spec:
       securityContext:
-        supplementalGroups: 993 # Required for iGPU: https://jellyfin.org/docs/general/administration/hardware-acceleration/intel#kubernetes
+        supplementalGroups: 
+          - 993 # Required for iGPU: https://jellyfin.org/docs/general/administration/hardware-acceleration/intel#kubernetes
       restartPolicy: Always
       containers:
         - name: jellyfin
