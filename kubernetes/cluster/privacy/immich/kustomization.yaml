@@ -49,8 +49,8 @@ helmCharts:
             cpu: 200m
             memory: 250Mi
           limits:
-            cpu: 1000m
-            memory: 2Gi
+            cpu: 2000m
+            memory: 4Gi
         persistence:
           # External Library
           external:
@@ -91,8 +91,8 @@ helmCharts:
             cpu: 100m
             memory: 150Mi
           limits:
-            cpu: 500m
-            memory: 2Gi
+            cpu: 2000m
+            memory: 4Gi
         probes:
           liveness:
             spec:
@@ -111,4 +111,5 @@ helmCharts:
             accessMode: ReadWriteMany
             storageClass: nfs-subdir
         nodeSelector:
-          nvidia.com/gpu.present: "true"
+          feature.node.kubernetes.io/igpu.present: "true"
+
