@@ -21,7 +21,7 @@ helmCharts:
       # Container and Environment
       strategyType: Recreate
       nodeSelector:
-        kubernetes.io/node-size: large
+        feature.node.kubernetes.io/igpu.present: "true"
         # feature.node.kubernetes.io/tpu.present: true
       image:
         tag: 0.14.1
