@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: immich-server
+spec:
+  template:
+    spec:
+      securityContext:
+        supplementalGroups:
+          - 993
+      containers:
+        - name: immich-server
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: render-device
+              mountPath: /dev/dri/renderD128
+      volumes:
+        - name: render-device
+          hostPath:
+            path: /dev/dri/renderD128

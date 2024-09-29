@@ -181,3 +181,14 @@
     kubectl apply -f kubernetes/argocd/03_default/authentik.yaml
     kubectl apply -f kubernetes/argocd/03_default/mariadb.yaml
     ```
+
+## Kubernetes Cluster
+
+### Tags
+
+- add custom tags to nodes
+  ```shell
+  kubectl label nodes <node-with-igpu> feature.node.kubernetes.io/igpu.present=true
+  # size = large / medium / small
+  kubectl label nodes <node> kubernetes.io/node-size=<size>
+  ```
