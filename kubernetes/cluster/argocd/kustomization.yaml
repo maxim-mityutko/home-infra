@@ -6,6 +6,6 @@ resources:
   - ingress.yaml
   - repo.yaml
   - secret.yaml
-  - dns.yaml
+  - dns-endpoint.yaml
   # TODO: Enable service scrape if necessary
   # - service-scrape.yaml
