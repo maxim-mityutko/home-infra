@@ -153,6 +153,15 @@
     ```shell
     kubectl apply -f home-infra/kubernetes/cluster/argocd/ingress.yaml
     ```
+- setup **configs**
+    ```shell
+    kubectl apply -f home-infra/kubernetes/cluster/argocd/config.yaml
+    ```
+- add **repos**
+    ```shell
+    kubectl apply -f home-infra/kubernetes/cluster/argocd/repo.yaml
+    ```
+
 
 - login into **ArgoCD** and create repo from SSH repo
 
@@ -174,12 +183,14 @@
 - apply all other manifests, but the recommendation is to start with
 
     ```shell
-    kubectl apply -f kubernetes/argocd/02_ingress/microk8s-ingress.yaml
-    kubectl apply -f kubernetes/argocd/03_default/cert-manager.yaml
-    kubectl apply -f kubernetes/argocd/03_default/nfs-subdir.yaml
-    kubectl apply -f kubernetes/argocd/03_default/postgres.yaml
-    kubectl apply -f kubernetes/argocd/03_default/authentik.yaml
-    kubectl apply -f kubernetes/argocd/03_default/mariadb.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/02_ingress/nginx-ingress.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/cert-manager.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/nfs-subdir.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/external-dns.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/redis.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/postgres.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/authentik.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/tailscale.yaml
     ```
 
 ## Kubernetes Cluster
