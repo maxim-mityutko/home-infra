@@ -19,7 +19,14 @@ helmCharts:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
       # Ref: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
       env:
-        TZ: Europe/Amsterdam
+        DB_HOSTNAME:
+          configMapKeyRef:
+            name: immich
+            key: DB_HOSTNAME
+        REDIS_HOSTNAME:
+          configMapKeyRef:
+            name: immich
+            key: REDIS_HOSTNAME
       envFrom:
         - configMapRef:
             name: immich
