@@ -18,7 +18,8 @@ helmCharts:
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
       # Ref: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
-      env: {}
+      env:
+        IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning:3003
       envFrom:
         - configMapRef:
             name: immich
