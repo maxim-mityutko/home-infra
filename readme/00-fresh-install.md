@@ -180,10 +180,13 @@
 
 ### Other
 
-- apply all other manifests, but the recommendation is to start with
-
+- extra **ingress** configs
     ```shell
     kubectl apply -f home-infra/kubernetes/argocd/02_ingress/nginx-ingress.yaml
+    ```
+
+- apply **primary** group of *default* services
+    ```shell
     kubectl apply -f home-infra/kubernetes/argocd/03_default/cert-manager.yaml
     kubectl apply -f home-infra/kubernetes/argocd/03_default/nfs-subdir.yaml
     kubectl apply -f home-infra/kubernetes/argocd/03_default/external-dns.yaml
@@ -192,6 +195,15 @@
     kubectl apply -f home-infra/kubernetes/argocd/03_default/authentik.yaml
     kubectl apply -f home-infra/kubernetes/argocd/03_default/tailscale.yaml
     ```
+- apply **secondary** group of *default* services
+    ```shell
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/blocky.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/cloudlflare.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/homer.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/lighttpd.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/omada.yaml
+    ```
+- apply services from other groups as required
 
 ## Kubernetes Cluster
 
