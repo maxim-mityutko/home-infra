@@ -153,6 +153,15 @@
     ```shell
     kubectl apply -f home-infra/kubernetes/cluster/argocd/ingress.yaml
     ```
+- setup **configs**
+    ```shell
+    kubectl apply -f home-infra/kubernetes/cluster/argocd/config.yaml
+    ```
+- add **repos**
+    ```shell
+    kubectl apply -f home-infra/kubernetes/cluster/argocd/repo.yaml
+    ```
+
 
 - login into **ArgoCD** and create repo from SSH repo
 
@@ -171,13 +180,38 @@
 
 ### Other
 
-- apply all other manifests, but the recommendation is to start with
-
+- extra **ingress** configs
     ```shell
-    kubectl apply -f kubernetes/argocd/02_ingress/microk8s-ingress.yaml
-    kubectl apply -f kubernetes/argocd/03_default/cert-manager.yaml
-    kubectl apply -f kubernetes/argocd/03_default/nfs-subdir.yaml
-    kubectl apply -f kubernetes/argocd/03_default/postgres.yaml
-    kubectl apply -f kubernetes/argocd/03_default/authentik.yaml
-    kubectl apply -f kubernetes/argocd/03_default/mariadb.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/02_ingress/nginx-ingress.yaml
     ```
+
+- apply **primary** group of *default* services
+    ```shell
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/cert-manager.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/nfs-subdir.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/external-dns.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/redis.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/postgres.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/authentik.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/tailscale.yaml
+    ```
+- apply **secondary** group of *default* services
+    ```shell
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/blocky.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/cloudlflare.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/homer.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/lighttpd.yaml
+    kubectl apply -f home-infra/kubernetes/argocd/03_default/omada.yaml
+    ```
+- apply services from other groups as required
+
+## Kubernetes Cluster
+
+### Tags
+
+- add custom tags to nodes
+  ```shell
+  kubectl label nodes <node-with-igpu> feature.node.kubernetes.io/igpu.present=true
+  # size = large / medium / small
+  kubectl label nodes <node> kubernetes.io/node-size=<size>
+  ```
