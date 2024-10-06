@@ -18,7 +18,7 @@ helmCharts:
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
       # Ref: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
-      env:
+      env:  # TODO: fix the default are still applied
       envFrom:
         - configMapRef:
             name: immich
@@ -43,7 +43,7 @@ helmCharts:
       server:
         enabled: true
         image:
-          tag: v1.115.0
+          tag: v1.116.2
         resources:
           requests:
             cpu: 200m
@@ -85,7 +85,7 @@ helmCharts:
         env:
           TRANSFORMERS_CACHE: /cache
         image:
-          tag: v1.115.0-cuda
+          tag: v1.116.2-cuda
         resources:
           requests:
             cpu: 100m

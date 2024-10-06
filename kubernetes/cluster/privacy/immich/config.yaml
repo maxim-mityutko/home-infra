@@ -9,5 +9,5 @@ metadata:
 data:
   TZ: Europe/Amsterdam
   DB_HOSTNAME: postgres.default.svc.cluster.local
-  REDIS_HOSTNAME: "redis-master.default.svc.cluster.local"
+  REDIS_HOSTNAME: redis-master.default.svc.cluster.local
   
