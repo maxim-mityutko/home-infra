@@ -9,7 +9,7 @@ helmCharts:
     - name: cert-manager
       namespace: default
       releaseName: cert-manager
-      version: v1.15.3
+      version: v1.16.0
       repo: https://charts.jetstack.io
       # Values: https://artifacthub.io/packages/helm/cert-manager/cert-manager
       # Args:
@@ -23,10 +23,10 @@ helmCharts:
         prometheus:
           enabled: false
         webhook:
-          enabled: true
+          replicaCount: 1
         ingressShim:
-          defaultIssureName: 'lets-encrypt'
-          defaultIssureKind: 'ClusterIssuer'
+          defaultIssuerName: 'lets-encrypt'
+          defaultIssuerKind: 'ClusterIssuer'
         # leaderElection:
         #   namespace: 'default'
         extraArgs:
