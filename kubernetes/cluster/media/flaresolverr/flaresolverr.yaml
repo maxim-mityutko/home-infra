@@ -45,6 +45,6 @@ spec:
               memory: 100Mi
               cpu: 50m
             limits:
-              memory: 500Mi
+              memory: 1Gi
           ports:
             - containerPort: 8191
