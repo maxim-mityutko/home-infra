@@ -65,3 +65,4 @@ data:
   PROMETHEUS_ENABLED: "false"
   PROMETHEUS_PORT: "8192"
   LOG_LEVEL: debug
+  LANG: en_GB
