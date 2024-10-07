@@ -66,4 +66,4 @@ data:
   PROMETHEUS_PORT: "8192"
   LOG_LEVEL: debug
   LANG: en_GB
-  HEADLESS: "false"
+  HEADLESS: "true"
