@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: flaresolverr
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: media
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: kubernetes/cluster/media/flaresolverr
+    repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
+    targetRevision: feature-flaresolverr
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
