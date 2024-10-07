@@ -23,10 +23,10 @@ helmCharts:
         prometheus:
           enabled: false
         webhook:
-          enabled: true
+          replicaCount: 1
         ingressShim:
-          defaultIssureName: 'lets-encrypt'
-          defaultIssureKind: 'ClusterIssuer'
+          defaultIssuerName: 'lets-encrypt'
+          defaultIssuerKind: 'ClusterIssuer'
         # leaderElection:
         #   namespace: 'default'
         extraArgs:
