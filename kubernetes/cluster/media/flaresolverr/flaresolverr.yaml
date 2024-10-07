@@ -61,6 +61,6 @@ metadata:
     app.kubernetes.io/name: flaresolverr
 data:
   TZ: Europe/Amsterdam
-  BROWSER_TIMEOUT: "80000"
+  BROWSER_TIMEOUT: "150000"
   PROMETHEUS_ENABLED: "false"
   PROMETHEUS_PORT: "8192"
