@@ -48,3 +48,19 @@ spec:
               memory: 1Gi
           ports:
             - containerPort: 8191
+          envFrom:
+            - configMapRef:
+                name: flaresolverr
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flaresolverr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: flaresolverr
+data:
+  TZ: Europe/Amsterdam
+  BROWSER_TIMEOUT: "80000"
+  PROMETHEUS_ENABLED: "false"
+  PROMETHEUS_PORT: "8192"
