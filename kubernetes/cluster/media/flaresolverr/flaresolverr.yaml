@@ -66,6 +66,6 @@ data:
   TZ: Europe/Amsterdam
   PROMETHEUS_ENABLED: "false"
   PROMETHEUS_PORT: "8192"
-  LOG_LEVEL: debug
+  LOG_LEVEL: info
   LANG: en_GB
   HEADLESS: "true"
