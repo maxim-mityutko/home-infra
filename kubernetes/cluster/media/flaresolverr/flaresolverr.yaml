@@ -42,10 +42,9 @@ spec:
           image: flaresolverr/flaresolverr:v3.3.21
           resources:
             requests:
-              memory: 200Mi
-              cpu: 100m
+              memory: 100Mi
+              cpu: 50m
             limits:
-              memory: 1Gi
-              cpu: 200m
+              memory: 500Mi
           ports:
             - containerPort: 8191
