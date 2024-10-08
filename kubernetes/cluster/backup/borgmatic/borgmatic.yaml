@@ -25,7 +25,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: borgmatic
-          image: ghcr.io/maxim-mityutko/borgmatic-exporter:v0.2.5
+          image: ghcr.io/maxim-mityutko/borgmatic-exporter:v0.2.6
           resources:
             requests:
               memory: 100Mi
@@ -94,4 +94,4 @@ data:
   TZ: "Europe/Amsterdam"
   BACKUP_CRON: "0 4 * * *"
   RUN_ON_STARTUP: "false"
-  BORGMATIC_CONFIG: "/etc/borgmatic.d/k8s-db.yml:/etc/borgmatic.d/k8s-fs.yml"
+  BORGMATIC_CONFIG: "/etc/borgmatic.d/"
