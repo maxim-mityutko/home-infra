@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaresolverr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: flaresolverr
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8191
+      targetPort: 8191
+  selector:
+    app.kubernetes.io/name: flaresolverr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaresolverr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: flaresolverr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: flaresolverr
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: flaresolverr
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: flaresolverr
+          # Using a temporary fix to resolve: https://github.com/FlareSolverr/FlareSolverr/pull/1163
+          # image: ghcr.io/flaresolverr/flaresolverr:v3.3.21
+          image: 21hsmw/flaresolverr:nodriver
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 50m
+            limits:
+              memory: 1Gi
+              cpu: 2
+          ports:
+            - containerPort: 8191
+          envFrom:
+            - configMapRef:
+                name: flaresolverr
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flaresolverr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: flaresolverr
+data:
+  TZ: Europe/Amsterdam
+  PROMETHEUS_ENABLED: "false"
+  PROMETHEUS_PORT: "8192"
+  LOG_LEVEL: info
+  LANG: en_GB
+  HEADLESS: "true"
