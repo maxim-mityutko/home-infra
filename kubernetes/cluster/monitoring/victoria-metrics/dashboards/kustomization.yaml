@@ -33,11 +33,13 @@ configMapGenerator:
   # - name: k8s-system-coredns
   #   files:
   #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-system-coredns.json
-  # Ingress
+  # Ingress Nginx
+  # Ref: https://github.com/kubernetes/ingress-nginx/tree/main/deploy/grafana/dashboards
   - name: dashboard-nginx
     files:
       - https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
   # Prometheus
+  # Ref: https://github.com/rfmoz/grafana-dashboards
   - name: dashboard-node-exporter-full
     files:
       - https://raw.githubusercontent.com/rfmoz/grafana-dashboards/refs/heads/master/prometheus/node-exporter-full.json
