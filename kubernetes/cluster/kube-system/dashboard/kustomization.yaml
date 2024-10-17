@@ -1,0 +1,55 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kubernetes-dashboard
+resources: []
+  # - secret.yaml
+  # - config.yaml
+  # - pv-pvc-data.yaml
+  # - dns-endpoint.yaml
+helmCharts:
+  - name: kubernetes-dashboard
+    namespace: kubernetes-dashboard
+    releaseName: kubernetes-dashboard
+    version: 7.11.1
+    repo: https://kubernetes.github.io/dashboard/
+    valuesInline: 
+      app:
+        mode: 'dashboard'
+        ingress:
+          enabled: true
+          hosts:
+            - k8s-dash.brhd.io
+          useDefaultIngressClass: true
+          useDefaultAnnotations: true
+          issuer:
+            name: lets-encrypt
+            scope: cluster
+      auth:
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+      web:
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+      metricsScraper:
+        enabled: false
+      metrics-server:
+        enabled: false
+      kong:
+        enabled: true
+      cert-manager:
+        enabled: false
+      nginx:
+        enabled: false
+      extras:
+        serviceMonitor:
+          enabled: false
