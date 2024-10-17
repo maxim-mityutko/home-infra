@@ -14,7 +14,7 @@ helmCharts:
       repo: https://victoriametrics.github.io/helm-charts/
       valuesInline:
         defaultDashboards:
-          enabled: true
+          enabled: false
           dashboards:
             victoriametrics-vmalert:
               enabled: true
