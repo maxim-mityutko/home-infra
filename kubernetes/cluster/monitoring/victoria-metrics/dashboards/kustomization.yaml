@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: monitoring
 configMapGenerator:
   # Victoria Metrics
+  # Ref: https://github.com/VictoriaMetrics/VictoriaMetrics/tree/master/dashboards
   - name: dashboard-vm-single-node
     files: 
       - https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/refs/heads/master/dashboards/victoriametrics.json
@@ -13,6 +14,7 @@ configMapGenerator:
     files:
       - https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/refs/heads/master/dashboards/vmalert.json
   # Kubernetes
+  # Ref: https://github.com/dotdc/grafana-dashboards-kubernetes
   - name: dashboard-k8s-views-global
     files:
       - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-views-global.json
@@ -27,13 +29,21 @@ configMapGenerator:
       - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-views-pods.json
   # - name: k8s-system-api-server
   #   files:
-  #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+  #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-system-api-server.json
   # - name: k8s-system-coredns
   #   files:
-  #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+  #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-system-coredns.json
+  # Ingress
   - name: dashboard-nginx
     files:
       - https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
+  # Prometheus
+  - name: dashboard-node-exporter-full
+    files:
+      - https://raw.githubusercontent.com/rfmoz/grafana-dashboards/refs/heads/master/prometheus/node-exporter-full.json
+  - name: dashboard-nfs-full
+    files:
+      - https://raw.githubusercontent.com/rfmoz/grafana-dashboards/refs/heads/master/prometheus/nfs-full.json
   # - TODO: ArgoCD
   # - TODO: Longhorn
 generatorOptions:
