@@ -13,8 +13,8 @@ helmCharts:
       version: 0.27.5
       repo: https://victoriametrics.github.io/helm-charts/
       valuesInline:
-        defaultDashboardEnabled: true
-        experimentalDashboardsEnabled: true
+        defaultDashboards:
+          enabled: true
         fullnameOverride: stack
         victoria-metrics-operator:
           enabled: true
