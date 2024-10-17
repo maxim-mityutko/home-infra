@@ -2,19 +2,47 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: monitoring
 configMapGenerator:
-  # Kubernetes
-  - name: k8s-views-nodes
+  # Victoria Metrics
+  # Ref: https://github.com/VictoriaMetrics/VictoriaMetrics/tree/master/dashboards
+  - name: dashboard-vm-single-node
+    files: 
+      - https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/refs/heads/master/dashboards/victoriametrics.json
+  - name: dashboard-vm-agent
     files:
-      - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+      - https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/refs/heads/master/dashboards/vmagent.json
+  - name: dashboard-vm-alert
+    files:
+      - https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/refs/heads/master/dashboards/vmalert.json
+  # Kubernetes
+  # Ref: https://github.com/dotdc/grafana-dashboards-kubernetes
+  - name: dashboard-k8s-views-global
+    files:
+      - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-views-global.json
+  - name: dashboard-k8s-views-namespaces
+    files:
+      - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-views-namespaces.json
+  - name: dashboard-k8s-views-nodes
+    files:
+      - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-views-nodes.json
+  - name: dashboard-k8s-views-pods
+    files:
+      - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-views-pods.json
   # - name: k8s-system-api-server
   #   files:
-  #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+  #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-system-api-server.json
   # - name: k8s-system-coredns
   #   files:
-  #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
-  - name: nginx
+  #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-system-coredns.json
+  # Ingress Nginx
+  # Ref: https://github.com/kubernetes/ingress-nginx/tree/main/deploy/grafana/dashboards
+  - name: dashboard-nginx
     files:
       - https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
+  # Prometheus
+  # Ref: https://github.com/rfmoz/grafana-dashboards
+  - name: dashboard-node-exporter-full
+    files:
+      - https://raw.githubusercontent.com/rfmoz/grafana-dashboards/refs/heads/master/prometheus/node-exporter-full.json
   # - TODO: ArgoCD
   # - TODO: Longhorn
 generatorOptions:
