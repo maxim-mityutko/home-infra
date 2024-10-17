@@ -43,6 +43,7 @@ helmCharts:
       # TODO: possibility to separate API and WORKERS: https://immich.app/docs/administration/jobs-workers/
       server:
         enabled: true
+        env: {}
         image:
           tag: v1.118.2
         resources:
