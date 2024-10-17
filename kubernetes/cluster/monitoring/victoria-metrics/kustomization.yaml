@@ -15,6 +15,13 @@ helmCharts:
       valuesInline:
         defaultDashboards:
           enabled: true
+          dashboards:
+            victoriametrics-vmalert:
+              enabled: true
+            victoriametrics-operator:
+              enabled: true
+            node-exporter-full:
+              enabled: true
         fullnameOverride: stack
         victoria-metrics-operator:
           enabled: true

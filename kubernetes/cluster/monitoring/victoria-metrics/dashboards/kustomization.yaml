@@ -3,9 +3,18 @@ kind: Kustomization
 namespace: monitoring
 configMapGenerator:
   # Kubernetes
+  - name: k8s-views-global
+    files:
+      - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-views-global.json
+  - name: k8s-views-namespaces
+    files:
+      - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-views-namespaces.json
   - name: k8s-views-nodes
     files:
-      - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+      - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-views-nodes.json
+  - name: k8s-views-pods
+    files:
+      - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-views-pods.json
   # - name: k8s-system-api-server
   #   files:
   #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
