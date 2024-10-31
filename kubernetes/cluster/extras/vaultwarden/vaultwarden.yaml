@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: vaultwarden
-          image: vaultwarden/server:1.32.2
+          image: vaultwarden/server:1.32.3
           resources:
             requests:
               memory: 200M
