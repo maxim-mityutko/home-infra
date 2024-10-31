@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: radarr
-          image: ghcr.io/hotio/radarr:release-5.12.2.9335
+          image: ghcr.io/hotio/radarr:release-5.14.0.9383
           resources:
             requests:
               memory: 500Mi
