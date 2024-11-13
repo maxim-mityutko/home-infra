@@ -11,7 +11,7 @@ helmCharts:
   - name: nextcloud
     namespace: privacy
     releaseName: nextcloud
-    version: 6.2.1
+    version: 6.2.2
     repo: https://nextcloud.github.io/helm/
     valuesInline:
       ingress:
