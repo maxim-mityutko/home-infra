@@ -18,10 +18,12 @@ helmCharts:
         fullnameOverride: stack
         victoria-metrics-operator:
           enabled: true
-          crd:
-            create: true
+          crds:
+            plain: true
             cleanup:
               enabled: true
+          serviceMonitor:
+            enabled: false
         prometheus-operator-crds:
           enabled: false
         grafana:
