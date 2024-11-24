@@ -19,7 +19,8 @@ helmCharts:
         victoria-metrics-operator:
           enabled: true
           crds:
-            plain: true
+            enabled: true
+            plain: false
             cleanup:
               enabled: true
           serviceMonitor:
