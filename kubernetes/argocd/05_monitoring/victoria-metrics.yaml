@@ -19,3 +19,17 @@ spec:
     syncOptions:
       - ServerSideApply=true
       - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+  # Ref: https://docs.victoriametrics.com/helm/victoriametrics-k8s-stack/#operator-self-signed-certificates
+  ignoreDifferences:
+    - group: ""
+      kind: Secret
+      name: victoria-metrics-victoria-metrics-operator-validation
+      namespace: monitoring
+      jsonPointers:
+        - /data
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: victoria-metrics-victoria-metrics-operator-admission
+      jqPathExpressions:
+      - '.webhooks[]?.clientConfig.caBundle'
