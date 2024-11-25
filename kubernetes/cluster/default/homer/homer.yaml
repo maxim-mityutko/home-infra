@@ -40,7 +40,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: homer
-          image: b4bz/homer:v24.11.4
+          image: b4bz/homer:v24.11.5
           resources:
             requests:
               cpu: 10m
