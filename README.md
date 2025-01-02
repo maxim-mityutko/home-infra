@@ -10,11 +10,30 @@ After the initial steps are complete, deployments are handled via ArgoCD applica
 defined in the `kubernetes\argocd`.
 
 ## Hardware:
-* TrueNAS Scale Host: CPU Intel i5-3470 / RAM 24 GB / 2 x SSD 500 GB MIRROR / 3 x HDD 12TB RAIDZ1 / NVIDIA Tesla P4 / Google Coral TPU M.2
-  * VM1: RAM 8GB
-  * VM2: RAM 6GB
-* (Spare) ProxMox Host:  CPU Intel i7-6700 / RAM 16 GB / 1 x NVME 500 GB
-  * VM1: RAM 8GB
+* ProxMox VE Host:
+  * MOBO: [ASRock IMB-X1231](https://www.asrockind.com/en-gb/IMB-X1231)
+  * CPU: Intel Core i5-13500
+  * RAM: Kingston Server Premier DDR4-ECC-3200 32 GB x2
+  * Extension Cards:
+    1. SATA Controller - 2 Port: JMB58x - M.2 M+B Key
+    2. SATA Controller - 6 port: ASM1166 - M.2 M Key
+  * Storage:
+    1. SSD Samsung 840 Pro 256 GB x2
+    2. SSD Samsung 860 Evo 1 TB
+    3. SSD Crucial BX500 1TB x2
+    4. HDD Seagate IronWolf Pro NAS 12 TB x3
+  * Virtual Machines:
+    * TrueNAS Scale with 4 CPUs, 8GB RAM and extension cards (1) and (2) as direct passthrough and SSD (3) and HDD (4) in ZFS pulls for storage
+    * Ubuntu Server with 4 CPUs and and 8GB RAM
+    * Ubuntu Server with 6 CPUs and and 16GB RAM 
+* ProxMox VE Host (Spare):  
+  * CPU Intel i7-6700
+  * RAM 16 GB 
+  * Storage:
+    1. SSD SanDisk SD7TB3Q-256G-1006 256GB
+    2. NVME WD Blue NVME 500 GB
+  * Virtual Machines:
+    * (x3) Ubuntu Server with 2 CPUs and and 4GB RAM 
 * Raspberry Pi 4B 8GB
 * Upcoming: [Compute Blade](https://www.kickstarter.com/projects/uptimelab/compute-blade) with CM4 8GB and 500 GB NVME x 4
 
