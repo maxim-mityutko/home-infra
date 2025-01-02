@@ -22,7 +22,7 @@ helmCharts:
       strategyType: Recreate
       nodeSelector:
         kubernetes.io/gpu: intel
-        # feature.node.kubernetes.io/tpu.present: true
+        # kubernetes.io/tpu: coral
       image:
         tag: 0.14.1
         # GPU: If Coral TPU is used `tensorrt` image is unnecessary
