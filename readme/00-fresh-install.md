@@ -211,7 +211,8 @@
 
 - add custom tags to nodes
   ```shell
-  kubectl label nodes <node-with-igpu> feature.node.kubernetes.io/igpu.present=true
+  # type = intel / nvidia
+  kubectl label nodes <node> kubernetes.io/gpu=<type>
   # size = large / medium / small
   kubectl label nodes <node> kubernetes.io/node-size=<size>
   ```
