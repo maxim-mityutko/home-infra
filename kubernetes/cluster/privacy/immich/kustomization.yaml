@@ -43,13 +43,13 @@ helmCharts:
       server:
         enabled: true
         image:
-          tag: v1.119.1
+          tag: v1.123.0
         resources:
           requests:
             cpu: 200m
             memory: 250Mi
           limits:
-            cpu: 1000m
+            cpu: 2000m
             memory: 2Gi
         persistence:
           # External Library
@@ -79,20 +79,22 @@ helmCharts:
               - host: photos.brhd.io
                 paths:
                   - path: "/"
+        nodeSelector:
+          kubernetes.io/gpu: intel
 
       machine-learning:
         enabled: true
         env:
           TRANSFORMERS_CACHE: /cache
         image:
-          tag: v1.119.1-cuda
+          tag: v1.123.0 # Use <tag>-cuda for NVidia GPUs
         resources:
           requests:
             cpu: 100m
             memory: 150Mi
           limits:
-            cpu: 500m
-            memory: 2Gi
+            cpu: 2000m
+            memory: 4Gi
         probes:
           liveness:
             spec:
@@ -111,4 +113,6 @@ helmCharts:
             accessMode: ReadWriteMany
             storageClass: nfs-subdir
         nodeSelector:
-          nvidia.com/gpu.present: "true"
+          kubernetes.io/node-size: large
+patches:
+  - path: patch.yaml  # Patch is required to enable Intel iGPU within the container for hardware decoding
