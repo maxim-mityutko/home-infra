@@ -21,11 +21,12 @@ helmCharts:
       # Container and Environment
       strategyType: Recreate
       nodeSelector:
-        beta.kubernetes.io/arch: amd64
-        nvidia.com/gpu.present: "true"
+        kubernetes.io/gpu: intel
+        # kubernetes.io/tpu: coral
       image:
+        tag: 0.14.1
         # GPU: If Coral TPU is used `tensorrt` image is unnecessary
-        tag: 0.14.1-tensorrt
+        # tag: 0.14.1-tensorrt
       env:
         TZ: Europe/Amsterdam
         YOLO_MODELS: yolov7-320
@@ -40,12 +41,12 @@ helmCharts:
 
       # Hardware
       coral:
-        enabled: true
+        enabled: false
         hostPath: "/dev/apex_0"
       # GPU: If Coral TPU is used NVIDIA drivers are unnecessary
       gpu:
         nvidia:
-          enabled: true
+          enabled: false
 
       # Frigate Config
       # Ref:
@@ -61,8 +62,8 @@ helmCharts:
 
         detectors:
           # Coral TPU
-          coral:
-            type: edgetpu
+          # coral:
+          #   type: edgetpu
 
           # GPU
           # https://docs.frigate.video/configuration/object_detectors/#nvidia-tensorrt-detector
@@ -70,23 +71,38 @@ helmCharts:
           #   type: tensorrt
           #   device: 0
 
+          # OpenVINO (on CPU)
+          ov:
+            type: openvino
+            device: CPU
+
         model:
           # Coral TPU
-          path: /edgetpu_model.tflite
-          input_tensor: nhwc
+          # path: /edgetpu_model.tflite
+          # input_tensor: nhwc
 
           # GPU
           # path: /config/model_cache/tensorrt/yolov7-320.trt
           # input_tensor: nchw
 
-          # General Config
-          input_pixel_format: rgb
-          width: 320
-          height: 320
+          # OpenVINO (on CPU)
+          width: 300
+          height: 300
+          input_tensor: nhwc
+          input_pixel_format: bgr
+          path: /openvino-model/ssdlite_mobilenet_v2.xml
+          labelmap_path: /openvino-model/coco_91cl_bkgr.txt
+
+          # General Config (enable for TPU or GPU)
+          # input_pixel_format: rgb
+          # width: 320
+          # height: 320
 
         ffmpeg:
-          hwaccel_args: "" # force software decoding
-          # hwaccel_args: preset-nvidia-h264 # GPU
+          # hwaccel_args: ""                  # force software decoding
+          # hwaccel_args: preset-nvidia-h264  # GPU
+          # hwaccel_args: preset-vaapi        # CPU
+          hwaccel_args: preset-intel-qsv-h264
 
         detect:
           enabled: true
@@ -219,3 +235,5 @@ helmCharts:
           enabled: false
           failureThreshold: 30
           periodSeconds: 10
+patches:
+  - path: patch.yaml  # Patch is required to enable Intel iGPU within the container for hardware decoding
