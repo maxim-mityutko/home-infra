@@ -73,7 +73,7 @@ metadata:
     app.kubernetes.io/name: linkwarden
 data:
   STORAGE_FOLDER: /data
-  RE_ARCHIVE_LIMIT: 1440 # 1 day
+  RE_ARCHIVE_LIMIT: "1440" # 1 day
 
   NEXT_PUBLIC_DISABLE_REGISTRATION: "true"
   NEXT_PUBLIC_CREDENTIALS_ENABLED: "false"
