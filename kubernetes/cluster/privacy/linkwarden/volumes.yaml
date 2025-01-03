@@ -1,0 +1,16 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: linkwarden-data
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: linkwarden
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadOnlyMany
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 100M
