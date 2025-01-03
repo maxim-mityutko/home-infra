@@ -1,0 +1,84 @@
+# Service: Linkwarden
+# Ingress: bookmarks.brhd.io
+# Label: app.kubernetes.io/name: linkwarden
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: linkwarden
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: linkwarden
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  selector:
+    app.kubernetes.io/name: linkwarden
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: linkwarden
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: linkwarden
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: linkwarden
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: privacy
+      labels:
+        app.kubernetes.io/name: linkwarden
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: linkwarden
+          image: ghcr.io/linkwarden/linkwarden:v2.8.4
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 50m
+            limits:
+              memory: 200Mi
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: linkwarden
+            - configMapRef:
+                name: linkwarden
+          volumeMounts:
+            - name: linkwarden-data
+              mountPath: /data
+      volumes:
+        - name: linkwarden-data
+          persistentVolumeClaim:
+            claimName: linkwarden-data
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: linkwarden
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: linkwarden
+data:
+  STORAGE_FOLDER: /data
+  RE_ARCHIVE_LIMIT: 1440 # 1 day
+
+  NEXT_PUBLIC_DISABLE_REGISTRATION: "true"
+  NEXT_PUBLIC_CREDENTIALS_ENABLED: "false"
+  DISABLE_NEW_SSO_USERS: "false"
+
+  NEXT_PUBLIC_AUTHENTIK_ENABLED: "true"
+  AUTHENTIK_CUSTOM_NAME: Authentik
+  NEXTAUTH_URL: https://bookmarks.brhd.io/api/v1/auth
