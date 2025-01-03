@@ -5,7 +5,7 @@ helmCharts:
   - name: redis
     namespace: default
     releaseName: redis
-    version: 20.3.0
+    version: 20.4.1
     repo: https://charts.bitnami.com/bitnami
     valuesInline:
       # global:
