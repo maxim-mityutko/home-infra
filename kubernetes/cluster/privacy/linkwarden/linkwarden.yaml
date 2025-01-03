@@ -58,7 +58,7 @@ spec:
                 name: linkwarden
           volumeMounts:
             - name: linkwarden-data
-              mountPath: /data
+              mountPath: /data/assets
       volumes:
         - name: linkwarden-data
           persistentVolumeClaim:
@@ -72,7 +72,7 @@ metadata:
   labels:
     app.kubernetes.io/name: linkwarden
 data:
-  STORAGE_FOLDER: /data
+  STORAGE_FOLDER: /assets
   RE_ARCHIVE_LIMIT: "1440" # 1 day
 
   NEXT_PUBLIC_DISABLE_REGISTRATION: "true"
