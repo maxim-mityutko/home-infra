@@ -5,8 +5,8 @@ helmCharts:
   - name: redis
     namespace: default
     releaseName: redis
-    version: 20.4.0
-    repo: https://charts.bitnami.com/bitnami
+    version: 20.6.1
+    repo: oci://registry-1.docker.io/bitnamicharts
     valuesInline:
       # global:
       #   storageClass: nfs-subdir
