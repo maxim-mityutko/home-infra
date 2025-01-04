@@ -52,11 +52,11 @@ spec:
               cpu: 500m
           ports:
             - containerPort: 5055
-          env:
-            - name: TZ
-              value: 'Europe/Amsterdam'
-            - name: LOG_LEVEL
-              value: 'debug'
+          envFrom:
+            - configMapRef:
+                name: jellyseerr
+            - secretRef:
+                name: jellyseerr
           volumeMounts:
             - name: jellyseerr-config
               mountPath: /app/config
@@ -64,3 +64,16 @@ spec:
         - name: jellyseerr-config
           persistentVolumeClaim:
             claimName: jellyseerr-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jellyseerr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: jellyseerr
+data:
+  TZ: Europe/Amsterdam
+  LOG_LEVEL: info
+  DB_TYPE: postgres
+  DB_LOG_QUERIES: "false"
