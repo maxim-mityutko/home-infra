@@ -10,7 +10,7 @@ helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring
       releaseName: victoria-metrics
-      version: 0.31.3
+      version: 0.33.1
       repo: https://victoriametrics.github.io/helm-charts/
       valuesInline:
         defaultDashboards:
