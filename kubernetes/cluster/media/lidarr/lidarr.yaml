@@ -51,7 +51,7 @@ spec:
               memory: 1000Mi
               cpu: 1000m
           ports:
-            - containerPort: 7878
+            - containerPort: 8686
           volumeMounts:
             - name: lidarr-config
               mountPath: /config
