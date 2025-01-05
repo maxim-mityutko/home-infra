@@ -42,14 +42,13 @@ spec:
       restartPolicy: Always
       containers:
         - name: jellyseerr
-          image: fallenbagel/jellyseerr:develop # 2.2.3
+          image: fallenbagel/jellyseerr:develop
           resources:
             requests:
               memory: 50Mi
               cpu: 100m
             limits:
               memory: 500Mi
-              cpu: 500m
           ports:
             - containerPort: 5055
           envFrom:
