@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: jellyseerr
-          image: fallenbagel/jellyseerr:2.2.3
+          image: fallenbagel/jellyseerr:develop # 2.2.3
           resources:
             requests:
               memory: 50Mi
