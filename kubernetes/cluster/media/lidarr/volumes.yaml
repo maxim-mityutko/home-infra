@@ -1,0 +1,16 @@
+---
+# Lidarr -- Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: lidarr-config
+  namespace: media
+  labels:
+    app.kubernetes.io/name: lidarr
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1G

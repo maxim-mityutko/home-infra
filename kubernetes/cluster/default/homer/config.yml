@@ -204,6 +204,11 @@ services:
         tag: "media"
         url: "https://bazarr.brhd.io"
         target: "_blank"
+      - name: "Lidarr"
+        logo: "https://casa.brhd.io/icons/lidarr.png"
+        tag: "media"
+        url: "https://lidarr.brhd.io"
+        target: "_blank"
   - name: "Home"
     icon: "fas fa-home"
     items:
