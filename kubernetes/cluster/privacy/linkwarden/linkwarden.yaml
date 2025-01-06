@@ -64,6 +64,8 @@ spec:
         - name: linkwarden-data
           persistentVolumeClaim:
             claimName: linkwarden-data
+      nodeSelector:
+        kubernetes.io/node-size: large
 ---
 apiVersion: v1
 kind: ConfigMap
