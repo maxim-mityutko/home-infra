@@ -38,21 +38,27 @@ directory:
 cat:
   radarr: /downloads/zzz/complete/_radarr
   sonarr: /downloads/zzz/complete/_sonarr
+  lidarr: /downloads/zzz/complete/_lidarr
   stash: /downloads/misc
 
+# replace (*) with full names from url
 tracker:
   t-ru:
     tag:
       - rutracker
       - public
-  torrentleech|tleechreload:
+  t**********h|t*****reload:
     tag:
-      - torrentleech
+      - t**********h
       - private
-  hdbits:
+  h****s:
     tag:
-      - hdbits
+      - h****s
       - private
+  t***********c:
+    tag:
+    - t***********c
+    - private
   racingfor:
     tag: rfm
   other:
@@ -93,6 +99,7 @@ share_limits:
     categories:
       - radarr
       - sonarr
+      - lidarr
     max_ratio: -1
     cleanup: false
   stash:
