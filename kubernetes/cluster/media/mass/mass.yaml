@@ -54,10 +54,16 @@ spec:
           volumeMounts:
             - name: music-assistant-config
               mountPath: /data
+            - name: downloads
+              mountPath: /downloads
       volumes:
         - name: music-assistant-config
           persistentVolumeClaim:
             claimName: music-assistant-config
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads
+            readOnly: true
 ---
 apiVersion: v1
 kind: ConfigMap
