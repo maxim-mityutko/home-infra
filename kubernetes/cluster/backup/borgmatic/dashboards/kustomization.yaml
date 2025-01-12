@@ -4,7 +4,7 @@ namespace: backup
 configMapGenerator:
   - name: dashboard-borgmatic
     files:
-      - https://github.com/maxim-mityutko/borgmatic-exporter/raw/refs/heads/master/observability/grafana-dashboard.json
+      - https://raw.githubusercontent.com/maxim-mityutko/borgmatic-exporter/9a222bd56a5a5ed138b131753816bb411a663843/observability/grafana-dashboard.json
 generatorOptions:
   labels:
     grafana-dashboard: "true"
