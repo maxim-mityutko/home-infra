@@ -57,7 +57,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: blocky
-          image: spx01/blocky:v0.24
+          image: spx01/blocky:v0.25
           resources:
             requests:
               cpu: 10m
