@@ -10,3 +10,5 @@ helmCharts:
     includeCRDs: true
     valuesInline:
       revisionHistoryLimit: 1
+      secretName: sealed-secrets-key4ql8z
+
