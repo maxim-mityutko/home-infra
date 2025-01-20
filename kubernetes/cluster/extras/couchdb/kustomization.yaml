@@ -21,11 +21,16 @@ helmCharts:
         enabled: true
       persistentVolume:
         enabled: true
-        existingClaims:
-          - volumeName: couchdb-data-iscsi
-            claimName: couchdb-data-iscsi
-            persistentVolumeName: couchdb-data-iscsi
-            volumeSource: persistentVolumeClaim
+        accessModes:
+          - ReadWriteOnce
+          - ReadOnlyMany
+        size: 10Gi
+        storageClass: nfs-subdir
+        # existingClaims:
+        #   - volumeName: couchdb-data-iscsi
+        #     claimName: couchdb-data-iscsi
+        #     persistentVolumeName: couchdb-data-iscsi
+        #     volumeSource: persistentVolumeClaim
 
       enableSearch: false
 
