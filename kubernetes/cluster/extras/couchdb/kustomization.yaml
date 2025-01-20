@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: extras
 resources:
   - secret.yaml
-  - volumes.yaml
+  # - volumes.yaml
   - dns-endpoint.yaml
 helmCharts:
   - name: couchdb
@@ -18,7 +18,7 @@ helmCharts:
         enabled: true
       createAdminSecret: false
       networkPolicy:
-        enabled: true
+        enabled: false
       persistentVolume:
         enabled: true
         accessModes:
