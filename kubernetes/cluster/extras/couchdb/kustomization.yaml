@@ -24,6 +24,7 @@ helmCharts:
         existingClaims:
           - volumeName: couchdb-data-iscsi
             claimName: couchdb-data-iscsi
+            persistentVolumeName: couchdb-data-iscsi
 
       enableSearch: false
 
