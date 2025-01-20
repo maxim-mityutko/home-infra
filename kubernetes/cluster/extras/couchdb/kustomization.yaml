@@ -23,7 +23,7 @@ helmCharts:
         enabled: true
         existingClaims:
           - volumeName: couchdb-data-iscsi
-            volumeClaim: couchdb-data-iscsi
+            claimName: couchdb-data-iscsi
 
       enableSearch: false
 
