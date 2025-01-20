@@ -50,16 +50,15 @@ helmCharts:
           memory: 250Mi
 
       couchdbConfig:
-        # couchdb:
-        #  uuid: decafbaddecafbaddecafbaddecafbad # Unique identifier for this CouchDB server instance
+        couchdb:
+          uuid: vfexns2c4a9ku265j6jzepu9x7hk
         # cluster:
         #   q: 8 # Create 8 shards for each database
         chttpd:
           bind_address: any
           require_valid_user: true
-        # required to use Fauxton if chttpd.require_valid_user is set to true
-        # httpd:
-        #   WWW-Authenticate: "Basic realm=\"administrator\""
+        httpd:
+          WWW-Authenticate: "Basic realm=\"administrator\""
 
       livenessProbe:
         enabled: true
