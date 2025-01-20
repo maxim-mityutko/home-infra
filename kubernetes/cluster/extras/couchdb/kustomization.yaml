@@ -26,8 +26,6 @@ helmCharts:
           - ReadOnlyMany
         size: 10Gi
         storageClass: nfs-subdir
-        volumeName: couchdb-data
-        claimName: couchdb-data
         # existingClaims:
         #   - volumeName: couchdb-data-iscsi
         #     claimName: couchdb-data-iscsi
@@ -63,12 +61,22 @@ helmCharts:
         couchdb:
           uuid: vfexns2c4a9ku265j6jzepu9x7hk
           single_node: true
-        # cluster:
-        #   q: 8 # Create 8 shards for each database
+          max_document_size: 50000000        # default: obsidian
         chttpd:
           bind_address: any
           require_valid_user: true
+          max_http_request_size: 4294967296  # default: obsidian
+          enable_cors: true                  # default: obsidian
+        chttpd_auth:
+          require_valid_user: true           # default: obsidian
+        cors:
+          credentials: true                  # default: obsidian
+          headers: accept, authorization, content-type, origin, referer
+          origins: app://obsidian.md, capacitor://localhost, http://localhost
+          methods: GET, PUT, POST, HEAD, DELETE
+          max_age: 3600
         httpd:
+          enable_cors: true                  # default: obsidian
           WWW-Authenticate: "Basic realm=\"administrator\""
 
       livenessProbe:
@@ -82,7 +90,7 @@ helmCharts:
         enabled: true
         failureThreshold: 3
         initialDelaySeconds: 0
-        periodSeconds: 30
+        periodSeconds: 10
         successThreshold: 1
         timeoutSeconds: 1
 
