@@ -60,6 +60,7 @@ helmCharts:
       couchdbConfig:
         couchdb:
           uuid: vfexns2c4a9ku265j6jzepu9x7hk
+          single_node: true
         # cluster:
         #   q: 8 # Create 8 shards for each database
         chttpd:
