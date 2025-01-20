@@ -67,6 +67,7 @@ helmCharts:
           require_valid_user: true
           max_http_request_size: 4294967296  # default: obsidian
           enable_cors: true                  # default: obsidian
+          authentication_handlers: "{chttpd_auth, proxy_authentication_handler}, {chttpd_auth, default_authentication_handler}"
         chttpd_auth:
           require_valid_user: true           # default: obsidian
         cors:
