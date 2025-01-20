@@ -1,0 +1,85 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: extras
+resources:
+  - secret.yaml
+  - volumes.yaml
+  - dns-endpoint.yaml
+helmCharts:
+  - name: couchdb
+    namespace: extras
+    releaseName: couchdb
+    version: 4.5.3
+    repo: https://apache.github.io/couchdb-helm
+    valuesInline:
+      clusterSize: 1
+      allowAdminParty: false
+      autoSetup:
+        enabled: true
+      createAdminSecret: false
+      networkPolicy:
+        enabled: true
+      persistentVolume:
+        enabled: true
+        existingClaims:
+          - couchdb-data-iscsi
+
+      enableSearch: false
+
+      service:
+        enabled: true
+        type: ClusterIP
+        externalPort: 5984
+        targetPort: 5984
+
+      ingress:
+        enabled: true
+        hosts:
+          - couchdb.brhd.io
+        path: /
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+        limits:
+          cpu: 200m
+          memory: 250Mi
+
+      couchdbConfig:
+        # couchdb:
+        #  uuid: decafbaddecafbaddecafbaddecafbad # Unique identifier for this CouchDB server instance
+        # cluster:
+        #   q: 8 # Create 8 shards for each database
+        chttpd:
+          bind_address: any
+          require_valid_user: true
+        # required to use Fauxton if chttpd.require_valid_user is set to true
+        # httpd:
+        #   WWW-Authenticate: "Basic realm=\"administrator\""
+
+      livenessProbe:
+        enabled: true
+        failureThreshold: 3
+        initialDelaySeconds: 0
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      readinessProbe:
+        enabled: true
+        failureThreshold: 3
+        initialDelaySeconds: 0
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+
+      prometheusPort:
+        enabled: false
+
+      sidecars: {}
+
+      placementConfig:
+        enabled: false
