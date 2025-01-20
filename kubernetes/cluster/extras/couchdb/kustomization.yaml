@@ -26,6 +26,8 @@ helmCharts:
           - ReadOnlyMany
         size: 10Gi
         storageClass: nfs-subdir
+        volumeName: couchdb-data
+        claimName: couchdb-data
         # existingClaims:
         #   - volumeName: couchdb-data-iscsi
         #     claimName: couchdb-data-iscsi
