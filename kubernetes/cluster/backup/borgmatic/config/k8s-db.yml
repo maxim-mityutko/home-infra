@@ -31,8 +31,6 @@ sqlite_databases:
     path: /mnt/k8s/pods/jellyfin-config/data/jellyfin.db
   - name: jellyfin-library
     path: /mnt/k8s/pods/jellyfin-config/data/library.db
-  - name: jellyseerr
-    path: /mnt/k8s/pods/jellyseerr-config/db/db.sqlite3
   - name: stash
     path: /mnt/k8s/pods/stash-config/stash-go.sqlite
   - name: frigate
