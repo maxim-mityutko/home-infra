@@ -280,7 +280,7 @@ services:
         logo: "https://casa.brhd.io/icons/it-tools.png"
         tag: "development"
         url: "https://it-tools.brhd.io"
-  - name: "Database Management"
+  - name: "Database & DB Management"
     icon: "fas fa-archive"
     items:
       - name: "CloudBeaver"
