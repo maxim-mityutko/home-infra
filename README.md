@@ -130,7 +130,13 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 **FlareSolverr**         | FlareSolverr is a proxy server to bypass Cloudflare and DDoS-GUARD protection                                                                                        |                                         [repo](https://github.com/FlareSolverr/FlareSolverr)<br>[docs](https://trash-guides.info/Prowlarr/prowlarr-setup-flaresolverr/)                                          |            [docker](https://github.com/orgs/FlareSolverr/packages/container/package/flaresolverr)            |
 | **Lidarr**             |  Looks and smells like Sonarr but made for music                                                                                       | [repo](https://github.com/Lidarr/Lidarr)<br>[docs](https://wiki.servarr.com/lidarrd) |             [docker](https://hotio.dev/containers/lidarr/)             |
 
-#### Plugins and Extras
+### Standalone Applications
+```
+This section contains the list of standalone applications or plugins that can be used to accompany the deployed services on the phones, computers or smart devices.
+```
 | Project            | Description                                                         | Link                                                                                                                                          |
 |--------------------|---------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| **Jellyfin Tizen** | Builds for the Jellyfin Tizen application for the Samsung smart TVs | [docker-builds](https://github.com/babagreensheep/jellyfin-tizen-docker)<br>[repo-jellyfin-tizen](https://github.com/jellyfin/jellyfin-tizen) |
+| **Jellyfin Tizen** | Builds for the Jellyfin Tizen application for the Samsung smart TVs. Use [@georift/install-jellyfin-tizen](https://github.com/Georift/install-jellyfin-tizen) for quick deploys. |[docker-builds](https://github.com/babagreensheep/jellyfin-tizen-docker)<br>[repo-jellyfin-tizen](https://github.com/jellyfin/jellyfin-tizen) |
+| **Obsidian** | Obsidian is a note-taking app that lets you store, link, and publish your thoughts on your device. You can customize Obsidian with plugins, themes, and graphs, and sync your notes securely across devices. | [obsidian.md](https://obsidian.md)
+| **Obsidian Plugins - Self-hosted LiveSync** | Synchronization plugin, available on every obsidian-compatible platform and using CouchDB or Object Storage (e.g., MinIO, S3, R2, etc.) as the server. | [repo](https://github.com/vrtmrz/obsidian-livesync)
+| **Bitwarden Password Manager** / **Bitwarden App** | Password manager that integrates with open-source Bitwarden implementation - **Vaultwarden**. 
