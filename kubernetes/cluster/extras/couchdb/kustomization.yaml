@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: extras
 resources:
   - secret.yaml
-  # - volumes.yaml
   - dns-endpoint.yaml
 helmCharts:
   - name: couchdb
@@ -26,11 +25,6 @@ helmCharts:
           - ReadOnlyMany
         size: 10Gi
         storageClass: nfs-subdir
-        # existingClaims:
-        #   - volumeName: couchdb-data-iscsi
-        #     claimName: couchdb-data-iscsi
-        #     persistentVolumeName: couchdb-data-iscsi
-        #     volumeSource: persistentVolumeClaim
 
       enableSearch: false
 
