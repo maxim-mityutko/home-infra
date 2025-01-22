@@ -4,6 +4,7 @@ namespace: extras
 resources:
   - secret.yaml
   - dns-endpoint.yaml
+  - ingress-utils.yaml
 helmCharts:
   - name: couchdb
     namespace: extras
