@@ -1,0 +1,51 @@
+# The ingress from the Helm will use default basic authentication to be compatible 
+# with `Self-hosted LiveSync` for Obsidian: https://couchdb.brhd.io 
+# This ingress uses Authentik for proxy authentication: https://couch-db.brhd.io
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: couch-db
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: couch-db
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+    # Headers are mapped with Authentik "Scope Mapping"
+    nginx.ingress.kubernetes.io/auth-response-headers: >-
+      Set-Cookie,X-Auth-CouchDB-UserName,X-Auth-CouchDB-Roles
+    nginx.ingress.kubernetes.io/auth-signin: >-
+      https://couch-db.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+    nginx.ingress.kubernetes.io/auth-snippet: |
+      proxy_set_header X-Forwarded-Host $http_host;
+    nginx.ingress.kubernetes.io/auth-url: >-
+      http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+spec:
+  rules:
+    - host: couch-db.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: couchdb-svc-couchdb
+                port:
+                  number: 5984
+  tls:
+    - hosts:
+        - couch-db.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: couch-db.brhd.io
+  namespace: extras
+spec:
+  endpoints:
+    - dnsName: couch-db.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
