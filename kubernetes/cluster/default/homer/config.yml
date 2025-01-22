@@ -290,4 +290,4 @@ services:
       - name: "CouchDB"
         logo: "https://casa.brhd.io/icons/couchdb.svg"
         tag: "db"
-        url: "https://couchdb.brhd.io/_utils"
+        url: "https://couch-db.brhd.io/_utils"
