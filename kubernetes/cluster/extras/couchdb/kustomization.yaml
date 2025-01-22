@@ -4,7 +4,7 @@ namespace: extras
 resources:
   - secret.yaml
   - dns-endpoint.yaml
-  - ingress-utils.yaml
+  - ingress-authentik.yaml
 helmCharts:
   - name: couchdb
     namespace: extras
@@ -66,8 +66,6 @@ helmCharts:
         chttpd_auth:
           require_valid_user: true           # default: obsidian
           proxy_use_secret: false
-          x_auth_username: X-authentik-username
-          x_auth_roles: X-authentik-groups
         cors:
           credentials: true                  # default: obsidian
           headers: accept, authorization, content-type, origin, referer
