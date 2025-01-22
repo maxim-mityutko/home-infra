@@ -12,6 +12,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
+    # Headers are mapped with Authentik "Scope Mapping"
     nginx.ingress.kubernetes.io/auth-response-headers: >-
       Set-Cookie,X-Auth-CouchDB-UserName,X-Auth-CouchDB-Roles
     nginx.ingress.kubernetes.io/auth-signin: >-
