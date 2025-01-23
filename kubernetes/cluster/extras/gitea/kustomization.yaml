@@ -10,6 +10,8 @@ helmCharts:
     version: 10.6.0
     repo: https://dl.gitea.com/charts/
     valuesInline:
+      image:
+        rootless: true
       podSecurityContext:
         fsGroup: 1000
       containerSecurityContext: {}
@@ -36,9 +38,9 @@ helmCharts:
         apiVersion: networking.k8s.io/v1
 
       resources:
-        limits:
-          cpu: 100m
-          memory: 128Mi
+        # limits:
+        #   cpu: 100m
+        #   memory: 128Mi
         requests:
           cpu: 100m
           memory: 128Mi
