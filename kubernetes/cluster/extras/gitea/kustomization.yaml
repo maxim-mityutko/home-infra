@@ -58,7 +58,7 @@ helmCharts:
       gitea:
         admin:
           existingSecret:
-          username: admin
+          username: gitea-admin
           password: test
           email: "gitea@local.domain"
           passwordMode: initialOnlyNoReset
