@@ -33,6 +33,7 @@ helmCharts:
               - path: /
                 pathType: Prefix
         tls: []
+        apiVersion: networking.k8s.io/v1
 
       resources:
         limits:
