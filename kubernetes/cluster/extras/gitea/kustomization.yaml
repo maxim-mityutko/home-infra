@@ -136,7 +136,11 @@ helmCharts:
       persistence:
         enabled: true
         storageClass: nfs-subdir
-      
+        size: 10Gi
+        accessModes:
+          - ReadWriteOnce
+          - ReadOnlyMany
+          
       resources:
         limits:
           cpu: 100m
