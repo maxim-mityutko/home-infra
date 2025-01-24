@@ -49,15 +49,7 @@ helmCharts:
             ENABLE_BASIC_AUTHENTICATION: true
             ALLOW_ONLY_EXTERNAL_REGISTRATION: true
             DEFAULT_ALLOW_CREATE_ORGANIZATION: false
-            # Ref: https://docs.gitea.com/usage/authentication#reverse-proxy
-            # Disabled in favour of OAuth2
-            # ENABLE_REVERSE_PROXY_AUTHENTICATION_API: true
-            # ENABLE_REVERSE_PROXY_AUTO_REGISTRATION: true
-            # ENABLE_REVERSE_PROXY_EMAIL: true
-            # ENABLE_REVERSE_PROXY_FULL_NAME: false
-            # REVERSE_PROXY_AUTHENTICATION_USER: X-WEBAUTH-USER
-            # REVERSE_PROXY_AUTHENTICATION_EMAIL: X-WEBAUTH-EMAIL
-            # REVERSE_PROXY_AUTHENTICATION_FULL_NAME: X-WEBAUTH-FULLNAME
+            ENABLE_PASSWORD_SIGNIN_FORM: false
           database:
             # Ref: https://docs.gitea.com/administration/config-cheat-sheet#database-database
             DB_TYPE: sqlite3
