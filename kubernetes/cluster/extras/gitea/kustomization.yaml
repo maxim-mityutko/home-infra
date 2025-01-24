@@ -171,3 +171,5 @@ helmCharts:
       checkDeprecation: true
       test:
         enabled: false
+patches:
+  - path: patch-deployment.yaml
