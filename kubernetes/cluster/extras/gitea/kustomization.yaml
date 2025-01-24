@@ -102,7 +102,7 @@ helmCharts:
             autoDiscoverUrl: https://auth.brhd.io/application/o/gitea/.well-known/openid-configuration
             scopes: email profile group
             iconUrl: https://goauthentik.io/img/icon.png
-            skipLocal2FA: true
+            skip-local-2fa: true
             groupClaimName: group
             adminGroup: admin
             restrictedGroup: user
