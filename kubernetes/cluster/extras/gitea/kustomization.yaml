@@ -42,11 +42,11 @@ helmCharts:
           oauth2_client:
             REGISTER_EMAIL_CONFIRM: false
             ENABLE_AUTO_REGISTRATION: true
-            OPENID_CONNECT_SCOPES: openid,profile,email
-            USERNAME: nickname
-            ACCOUNT_LINKING: auto
+            USERNAME: userid
+            ACCOUNT_LINKING: login
           service:
             ENABLE_BASIC_AUTHENTICATION: true
+            ALLOW_ONLY_EXTERNAL_REGISTRATION: true
             # Ref: https://docs.gitea.com/usage/authentication#reverse-proxy
             # Disabled in favour of OAuth2
             # ENABLE_REVERSE_PROXY_AUTHENTICATION_API: true
@@ -100,8 +100,12 @@ helmCharts:
             provider: openidConnect
             existingSecret: gitea-oauth
             autoDiscoverUrl: https://auth.brhd.io/application/o/gitea/.well-known/openid-configuration
-            scopes: email profile
+            scopes: email profile group
             iconUrl: https://goauthentik.io/img/icon.png
+            skipLocal2FA: true
+            groupClaimName: group
+            adminGroup: admin
+            restrictedGroup: user
 
         livenessProbe:
           enabled: false
