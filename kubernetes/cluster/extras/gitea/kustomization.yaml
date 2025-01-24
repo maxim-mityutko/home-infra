@@ -16,14 +16,96 @@ helmCharts:
       podSecurityContext:
         fsGroup: 1000
       containerSecurityContext: {}
+      
+      gitea:
+        # Ref: https://docs.gitea.com/administration/config-cheat-sheet
+        config:
+          server:
+            DISABLE_SSH: true
+            SSH_EXPOSE_ANONYMOUS: false
+            START_SSH_SERVER: false
+            DOMAIN: git.brhd.io
+          repository:
+            DEFAULT_PRIVATE: private
+            DISABLED_REPO_UNITS: repo.actions,repo.ext_issues,repo.ext_wiki
+            DEFAULT_REPO_UNITS: repo.code,repo.releases
+          cors:
+            ENABLED: false
+          ui:
+            SHOW_USER_EMAIL: false
+            AMBIGUOUS_UNICODE_DETECTION: false
+            DEFAULT_SHOW_FULL_NAME: false
+          oauth2_client:
+            REGISTER_EMAIL_CONFIRM: false
+            ENABLE_AUTO_REGISTRATION: true
+            USERNAME: nickname
+            ACCOUNT_LINKING: auto
+          service:
+            ENABLE_BASIC_AUTHENTICATION: true
+            # Ref: https://docs.gitea.com/usage/authentication#reverse-proxy
+            # Disabled in favour of OAuth2
+            # ENABLE_REVERSE_PROXY_AUTHENTICATION_API: true
+            # ENABLE_REVERSE_PROXY_AUTO_REGISTRATION: true
+            # ENABLE_REVERSE_PROXY_EMAIL: true
+            # ENABLE_REVERSE_PROXY_FULL_NAME: false
+            # REVERSE_PROXY_AUTHENTICATION_USER: X-WEBAUTH-USER
+            # REVERSE_PROXY_AUTHENTICATION_EMAIL: X-WEBAUTH-EMAIL
+            # REVERSE_PROXY_AUTHENTICATION_FULL_NAME: X-WEBAUTH-FULLNAME
+          database:
+            # Ref: https://docs.gitea.com/administration/config-cheat-sheet#database-database
+            DB_TYPE: sqlite3
+          session:
+            # Ref: https://docs.gitea.com/administration/config-cheat-sheet#session-session
+            PROVIDER: memory
+          cache:
+            # Ref: https://docs.gitea.com/administration/config-cheat-sheet#cache-cache
+            ADAPTER: memory
+          queue:
+            TYPE: level
+          mailer:
+            ENABLED: false
+          log:
+            LEVEL: Info
+            ENABLE_SSH_LOG: false
+          cron:
+            ENABLED: false
+          metrics:
+            ENABLED: false
+          api:
+            ENABLE_SWAGGER: false
+          oauth2:
+            ENABLED: false
+          time:
+            DEFAULT_UI_LOCATION: Europe/Amsterdam
+          storage:
+            STORAGE_TYPE: local # could have used `minio`, but then it makes sense to replace CouchDB for Obsidian
+          actions:
+            ENABLED: false
 
+        admin:
+          existingSecret: gitea-admin
+          passwordMode: initialOnlyNoReset
+
+        metrics:
+          enabled: false
+
+
+        ldap: []
+        oauth: []
+
+        livenessProbe:
+          enabled: false
+
+        readinessProbe:
+          enabled: false
+
+        startupProbe:
+          enabled: false
+      
       service:
         http:
           type: ClusterIP
           port: 3000
-        # ssh:
-        #   type: ClusterIP
-        #   port: 22
 
       ingress:
         enabled: true
@@ -58,42 +140,6 @@ helmCharts:
       actions:
         enabled: false
 
-      gitea:
-        config:
-          server:
-            DISABLE_SSH: true
-            SSH_EXPOSE_ANONYMOUS: false
-            START_SSH_SERVER: false
-          database:
-            DB_TYPE: sqlite3
-          session:
-            PROVIDER: memory
-          cache:
-            ADAPTER: memory
-          queue:
-            TYPE: level
-
-
-        admin:
-          existingSecret: gitea-admin
-          passwordMode: initialOnlyNoReset
-
-        metrics:
-          enabled: false
-
-
-        ldap: []
-        oauth: []
-
-        livenessProbe:
-          enabled: false
-
-        readinessProbe:
-          enabled: false
-
-        startupProbe:
-          enabled: false
-
       redis-cluster:
         enabled: false
       redis:
@@ -102,7 +148,6 @@ helmCharts:
         enabled: false
       postgresql-ha:
         enabled: false
-
 
       checkDeprecation: true
       test:
