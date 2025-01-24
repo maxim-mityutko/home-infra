@@ -111,9 +111,7 @@ helmCharts:
           periodSeconds: 60
 
         readinessProbe:
-          enabled: true
-          initialDelaySeconds: 30
-          periodSeconds: 15
+          enabled: false
 
         startupProbe:
           enabled: false
