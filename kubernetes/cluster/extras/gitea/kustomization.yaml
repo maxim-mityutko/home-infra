@@ -87,7 +87,7 @@ helmCharts:
         
         admin:
           existingSecret: gitea-admin
-          passwordMode: initialOnlyNoReset
+          passwordMode: keepUpdated
 
         metrics:
           enabled: false
