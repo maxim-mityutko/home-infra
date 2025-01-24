@@ -79,7 +79,7 @@ helmCharts:
           api:
             ENABLE_SWAGGER: false
           oauth2:
-            ENABLED: false
+            ENABLED: true
           time:
             DEFAULT_UI_LOCATION: Europe/Amsterdam
           storage:
