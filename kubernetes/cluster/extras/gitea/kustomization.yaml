@@ -50,7 +50,6 @@ helmCharts:
             ALLOW_ONLY_EXTERNAL_REGISTRATION: true
             DEFAULT_ALLOW_CREATE_ORGANIZATION: false
             ENABLE_PASSWORD_SIGNIN_FORM: false
-            DEFAULT_USER_VISIBILITY: limited
           database:
             # Ref: https://docs.gitea.com/administration/config-cheat-sheet#database-database
             DB_TYPE: sqlite3
