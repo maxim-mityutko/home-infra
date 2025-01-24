@@ -107,10 +107,13 @@ helmCharts:
             adminGroup: admin
 
         livenessProbe:
-          enabled: false
+          enabled: true
+          periodSeconds: 60
 
         readinessProbe:
-          enabled: false
+          enabled: true
+          initialDelaySeconds: 30
+          periodSeconds: 15
 
         startupProbe:
           enabled: false
@@ -140,7 +143,7 @@ helmCharts:
         accessModes:
           - ReadWriteOnce
           - ReadOnlyMany
-          
+
       resources:
         limits:
           cpu: 100m
