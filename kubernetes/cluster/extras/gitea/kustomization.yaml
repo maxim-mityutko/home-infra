@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: extras
 resources:
+  - secret.yaml
   - dns-endpoint.yaml
 helmCharts:
   - name: gitea
@@ -38,12 +39,12 @@ helmCharts:
         apiVersion: networking.k8s.io/v1
 
       resources:
-        # limits:
-        #   cpu: 100m
-        #   memory: 128Mi
-        requests:
+        limits:
           cpu: 100m
-          memory: 128Mi
+          memory: 200Mi
+        requests:
+          cpu: 50m
+          memory: 100Mi
 
       serviceAccount:
         create: false
@@ -58,30 +59,11 @@ helmCharts:
         enabled: false
 
       gitea:
-        admin:
-          existingSecret:
-          username: gitea-admin
-          password: test
-          email: "gitea@local.domain"
-          passwordMode: initialOnlyNoReset
-
-        metrics:
-          enabled: false
-
-        oauth: []
-          # - name: 'OAuth 1'
-          #   provider:
-          #   key:
-          #   secret:
-          #   existingSecret:
-          #   autoDiscoverUrl:
-          #   useCustomUrls:
-          #   customAuthUrl:
-          #   customTokenUrl:
-          #   customProfileUrl:
-          #   customEmailUrl:
-
         config:
+          server:
+            DISABLE_SSH: true
+            SSH_EXPOSE_ANONYMOUS: false
+            START_SSH_SERVER: false
           database:
             DB_TYPE: sqlite3
           session:
@@ -90,6 +72,18 @@ helmCharts:
             ADAPTER: memory
           queue:
             TYPE: level
+
+
+        admin:
+          existingSecret: gitea-admin
+          passwordMode: initialOnlyNoReset
+
+        metrics:
+          enabled: false
+
+
+        ldap: []
+        oauth: []
 
         livenessProbe:
           enabled: false
