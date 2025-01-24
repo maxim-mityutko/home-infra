@@ -27,6 +27,7 @@ helmCharts:
             PROTOCOL: http
             DOMAIN: git.brhd.io
             ROOT_URL: https://git.brhd.io/
+            LANDING_PAGE: login
           repository:
             DEFAULT_PRIVATE: private
             DISABLED_REPO_UNITS: repo.actions,repo.ext_issues,repo.ext_wiki
@@ -47,6 +48,7 @@ helmCharts:
           service:
             ENABLE_BASIC_AUTHENTICATION: true
             ALLOW_ONLY_EXTERNAL_REGISTRATION: true
+            DEFAULT_ALLOW_CREATE_ORGANIZATION: false
             # Ref: https://docs.gitea.com/usage/authentication#reverse-proxy
             # Disabled in favour of OAuth2
             # ENABLE_REVERSE_PROXY_AUTHENTICATION_API: true
@@ -100,12 +102,11 @@ helmCharts:
             provider: openidConnect
             existingSecret: gitea-oauth
             autoDiscoverUrl: https://auth.brhd.io/application/o/gitea/.well-known/openid-configuration
-            scopes: email profile group
+            scopes: email profile gitea
             iconUrl: https://goauthentik.io/img/icon.png
             skip-local-2fa: true
-            groupClaimName: group
+            groupClaimName: gitea
             adminGroup: admin
-            restrictedGroup: user
 
         livenessProbe:
           enabled: false
