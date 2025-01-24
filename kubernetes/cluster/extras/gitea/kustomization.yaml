@@ -24,8 +24,9 @@ helmCharts:
             DISABLE_SSH: true
             SSH_EXPOSE_ANONYMOUS: false
             START_SSH_SERVER: false
-            PROTOCOL: https
+            PROTOCOL: http
             DOMAIN: git.brhd.io
+            ROOT_URL: https://git.brhd.io/
           repository:
             DEFAULT_PRIVATE: private
             DISABLED_REPO_UNITS: repo.actions,repo.ext_issues,repo.ext_wiki
