@@ -52,7 +52,7 @@ helmCharts:
             ENABLE_PASSWORD_SIGNIN_FORM: false
           database:
             # Ref: https://docs.gitea.com/administration/config-cheat-sheet#database-database
-            DB_TYPE: sqlite3
+            DB_TYPE: postgres
           session:
             # Ref: https://docs.gitea.com/administration/config-cheat-sheet#session-session
             PROVIDER: memory
@@ -81,6 +81,10 @@ helmCharts:
           actions:
             ENABLED: false
 
+        additionalConfigSources:
+          - secret:
+              secretName: gitea-db
+        
         admin:
           existingSecret: gitea-admin
           passwordMode: initialOnlyNoReset
