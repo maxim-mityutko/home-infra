@@ -133,6 +133,10 @@ helmCharts:
         tls: []
         apiVersion: networking.k8s.io/v1
 
+      persistence:
+        enabled: true
+        storageClass: nfs-subdir
+      
       resources:
         limits:
           cpu: 100m
@@ -143,9 +147,6 @@ helmCharts:
 
       serviceAccount:
         create: false
-
-      persistence:
-        enabled: false
 
       signing:
         enabled: false
