@@ -43,7 +43,7 @@ helmCharts:
       server:
         enabled: true
         image:
-          tag: v1.123.0
+          tag: v1.125.2
         resources:
           requests:
             cpu: 200m
@@ -87,7 +87,7 @@ helmCharts:
         env:
           TRANSFORMERS_CACHE: /cache
         image:
-          tag: v1.123.0 # Use <tag>-cuda for NVidia GPUs
+          tag: v1.125.2 # Use <tag>-cuda for NVidia GPUs
         resources:
           requests:
             cpu: 100m
