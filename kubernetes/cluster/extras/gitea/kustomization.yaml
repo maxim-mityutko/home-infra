@@ -40,6 +40,7 @@ helmCharts:
           oauth2_client:
             REGISTER_EMAIL_CONFIRM: false
             ENABLE_AUTO_REGISTRATION: true
+            OPENID_CONNECT_SCOPES: openid,profile,email
             USERNAME: nickname
             ACCOUNT_LINKING: auto
           service:
@@ -92,7 +93,10 @@ helmCharts:
           enabled: false
 
         ldap: []
-        oauth: []
+        oauth: 
+          - name: Authentik
+            existingSecret: gitea-oauth
+            autoDiscoverUrl: https://auth.brhd.io/application/o/gitea/.well-known/openid-configuration
 
         livenessProbe:
           enabled: false
