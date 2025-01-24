@@ -95,10 +95,13 @@ helmCharts:
           enabled: false
 
         ldap: []
-        # oauth: 
-        #   - name: Authentik
-        #     existingSecret: gitea-oauth
-        #     autoDiscoverUrl: https://auth.brhd.io/application/o/gitea/.well-known/openid-configuration
+        oauth: 
+          - name: Authentik
+            provider: openidConnect
+            existingSecret: gitea-oauth
+            autoDiscoverUrl: https://auth.brhd.io/application/o/gitea/.well-known/openid-configuration
+            scopes: email profile
+            iconUrl: https://goauthentik.io/img/icon.png
 
         livenessProbe:
           enabled: false
