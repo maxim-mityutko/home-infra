@@ -37,6 +37,8 @@ helmCharts:
             SHOW_USER_EMAIL: false
             AMBIGUOUS_UNICODE_DETECTION: false
             DEFAULT_SHOW_FULL_NAME: false
+          openid:
+            ENABLE_OPENID_SIGNIN: true
           oauth2_client:
             REGISTER_EMAIL_CONFIRM: false
             ENABLE_AUTO_REGISTRATION: true
