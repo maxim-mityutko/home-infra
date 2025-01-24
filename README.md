@@ -90,6 +90,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **CloudBeaver**          | Cloud Database Manager                                                     |                          [repo](https://github.com/dbeaver/cloudbeaver)                           |                                    [docker](https://hub.docker.com/r/dbeaver/cloudbeaver)                                     |
 | **Miniflux**             | Minimalist and opinionated feed reader                                     |              [repo](https://github.com/miniflux/v2)<br>[docs](https://miniflux.app)               |                                     [docker](https://hub.docker.com/r/miniflux/miniflux)                                      |
 | **CouchDB** | Open-source document-oriented NoSQL database. Usecase is to enable [Self-hosted LiveSync](https://github.com/vrtmrz/obsidian-livesync) for [Obsidian](https://obsidian.md) | [docs](https://docs.couchdb.org/)<br>[repo](https://github.com/apache/couchdb) | [helm](https://github.com/apache/couchdb-helm/blob/main/couchdb/README.md) |
+| **Gitea** | Lightweight and easy to use version control system | [repo](https://github.com/go-gitea/gitea)<br>[docs](https://docs.gitea.com) | [helm](https://gitea.com/gitea/helm-chart)
 
 ### Smart Home
 | Project                | Description                                                                     |                                          Docs / Repo                                           |                                 Docker / Helm                                  |
@@ -131,12 +132,13 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | **Lidarr**             |  Looks and smells like Sonarr but made for music                                                                                       | [repo](https://github.com/Lidarr/Lidarr)<br>[docs](https://wiki.servarr.com/lidarrd) |             [docker](https://hotio.dev/containers/lidarr/)             |
 
 ### Standalone Applications
-```
-This section contains the list of standalone applications or plugins that can be used to accompany the deployed services on the phones, computers or smart devices.
-```
+
+*This section contains the list of standalone applications or plugins that can be used to accompany the deployed services on the phones, computers or smart devices.*
+
 | Project            | Description                                                         | Link                                                                                                                                          |
 |--------------------|---------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
 | **Jellyfin Tizen** | Builds for the Jellyfin Tizen application for the Samsung smart TVs. Use [@georift/install-jellyfin-tizen](https://github.com/Georift/install-jellyfin-tizen) for quick deploys. |[docker-builds](https://github.com/babagreensheep/jellyfin-tizen-docker)<br>[repo-jellyfin-tizen](https://github.com/jellyfin/jellyfin-tizen) |
 | **Obsidian** | Obsidian is a note-taking app that lets you store, link, and publish your thoughts on your device. You can customize Obsidian with plugins, themes, and graphs, and sync your notes securely across devices. | [obsidian.md](https://obsidian.md)
 | **Obsidian Plugins - Self-hosted LiveSync** | Synchronization plugin, available on every obsidian-compatible platform and using CouchDB or Object Storage (e.g., MinIO, S3, R2, etc.) as the server. | [repo](https://github.com/vrtmrz/obsidian-livesync)
-| **Bitwarden Password Manager** / **Bitwarden App** | Password manager that integrates with open-source Bitwarden implementation - **Vaultwarden**. 
+| **Bitwarden Password Manager** / **Bitwarden App** | Password manager that integrates with open-source Bitwarden implementation - **Vaultwarden**.  |
+| **Flocus** | Sync your bookmarks privately across browsers and devices. Uses **Gitea** for bookmarks storage. |[repo](https://github.com/floccusaddon/floccus)<br>[docs](https://floccus.org/guides) |  
