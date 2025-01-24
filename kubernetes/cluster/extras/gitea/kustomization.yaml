@@ -38,7 +38,7 @@ helmCharts:
             AMBIGUOUS_UNICODE_DETECTION: false
             DEFAULT_SHOW_FULL_NAME: false
           openid:
-            ENABLE_OPENID_SIGNIN: true
+            ENABLE_OPENID_SIGNIN: false
           oauth2_client:
             REGISTER_EMAIL_CONFIRM: false
             ENABLE_AUTO_REGISTRATION: true
@@ -79,7 +79,7 @@ helmCharts:
           api:
             ENABLE_SWAGGER: false
           oauth2:
-            ENABLED: true
+            ENABLED: false
           time:
             DEFAULT_UI_LOCATION: Europe/Amsterdam
           storage:
@@ -95,10 +95,10 @@ helmCharts:
           enabled: false
 
         ldap: []
-        oauth: 
-          - name: Authentik
-            existingSecret: gitea-oauth
-            autoDiscoverUrl: https://auth.brhd.io/application/o/gitea/.well-known/openid-configuration
+        # oauth: 
+        #   - name: Authentik
+        #     existingSecret: gitea-oauth
+        #     autoDiscoverUrl: https://auth.brhd.io/application/o/gitea/.well-known/openid-configuration
 
         livenessProbe:
           enabled: false
