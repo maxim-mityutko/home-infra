@@ -98,11 +98,13 @@ helmCharts:
 
         ldap: []
         oauth: 
+          # Basic settings: https://gitea.com/gitea/helm-chart#oauth2-settings
+          # All auth config values: https://docs.gitea.com/administration/command-line#admin
           - name: Authentik
             provider: openidConnect
             existingSecret: gitea-oauth
             autoDiscoverUrl: https://auth.brhd.io/application/o/gitea/.well-known/openid-configuration
-            scopes: email profile group
+            scopes: email profile gitea
             iconUrl: https://goauthentik.io/img/icon.png
             skip-local-2fa: true
             groupClaimName: group
