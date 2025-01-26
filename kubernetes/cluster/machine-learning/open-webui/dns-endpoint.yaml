@@ -2,7 +2,7 @@
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: git.brhd.io
+  name: oi.brhd.io
   namespace: machine-learning
 spec:
   endpoints:
