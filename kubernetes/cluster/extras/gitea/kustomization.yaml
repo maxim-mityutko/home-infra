@@ -80,6 +80,17 @@ helmCharts:
             STORAGE_TYPE: local # could have used `minio`, but then it makes sense to replace CouchDB for Obsidian
           actions:
             ENABLED: false
+          markup.html:
+            ENABLED: true
+            FILE_EXTENSIONS: .html,.htm
+            RENDER_COMMAND: cat
+            IS_INPUT_FILE: true
+          markup.sanitizer.html.1:
+            ELEMENT: div
+            ALLOW_ATTR: class
+          markup.sanitizer.html.2:
+            ELEMENT: a
+            ALLOW_ATTR: class
 
         additionalConfigSources:
           - secret:
