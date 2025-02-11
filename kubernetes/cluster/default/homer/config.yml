@@ -280,10 +280,6 @@ services:
         logo: "https://casa.brhd.io/icons/jupyter.png"
         tag: "development"
         url: "https://jupyter.brhd.io"
-      - name: "IT Tools"
-        logo: "https://casa.brhd.io/icons/it-tools.png"
-        tag: "development"
-        url: "https://it-tools.brhd.io"
   - name: "Database & DB Management"
     icon: "fas fa-archive"
     items:
@@ -295,3 +291,14 @@ services:
         logo: "https://casa.brhd.io/icons/couchdb.svg"
         tag: "db"
         url: "https://couch-db.brhd.io/_utils"
+  - name: "Utilities"
+    icon:
+    items:
+      - name: "IT Tools"
+        logo: "https://casa.brhd.io/icons/it-tools.png"
+        tag: "development"
+        url: "https://it-tools.brhd.io"
+      - name: "PairDrop"
+        logo: "https://casa.brhd.io/icons/pairdrop.svg"
+        tag: "development"
+        url: "https://pd.brhd.io"

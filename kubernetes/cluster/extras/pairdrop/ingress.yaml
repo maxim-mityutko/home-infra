@@ -1,0 +1,36 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pairdrop
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: pairdrop
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: pd.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: pairdrop
+                port:
+                  number: 3000
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: pd.brhd.io
+  namespace: extras
+spec:
+  endpoints:
+    - dnsName: pd.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
