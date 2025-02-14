@@ -51,6 +51,16 @@ helmCharts:
               secretKeyRef:
                 name: immich
                 key: DB_DATABASE_NAME
+          DB_USERNAME:
+            valueFrom:
+              secretKeyRef:
+                name: immich
+                key: DB_USERNAME
+          DB_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: immich
+                key: DB_PASSWORD
         resources:
           requests:
             cpu: 200m
