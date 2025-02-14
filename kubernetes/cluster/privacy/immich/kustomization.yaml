@@ -18,25 +18,10 @@ helmCharts:
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
       # Ref: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
-      env:  
-        TZ: Europe/Amsterdam
-        DB_HOSTNAME: postgres.default.svc.cluster.local
-        REDIS_HOSTNAME: redis-master.default.svc.cluster.local
-        DB_DATABASE_NAME:
-            secretKeyRef:
-              name: immich
-              key: DB_DATABASE_NAME
-        DB_USERNAME:
-            secretKeyRef:
-              name: immich
-              key: DB_USERNAME
-        DB_PASSWORD:
-            secretKeyRef:
-              name: immich
-              key: DB_PASSWORD
+      env: {}
       # envFrom:
-      #   # - configMapRef:
-      #   #     name: immich
+      #   - configMapRef:
+      #       name: immich
       #   - secretRef: 
       #       name: immich
       
@@ -59,6 +44,11 @@ helmCharts:
         enabled: true
         image:
           tag: v1.126.1
+        envFrom:
+          - configMapRef:
+              name: immich
+          - secretRef: 
+              name: immich
         resources:
           requests:
             cpu: 200m
