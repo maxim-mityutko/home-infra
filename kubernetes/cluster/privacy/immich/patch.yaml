@@ -10,7 +10,7 @@ spec:
           - 993
       containers:
         - name: immich-server
-          env: {}
+          env: []
           securityContext:
             privileged: true
           volumeMounts:
