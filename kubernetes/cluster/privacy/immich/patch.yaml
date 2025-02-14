@@ -24,16 +24,19 @@ spec:
                 name: immich
                 key: REDIS_HOSTNAME
             - name: DB_DATABASE_NAME
+              value: null
               valueFrom:
                 secretKeyRef:
                   name: immich
                   key: DB_DATABASE_NAME
             - name: DB_USERNAME
+              value: null
               valueFrom:
                 secretKeyRef:
                   name: immich
                   key: DB_USERNAME
             - name: DB_PASSWORD
+              value: null
               valueFrom:
                 secretKeyRef:
                   name: immich
@@ -71,16 +74,19 @@ spec:
                 name: immich
                 key: REDIS_HOSTNAME
             - name: DB_DATABASE_NAME
+              value: null
               valueFrom:
                 secretKeyRef:
                   name: immich
                   key: DB_DATABASE_NAME
             - name: DB_USERNAME
+              value: null
               valueFrom:
                 secretKeyRef:
                   name: immich
                   key: DB_USERNAME
             - name: DB_PASSWORD
+              value: null
               valueFrom:
                 secretKeyRef:
                   name: immich
