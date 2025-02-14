@@ -56,7 +56,6 @@ helmCharts:
                 name: immich
                 key: DB_USERNAME
           DB_PASSWORD:
-            valueFrom:
               secretKeyRef:
                 name: immich
                 key: DB_PASSWORD
