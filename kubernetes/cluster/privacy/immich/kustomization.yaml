@@ -91,6 +91,11 @@ helmCharts:
         enabled: true
         env:
           TRANSFORMERS_CACHE: /cache
+        envFrom:
+          - configMapRef:
+              name: immich
+          - secretRef: 
+              name: immich
         image:
           tag: v1.126.1 # Use <tag>-cuda for NVidia GPUs
         resources:
