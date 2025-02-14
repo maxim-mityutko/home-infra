@@ -46,11 +46,10 @@ helmCharts:
           tag: v1.126.1
         env:
           DB_HOSTNAME: postgres.default.svc.cluster.local
-          DB_DATABASE_NAME: fsfsf
-            # valueFrom:
-            #   secretKeyRef:
-            #     name: immich
-            #     key: DB_DATABASE_NAME
+          DB_DATABASE_NAME:
+            secretKeyRef:
+              name: immich
+              key: DB_DATABASE_NAME
           DB_USERNAME:
             valueFrom:
               secretKeyRef:
