@@ -125,6 +125,14 @@ helmCharts:
           retain:
             default: 30
 
+        # Ref: https://docs.frigate.video/configuration/semantic_search
+        semantic_search:
+          enabled: false
+
+        # Ref: https://docs.frigate.video/configuration/genai
+        genai:
+          enabled: false
+
         record:
           enabled: true
           retain:
