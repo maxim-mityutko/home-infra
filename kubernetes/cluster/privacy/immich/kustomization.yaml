@@ -46,11 +46,11 @@ helmCharts:
           tag: v1.126.1
         env:
           DB_HOSTNAME: postgres.default.svc.cluster.local
-        envFrom:
-          - configMapRef:
-              name: immich
-          - secretRef: 
-              name: immich
+          DB_DATABASE_NAME:
+            valueFrom:
+              secretKeyRef:
+                name: immich
+                key: DB_DATABASE_NAME
         resources:
           requests:
             cpu: 200m
