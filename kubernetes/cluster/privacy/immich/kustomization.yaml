@@ -18,7 +18,7 @@ helmCharts:
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
       # Ref: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
-      env:  # TODO: fix the default are still applied
+      env: {}
       envFrom:
         - configMapRef:
             name: immich
@@ -40,10 +40,17 @@ helmCharts:
 
       # Immich Components
       # TODO: possibility to separate API and WORKERS: https://immich.app/docs/administration/jobs-workers/
+      # Ref: https://github.com/immich-app/immich-charts/pull/137
       server:
         enabled: true
         image:
-          tag: v1.125.2
+          tag: v1.126.1
+        env:
+          DB_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: immich
+                key: DB_PASSWORD
         resources:
           requests:
             cpu: 200m
@@ -87,7 +94,7 @@ helmCharts:
         env:
           TRANSFORMERS_CACHE: /cache
         image:
-          tag: v1.125.2 # Use <tag>-cuda for NVidia GPUs
+          tag: v1.126.1 # Use <tag>-cuda for NVidia GPUs
         resources:
           requests:
             cpu: 100m
@@ -115,4 +122,5 @@ helmCharts:
         nodeSelector:
           kubernetes.io/node-size: large
 patches:
-  - path: patch.yaml  # Patch is required to enable Intel iGPU within the container for hardware decoding
+  # Patch is required to enable Intel iGPU within the container for hardware decoding
+  - path: patch.yaml  
