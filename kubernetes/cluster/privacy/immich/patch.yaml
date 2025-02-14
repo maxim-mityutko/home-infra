@@ -10,7 +10,9 @@ spec:
           - 993
       containers:
         - name: immich-server
-          env: []
+          env:
+            - name: DB_PASSWORD
+              value: immichsdsdasd
           securityContext:
             privileged: true
           volumeMounts:
