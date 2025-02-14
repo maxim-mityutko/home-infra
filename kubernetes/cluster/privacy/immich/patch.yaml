@@ -12,7 +12,10 @@ spec:
         - name: immich-server
           env:
             - name: DB_PASSWORD
-              value: immichsdsdasd
+              valueFrom:
+                secretKeyRef:
+                  name: immich
+                  key: DB_PASSWORD
           securityContext:
             privileged: true
           volumeMounts:
