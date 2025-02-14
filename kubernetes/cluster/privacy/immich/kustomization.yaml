@@ -40,6 +40,7 @@ helmCharts:
 
       # Immich Components
       # TODO: possibility to separate API and WORKERS: https://immich.app/docs/administration/jobs-workers/
+      # Ref: https://github.com/immich-app/immich-charts/pull/137
       server:
         enabled: true
         image:
@@ -121,4 +122,6 @@ helmCharts:
         nodeSelector:
           kubernetes.io/node-size: large
 patches:
-  - path: patch.yaml  # Patch is required to enable Intel iGPU within the container for hardware decoding
+  # Patch is required to enable Intel iGPU within the container for hardware decoding
+  # and to properly set environment variables
+  - path: patch.yaml  
