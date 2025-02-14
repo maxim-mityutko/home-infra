@@ -49,7 +49,7 @@ helmCharts:
           cpu: 100m
           memory: 100Mi
         limits:
-          cpu: 200m
+          cpu: 300m
           memory: 250Mi
 
       couchdbConfig:
