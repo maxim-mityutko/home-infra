@@ -18,10 +18,13 @@ helmCharts:
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
       # Ref: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
-      env:  # TODO: fix the default are still applied
+      env:  
+        TZ: Europe/Amsterdam
+        DB_HOSTNAME: postgres.default.svc.cluster.local
+        REDIS_HOSTNAME: redis-master.default.svc.cluster.local
       envFrom:
-        - configMapRef:
-            name: immich
+        # - configMapRef:
+        #     name: immich
         - secretRef: 
             name: immich
       
@@ -43,7 +46,7 @@ helmCharts:
       server:
         enabled: true
         image:
-          tag: v1.125.2
+          tag: v1.126.1
         resources:
           requests:
             cpu: 200m
@@ -87,7 +90,7 @@ helmCharts:
         env:
           TRANSFORMERS_CACHE: /cache
         image:
-          tag: v1.125.2 # Use <tag>-cuda for NVidia GPUs
+          tag: v1.126.1 # Use <tag>-cuda for NVidia GPUs
         resources:
           requests:
             cpu: 100m
