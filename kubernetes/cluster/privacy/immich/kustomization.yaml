@@ -24,14 +24,6 @@ helmCharts:
             name: immich
         - secretRef: 
             name: immich
-
-      containers:
-        main:
-          envFrom:
-            - configMapRef:
-                name: immich
-            - secretRef: 
-                name: immich
       
       immich:
         metrics:
@@ -52,6 +44,8 @@ helmCharts:
         enabled: true
         image:
           tag: v1.126.1
+        env:
+          DB_HOSTNAME: postgres.default.svc.cluster.local
         resources:
           requests:
             cpu: 200m
