@@ -123,5 +123,4 @@ helmCharts:
           kubernetes.io/node-size: large
 patches:
   # Patch is required to enable Intel iGPU within the container for hardware decoding
-  # and to properly set environment variables
   - path: patch.yaml  
