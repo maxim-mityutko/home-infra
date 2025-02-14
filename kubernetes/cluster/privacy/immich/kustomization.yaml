@@ -26,7 +26,7 @@ helmCharts:
             name: immich
 
       containers:
-        server:
+        main:
           envFrom:
             - configMapRef:
                 name: immich
