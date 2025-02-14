@@ -22,11 +22,26 @@ helmCharts:
         TZ: Europe/Amsterdam
         DB_HOSTNAME: postgres.default.svc.cluster.local
         REDIS_HOSTNAME: redis-master.default.svc.cluster.local
-      envFrom:
-        # - configMapRef:
-        #     name: immich
-        - secretRef: 
-            name: immich
+        DB_DATABASE_NAME:
+          valueFrom:
+            secretKeyRef:
+              name: immich
+              key: DB_DATABASE_NAME
+        DB_USERNAME:
+          valueFrom:
+            secretKeyRef:
+              name: immich
+              key: DB_USERNAME
+        DB_PASSWORD:
+          valueFrom:
+            secretKeyRef:
+              name: immich
+              key: DB_PASSWORD
+      # envFrom:
+      #   # - configMapRef:
+      #   #     name: immich
+      #   - secretRef: 
+      #       name: immich
       
       immich:
         metrics:
