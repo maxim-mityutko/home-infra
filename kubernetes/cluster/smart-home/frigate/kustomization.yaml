@@ -24,7 +24,7 @@ helmCharts:
         kubernetes.io/gpu: intel
         # kubernetes.io/tpu: coral
       image:
-        tag: 0.14.1
+        tag: 0.15.0
         # GPU: If Coral TPU is used `tensorrt` image is unnecessary
         # tag: 0.14.1-tensorrt
       env:
@@ -130,11 +130,17 @@ helmCharts:
           retain:
             days: 0   # No continuous recordings
             mode: all
-          events:
+          alerts:
             pre_capture: 5
             post_capture: 10
             retain:
-              default: 30
+              days: 30
+              mode: motion
+          detections:
+            pre_capture: 5
+            post_capture: 10
+            retain:
+              days: 30
               mode: motion
 
         # Ref:
