@@ -3,3 +3,7 @@ kind: Kustomization
 resources:
   - qbitmanage.yaml
   - volumes.yaml
+configMapGenerator:
+  - name: qbitmanage-config-yml
+    files:
+    - config/cbnfig.yml
