@@ -50,6 +50,9 @@ spec:
           imagePullPolicy: IfNotPresent
           name: qbitmanage-init
           resources: {}
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
           volumeMounts:
             - name: qbitmanage-config
               mountPath: /config 
