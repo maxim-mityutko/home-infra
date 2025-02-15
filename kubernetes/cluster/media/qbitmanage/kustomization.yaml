@@ -6,4 +6,4 @@ resources:
 configMapGenerator:
   - name: qbitmanage-config-yml
     files:
-    - config/cbnfig.yml
+    - config/config.yml
