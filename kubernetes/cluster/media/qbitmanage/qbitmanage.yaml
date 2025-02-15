@@ -57,7 +57,6 @@ spec:
             - name: qbitmanage-config
               mountPath: /config 
             - name: qbitmanage-config-yml
-              # defaultMode: 420
               mountPath: /config.yml
               subPath: config.yml
       volumes:

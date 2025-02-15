@@ -7,5 +7,5 @@ configMapGenerator:
   - name: qbitmanage-config-yml
     files:
     - config/config.yml
-generatorOptions:
-  disableNameSuffixHash: true
+# generatorOptions:
+#   disableNameSuffixHash: true
