@@ -43,7 +43,7 @@ spec:
         - args:
             - '-v'
             - /config.yml
-            - /config/config-test.yml
+            - /config/config.yml
           command:
             - cp
           image: busybox:latest
