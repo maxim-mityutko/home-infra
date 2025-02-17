@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+# resources:
+#   - secret.yaml
+#   - ingress.yaml
+helmCharts:
+    - name: cloudnative-pg
+      namespace: default
+      releaseName: cloudnative-pg
+      version: 0.23.0
+      repo: https://cloudnative-pg.github.io/charts
+      valuesInline:
+        replicaCount: 1
+        updateStrategy:
+          type: RollingUpdate
+        config:
+          clusterWide: true
+          # Ref: https://cloudnative-pg.io/documentation/current/operator_conf/#available-options
+          data: {}
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        monitoring:
+          podMonitorEnabled: false
+          grafanaDashboard:
+            create: false
