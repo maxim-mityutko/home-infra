@@ -11,7 +11,7 @@ helmCharts:
       version: 0.23.0
       repo: https://cloudnative-pg.github.io/charts
       valuesInline:
-        replicaCount: 1
+        replicaCount: 2
         updateStrategy:
           type: RollingUpdate
         config:
