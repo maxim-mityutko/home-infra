@@ -31,14 +31,14 @@ spec:
   storage:
     size: 5Gi
     resizeInUseVolumes: true
-    # storageClass: longhorn-cnpg
-    pvcTemplate:
-      accessModes:
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
-      storageClassName: longhorn-cnpg
+    storageClass: longhorn-cnpg
+    # pvcTemplate:
+    #   accessModes:
+    #     - ReadWriteOnce
+    #   resources:
+    #     requests:
+    #       storage: 5Gi
+    #   storageClassName: longhorn-cnpg
 
   probes:
     readiness:
