@@ -10,6 +10,11 @@ spec:
   primaryUpdateStrategy: unsupervised
   logLevel: info
 
+  postgresql:
+    # Ref: https://github.com/tensorchord/cloudnative-pgvecto.rs
+    shared_preload_libraries:
+      - "vectors.so"
+
   backup: {}
 
   envFrom:
