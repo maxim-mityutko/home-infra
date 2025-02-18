@@ -43,7 +43,7 @@ helmCharts:
       defaultBackupStore:
         backupTarget: nfs://nas.brhd.io:/mnt/spin/backup/longhorn
       persistence:
-        defaultClass: true
+        defaultClass: false
         defaultFsType: ext4
         defaultClassReplicaCount: 3
         reclaimPolicy: Delete   # or "Retain"
