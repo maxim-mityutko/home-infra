@@ -4,4 +4,4 @@ namespace: default
 resources:
   - postgres-cnpg.yaml
   - storage-class.yaml
-  # - secret.yaml
+  - secret.yaml

@@ -17,9 +17,9 @@ spec:
 
   backup: {}
 
-  envFrom:
-    - secretRef:
-        name: postgres
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: postgres-cnpg
   
   resources:
     requests:
