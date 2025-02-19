@@ -64,9 +64,7 @@ spec:
       connectionParameters: 
         host: postgres.default.svc
         dbname: postgres
-        user:
-          name: postgres-cnpg
-          key: username
+        user: postgres
       password:
         name: postgres-cnpg
         key: password
