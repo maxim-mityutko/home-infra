@@ -32,13 +32,6 @@ spec:
     size: 5Gi
     resizeInUseVolumes: true
     storageClass: longhorn-cnpg
-    # pvcTemplate:
-    #   accessModes:
-    #     - ReadWriteOnce
-    #   resources:
-    #     requests:
-    #       storage: 5Gi
-    #   storageClassName: longhorn-cnpg
 
   probes:
     readiness:
@@ -49,3 +42,7 @@ spec:
       initialDelaySeconds: 45
       timeoutSeconds: 5
       periodSeconds: 30
+
+  affinity:
+    nodeSelector:
+      beta.kubernetes.io/arch: amd64
