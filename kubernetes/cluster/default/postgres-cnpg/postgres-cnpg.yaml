@@ -53,8 +53,8 @@ spec:
         type: monolith
         # schemaOnly: true
         databases:
-          - lidarr-log
-          - lidarr-main
+          - lidarr_log
+          - lidarr_main
         roles:
           - arr
         source:
