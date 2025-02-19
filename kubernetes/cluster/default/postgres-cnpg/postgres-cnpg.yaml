@@ -50,8 +50,8 @@ spec:
   bootstrap:
     initdb:
       import:
-        type: microservice
-        schemaOnly: true
+        type: monolith
+        # schemaOnly: true
         databases:
           - lidarr-log
           - lidarr-main
@@ -60,7 +60,7 @@ spec:
   externalCluster:
     - name: classic-pg
       connectionParameters: postgres.default.svc
-      dbname: lidarr-log
+      dbname: postgres
       user:
         name: postgres-cnpg
         key: username
