@@ -47,23 +47,26 @@ spec:
     nodeSelector:
       beta.kubernetes.io/arch: amd64
 
-  # bootstrap:
-  #   initdb:
-  #     import:
-  #       type: monolith
-  #       # schemaOnly: true
-  #       databases:
-  #         - lidarr-log
-  #         - lidarr-main
-  #       source:
-  #         externalCluster: classic-pg
-  # externalCluster:
-  #   - name: classic-pg
-  #     connectionParameters: postgres.default.svc
-  #     dbname: postgres
-  #     user:
-  #       name: postgres-cnpg
-  #       key: username
-  #     password:
-  #       name: postgres-cnpg
-  #       key: password
+  bootstrap:
+    initdb:
+      import:
+        type: monolith
+        # schemaOnly: true
+        databases:
+          - lidarr-log
+          - lidarr-main
+        roles:
+          - arr
+        source:
+          externalCluster: classic-pg
+  externalCluster:
+    - name: classic-pg
+      connectionParameters: 
+        host: postgres.default.svc
+        dbname: postgres
+        user:
+          name: postgres-cnpg
+          key: username
+      password:
+        name: postgres-cnpg
+        key: password
