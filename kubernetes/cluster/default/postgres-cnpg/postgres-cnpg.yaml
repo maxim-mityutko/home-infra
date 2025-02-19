@@ -59,7 +59,7 @@ spec:
           - arr
         source:
           externalCluster: classic-pg
-  externalCluster:
+  externalClusters:
     - name: classic-pg
       connectionParameters: 
         host: postgres.default.svc
