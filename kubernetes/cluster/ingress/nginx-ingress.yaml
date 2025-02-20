@@ -1,31 +1,31 @@
-# ---
-# apiVersion: apps/v1
-# kind: DaemonSet
-# metadata:
-#   name: nginx-ingress-microk8s-controller
-#   namespace: ingress
-#   labels:
-#     microk8s-application: nginx-ingress-microk8s
-#   annotations:
-#     argocd.argoproj.io/sync-options: Validate=false
-# spec:
-#   template:
-#     spec:
-#       containers:
-#         - name: nginx-ingress-microk8s
-#           ports:
-#             - containerPort: 53
-#               name: dns-tcp
-#               hostPort: 53
-#               protocol: TCP
-#             - containerPort: 53
-#               name: dns-udp
-#               hostPort: 53
-#               protocol: UDP
-#             - containerPort: 5432
-#               name: postgres
-#               hostPort: 5432
-#               protocol: TCP
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx-ingress-microk8s-controller
+  namespace: ingress
+  labels:
+    microk8s-application: nginx-ingress-microk8s
+  annotations:
+    argocd.argoproj.io/sync-options: ServerSideApply=true #Validate=false
+spec:
+  template:
+    spec:
+      containers:
+        - name: nginx-ingress-microk8s
+          ports:
+            - containerPort: 53
+              name: dns-tcp
+              hostPort: 53
+              protocol: TCP
+            - containerPort: 53
+              name: dns-udp
+              hostPort: 53
+              protocol: UDP
+            - containerPort: 5432
+              name: postgres
+              hostPort: 5432
+              protocol: TCP
 ---
 apiVersion: v1
 kind: ConfigMap
