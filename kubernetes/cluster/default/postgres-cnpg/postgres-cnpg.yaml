@@ -33,13 +33,17 @@ spec:
     resizeInUseVolumes: true
     storageClass: longhorn-cnpg
 
+  # Ref: https://cloudnative-pg.io/documentation/1.19/instance_manager/
+  startDelay: 15
+  stopDelay: 15
+  smartStopDelay: 30
   probes:
     readiness:
       initialDelaySeconds: 15
       timeoutSeconds: 5
       periodSeconds: 30
     liveness:
-      initialDelaySeconds: 45
+      initialDelaySeconds: 15
       timeoutSeconds: 5
       periodSeconds: 30
 
