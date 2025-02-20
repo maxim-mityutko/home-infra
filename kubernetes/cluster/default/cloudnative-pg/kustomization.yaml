@@ -30,7 +30,5 @@ helmCharts:
           # beta.kubernetes.io/arch: amd64
           node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
         tolerations:
-          - key: node.kubernetes.io/microk8s-controlplane
-            value: microk8s-controlplane
-            operator: Equal
-            effect: NoSchedule
+          - key: "node.kubernetes.io/unschedulable"
+            operator: Exists
