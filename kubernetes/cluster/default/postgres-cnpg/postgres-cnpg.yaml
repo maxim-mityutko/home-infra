@@ -17,8 +17,6 @@ spec:
     parameters:
       timezone: "Etc/UTC"
 
-  backup: {}
-
   enableSuperuserAccess: true
   superuserSecret:
     name: postgres-cnpg
