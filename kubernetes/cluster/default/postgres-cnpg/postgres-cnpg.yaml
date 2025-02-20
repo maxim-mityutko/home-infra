@@ -50,13 +50,13 @@ spec:
   bootstrap:
     initdb:
       import:
-        type: microservice # monolith
+        type: monolith
         # schemaOnly: true
         databases:
           - lidarr_log
-        #   - lidarr_main
-        # roles:
-        #   - arr
+          - lidarr_main
+        roles:
+          - arr
         source:
           externalCluster: classic-pg
   externalClusters:
