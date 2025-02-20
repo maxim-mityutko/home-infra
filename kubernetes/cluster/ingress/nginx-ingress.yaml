@@ -22,6 +22,10 @@ spec:
             name: dns-udp
             hostPort: 53
             protocol: UDP
+          - containerPort: 5432
+            name: postgres
+            hostPort: 5432
+            protocol: TCP
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -30,6 +34,7 @@ metadata:
   namespace: ingress
 data:
   53: default/blocky-dns:53
+  5432: default/postgres-cnpg-rw:5432
 ---
 apiVersion: v1
 kind: ConfigMap
