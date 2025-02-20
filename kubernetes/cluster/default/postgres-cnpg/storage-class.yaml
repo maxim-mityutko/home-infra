@@ -9,7 +9,7 @@ metadata:
 provisioner: driver.longhorn.io
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
-reclaimPolicy: Delete # TODO: change to "Retain"
+reclaimPolicy: Retain # TODO: change to "Retain"
 parameters:
   numberOfReplicas: "1"
   staleReplicaTimeout: "1440" # 1 day
