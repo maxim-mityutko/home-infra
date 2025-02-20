@@ -14,6 +14,8 @@ spec:
     # Ref: https://github.com/tensorchord/cloudnative-pgvecto.rs
     shared_preload_libraries:
       - "vectors.so"
+    parameters:
+      timezone: "Etc/UTC"
 
   backup: {}
 
@@ -55,7 +57,6 @@ spec:
     initdb:
       import:
         type: monolith
-        # schemaOnly: true
         databases:
           - lidarr_log
           - lidarr_main
