@@ -26,3 +26,5 @@ helmCharts:
           podMonitorEnabled: false
           grafanaDashboard:
             create: false
+        nodeSelector:
+          beta.kubernetes.io/arch: amd64
