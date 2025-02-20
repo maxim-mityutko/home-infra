@@ -4,8 +4,8 @@ namespace: ingress
 resources:
   - nginx-ingress.yaml
   - pod-scrape.yaml
-patches:
-  - target:
-      kind: DaemonSet
-      name: nginx-ingress-microk8s-controller
-    path: nginx-ingress-patch.yaml
+# patches:
+#   - target:
+#       kind: DaemonSet
+#       name: nginx-ingress-microk8s-controller
+#     path: nginx-ingress-patch.yaml
