@@ -6,6 +6,7 @@ metadata:
   name: longhorn-cnpg
   annotations:
     storageclass.kubernetes.io/is-default-class: "false"
+    argocd.argoproj.io/sync-options: Replace=true
 provisioner: driver.longhorn.io
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
