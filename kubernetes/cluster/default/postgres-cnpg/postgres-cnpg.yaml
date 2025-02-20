@@ -62,10 +62,9 @@ spec:
       import:
         type: monolith
         databases:
-          - lidarr_log
-          - lidarr_main
+          - authentik
         roles:
-          - arr
+          - authentik
         source:
           externalCluster: classic-pg
   externalClusters:
