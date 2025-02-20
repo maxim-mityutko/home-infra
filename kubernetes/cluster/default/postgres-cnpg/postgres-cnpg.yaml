@@ -17,6 +17,12 @@ spec:
     parameters:
       timezone: "Etc/UTC"
 
+  managed:
+    # Ref: https://cloudnative-pg.io/documentation/1.25/service_management/
+    services:
+      # Keep "ro" for Borgmatic
+      disabledDefaultServices: ["r"]
+
   enableSuperuserAccess: true
   superuserSecret:
     name: postgres-cnpg
