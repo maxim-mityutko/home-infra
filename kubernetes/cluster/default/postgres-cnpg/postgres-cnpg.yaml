@@ -43,7 +43,7 @@ spec:
         matchExpressions: 
           - key: app.kubernetes.io/name
             operator: In
-            values: ["${.PVC.name}"] #["postgres-cnpg"]
+            values: ["postgres-cnpg"]
 
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
