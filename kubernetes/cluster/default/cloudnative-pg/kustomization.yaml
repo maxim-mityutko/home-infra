@@ -29,7 +29,7 @@ helmCharts:
           grafanaDashboard:
             create: true
             labels: 
-              grafana-dashboard: true
+              grafana-dashboard: "true"
         # Control plane nodes are cordonned due to resource (memory) constraints, which ensures that only
         # daemon sets are running on that nodes. Forcing the pod to be deployed on the cordoned
         # node due to criticality and low resource consumption.
