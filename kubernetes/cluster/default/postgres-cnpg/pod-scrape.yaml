@@ -15,12 +15,11 @@ spec:
       relabelConfigs:
         - target_label: job
           replacement: postgres-cnpg-metrics
-        - target_label: cluster
-          replacement: postgres-cnpg
-      # metricRelabelConfigs:
-        # - sourceLabels: ["__name__"]
-        #   regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
-        #   action: drop
+        # - target_label: cluster
+        #   replacement: postgres-cnpg
+      metricRelabelConfigs:
+        - sourceLabels: ["cluster"]
+          replacement:  postgres-cnpg
   selector:
     matchLabels:
      cnpg.io/cluster: postgres-cnpg
