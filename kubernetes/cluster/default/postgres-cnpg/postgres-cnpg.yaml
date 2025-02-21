@@ -38,7 +38,7 @@ spec:
   storage:
     size: 2Gi
     # resizeInUseVolumes: true
-    storageClass: local-stoage
+    storageClass: local-storage
     pvcTemplate:
       selector:
         matchLabels: 
