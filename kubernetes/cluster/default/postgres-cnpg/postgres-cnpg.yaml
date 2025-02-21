@@ -35,15 +35,16 @@ spec:
       memory: 1Gi
   
   storage:
-    size: 1Gi
+    size: 5Gi
     resizeInUseVolumes: true
     storageClass: longhorn-cnpg
     pvcTemplate:
       selector:
         matchLabels: 
-          - key: app.kubernetes.io/name
-            operator: In
-            values: ["postgres-cnpg"]
+          - app.kubernetes.io/name: postgres-cnpg
+          # - key: app.kubernetes.io/name
+          #   operator: In
+          #   values: ["postgres-cnpg"]
 
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/

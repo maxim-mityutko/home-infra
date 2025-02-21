@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: postgres-cnpg
 spec:
   capacity:
-    storage: 1Gi
+    storage: 5Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
@@ -27,7 +27,7 @@ metadata:
     app.kubernetes.io/name: postgres-cnpg
 spec:
   capacity:
-    storage: 1Gi
+    storage: 5Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
