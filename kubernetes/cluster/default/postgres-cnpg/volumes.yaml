@@ -72,6 +72,15 @@ spec:
   storageClassName: local-stoage
   local:
     path: /mnt/postgres-cnpg
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - kcw-01
+                - kcw-02
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -89,3 +98,12 @@ spec:
   storageClassName: local-stoage
   local:
     path: /mnt/postgres-cnpg
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - kcw-01
+                - kcw-02
