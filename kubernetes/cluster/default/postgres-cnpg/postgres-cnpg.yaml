@@ -35,7 +35,7 @@ spec:
       memory: 1Gi
   
   storage:
-    size: 5Gi
+    size: 2Gi
     resizeInUseVolumes: true
     storageClass: longhorn-cnpg
     pvcTemplate:
