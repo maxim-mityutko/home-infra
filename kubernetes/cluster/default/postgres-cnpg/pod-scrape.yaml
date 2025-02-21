@@ -9,7 +9,7 @@ metadata:
 spec:
   podMetricsEndpoints:
     - port: metrics
-      # scheme: http
+      scheme: http
       scrapeTimeout: 120s
       interval: 10s
       # relabelConfigs:
