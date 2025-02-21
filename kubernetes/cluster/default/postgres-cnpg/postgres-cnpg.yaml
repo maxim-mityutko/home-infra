@@ -40,7 +40,7 @@ spec:
     storageClass: longhorn-cnpg
     pvcTemplate:
       selector:
-        matchExpressions: 
+        matchLabels: 
           - key: app.kubernetes.io/name
             operator: In
             values: ["postgres-cnpg"]
