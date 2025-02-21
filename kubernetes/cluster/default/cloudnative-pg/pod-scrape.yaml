@@ -11,12 +11,11 @@ spec:
   podMetricsEndpoints:
     - port: metrics
       scheme: http
-      # path: /metrics
       scrapeTimeout: 120s
       interval: 10s
-      # relabelConfigs:
-      #   - target_label: job
-      #     replacement: borgmatic
+      relabelConfigs:
+        - target_label: job
+          replacement: cloudnative-pg
   selector:
     matchLabels:
      app.kubernetes.io/name: cloudnative-pg
