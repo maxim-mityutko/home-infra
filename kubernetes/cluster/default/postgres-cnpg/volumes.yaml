@@ -1,9 +1,18 @@
 # NOTE: Volumes should be manually created via Longhorn UI prior to the deployment
+# Name: postgres-cnpg-uuid
+# Size: 2Gi
+# Number of Replicas: 1
+# Frontend: Block Device
+# Data Locality: Strictly Local
+# Access Mode: Read Write Once
+# Data Engine: v1
+# Backup: default
+# Disk Tag: ssd
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-cnpg-1
+  name: postgres-cnpg-5115d866-f077-11e-a1203f84
   labels:
     app.kubernetes.io/name: postgres-cnpg
 spec:
@@ -16,13 +25,17 @@ spec:
   storageClassName: longhorn-cnpg
   csi:
     driver: driver.longhorn.io
-    volumeHandle: postgres-cnpg-1
+    volumeHandle: postgres-cnpg-5115d866-f077-11e-a1203f84
     fsType: ext4
+    volumeAttributes:
+      diskSelector: ssd
+      numberOfReplicas: '1'
+      staleReplicaTimeout: '1440'
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-cnpg-2
+  name: postgres-cnpg-5115dcd4-f077-11e-b6cea0f2
   labels:
     app.kubernetes.io/name: postgres-cnpg
 spec:
@@ -35,6 +48,9 @@ spec:
   storageClassName: longhorn-cnpg
   csi:
     driver: driver.longhorn.io
-    volumeHandle: postgres-cnpg-2
+    volumeHandle: postgres-cnpg-5115dcd4-f077-11e-b6cea0f2
     fsType: ext4
-
+    volumeAttributes:
+      diskSelector: ssd
+      numberOfReplicas: '1'
+      staleReplicaTimeout: '1440'
