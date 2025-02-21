@@ -59,7 +59,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: 66694f7c-f08a-11ef-8000-0fbb613e133c
+  name: postgres-cnpg-66694f7c-f08a-11ef-8000-0fbb613e133c
   labels:
     app.kubernetes.io/name: postgres-cnpg
 spec:
@@ -76,7 +76,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: 87c4af5f-f08a-11ef-8000-7d50ed8f1b0a
+  name: postgres-cnpg-87c4af5f-f08a-11ef-8000-7d50ed8f1b0a
   labels:
     app.kubernetes.io/name: postgres-cnpg
 spec:
