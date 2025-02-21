@@ -40,11 +40,10 @@ spec:
     storageClass: longhorn-cnpg
     pvcTemplate:
       selector:
-        matchLabels: ${.PVC.name}
-        # matchExpressions: 
-          # - key: app.kubernetes.io/name
-          #   operator: 
-          #   values: ["postgres-cnpg"]
+        matchExpressions: 
+          - key: app.kubernetes.io/name
+            operator: In
+            values: ["${.PVC.name}"] #["postgres-cnpg"]
 
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
