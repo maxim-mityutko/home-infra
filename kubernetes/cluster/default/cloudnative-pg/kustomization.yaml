@@ -1,6 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
+resources:
+  - pod-scrape.yaml
 helmCharts:
     - name: cloudnative-pg
       namespace: default
@@ -23,7 +25,7 @@ helmCharts:
             cpu: 100m
             memory: 100Mi
         monitoring:
-          podMonitorEnabled: true
+          podMonitorEnabled: false
           grafanaDashboard:
             create: true
         # Control plane nodes are cordonned due to resource (memory) constraints, which ensures that only

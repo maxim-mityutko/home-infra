@@ -1,0 +1,22 @@
+# Victoria Metrics
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
+metadata:
+  labels:
+    app.kubernetes.io/instance: victoria-metrics
+  name: cloudnative-pg-metrics
+  namespace: default
+spec:
+  podMetricsEndpoints:
+    - port: metrics
+      scheme: http
+      # path: /metrics
+      scrapeTimeout: 120s
+      interval: 10s
+      # relabelConfigs:
+      #   - target_label: job
+      #     replacement: borgmatic
+  selector:
+    matchLabels:
+     app.kubernetes.io/name: cloudnative-pg
