@@ -12,9 +12,9 @@ spec:
       scheme: http
       scrapeTimeout: 120s
       interval: 10s
-      # relabelConfigs:
-      #   - target_label: job
-      #     replacement: cloudnative-pg
+      relabelConfigs:
+        - target_label: job
+          replacement: postgres-cnpg-metrics
   selector:
     matchLabels:
      cnpg.io/cluster: postgres-cnpg
