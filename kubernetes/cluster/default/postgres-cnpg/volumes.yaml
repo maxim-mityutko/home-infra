@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-cnpg-1
+  labels:
+    app.kubernetes.io/name: postgres-cnpg
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: longhorn-cnpg
+  csi:
+    driver: driver.longhorn.io
+    volumeHandle: postgres-cnpg-1
