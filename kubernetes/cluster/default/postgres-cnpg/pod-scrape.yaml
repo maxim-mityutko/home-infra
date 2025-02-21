@@ -4,7 +4,7 @@ kind: VMPodScrape
 metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
-  name: cpostgres-cnpg-metrics
+  name: postgres-cnpg-metrics
   namespace: default
 spec:
   podMetricsEndpoints:
