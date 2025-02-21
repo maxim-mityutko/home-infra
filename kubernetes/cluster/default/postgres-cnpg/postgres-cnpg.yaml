@@ -41,7 +41,8 @@ spec:
     pvcTemplate:
       selector:
         matchLabels: 
-        matchExpressions: ${.PVC.name}
+        matchExpressions: 
+          - ${.PVC.name}
           # - key: app.kubernetes.io/name
           #   operator: 
           #   values: ["postgres-cnpg"]
