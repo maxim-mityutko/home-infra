@@ -8,11 +8,58 @@
 # Data Engine: v1
 # Backup: default
 # Disk Tag: ssd
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: postgres-cnpg-5115d866-f077-11e-a1203f84
+#   labels:
+#     app.kubernetes.io/name: postgres-cnpg
+# spec:
+#   capacity:
+#     storage: 2Gi
+#   volumeMode: Filesystem
+#   accessModes:
+#     - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Retain
+#   storageClassName: longhorn-cnpg
+#   csi:
+#     driver: driver.longhorn.io
+#     volumeHandle: postgres-cnpg-5115d866-f077-11e-a1203f84
+#     fsType: ext4
+#     volumeAttributes:
+#       diskSelector: ssd
+#       numberOfReplicas: '1'
+#       staleReplicaTimeout: '1440'
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: postgres-cnpg-5115dcd4-f077-11e-b6cea0f2
+#   labels:
+#     app.kubernetes.io/name: postgres-cnpg
+# spec:
+#   capacity:
+#     storage: 2Gi
+#   volumeMode: Filesystem
+#   accessModes:
+#     - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Retain
+#   storageClassName: longhorn-cnpg
+#   csi:
+#     driver: driver.longhorn.io
+#     volumeHandle: postgres-cnpg-5115dcd4-f077-11e-b6cea0f2
+#     fsType: ext4
+#     volumeAttributes:
+#       diskSelector: ssd
+#       numberOfReplicas: '1'
+#       staleReplicaTimeout: '1440'
+# Local Storage
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-cnpg-5115d866-f077-11e-a1203f84
+  name: 66694f7c-f08a-11ef-8000-0fbb613e133c
   labels:
     app.kubernetes.io/name: postgres-cnpg
 spec:
@@ -22,20 +69,14 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: longhorn-cnpg
-  csi:
-    driver: driver.longhorn.io
-    volumeHandle: postgres-cnpg-5115d866-f077-11e-a1203f84
-    fsType: ext4
-    volumeAttributes:
-      diskSelector: ssd
-      numberOfReplicas: '1'
-      staleReplicaTimeout: '1440'
+  storageClassName: local-stoage
+  local:
+    path: /mnt/postgres-cnpg
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-cnpg-5115dcd4-f077-11e-b6cea0f2
+  name: 87c4af5f-f08a-11ef-8000-7d50ed8f1b0a
   labels:
     app.kubernetes.io/name: postgres-cnpg
 spec:
@@ -45,12 +86,6 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: longhorn-cnpg
-  csi:
-    driver: driver.longhorn.io
-    volumeHandle: postgres-cnpg-5115dcd4-f077-11e-b6cea0f2
-    fsType: ext4
-    volumeAttributes:
-      diskSelector: ssd
-      numberOfReplicas: '1'
-      staleReplicaTimeout: '1440'
+  storageClassName: local-stoage
+  local:
+    path: /mnt/postgres-cnpg
