@@ -1,21 +1,20 @@
-# Victoria Metrics
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMPodScrape
 metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
-  name: cloudnative-pg-metrics
+  name: cpostgres-cnpg-metrics
   namespace: default
 spec:
   podMetricsEndpoints:
     - port: metrics
-      scheme: http
+      # scheme: http
       scrapeTimeout: 120s
-      interval: 60s
-      relabelConfigs:
-        - target_label: job
-          replacement: cloudnative-pg
+      interval: 10s
+      # relabelConfigs:
+      #   - target_label: job
+      #     replacement: cloudnative-pg
   selector:
     matchLabels:
-     app.kubernetes.io/name: cloudnative-pg
+     cnpg.io/cluster: postgres-cnpg

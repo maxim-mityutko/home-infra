@@ -6,3 +6,4 @@ resources:
   - storage-class.yaml
   - secret.yaml
   - volumes.yaml
+  - pod-scrape.yaml
