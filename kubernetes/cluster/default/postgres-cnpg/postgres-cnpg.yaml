@@ -41,9 +41,9 @@ spec:
     pvcTemplate:
       selector:
         matchExpressions: 
-          key: app.kubernetes.io/name
-          operator: In
-          value: postgres-cnpg
+          - key: app.kubernetes.io/name
+            operator: In
+            value: postgres-cnpg
 
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
