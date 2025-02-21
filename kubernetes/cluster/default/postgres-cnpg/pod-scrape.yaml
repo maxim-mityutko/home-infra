@@ -19,7 +19,8 @@ spec:
         #   replacement: postgres-cnpg
       # TODO: fix
       metricRelabelConfigs:
-        - target_label: cluster
+        - source_labels: [cluster] 
+          target_label: cluster
           replacement:  postgres-cnpg
   selector:
     matchLabels:
