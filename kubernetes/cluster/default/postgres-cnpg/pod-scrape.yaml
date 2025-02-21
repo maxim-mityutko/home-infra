@@ -11,12 +11,13 @@ spec:
     - port: metrics
       scheme: http
       scrapeTimeout: 120s
-      interval: 10s
+      interval: 60s
       relabelConfigs:
         - target_label: job
           replacement: postgres-cnpg-metrics
         # - target_label: cluster
         #   replacement: postgres-cnpg
+      # TODO: fix
       metricRelabelConfigs:
         - target_label: cluster
           replacement:  postgres-cnpg
