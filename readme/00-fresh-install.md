@@ -215,4 +215,6 @@
   kubectl label nodes <node> kubernetes.io/gpu=<type>
   # size = large / medium / small
   kubectl label nodes <node> kubernetes.io/node-size=<size>
+  # flag = true / false
+  kubectl label nodes <node> kubernetes.io/local-storage=<flag>
   ```

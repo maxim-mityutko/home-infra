@@ -60,8 +60,7 @@ spec:
 
   affinity:
     nodeSelector:
-      # TODO: add better selector to make sure that configured local storage is available
-      beta.kubernetes.io/arch: amd64
+      kubernetes.io/local-storage: "true"
 
   bootstrap:
     initdb:

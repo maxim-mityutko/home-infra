@@ -20,11 +20,14 @@ spec:
     required:
       nodeSelectorTerms:
         - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - kcw-01
-                - kcw-02
+            - key: kubernetes.io/local-storage
+              operator: Is
+              values: "true"
+            # - key: kubernetes.io/hostname
+            #   operator: In
+            #   values:
+            #     - kcw-01
+            #     - kcw-02
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -46,8 +49,11 @@ spec:
     required:
       nodeSelectorTerms:
         - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - kcw-01
-                - kcw-02
+            - key: kubernetes.io/local-storage
+              operator: Is
+              values: "true"
+            # - key: kubernetes.io/hostname
+            #   operator: In
+            #   values:
+            #     - kcw-01
+            #     - kcw-02
