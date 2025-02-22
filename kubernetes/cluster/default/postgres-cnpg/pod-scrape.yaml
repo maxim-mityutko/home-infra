@@ -19,10 +19,9 @@ spec:
         #   replacement: postgres-cnpg
       # TODO: fix
       metricRelabelConfigs:
-        - source_labels: [cluster]
-          regex: "cluster-name"
+        - sourceLabels: ["__name__"]
           target_label: cluster
-          replacement: postgres-cnpg
+          replacement:  postgres-cnpg
         - sourceLabels: ["__name__"]
           target_label: cluster-test
           replacement:  postgres-cnpg
