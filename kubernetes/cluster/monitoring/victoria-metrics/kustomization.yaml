@@ -145,8 +145,8 @@ helmCharts:
           enabled: true
           spec:
             scrapeInterval: 60s
-            externalLabels: {}
-            #   cluster: cluster-name
+            externalLabels:
+              vm-cluster: brhd.io
             resources:
               requests:
                 cpu: 100m
