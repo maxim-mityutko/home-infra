@@ -64,9 +64,10 @@ spec:
     #   kubernetes.io/local-storage: true
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
-        - matchExpressions:
-          - key: kubernetes.io/local-storage
-            operator: Exists
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/local-storage
+              operator: Exists
 
   bootstrap:
     initdb:
