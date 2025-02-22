@@ -145,8 +145,8 @@ helmCharts:
           enabled: true
           spec:
             scrapeInterval: 60s
-            externalLabels: 
-              cluster: cluster-name
+            # externalLabels: 
+            #   cluster: cluster-name
             resources:
               requests:
                 cpu: 100m
