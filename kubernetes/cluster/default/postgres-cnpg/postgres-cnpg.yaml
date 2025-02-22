@@ -4,16 +4,13 @@ metadata:
   name: postgres-cnpg
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:17.2-v0.4.0
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.2
   imagePullPolicy: IfNotPresent
   instances: 2
   primaryUpdateStrategy: unsupervised
   logLevel: info
 
   postgresql:
-    # Ref: https://github.com/tensorchord/cloudnative-pgvecto.rs
-    shared_preload_libraries:
-      - "vectors.so"
     parameters:
       timezone: "Etc/UTC"
       max_slot_wal_keep_size: 200MB
@@ -21,7 +18,6 @@ spec:
   managed:
     # Ref: https://cloudnative-pg.io/documentation/1.25/service_management/
     services:
-      # Keep "ro" for Borgmatic
       disabledDefaultServices: ["r","ro"]
 
   enableSuperuserAccess: true
