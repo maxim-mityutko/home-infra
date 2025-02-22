@@ -28,6 +28,7 @@ helmCharts:
           podMonitorEnabled: false
           grafanaDashboard:
             create: true
+            sidecarLabel: "grafana-dashboard"
             sidecarLabelValue: "true"
             # labels: 
             #   grafana-dashboard: "true"
