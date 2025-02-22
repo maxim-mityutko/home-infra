@@ -20,6 +20,7 @@ spec:
     matchLabels:
      app.kubernetes.io/name: cloudnative-pg
 ---
+# Ref: https://github.com/cloudnative-pg/cloudnative-pg/blob/main/docs/src/samples/monitoring/prometheusrule.yaml
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMRule
 metadata:
