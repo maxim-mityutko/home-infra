@@ -189,12 +189,19 @@ helmCharts:
                   replacement: kubelet
                 - action: labeldrop # Drop labels created after roll out of GPU operator
                   regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
-              metricRelabelConfigs:
-                - sourceLabels: ["__name__"]
-                  target_label: cluster
-                  replacement:  brhd.io
         kube-state-metrics:
           enabled: true
+          vmScrape:
+            spec:
+              endpoints:
+                - port: http
+                  honorLabels: true
+                  metricRelabelConfigs:
+                    - action: labeldrop
+                      regex: (uid|container_id|image_id)
+                    - sourceLabels: ["__name__"]
+                      target_label: cluster
+                      replacement:  brhd.io
         prometheus-node-exporter:
           enabled: true
           spec:
