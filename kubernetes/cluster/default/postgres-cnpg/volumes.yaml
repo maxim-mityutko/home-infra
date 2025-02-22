@@ -1,3 +1,4 @@
+# NOTE: The paths on the node have to be created manually with `sudo mkdir /mnt/my-vol`
 ---
 apiVersion: v1
 kind: PersistentVolume
