@@ -59,16 +59,8 @@ spec:
       periodSeconds: 30
 
   affinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/local-storage
-          operator: In
-          values:
-            - ssd
-            - nvme
-    # nodeSelector:
-    #   kubernetes.io/local-storage: ssd
+    nodeSelector:
+      kubernetes.io/local-storage: ssd
 
   bootstrap:
     initdb:
