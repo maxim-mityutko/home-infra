@@ -210,11 +210,19 @@
 ### Tags
 
 - add custom tags to nodes
-  ```shell
-  # type = intel / nvidia
-  kubectl label nodes <node> kubernetes.io/gpu=<type>
-  # size = large / medium / small
-  kubectl label nodes <node> kubernetes.io/node-size=<size>
-  # flag = ssd / nvme / hdd
-  kubectl label nodes <node> kubernetes.io/local-storage=<flag>
-  ```
+```shell
+# type = intel / nvidia
+kubectl label nodes <node> kubernetes.io/gpu=<type>
+# size = large / medium / small
+kubectl label nodes <node> kubernetes.io/node-size=<size>
+```
+
+### Local Storage
+- create and / or mount drive that will be used for local storage
+```shell
+sudo mkdir /mnt/my-local-storage
+```
+- tag the node
+```shell
+kubectl label nodes <node> kubernetes.io/local-storage=true
+```
