@@ -21,6 +21,9 @@ spec:
       metricRelabelConfigs:
         - sourceLabels: ["__name__"]
           target_label: cluster
+          action: drop
+        - sourceLabels: ["__name__"]
+          target_label: cluster
           replacement:  postgres-cnpg
   selector:
     matchLabels:
