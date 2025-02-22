@@ -21,10 +21,7 @@ spec:
       nodeSelectorTerms:
         - matchExpressions:
           - key: kubernetes.io/local-storage
-            operator: In
-            values:
-              - ssd
-              - nvme
+            operator: Exists
             # - key: kubernetes.io/hostname
             #   operator: In
             #   values:
@@ -52,10 +49,7 @@ spec:
       nodeSelectorTerms:
         - matchExpressions:
           - key: kubernetes.io/local-storage
-            operator: In
-            values:
-              - ssd
-              - nvme
+            operator: Exists
             # - key: kubernetes.io/hostname
             #   operator: In
             #   values:

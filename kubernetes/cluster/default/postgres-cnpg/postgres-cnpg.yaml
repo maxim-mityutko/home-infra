@@ -60,8 +60,13 @@ spec:
 
   affinity:
     # TODO: add selector for `ssd` or `nvme`
-    nodeSelector:
-      kubernetes.io/local-storage: ssd
+    # nodeSelector:
+    #   kubernetes.io/local-storage: true
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - matchExpressions:
+          - key: kubernetes.io/local-storage
+            operator: Exists
 
   bootstrap:
     initdb:
