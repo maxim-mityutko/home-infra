@@ -97,7 +97,8 @@ helmCharts:
         vmsingle:
           enabled: true
           spec:
-            retentionPeriod: "6"
+            # Data retention period. Possible units character: h(ours), d(ays), w(eeks), y(ears), if no unit character specified - month.
+            retentionPeriod: "3"
             storage:
               # Use custom storage class to leverage automatic PV creation
               storageClassName: nfs-subdir
