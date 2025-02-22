@@ -15,10 +15,6 @@ spec:
       relabelConfigs:
         - target_label: job
           replacement: postgres-cnpg-metrics
-      metricRelabelConfigs:
-        - sourceLabels: ["__name__"]
-          target_label: cluster
-          replacement:  postgres-cnpg
   selector:
     matchLabels:
      cnpg.io/cluster: postgres-cnpg
