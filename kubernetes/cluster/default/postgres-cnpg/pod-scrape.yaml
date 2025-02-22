@@ -20,7 +20,7 @@ spec:
       # TODO: fix
       metricRelabelConfigs:
         - sourceLabels: ["__name__"]
-          target_label: cluster-name
+          target_label: cluster
           replacement:  postgres-cnpg
   selector:
     matchLabels:
