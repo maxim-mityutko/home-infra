@@ -59,6 +59,7 @@ spec:
       periodSeconds: 30
 
   affinity:
+    # TODO: add selector for `ssd` or `nvme`
     nodeSelector:
       kubernetes.io/local-storage: ssd
 
