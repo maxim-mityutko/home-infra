@@ -15,13 +15,12 @@ spec:
       relabelConfigs:
         - target_label: job
           replacement: postgres-cnpg-metrics
-        - target_label: cluster
-          replacement: postgres-cnpg
+        # - target_label: cluster
+        #   replacement: postgres-cnpg
       # TODO: fix
       metricRelabelConfigs:
-        - sourceLabels: ["__name__"]
-          target_label: cluster
-          action: drop
+        - action: labeldrop
+          regex: cluster
         - sourceLabels: ["__name__"]
           target_label: cluster
           replacement:  postgres-cnpg
