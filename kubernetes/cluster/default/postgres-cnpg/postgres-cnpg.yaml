@@ -22,7 +22,7 @@ spec:
     # Ref: https://cloudnative-pg.io/documentation/1.25/service_management/
     services:
       # Keep "ro" for Borgmatic
-      disabledDefaultServices: ["r"]
+      disabledDefaultServices: ["r","ro"]
 
   enableSuperuserAccess: true
   superuserSecret:
