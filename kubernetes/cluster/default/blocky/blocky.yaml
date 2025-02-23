@@ -94,3 +94,6 @@ spec:
         - name: blocky-config
           configMap:
             name: blocky-config
+      tolerations:
+        - key: "node.kubernetes.io/unschedulable"
+          operator: Exists
