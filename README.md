@@ -4,10 +4,10 @@
 
 ## Notes
 The rollout from scratch has not been fully automated yet, and generally requires following
-the process defined in `\readme` and `\kubernetes\scripts` folders for the initial setup.
+the process defined in the [/readme](./readme/) and [/kubernetes/scripts](./kubernetes/scripts/) folders for the initial setup.
 
 After the initial steps are complete, deployments are handled via ArgoCD application manifests
-defined in the `kubernetes\argocd`.
+defined in the [/kubernetes/argocd](./kubernetes/argocd/).
 
 ## Hardware:
 * ProxMox VE Host:
