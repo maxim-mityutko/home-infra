@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: postgres-pgvecto-rs-cnpg
+  name: postgres-pgvectors-cnpg
   namespace: argocd
 spec:
   destination:
@@ -9,7 +9,7 @@ spec:
     namespace: default
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/default/postgres-pgvecto-rs-cnpg
+    path: kubernetes/cluster/default/postgres-pgvectors-cnpg
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default

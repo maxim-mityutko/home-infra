@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-pgvecto-rs-cnpg-fc3a2a45-f2fa-11ef-8000-51b7d4d06f84
+  name: postgres-pgvectors-cnpg-fc3a2a45-f2fa-11ef-8000-51b7d4d06f84
   labels:
-    app.kubernetes.io/name: postgres-pgvecto-rs-cnpg
+    app.kubernetes.io/name: postgres-pgvectors-cnpg
 spec:
   capacity:
     storage: 5Gi
@@ -15,7 +15,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /mnt/postgres-pgvecto-rs-cnpg
+    path: /mnt/postgres-pgvectors-cnpg
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -26,9 +26,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-pgvecto-rs-cnpg-0ddba1c6-f2fb-11ef-8000-8dd73e70ffbc
+  name: postgres-pgvectors-cnpg-0ddba1c6-f2fb-11ef-8000-8dd73e70ffbc
   labels:
-    app.kubernetes.io/name: postgres-pgvecto-rs-cnpg
+    app.kubernetes.io/name: postgres-pgvectors-cnpg
 spec:
   capacity:
     storage: 5Gi
@@ -38,7 +38,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /mnt/postgres-pgvecto-rs-cnpg
+    path: /mnt/postgres-pgvectors-cnpg
   nodeAffinity:
     required:
       nodeSelectorTerms:

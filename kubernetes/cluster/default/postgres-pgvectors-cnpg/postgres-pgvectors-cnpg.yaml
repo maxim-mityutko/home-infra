@@ -1,7 +1,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres-pgvecto-rs-cnpg
+  name: postgres-pgvectors-cnpg
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.4-v0.3.0
@@ -41,7 +41,7 @@ spec:
     # pvcTemplate:
     #   selector:
     #     matchLabels: 
-    #       app.kubernetes.io/name: postgres-pgvecto-rs-cnpg
+    #       app.kubernetes.io/name: postgres-pgvectors-cnpg
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
   startDelay: 15
