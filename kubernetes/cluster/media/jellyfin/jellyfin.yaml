@@ -45,7 +45,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: jellyfin
-          image: jellyfin/jellyfin:10.10.5
+          image: jellyfin/jellyfin:10.10.6
           resources:
             requests:
               memory: 1000Mi
