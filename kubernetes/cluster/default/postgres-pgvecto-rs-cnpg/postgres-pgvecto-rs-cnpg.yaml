@@ -6,7 +6,7 @@ metadata:
 spec:
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.4-v0.3.0
   imagePullPolicy: IfNotPresent
-  instances: 2
+  instances: 1
   primaryUpdateStrategy: unsupervised
   logLevel: info
 
@@ -29,8 +29,8 @@ spec:
   
   resources:
     requests:
-      memory: 70Mi
-      cpu: 20m
+      memory: 200Mi
+      cpu: 100m
     limits:
       memory: 500Gi
   
