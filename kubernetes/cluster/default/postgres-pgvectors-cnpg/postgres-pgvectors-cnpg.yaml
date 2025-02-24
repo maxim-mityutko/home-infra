@@ -38,10 +38,6 @@ spec:
     size: 5Gi
     # resizeInUseVolumes: true
     storageClass: nfs-subdir
-    # pvcTemplate:
-    #   selector:
-    #     matchLabels: 
-    #       app.kubernetes.io/name: postgres-pgvectors-cnpg
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
   startDelay: 15
@@ -68,16 +64,16 @@ spec:
   # CloudNativePG documentation for more details.
   # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
   # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/
-  bootstrap:
-    initdb:
-      import:
-        type: monolith
-        databases:
-          - immich
-        roles:
-          - immich
-        source:
-          externalCluster: classic-pg
+  # bootstrap:
+  #   initdb:
+  #     import:
+  #       type: monolith
+  #       databases:
+  #         - immich
+  #       roles:
+  #         - immich
+  #       source:
+  #         externalCluster: classic-pg
   externalClusters:
     - name: classic-pg
       connectionParameters: 
