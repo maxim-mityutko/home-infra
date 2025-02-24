@@ -61,7 +61,10 @@ spec:
           - matchExpressions:
             - key: kubernetes.io/local-storage
               operator: Exists
-  # Bootstrap is mo longer required
+  # NOTE: keeping `bootstrap` section here for reference, refer to
+  # CloudNativePG documentation for more details.
+  # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
+  # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/
   # bootstrap:
   #   initdb:
   #     import:
@@ -72,12 +75,12 @@ spec:
   #         - authentik
   #       source:
   #         externalCluster: classic-pg
-  # externalClusters:
-  #   - name: classic-pg
-  #     connectionParameters: 
-  #       host: postgres.default.svc
-  #       dbname: postgres
-  #       user: postgres
-  #     password:
-  #       name: postgres-cnpg
-  #       key: password
+  externalClusters:
+    - name: classic-pg
+      connectionParameters: 
+        host: postgres.default.svc
+        dbname: postgres
+        user: postgres
+      password:
+        name: postgres-cnpg
+        key: password
