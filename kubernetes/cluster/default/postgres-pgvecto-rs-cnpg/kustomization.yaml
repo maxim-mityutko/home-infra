@@ -4,5 +4,5 @@ kind: Kustomization
 namespace: default
 resources:
   - postgres-pgvecto-rs-cnpg.yaml
-  - volumes.yaml
+  # - volumes.yaml
   - pod-scrape.yaml
