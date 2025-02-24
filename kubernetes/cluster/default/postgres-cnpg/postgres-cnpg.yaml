@@ -68,8 +68,12 @@ spec:
         type: monolith
         databases:
           - authentik
+          - guacamole
+          - vaultwarden
         roles:
           - authentik
+          - guacamole
+          - vaultwarden
         source:
           externalCluster: classic-pg
   externalClusters:
