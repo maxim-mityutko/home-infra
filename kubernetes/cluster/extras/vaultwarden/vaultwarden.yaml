@@ -59,13 +59,6 @@ spec:
                 name: vaultwarden
             - secretRef:
                 name: vaultwarden
-          # volumeMounts:
-          #   - name: vaultwarden-data
-          #     mountPath: /data
-      # volumes:
-      #   - name: vaultwarden-data
-      #     persistentVolumeClaim:
-      #       claimName: vaultwarden-data
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -87,7 +80,7 @@ data:
   ORG_ATTACHMENT_LIMIT: "0"
   USER_ATTACHMENT_LIMIT: "0"
 
-  DISABLE_ADMIN_TOKEN: "true"
+  DISABLE_ADMIN_TOKEN: "false"
 
   DISABLE_ICON_DOWNLOAD: "true"
   ICON_CACHE_TTL: "0"
