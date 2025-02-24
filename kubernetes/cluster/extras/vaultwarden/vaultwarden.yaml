@@ -6,7 +6,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: vaultwarden
-  namespace: extras
+  namespace: privacy
   labels:
     app.kubernetes.io/name: vaultwarden
 spec:
@@ -23,7 +23,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vaultwarden
-  namespace: extras
+  namespace: privacy
   labels:
     app.kubernetes.io/name: vaultwarden
 spec:
@@ -36,7 +36,7 @@ spec:
   revisionHistoryLimit: 1
   template:
     metadata:
-      namespace: extras
+      namespace: privacy
       labels:
         app.kubernetes.io/name: vaultwarden
     spec:
@@ -59,20 +59,36 @@ spec:
                 name: vaultwarden
             - secretRef:
                 name: vaultwarden
-          volumeMounts:
-            - name: vaultwarden-data
-              mountPath: /data
-      volumes:
-        - name: vaultwarden-data
-          persistentVolumeClaim:
-            claimName: vaultwarden-data
+          # volumeMounts:
+          #   - name: vaultwarden-data
+          #     mountPath: /data
+      # volumes:
+      #   - name: vaultwarden-data
+      #     persistentVolumeClaim:
+      #       claimName: vaultwarden-data
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: vaultwarden
-  namespace: extras
+  namespace: privacy
   labels:
     app.kubernetes.io/name: vaultwarden
 data:
+  DOMAIN: "https://vault.brhd.io"
+  SIGNUPS_ALLOWED: "true"
+  EMERGENCY_ACCESS_ALLOWED: "true"
+
+  SENDS_ALLOWED: "true"
+  USER_SEND_LIMIT: "1024" # in KB
+
   WEBSOCKET_ENABLED: "true"
+
+  ORG_ATTACHMENT_LIMIT: "0"
+  USER_ATTACHMENT_LIMIT: "0"
+
+  DISABLE_ADMIN_TOKEN: "true"
+
+  DISABLE_ICON_DOWNLOAD: "true"
+  ICON_CACHE_TTL: "0"
+  ICON_SERVICE: duckduckgo # internal / bitwarden / duckduckgo / google

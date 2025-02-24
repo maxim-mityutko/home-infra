@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: vaultwarden-data
-  namespace: extras
+  namespace: privacy
   labels:
     app.kubernetes.io/name: vaultwarden
 spec:
@@ -21,7 +21,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: vaultwarden-backup
-  namespace: extras
+  namespace: privacy
   labels:
     app.kubernetes.io/name: vaultwarden-backup
 spec:

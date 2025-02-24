@@ -61,27 +61,23 @@ spec:
           - matchExpressions:
             - key: kubernetes.io/local-storage
               operator: Exists
-
-  bootstrap:
-    initdb:
-      import:
-        type: monolith
-        databases:
-          - authentik
-          - guacamole
-          - vaultwarden
-        roles:
-          - authentik
-          - guacamole
-          - vaultwarden
-        source:
-          externalCluster: classic-pg
-  externalClusters:
-    - name: classic-pg
-      connectionParameters: 
-        host: postgres.default.svc
-        dbname: postgres
-        user: postgres
-      password:
-        name: postgres-cnpg
-        key: password
+  # Bootstrap is mo longer required
+  # bootstrap:
+  #   initdb:
+  #     import:
+  #       type: monolith
+  #       databases:
+  #         - authentik
+  #       roles:
+  #         - authentik
+  #       source:
+  #         externalCluster: classic-pg
+  # externalClusters:
+  #   - name: classic-pg
+  #     connectionParameters: 
+  #       host: postgres.default.svc
+  #       dbname: postgres
+  #       user: postgres
+  #     password:
+  #       name: postgres-cnpg
+  #       key: password
