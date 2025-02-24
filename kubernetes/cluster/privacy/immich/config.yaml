@@ -10,4 +10,3 @@ data:
   TZ: Europe/Amsterdam
   DB_HOSTNAME: postgres-pgvectors-cnpg-rw.default.svc.cluster.local
   REDIS_HOSTNAME: redis-master.default.svc.cluster.local
-  
