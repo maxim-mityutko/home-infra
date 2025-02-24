@@ -6,7 +6,7 @@ metadata:
 spec:
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.4-v0.3.0
   imagePullPolicy: IfNotPresent
-  instances: 2
+  instances: 1
   primaryUpdateStrategy: unsupervised
   logLevel: info
 
@@ -37,11 +37,11 @@ spec:
   storage:
     size: 5Gi
     # resizeInUseVolumes: true
-    storageClass: local-storage
-    pvcTemplate:
-      selector:
-        matchLabels: 
-          app.kubernetes.io/name: postgres-pgvecto-rs-cnpg
+    storageClass: nfs-subdir
+    # pvcTemplate:
+    #   selector:
+    #     matchLabels: 
+    #       app.kubernetes.io/name: postgres-pgvecto-rs-cnpg
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
   startDelay: 15
@@ -68,16 +68,16 @@ spec:
   # CloudNativePG documentation for more details.
   # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
   # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/
-  # bootstrap:
-  #   initdb:
-  #     import:
-  #       type: monolith
-  #       databases:
-  #         - immich
-  #       roles:
-  #         - immich
-  #       source:
-  #         externalCluster: classic-pg
+  bootstrap:
+    initdb:
+      import:
+        type: monolith
+        databases:
+          - immich
+        roles:
+          - immich
+        source:
+          externalCluster: classic-pg
   externalClusters:
     - name: classic-pg
       connectionParameters: 
