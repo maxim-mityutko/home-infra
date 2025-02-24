@@ -97,7 +97,8 @@ helmCharts:
         vmsingle:
           enabled: true
           spec:
-            retentionPeriod: "6"
+            # Data retention period. Possible units character: h(ours), d(ays), w(eeks), y(ears), if no unit character specified - month.
+            retentionPeriod: "3"
             storage:
               # Use custom storage class to leverage automatic PV creation
               storageClassName: nfs-subdir
@@ -145,8 +146,8 @@ helmCharts:
           enabled: true
           spec:
             scrapeInterval: 60s
-            externalLabels: 
-              cluster: cluster-name
+            externalLabels:
+              vm-cluster: brhd.io
             resources:
               requests:
                 cpu: 100m
@@ -154,6 +155,10 @@ helmCharts:
               limits:
                 cpu: 400m
                 memory: 500Mi
+            extraArgs:
+              # Do not store original labels in vmagent's memory by default. This reduces the amount of memory used by vmagent
+              # but makes vmagent debugging UI less informative. See: https://docs.victoriametrics.com/vmagent/#relabel-debug
+              promscrape.dropOriginalLabels: "true"
           ingress:
             enabled: true
             annotations:
@@ -185,12 +190,38 @@ helmCharts:
                   replacement: kubelet
                 - action: labeldrop # Drop labels created after roll out of GPU operator
                   regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
+              metricRelabelConfigs:
+                - sourceLabels: ["__name__"]
+                  target_label: cluster
+                  replacement:  brhd.io
         kube-state-metrics:
           enabled: true
+          vmScrape:
+            spec:
+              endpoints:
+                - port: http
+                  interval: 60s
+                  honorLabels: true
+                  metricRelabelConfigs:
+                    - action: labeldrop
+                      regex: (uid|container_id|image_id)
+                    - sourceLabels: ["__name__"]
+                      target_label: cluster
+                      replacement:  brhd.io
         prometheus-node-exporter:
           enabled: true
-          spec:
-            interval: 60s
+          vmScrape:
+            spec:
+              endpoints:
+                - port: metrics
+                  interval: 60s
+                  metricRelabelConfigs:
+                    - action: drop
+                      source_labels: [mountpoint]
+                      regex: "/var/lib/kubelet/pods.+"
+                    - sourceLabels: ["__name__"]
+                      target_label: cluster
+                      replacement:  brhd.io
         # Service Scrape (disabled)
         kubeApiServer:
           enabled: false

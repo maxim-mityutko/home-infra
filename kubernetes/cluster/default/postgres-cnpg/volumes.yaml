@@ -1,0 +1,47 @@
+# NOTE: The paths on the node have to be created manually with `sudo mkdir /mnt/my-vol`
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-cnpg-66694f7c-f08a-11ef-8000-0fbb613e133c
+  labels:
+    app.kubernetes.io/name: postgres-cnpg
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /mnt/postgres-cnpg
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/local-storage
+            operator: Exists
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-cnpg-87c4af5f-f08a-11ef-8000-7d50ed8f1b0a
+  labels:
+    app.kubernetes.io/name: postgres-cnpg
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /mnt/postgres-cnpg
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/local-storage
+            operator: Exists

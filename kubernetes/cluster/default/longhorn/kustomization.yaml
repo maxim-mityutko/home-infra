@@ -1,16 +1,15 @@
 # NOTES:
-# - To uninstall follow: https://longhorn.io/docs/1.6.1/deploy/uninstall/#uninstalling-longhorn-using-argo-cd
-# - If there is an error in defaultSettings, none will be applied. Check "Longhorn Manager" pod for logs
+# - To uninstall follow: https://longhorn.io/docs/1.8.0/deploy/uninstall/#uninstalling-longhorn-using-argo-cd;
+# - If there is an error in defaultSettings, none will be applied, check "Longhorn Manager" pod for logs;
 # - For custom storage class: https://longhorn.io/docs/1.6.1/references/storage-class-parameters/
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: longhorn-system
 resources:
-  - ingress.yaml
-  # TODO: Enable service scrape if necessary
+  - dns-endpoint.yaml
+  # - recurring-job.yaml
   # - service-scrape.yaml
-  - recurring-job.yaml
 helmCharts:
   - name: longhorn
     namespace: longhorn-system
@@ -18,27 +17,33 @@ helmCharts:
     version: 1.8.0
     repo: https://charts.longhorn.io
     valuesInline:
+      global:
+        nodeSelector:
+          beta.kubernetes.io/arch: amd64
       defaultSettings:
         replicaAutoBalance: least-effort
         storageOverProvisioningPercentage: 50
         storageMinimalAvailablePercentage: 20
         upgradeChecker: false
-        defaultReplicaCount: 3  # For Kubernetes configuration, modify the `numberOfReplicas` field in the StorageClass.
+        # For Kubernetes configuration, modify the `numberOfReplicas` field in the StorageClass.
+        defaultReplicaCount: 3  
         autoDeletePodWhenVolumeDetachedUnexpectedly: true
         detachManuallyAttachedVolumesWhenCordoned: true
         disableSchedulingOnCordonedNode: true
         orphanAutoDeletion: false
+        nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
+        nodeDrainPolicy: always-allow
         logLevel: Info
         deletingConfirmationFlag: true
         allowCollectingLonghornUsageMetrics: false
-        # Snapshots and Backups
+        recurringSuccessfulJobsHistoryLimit: 7
+        recurringFailedJobsHistoryLimit: 7
+        recurringJobMaxRetention: 14
+        snapshotMaxCount: 14
+      defaultBackupStore:
         backupTarget: nfs://nas.brhd.io:/mnt/spin/backup/longhorn
-        recurringSuccessfulJobsHistoryLimit: 10
-        recurringFailedJobsHistoryLimit: 10
-        recurringJobMaxRetention: 10
-        snapshotMaxCount: 10
       persistence:
-        defaultClass: true
+        defaultClass: false
         defaultFsType: ext4
         defaultClassReplicaCount: 3
         reclaimPolicy: Delete   # or "Retain"
@@ -48,31 +53,32 @@ helmCharts:
         jobEnabled: false
         upgradeVersionCheck: false
       csi:
-        kubeletRootDir: /var/snap/microk8s/common/var/lib/kubelet # This should be changed specifically for Microk8s
-        attacherReplicaCount: 3
-        provisionerReplicaCount: 3
+        # This should be changed specifically for Microk8s
+        kubeletRootDir: /var/snap/microk8s/common/var/lib/kubelet 
+        attacherReplicaCount: 1
+        provisionerReplicaCount: 1
         resizerReplicaCount: 1 
-        snapshotterReplicaCount: 3
+        snapshotterReplicaCount: 1
       longhornUI:
-        replicas: 2
+        replicas: 1
       metrics:
         serviceMonitor:
           enabled: false
       # Disabling and replacing with standalone ingress config because annotations are not applied
-      # ingress:
-      #   enabled: true
-      #   host: longhorn.brhd.io
-      #   path: /
-      #   annotations:
-      #     kubernetes.io/ingress.class: public
-      #     cert-manager.io/cluster-issuer: lets-encrypt
-      #     nginx.ingress.kubernetes.io/auth-response-headers: >-
-      #       Set-Cookie
-      #     nginx.ingress.kubernetes.io/auth-signin: >-
-      #       https://longhorn.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
-      #     nginx.ingress.kubernetes.io/auth-snippet: |
-      #       proxy_set_header X-Forwarded-Host $http_host;
-      #     nginx.ingress.kubernetes.io/auth-url: >-
-      #       http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+      ingress:
+        enabled: true
+        host: longhorn.brhd.io
+        path: /
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+          nginx.ingress.kubernetes.io/auth-response-headers: >-
+            Set-Cookie
+          nginx.ingress.kubernetes.io/auth-signin: >-
+            https://longhorn.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+          nginx.ingress.kubernetes.io/auth-snippet: |
+            proxy_set_header X-Forwarded-Host $http_host;
+          nginx.ingress.kubernetes.io/auth-url: >-
+            http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
       openshift:
         enabled: false
