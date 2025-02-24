@@ -1,0 +1,8 @@
+# NOTE: Mission critical applications
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - postgres-cnpg.yaml
+  - volumes.yaml
+  - pod-scrape.yaml

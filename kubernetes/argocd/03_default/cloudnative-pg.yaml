@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vaultwarden
+  name: cloudnative-pg
   namespace: argocd
 spec:
   destination:
     name: ''
-    namespace: extras
+    namespace: default
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/extras/vaultwarden
+    path: kubernetes/cluster/default/cloudnative-pg
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
@@ -18,4 +18,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+      - ServerSideApply=true
