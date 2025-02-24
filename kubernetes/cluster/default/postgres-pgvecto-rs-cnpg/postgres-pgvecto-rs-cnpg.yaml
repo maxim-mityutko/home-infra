@@ -1,7 +1,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres-cnpg
+  name: postgres-pgvecto-rs-cnpg
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:17.2-v0.4.0
@@ -25,23 +25,23 @@ spec:
 
   enableSuperuserAccess: true
   superuserSecret:
-    name: postgres-cnpg
+    name: cnpg-default-secret
   
   resources:
     requests:
-      memory: 500Mi
-      cpu: 200m
+      memory: 70Mi
+      cpu: 20m
     limits:
-      memory: 1Gi
+      memory: 500Gi
   
   storage:
-    size: 2Gi
+    size: 5Gi
     # resizeInUseVolumes: true
     storageClass: local-storage
     pvcTemplate:
       selector:
         matchLabels: 
-          app.kubernetes.io/name: postgres-cnpg
+          app.kubernetes.io/name: postgres-pgvecto-rs-cnpg
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
   startDelay: 15
@@ -64,15 +64,18 @@ spec:
           - matchExpressions:
             - key: kubernetes.io/local-storage
               operator: Exists
-
+  # NOTE: keeping `bootstrap` section here for reference, refer to
+  # CloudNativePG documentation for more details.
+  # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
+  # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/
   bootstrap:
     initdb:
       import:
         type: monolith
         databases:
-          - authentik
+          - immich
         roles:
-          - authentik
+          - immich
         source:
           externalCluster: classic-pg
   externalClusters:
@@ -82,5 +85,5 @@ spec:
         dbname: postgres
         user: postgres
       password:
-        name: postgres-cnpg
+        name: cnpg-default-secret
         key: password

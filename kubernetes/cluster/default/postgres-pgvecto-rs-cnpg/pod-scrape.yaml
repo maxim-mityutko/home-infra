@@ -1,0 +1,20 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
+metadata:
+  labels:
+    app.kubernetes.io/instance: victoria-metrics
+  name: postgres-pgvecto-rs-cnpg-metrics
+  namespace: default
+spec:
+  podMetricsEndpoints:
+    - port: metrics
+      scheme: http
+      scrapeTimeout: 120s
+      interval: 60s
+      relabelConfigs:
+        - target_label: job
+          replacement: postgres-pgvecto-rs-cnpg-metrics
+  selector:
+    matchLabels:
+     cnpg.io/cluster: postgres-pgvecto-rs-cnpg
