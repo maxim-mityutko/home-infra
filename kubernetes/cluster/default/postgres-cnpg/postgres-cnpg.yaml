@@ -22,7 +22,7 @@ spec:
 
   enableSuperuserAccess: true
   superuserSecret:
-    name: postgres-cnpg
+    name: cnpg-default-secret
   
   resources:
     requests:
@@ -82,5 +82,5 @@ spec:
         dbname: postgres
         user: postgres
       password:
-        name: postgres-cnpg
+        name: cnpg-default-secret
         key: password
