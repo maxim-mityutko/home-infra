@@ -15,7 +15,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /mnt/postgres-ha-cnpg
+    path: /mnt/postgres-cnpg
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -38,7 +38,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /mnt/postgres-ha-cnpg
+    path: /mnt/postgres-cnpg
   nodeAffinity:
     required:
       nodeSelectorTerms:
