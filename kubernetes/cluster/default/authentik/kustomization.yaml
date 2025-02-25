@@ -16,7 +16,7 @@ helmCharts:
             enabled: false
           log_level: warning
           postgresql:
-            host: postgres-cnpg-rw.default.svc.cluster.local
+            host: postgres-ha-cnpg-rw.default.svc.cluster.local
           redis:
             host: redis-master.default.svc.cluster.local
         blueprints:
