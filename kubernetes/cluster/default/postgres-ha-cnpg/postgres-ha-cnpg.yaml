@@ -1,12 +1,12 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres-cnpg
+  name: postgres-ha-cnpg
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.2
   imagePullPolicy: IfNotPresent
-  instances: 1
+  instances: 2
   primaryUpdateStrategy: unsupervised
   logLevel: info
 
@@ -26,15 +26,19 @@ spec:
   
   resources:
     requests:
-      memory: 200Mi
-      cpu: 100m
+      memory: 500Mi
+      cpu: 200m
     limits:
-      memory: 500Gi
+      memory: 1Gi
   
   storage:
-    size: 25Gi
+    size: 2Gi
     # resizeInUseVolumes: true
-    storageClass: nfs-subdir
+    storageClass: local-storage
+    pvcTemplate:
+      selector:
+        matchLabels: 
+          app.kubernetes.io/name: postgres-ha-cnpg
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
   startDelay: 15
@@ -50,6 +54,13 @@ spec:
       timeoutSeconds: 5
       periodSeconds: 30
 
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/local-storage
+              operator: Exists
   # NOTE: keeping `bootstrap` section here for reference, refer to
   # CloudNativePG documentation for more details.
   # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
@@ -59,9 +70,9 @@ spec:
   #     import:
   #       type: monolith
   #       databases:
-  #         - immich
+  #         - authentik
   #       roles:
-  #         - immich
+  #         - authentik
   #       source:
   #         externalCluster: classic-pg
   externalClusters:
