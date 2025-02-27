@@ -3,6 +3,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
 resources:
-  - postgres-ha-cnpg.yaml
+  - cnpg-ha.yaml
   - volumes.yaml
   - pod-scrape.yaml

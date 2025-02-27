@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-ha-cnpg-66694f7c-f08a-11ef-8000-0fbb613e133c
+  name: cnpg-ha-66694f7c-f08a-11ef-8000-0fbb613e133c
   labels:
-    app.kubernetes.io/name: postgres-ha-cnpg
+    app.kubernetes.io/name: cnpg-ha
 spec:
   capacity:
     storage: 2Gi
@@ -15,7 +15,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /mnt/postgres-ha-cnpg
+    path: /mnt/cnpg-ha
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -26,9 +26,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-ha-cnpg-87c4af5f-f08a-11ef-8000-7d50ed8f1b0a
+  name: cnpg-ha-87c4af5f-f08a-11ef-8000-7d50ed8f1b0a
   labels:
-    app.kubernetes.io/name: postgres-ha-cnpg
+    app.kubernetes.io/name: cnpg-ha
 spec:
   capacity:
     storage: 2Gi
@@ -38,7 +38,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /mnt/postgres-ha-cnpg
+    path: /mnt/cnpg-ha
   nodeAffinity:
     required:
       nodeSelectorTerms:

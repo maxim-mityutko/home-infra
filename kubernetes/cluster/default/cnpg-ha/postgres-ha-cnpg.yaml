@@ -1,7 +1,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres-ha-cnpg
+  name: cnpg-ha
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.2
@@ -38,7 +38,7 @@ spec:
     pvcTemplate:
       selector:
         matchLabels: 
-          app.kubernetes.io/name: postgres-ha-cnpg
+          app.kubernetes.io/name: cnpg-ha
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
   startDelay: 15
