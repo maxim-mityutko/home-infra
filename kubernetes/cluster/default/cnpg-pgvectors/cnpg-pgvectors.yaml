@@ -1,16 +1,20 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres-cnpg
+  name: cnpg-pgvectors
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.2
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.4-v0.3.0
   imagePullPolicy: IfNotPresent
-  instances: 2
+  instances: 1
+  enablePDB: true
   primaryUpdateStrategy: unsupervised
   logLevel: info
 
   postgresql:
+    # Ref: https://github.com/tensorchord/cloudnative-pgvecto.rs
+    shared_preload_libraries:
+      - "vectors.so"
     parameters:
       timezone: "Etc/UTC"
       max_slot_wal_keep_size: 200MB
@@ -26,19 +30,15 @@ spec:
   
   resources:
     requests:
-      memory: 500Mi
-      cpu: 200m
+      memory: 200Mi
+      cpu: 100m
     limits:
-      memory: 1Gi
+      memory: 500Gi
   
   storage:
-    size: 2Gi
+    size: 5Gi
     # resizeInUseVolumes: true
-    storageClass: local-storage
-    pvcTemplate:
-      selector:
-        matchLabels: 
-          app.kubernetes.io/name: postgres-cnpg
+    storageClass: nfs-subdir
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
   startDelay: 15
@@ -70,17 +70,17 @@ spec:
   #     import:
   #       type: monolith
   #       databases:
-  #         - authentik
+  #         - immich
   #       roles:
-  #         - authentik
+  #         - immich
   #       source:
-  #         externalCluster: classic-pg
-  externalClusters:
-    - name: classic-pg
-      connectionParameters: 
-        host: postgres.default.svc
-        dbname: postgres
-        user: postgres
-      password:
-        name: cnpg-default-secret
-        key: password
+  #         externalCluster: postgres-pgvectors-cnpg
+  # externalClusters:
+  #   - name: postgres-pgvectors-cnpg
+  #     connectionParameters: 
+  #       host: postgres-pgvectors-cnpg-rw.default.svc
+  #       dbname: postgres
+  #       user: postgres
+  #     password:
+  #       name: cnpg-default-secret
+  #       key: password

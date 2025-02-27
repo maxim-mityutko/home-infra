@@ -4,7 +4,7 @@ kind: VMPodScrape
 metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
-  name: postgres-cnpg-metrics
+  name: cnpg-ha-metrics
   namespace: default
 spec:
   podMetricsEndpoints:
@@ -14,7 +14,7 @@ spec:
       interval: 60s
       relabelConfigs:
         - target_label: job
-          replacement: postgres-cnpg-metrics
+          replacement: cnpg-ha-metrics
   selector:
     matchLabels:
-     cnpg.io/cluster: postgres-cnpg
+     cnpg.io/cluster: cnpg-ha

@@ -29,6 +29,8 @@ exclude_patterns:
   - '*/omada-data/db'
   - '*/omada-logs'
   - '*/postgres-data'
+  - '*/cnpg-ha'
+  - '*/cnpg-pgvectors'
   - '*/shinobi-plugins'
   - '*/vmsingle-stack'
   - '*/code-server-data'
