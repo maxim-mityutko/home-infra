@@ -24,6 +24,11 @@ postgresql_databases:
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     format: tar
+  - name: all
+    hostname: cnpg-pgvectors-rw.default.svc.cluster.local
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    format: tar
 # mariadb_databases:
 #   - name: all
 #     hostname: mariadb.default.svc.cluster.local
