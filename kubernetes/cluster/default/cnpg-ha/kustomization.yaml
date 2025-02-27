@@ -1,7 +1,8 @@
-# NOTE: Postgres with pgvecto.rs extension
+# NOTE: Mission critical applications
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
 resources:
-  - postgres-pgvectors-cnpg.yaml
+  - cnpg-ha.yaml
+  - volumes.yaml
   - pod-scrape.yaml

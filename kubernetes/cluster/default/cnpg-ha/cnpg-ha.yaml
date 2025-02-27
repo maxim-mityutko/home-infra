@@ -1,19 +1,17 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres-pgvectors-cnpg
+  name: cnpg-ha
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.4-v0.3.0
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.2
   imagePullPolicy: IfNotPresent
-  instances: 1
+  instances: 2
+  enablePDB: true
   primaryUpdateStrategy: unsupervised
   logLevel: info
 
   postgresql:
-    # Ref: https://github.com/tensorchord/cloudnative-pgvecto.rs
-    shared_preload_libraries:
-      - "vectors.so"
     parameters:
       timezone: "Etc/UTC"
       max_slot_wal_keep_size: 200MB
@@ -29,15 +27,18 @@ spec:
   
   resources:
     requests:
-      memory: 200Mi
-      cpu: 100m
+      memory: 500Mi
+      cpu: 200m
     limits:
-      memory: 500Gi
+      memory: 1Gi
   
   storage:
-    size: 5Gi
-    # resizeInUseVolumes: true
-    storageClass: nfs-subdir
+    size: 2Gi
+    storageClass: local-storage
+    pvcTemplate:
+      selector:
+        matchLabels: 
+          app.kubernetes.io/name: cnpg-ha
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
   startDelay: 15
@@ -69,17 +70,21 @@ spec:
   #     import:
   #       type: monolith
   #       databases:
-  #         - immich
+  #         - authentik
+  #         - guacamole
+  #         - vaultwarden
   #       roles:
-  #         - immich
+  #         - authentik
+  #         - guacamole
+  #         - vaultwarden         
   #       source:
-  #         externalCluster: classic-pg
-  externalClusters:
-    - name: classic-pg
-      connectionParameters: 
-        host: postgres.default.svc
-        dbname: postgres
-        user: postgres
-      password:
-        name: cnpg-default-secret
-        key: password
+  #         externalCluster: postgres-cnpg
+  # externalClusters:
+  #   - name: postgres-cnpg
+  #     connectionParameters: 
+  #       host: postgres-cnpg-rw.default.svc
+  #       dbname: postgres
+  #       user: postgres
+  #     password:
+  #       name: cnpg-default-secret
+  #       key: password

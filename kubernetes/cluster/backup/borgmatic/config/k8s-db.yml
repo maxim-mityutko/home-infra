@@ -20,7 +20,12 @@ postgresql_databases:
     password: ${POSTGRES_PASSWORD}
     format: tar
   - name: all
-    hostname: postgres-cnpg-rw.default.svc.cluster.local
+    hostname: cnpg-ha-rw.default.svc.cluster.local
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    format: tar
+  - name: all
+    hostname: cnpg-pgvectors-rw.default.svc.cluster.local
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     format: tar
