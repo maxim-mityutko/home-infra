@@ -65,26 +65,26 @@ spec:
   # CloudNativePG documentation for more details.
   # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
   # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/
-  bootstrap:
-    initdb:
-      import:
-        type: monolith
-        databases:
-          - authentik
-          - guacamole
-          - vaultwarden
-        roles:
-          - authentik
-          - guacamole
-          - vaultwarden         
-        source:
-          externalCluster: postgres-cnpg
-  externalClusters:
-    - name: postgres-cnpg
-      connectionParameters: 
-        host: postgres-cnpg-rw.default.svc
-        dbname: postgres
-        user: postgres
-      password:
-        name: cnpg-default-secret
-        key: password
+  # bootstrap:
+  #   initdb:
+  #     import:
+  #       type: monolith
+  #       databases:
+  #         - authentik
+  #         - guacamole
+  #         - vaultwarden
+  #       roles:
+  #         - authentik
+  #         - guacamole
+  #         - vaultwarden         
+  #       source:
+  #         externalCluster: postgres-cnpg
+  # externalClusters:
+  #   - name: postgres-cnpg
+  #     connectionParameters: 
+  #       host: postgres-cnpg-rw.default.svc
+  #       dbname: postgres
+  #       user: postgres
+  #     password:
+  #       name: cnpg-default-secret
+  #       key: password
