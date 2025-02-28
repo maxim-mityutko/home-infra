@@ -55,6 +55,7 @@ spec:
         app.kubernetes.io/name: blocky
     spec:
       restartPolicy: Always
+      hostNetwork: true
       containers:
         - name: blocky
           image: spx01/blocky:v0.25
