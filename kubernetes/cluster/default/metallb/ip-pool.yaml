@@ -12,3 +12,21 @@ kind: BGPAdvertisement
 metadata:
   name: service-pool
   namespace: metallb-system
+--- # Test
+apiVersion: v1
+kind: Service
+metadata:
+  name: cnpg-ha-test
+  namespace: metallb-system
+  annotations:
+    metallb.universe.tf/address-pool: service-pool
+spec:
+  ports:
+    - name: postgres
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    cnpg.io/cluster: cnpg-ha
+    cnpg.io/instanceRole: primary
+  type: ClusterIP
