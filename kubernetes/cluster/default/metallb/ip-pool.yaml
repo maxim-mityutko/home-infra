@@ -19,7 +19,7 @@ metadata:
   name: cnpg-ha-test
   namespace: default
   annotations:
-   metallb.io/loadBalancerIPs: "192.168.1.101"
+   metallb.io/loadBalancerIPs: "192.168.1.223"
 spec:
   ports:
     - name: postgres
