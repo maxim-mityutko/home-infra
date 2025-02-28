@@ -38,3 +38,26 @@ spec:
     cnpg.io/cluster: cnpg-ha
     cnpg.io/instanceRole: primary
   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky-dns-test
+  annotations:
+    metallb.io/address-pool: service-pool
+  labels:
+    app.kubernetes.io/name: blocky
+spec:
+  externalTrafficPolicy: Local
+  selector:
+    app.kubernetes.io/name: blocky
+  ports:
+    - port: 53
+      targetPort: 53
+      name: dns-tcp
+      protocol: TCP
+    - port: 53
+      targetPort: 53
+      name: dns-udp
+      protocol: UDP
+  type: LoadBalancer
