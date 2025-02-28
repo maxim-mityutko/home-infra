@@ -12,6 +12,12 @@ kind: BGPAdvertisement
 metadata:
   name: service-pool
   namespace: metallb-system
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisements
+metadata:
+  name: service-pool
+  namespace: metallb-system
 --- # Test
 apiVersion: v1
 kind: Service
