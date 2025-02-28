@@ -1,31 +1,31 @@
----
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: nginx-ingress-microk8s-controller
-  namespace: ingress
-  labels:
-    microk8s-application: nginx-ingress-microk8s
-  annotations:
-    argocd.argoproj.io/sync-options: Validate=false
-spec:
-  template:
-    spec:
-      containers:
-        - name: nginx-ingress-microk8s
-          ports:
-            - containerPort: 53
-              name: dns-tcp
-              hostPort: 53
-              protocol: TCP
-            - containerPort: 53
-              name: dns-udp
-              hostPort: 53
-              protocol: UDP
-            # - containerPort: 5432
-            #   name: postgres
-            #   hostPort: 5432
-            #   protocol: TCP
+# ---
+# apiVersion: apps/v1
+# kind: DaemonSet
+# metadata:
+#   name: nginx-ingress-microk8s-controller
+#   namespace: ingress
+#   labels:
+#     microk8s-application: nginx-ingress-microk8s
+#   annotations:
+#     argocd.argoproj.io/sync-options: Validate=false
+# spec:
+#   template:
+#     spec:
+#       containers:
+#         - name: nginx-ingress-microk8s
+#           ports:
+#             - containerPort: 53
+#               name: dns-tcp
+#               hostPort: 53
+#               protocol: TCP
+#             - containerPort: 53
+#               name: dns-udp
+#               hostPort: 53
+#               protocol: UDP
+#             - containerPort: 5432
+#               name: postgres
+#               hostPort: 5432
+#               protocol: TCP
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -64,6 +64,7 @@ metadata:
     app.kubernetes.io/part-of: nginx-ingress
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   externalIPs:
     - 192.168.1.211
     - 192.168.1.212
@@ -77,9 +78,9 @@ spec:
       port: 443
       targetPort: 443
       protocol: TCP
-    # - name: poscnpg-hatgres
-    #   port: 5432
-    #   targetPort: 5432
-    #   protocol: TCP
+    - name: cnpg-ha
+      port: 5432
+      targetPort: 5432
+      protocol: TCP
   selector:
     name: nginx-ingress-microk8s
