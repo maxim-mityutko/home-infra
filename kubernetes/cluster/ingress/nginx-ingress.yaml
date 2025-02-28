@@ -34,7 +34,7 @@ metadata:
   namespace: ingress
 data:
   53: default/blocky-dns:53
-  5432: default/cnpg-ha-rw:5432
+  # 5432: default/cnpg-ha-rw:5432
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -53,3 +53,33 @@ data:
   # Required for Authentik
   # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#allow-snippet-annotations
   allow-snippet-annotations: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingress
+  namespace: ingress
+  labels:
+    app.kubernetes.io/name: nginx-ingress
+    app.kubernetes.io/part-of: nginx-ingress
+spec:
+  type: LoadBalancer
+  externalIPs:
+    - 192.168.1.211
+    - 192.168.1.212
+    - 192.168.1.213
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    - name: https
+      port: 443
+      targetPort: 443
+      protocol: TCP
+    - name: poscnpg-hatgres
+      port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    name: nginx-ingress-microk8s
