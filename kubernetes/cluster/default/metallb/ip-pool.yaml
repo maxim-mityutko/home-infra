@@ -66,3 +66,21 @@ spec:
       name: dns-udp
       protocol: UDP
   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lighttpd-test
+  namespace: default
+  labels:
+    app.kubernetes.io/name: lighttpd
+  annotations:
+    metallb.io/address-pool: service-pool
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app.kubernetes.io/name: lighttpd
