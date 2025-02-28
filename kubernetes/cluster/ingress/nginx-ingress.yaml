@@ -70,14 +70,14 @@ spec:
     - 192.168.1.212
     - 192.168.1.213
   ports:
-    - name: http
-      port: 80
-      targetPort: 80
+    - containerPort: 53
+      name: dns-tcp
+      hostPort: 53
       protocol: TCP
-    - name: https
-      port: 443
-      targetPort: 443
-      protocol: TCP
+    - containerPort: 53
+      name: dns-udp
+      hostPort: 53
+      protocol: UDP
     - name: cnpg-ha
       port: 5432
       targetPort: 5432
