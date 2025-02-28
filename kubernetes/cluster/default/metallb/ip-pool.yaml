@@ -14,7 +14,7 @@ metadata:
   namespace: metallb-system
 ---
 apiVersion: metallb.io/v1beta1
-kind: L2Advertisements
+kind: L2Advertisement
 metadata:
   name: service-pool
   namespace: metallb-system
