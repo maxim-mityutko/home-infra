@@ -77,9 +77,9 @@ spec:
       port: 443
       targetPort: 443
       protocol: TCP
-    - name: poscnpg-hatgres
-      port: 5432
-      targetPort: 5432
-      protocol: TCP
+    # - name: poscnpg-hatgres
+    #   port: 5432
+    #   targetPort: 5432
+    #   protocol: TCP
   selector:
     name: nginx-ingress-microk8s
