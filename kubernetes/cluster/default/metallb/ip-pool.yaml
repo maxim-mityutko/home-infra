@@ -17,9 +17,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cnpg-ha-test
-  namespace: metallb-system
+  namespace: default
   annotations:
-    metallb.universe.tf/address-pool: service-pool
+   metallb.io/loadBalancerIPs: service-pool
 spec:
   ports:
     - name: postgres
