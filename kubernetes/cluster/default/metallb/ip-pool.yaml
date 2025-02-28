@@ -29,6 +29,7 @@ metadata:
     metallb.io/address-pool: service-pool
 spec:
   externalTrafficPolicy: Local
+  # loadBalancerIP: x.y.z.a
   ports:
     - name: postgres
       port: 5432
