@@ -5,7 +5,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 192.168.1.100-192.168.1.150
+    - 192.168.1.230-192.168.1.240
 ---
 apiVersion: metallb.io/v1beta1
 kind: BGPAdvertisement
@@ -19,7 +19,8 @@ metadata:
   name: cnpg-ha-test
   namespace: default
   annotations:
-   metallb.io/loadBalancerIPs: "192.168.1.223"
+   # metallb.io/loadBalancerIPs: "192.168.1.230"
+    metallb.io/address-pool: service-pool
 spec:
   ports:
     - name: postgres
