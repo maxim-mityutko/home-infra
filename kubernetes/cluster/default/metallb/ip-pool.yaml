@@ -55,7 +55,7 @@ metadata:
     app.kubernetes.io/name: blocky
   annotations:
     metallb.io/address-pool: service-pool
-    metallb.universe.tf/allow-shared-ip: "true"
+    metallb.io/allow-shared-ip: "true"
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
@@ -75,7 +75,7 @@ metadata:
     app.kubernetes.io/name: blocky
   annotations:
     metallb.io/address-pool: service-pool
-    metallb.universe.tf/allow-shared-ip: "true"
+    metallb.io/allow-shared-ip: "true"
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
