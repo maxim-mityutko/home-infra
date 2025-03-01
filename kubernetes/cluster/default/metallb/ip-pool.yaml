@@ -24,9 +24,9 @@ metadata:
 spec:
   ipAddressPools:
     - service-pool
-  # nodeSelectors:
-  #   - matchLabels:
-  #       node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
+  nodeSelectors:
+    - matchLabels:
+        node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
 --- # Test
 apiVersion: v1
 kind: Service
