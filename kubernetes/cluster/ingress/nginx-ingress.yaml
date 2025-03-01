@@ -32,6 +32,7 @@ metadata:
   name: nginx-ingress-proxy
   namespace: ingress
   annotations:
+    # Using `dummy` address pool to prevent this from grabbing address from MetalLB
     metallb.io/address-pool: dummy
 spec:
   type: LoadBalancer
