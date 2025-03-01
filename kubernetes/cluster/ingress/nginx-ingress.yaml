@@ -31,6 +31,8 @@ kind: Service
 metadata:
   name: nginx-ingress-proxy
   namespace: ingress
+  annotations:
+    metallb.io/address-pool: dummy
 spec:
   type: LoadBalancer
   allocateLoadBalancerNodePorts: false
