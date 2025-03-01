@@ -1,3 +1,26 @@
+# TODO: Revisit and setup BGPAdvertisement if / when BGP becomes available on the Omada
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: dns-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 192.168.1.220-192.168.1.221
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: dns-pool
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - dns-pool
+  nodeSelectors:
+    - matchLabels:
+        node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
+
+---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
@@ -6,15 +29,6 @@ metadata:
 spec:
   addresses:
     - 192.168.1.230-192.168.1.240
-# ---
-# apiVersion: metallb.io/v1beta1
-# kind: BGPAdvertisement
-# metadata:
-#   name: service-pool
-#   namespace: metallb-system
-# spec:
-#   ipAddressPools:
-#     - service-pool
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
@@ -24,30 +38,29 @@ metadata:
 spec:
   ipAddressPools:
     - service-pool
-  # nodeSelectors:
-  #   - matchLabels:
-  #       node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
---- # Test
-apiVersion: v1
-kind: Service
-metadata:
-  name: cnpg-ha-test
-  namespace: default
-  annotations:
-   # metallb.io/loadBalancerIPs: "192.168.1.230"
-    metallb.io/address-pool: service-pool
-spec:
-  externalTrafficPolicy: Local
-  # loadBalancerIP: x.y.z.a
-  ports:
-    - name: postgres
-      port: 5432
-      protocol: TCP
-      targetPort: 5432
-  selector:
-    cnpg.io/cluster: cnpg-ha
-    cnpg.io/instanceRole: primary
-  type: LoadBalancer
+
+
+# --- # Test
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: cnpg-ha-test
+#   namespace: default
+#   annotations:
+#    # metallb.io/loadBalancerIPs: "192.168.1.230"
+#     metallb.io/address-pool: service-pool
+# spec:
+#   externalTrafficPolicy: Local
+#   # loadBalancerIP: x.y.z.a
+#   ports:
+#     - name: postgres
+#       port: 5432
+#       protocol: TCP
+#       targetPort: 5432
+#   selector:
+#     cnpg.io/cluster: cnpg-ha
+#     cnpg.io/instanceRole: primary
+#   type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
@@ -57,11 +70,12 @@ metadata:
   labels:
     app.kubernetes.io/name: blocky
   annotations:
-    metallb.io/address-pool: service-pool
+    metallb.io/address-pool: dns-pool
     metallb.io/allow-shared-ip: "true"
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
+  loadBalancerIP: 192.168.1.221
   ports:
     - protocol: UDP
       port: 53
@@ -77,11 +91,12 @@ metadata:
   labels:
     app.kubernetes.io/name: blocky
   annotations:
-    metallb.io/address-pool: service-pool
+    metallb.io/address-pool: dns-pool
     metallb.io/allow-shared-ip: "true"
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
+  loadBalancerIP: 192.168.1.221
   ports:
     - protocol: TCP
       port: 53
