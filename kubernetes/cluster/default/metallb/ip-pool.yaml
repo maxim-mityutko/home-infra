@@ -65,8 +65,6 @@ spec:
       targetPort: 53
   selector:
     app.kubernetes.io/name: blocky
-  nodeSelector:
-    kubernetes.io/hostname: kcm-01
 ---
 apiVersion: v1
 kind: Service
@@ -87,8 +85,7 @@ spec:
       targetPort: 53
   selector:
     app.kubernetes.io/name: blocky
-  nodeSelector:
-    kubernetes.io/hostname: kcm-01
+
 
 
 ---
