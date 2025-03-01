@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: blocky-dns-udp
+  name: blocky-dns-lb-udp
   namespace: default
   labels:
     app.kubernetes.io/name: blocky
@@ -47,7 +47,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: blocky-dns-tcp
+  name: blocky-dns-lb-tcp
   namespace: default
   labels:
     app.kubernetes.io/name: blocky
