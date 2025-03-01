@@ -18,11 +18,11 @@ spec:
     - dns-pool
   nodeSelectors:
     - matchLabels:
-      kubernetes.io/hostname: kcm-01
+        kubernetes.io/hostname: kcm-01
     - matchLabels:
-      kubernetes.io/hostname: kcm-02
+        kubernetes.io/hostname: kcm-02
     - matchLabels:
-      kubernetes.io/hostname: kcm-03  
+        kubernetes.io/hostname: kcm-03  
   # nodeSelectors:
   #   - matchLabels:
   #       node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
