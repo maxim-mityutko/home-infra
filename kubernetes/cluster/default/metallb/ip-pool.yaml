@@ -16,13 +16,7 @@ metadata:
 spec:
   ipAddressPools:
     - dns-pool
-  # nodeSelectors:
-  #   - matchLabels:
-  #       kubernetes.io/hostname: kcm-01
-  #   - matchLabels:
-  #       kubernetes.io/hostname: kcm-02
-  #   - matchLabels:
-  #       kubernetes.io/hostname: kcm-03  
+  # NOTE: can be ingored as speakers only deployed to controlplane nodes
   # nodeSelectors:
   #   - matchLabels:
   #       node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
