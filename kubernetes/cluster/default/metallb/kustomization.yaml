@@ -30,8 +30,8 @@ helmCharts:
       speaker:
         enabled: true
         logLevel: info
-        tolerateMaster: true
-        ignoreExcludeLB: true
+        tolerateMaster: false
+        ignoreExcludeLB: false
         # tolerations:
         #   - key: "node.kubernetes.io/unschedulable"
         #     operator: Exists
