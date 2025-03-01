@@ -6,3 +6,4 @@ resources:
   - cnpg-ha.yaml
   - volumes.yaml
   - pod-scrape.yaml
+  - service.yaml
