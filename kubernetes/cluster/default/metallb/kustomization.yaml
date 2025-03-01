@@ -29,9 +29,11 @@ helmCharts:
           periodSeconds: 60
       speaker:
         enabled: true
-        tolerations:
-          - key: "node.kubernetes.io/unschedulable"
-            operator: Exists
+        logLevel: info
+        ignoreExcludeLB: true
+        # tolerations:
+        #   - key: "node.kubernetes.io/unschedulable"
+        #     operator: Exists
         # nodeSelector:
         #   node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
         frr:
