@@ -25,6 +25,7 @@ data:
   # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#allow-snippet-annotations
   allow-snippet-annotations: "true"
 ---
+# Ref: https://kubernetes.github.io/ingress-nginx/user-guide/exposing-tcp-udp-services/
 apiVersion: v1
 kind: Service
 metadata:
@@ -33,10 +34,10 @@ metadata:
 spec:
   type: LoadBalancer
   allocateLoadBalancerNodePorts: false
-  # externalIPs:
-  #   - 192.168.1.211
-  #   - 192.168.1.212
-  #   - 192.168.1.213
+  externalIPs:
+    - 192.168.1.211
+    - 192.168.1.212
+    - 192.168.1.213
   ports:
     - targetPort: 53
       name: dns-tcp
