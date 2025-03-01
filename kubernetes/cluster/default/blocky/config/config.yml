@@ -14,19 +14,22 @@ upstreams:
   groups:
     default:
       # Cloudflare
+      - tcp-tls:one.one.one.one:853 # DoT
+      - tcp-tls://dns.quad9.net:853
       - https://cloudflare-dns.com/dns-query
-      - 1.1.1.1
-      - 1.0.0.1
+      - https://dns.quad9.net/dns-query
+      # - 1.1.1.1
+      # - 1.0.0.1
       # Other
       # - https://dns.google/dns-query
       # - https://dns.digitale-gesellschaft.ch/dns-query
     family:
       # Cloudflare
       - https://family.cloudflare-dns.com/dns-query
-      - 1.1.1.3
-      - 1.0.0.3
+      - https://doh.cleanbrowsing.org/doh/family-filter/
+      # - 1.1.1.3
+      # - 1.0.0.3
       # Other
-      # - https://doh.cleanbrowsing.org/doh/family-filter/
       # - 208.67.222.123  # OpenDNS - FamilyFilter
       # - 208.67.220.123  # OpenDNS - FamilyFilter
   timeout: 2s
