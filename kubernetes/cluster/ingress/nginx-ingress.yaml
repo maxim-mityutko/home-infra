@@ -33,10 +33,10 @@ metadata:
 spec:
   type: LoadBalancer
   allocateLoadBalancerNodePorts: false
-  externalIPs:
-    - 192.168.1.211
-    - 192.168.1.212
-    - 192.168.1.213
+  # externalIPs:
+  #   - 192.168.1.211
+  #   - 192.168.1.212
+  #   - 192.168.1.213
   ports:
     - targetPort: 53
       name: dns-tcp
