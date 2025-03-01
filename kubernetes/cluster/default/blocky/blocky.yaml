@@ -36,7 +36,7 @@ spec:
       targetPort: 4000
 ---
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
   name: blocky
   labels:
@@ -45,8 +45,9 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: blocky
-  updateStrategy:
+  strategy:
     type: RollingUpdate
+  replicas: 2
   revisionHistoryLimit: 1
   template:
     metadata:
