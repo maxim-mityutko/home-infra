@@ -15,7 +15,7 @@ upstreams:
     default:
       # Cloudflare
       - tcp-tls:one.one.one.one:853 # DoT
-      - tcp-tls:dns.quad9.net:853
+      - tcp-tls:dns.quad9.net:853   # DoT
       - https://cloudflare-dns.com/dns-query
       - https://dns.quad9.net/dns-query
       # - 1.1.1.1
