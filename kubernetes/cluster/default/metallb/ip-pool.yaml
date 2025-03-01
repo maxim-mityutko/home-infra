@@ -58,6 +58,7 @@ metadata:
     metallb.io/allow-shared-ip: "true"
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - protocol: UDP
       port: 53
@@ -77,6 +78,7 @@ metadata:
     metallb.io/allow-shared-ip: "true"
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - protocol: TCP
       port: 53
