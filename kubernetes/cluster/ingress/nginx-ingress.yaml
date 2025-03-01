@@ -34,7 +34,6 @@ metadata:
   namespace: ingress
 data:
   53: default/blocky-dns:53
-  5432: default/cnpg-ha-rw:5432
 ---
 apiVersion: v1
 kind: ConfigMap
