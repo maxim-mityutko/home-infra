@@ -13,7 +13,7 @@ helmCharts:
         create: true
       controller:
         enabled: true
-        logLevel: info
+        logLevel: debug
         nodeSelector:
           node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
         tolerations:
