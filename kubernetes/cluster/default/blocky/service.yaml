@@ -1,0 +1,84 @@
+# Ingress Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky-dns
+  labels:
+    app.kubernetes.io/name: blocky
+spec:
+  selector:
+    app.kubernetes.io/name: blocky
+  ports:
+    - port: 53
+      targetPort: 53
+      name: dns-tcp
+      protocol: TCP
+    - port: 53
+      targetPort: 53
+      name: dns-udp
+      protocol: UDP
+  type: ClusterIP
+# Load Balancer Service (UDP)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky-dns-udp
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+  annotations:
+    metallb.io/address-pool: dns-pool
+    metallb.io/allow-shared-ip: "true"
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  loadBalancerIP: 192.168.1.221
+  allocateLoadBalancerNodePorts: false
+  ports:
+    - protocol: UDP
+      port: 53
+      targetPort: 53
+  selector:
+    app.kubernetes.io/name: blocky
+# Load Balancer Service (UDP)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky-dns-tcp
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+  annotations:
+    metallb.io/address-pool: dns-pool
+    metallb.io/allow-shared-ip: "true"
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  loadBalancerIP: 192.168.1.221
+  allocateLoadBalancerNodePorts: false
+  ports:
+    - protocol: TCP
+      port: 53
+      targetPort: 53
+  selector:
+    app.kubernetes.io/name: blocky
+# Blocky API
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky
+  labels:
+    app.kubernetes.io/name: blocky
+spec:
+  selector:
+    app.kubernetes.io/name: blocky
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 4000
+      targetPort: 4000
