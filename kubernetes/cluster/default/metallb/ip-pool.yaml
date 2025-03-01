@@ -58,7 +58,7 @@ metadata:
     metallb.universe.tf/allow-shared-ip: "true"
 spec:
   type: LoadBalancer
-  # externalTrafficPolicy: Local
+  externalTrafficPolicy: Local
   ports:
     - protocol: UDP
       port: 53
@@ -78,7 +78,7 @@ metadata:
     metallb.universe.tf/allow-shared-ip: "true"
 spec:
   type: LoadBalancer
-  # externalTrafficPolicy: Local
+  externalTrafficPolicy: Local
   ports:
     - protocol: TCP
       port: 53
