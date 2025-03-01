@@ -65,6 +65,10 @@ spec:
       port: 53
       protocol: UDP
       targetPort: 53
+    - port: 53
+      targetPort: 53
+      name: dns-tcp
+      protocol: TCP
   type: LoadBalancer
 ---
 apiVersion: v1
