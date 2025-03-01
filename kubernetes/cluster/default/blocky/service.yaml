@@ -31,11 +31,10 @@ metadata:
   annotations:
     metallb.io/address-pool: dns-pool
     metallb.io/allow-shared-ip: "true"
-    metallb.universe.tf/loadBalancerIPs: "192.168.1.221,192.168.1.220"
+    metallb.universe.tf/loadBalancerIPs: "192.168.1.221"
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
-  # loadBalancerIP: 192.168.1.221
   allocateLoadBalancerNodePorts: false
   ports:
     - protocol: UDP
@@ -43,7 +42,7 @@ spec:
       targetPort: 53
   selector:
     app.kubernetes.io/name: blocky
-# Load Balancer Service (UDP)
+# Load Balancer Service (TCP)
 ---
 apiVersion: v1
 kind: Service
@@ -55,11 +54,10 @@ metadata:
   annotations:
     metallb.io/address-pool: dns-pool
     metallb.io/allow-shared-ip: "true"
-    metallb.universe.tf/loadBalancerIPs: "192.168.1.221,192.168.1.220"
+    metallb.universe.tf/loadBalancerIPs: "192.168.1.221"
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
-  # loadBalancerIP: 192.168.1.221
   allocateLoadBalancerNodePorts: false
   ports:
     - protocol: TCP

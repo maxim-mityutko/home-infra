@@ -35,26 +35,3 @@ metadata:
 spec:
   ipAddressPools:
     - service-pool
-
-
-# --- # Test
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: cnpg-ha-test
-#   namespace: default
-#   annotations:
-#    # metallb.io/loadBalancerIPs: "192.168.1.230"
-#     metallb.io/address-pool: service-pool
-# spec:
-#   externalTrafficPolicy: Local
-#   # loadBalancerIP: x.y.z.a
-#   ports:
-#     - name: postgres
-#       port: 5432
-#       protocol: TCP
-#       targetPort: 5432
-#   selector:
-#     cnpg.io/cluster: cnpg-ha
-#     cnpg.io/instanceRole: primary
-#   type: LoadBalancer
