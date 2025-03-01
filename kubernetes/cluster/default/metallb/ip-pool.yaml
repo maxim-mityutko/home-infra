@@ -53,7 +53,6 @@ metadata:
   namespace: default
   annotations:
     metallb.io/address-pool: service-pool
-    # metallb.io/allow-shared-ip: 'blocky services are allowed to share an IP address'
   labels:
     app.kubernetes.io/name: blocky
 spec:
@@ -61,14 +60,14 @@ spec:
   selector:
     app.kubernetes.io/name: blocky
   ports:
-    - name: dns-udp
-      port: 53
-      protocol: UDP
-      targetPort: 53
     - port: 53
       targetPort: 53
       name: dns-tcp
       protocol: TCP
+    - port: 53
+      targetPort: 53
+      name: dns-udp
+      protocol: UDP
   type: LoadBalancer
 ---
 apiVersion: v1
