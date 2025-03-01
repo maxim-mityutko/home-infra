@@ -23,9 +23,9 @@ spec:
   #       kubernetes.io/hostname: kcm-02
   #   - matchLabels:
   #       kubernetes.io/hostname: kcm-03  
-  # nodeSelectors:
-  #   - matchLabels:
-  #       node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
+  nodeSelectors:
+    - matchLabels:
+        node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
 
 ---
 apiVersion: metallb.io/v1beta1
