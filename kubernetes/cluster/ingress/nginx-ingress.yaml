@@ -53,34 +53,34 @@ data:
   # Required for Authentik
   # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#allow-snippet-annotations
   allow-snippet-annotations: "true"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: ingress
-  namespace: ingress
-  labels:
-    app.kubernetes.io/name: nginx-ingress
-    app.kubernetes.io/part-of: nginx-ingress
-spec:
-  type: LoadBalancer
-  externalTrafficPolicy: Local
-  externalIPs:
-    - 192.168.1.211
-    - 192.168.1.212
-    - 192.168.1.213
-  ports:
-    - targetPort: 53
-      name: dns-tcp
-      port: 53
-      protocol: TCP
-    - targetPort: 53
-      name: dns-udp
-      port: 53
-      protocol: UDP
-    - name: cnpg-ha
-      port: 5432
-      targetPort: 5432
-      protocol: TCP
-  selector:
-    name: nginx-ingress-microk8s
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: ingress
+#   namespace: ingress
+#   labels:
+#     app.kubernetes.io/name: nginx-ingress
+#     app.kubernetes.io/part-of: nginx-ingress
+# spec:
+#   type: LoadBalancer
+#   externalTrafficPolicy: Local
+#   externalIPs:
+#     - 192.168.1.211
+#     - 192.168.1.212
+#     - 192.168.1.213
+#   ports:
+#     - targetPort: 53
+#       name: dns-tcp
+#       port: 53
+#       protocol: TCP
+#     - targetPort: 53
+#       name: dns-udp
+#       port: 53
+#       protocol: UDP
+#     - name: cnpg-ha
+#       port: 5432
+#       targetPort: 5432
+#       protocol: TCP
+#   selector:
+#     name: nginx-ingress-microk8s
