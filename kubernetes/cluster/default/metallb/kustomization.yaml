@@ -32,6 +32,8 @@ helmCharts:
         tolerations:
           - key: "node.kubernetes.io/unschedulable"
             operator: Exists
+        nodeSelector:
+          node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
         frr:
           enabled: false
         livenessProbe:
