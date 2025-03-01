@@ -45,8 +45,8 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: blocky
-  strategy:
-    type: RollingUpdate
+  # strategy:
+  #   type: RollingUpdate
   revisionHistoryLimit: 1
   template:
     metadata:
@@ -93,5 +93,3 @@ spec:
         - name: blocky-config
           configMap:
             name: blocky-config
-      priorityClassName: important
-
