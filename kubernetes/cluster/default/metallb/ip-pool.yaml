@@ -49,26 +49,42 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: blocky-dns-test
+  name: blocky-dns-udp
   namespace: default
-  annotations:
-    metallb.io/address-pool: service-pool
   labels:
     app.kubernetes.io/name: blocky
+  annotations:
+    metallb.io/address-pool: service-pool
+    metallb.io/allow-shared-ip: "true"
 spec:
-  externalTrafficPolicy: Local
+  type: LoadBalancer
+  ports:
+    - protocol: UDP
+      port: 53
+      targetPort: 53
   selector:
     app.kubernetes.io/name: blocky
-  ports:
-    - port: 53
-      targetPort: 53
-      name: dns-tcp
-      protocol: TCP
-    - port: 53
-      targetPort: 53
-      name: dns-udp
-      protocol: UDP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky-dns-tcp
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+  annotations:
+    metallb.io/address-pool: service-pool
+    metallb.io/allow-shared-ip: "true"
+spec:
   type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 53
+      targetPort: 53
+  selector:
+    app.kubernetes.io/name: blocky
+
+
 ---
 apiVersion: v1
 kind: Service
