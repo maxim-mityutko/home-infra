@@ -83,6 +83,7 @@ spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
   loadBalancerIP: 192.168.1.221
+  allocateLoadBalancerNodePorts: false
   ports:
     - protocol: UDP
       port: 53
@@ -104,6 +105,7 @@ spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
   loadBalancerIP: 192.168.1.221
+  allocateLoadBalancerNodePorts: false
   ports:
     - protocol: TCP
       port: 53
