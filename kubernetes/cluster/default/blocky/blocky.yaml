@@ -93,5 +93,5 @@ spec:
         - name: blocky-config
           configMap:
             name: blocky-config
-      nodeSelector:
-        node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
+      # nodeSelector:
+      #   node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
