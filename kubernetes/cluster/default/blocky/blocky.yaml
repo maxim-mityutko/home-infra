@@ -22,8 +22,10 @@ spec:
       containers:
         - name: blocky
           image: spx01/blocky:v0.25
-          command: ["./blocky"]
-          args: ["--help"]
+          # command: ["./blocky"]
+          args: 
+            - --config 
+            - ./config/
           resources:
             requests:
               cpu: 10m
