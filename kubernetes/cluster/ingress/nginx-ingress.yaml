@@ -1,32 +1,4 @@
 ---
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: nginx-ingress-microk8s-controller
-  namespace: ingress
-  labels:
-    microk8s-application: nginx-ingress-microk8s
-  annotations:
-    argocd.argoproj.io/sync-options: Validate=false
-spec:
-  template:
-    spec:
-      containers:
-        - name: nginx-ingress-microk8s
-          ports:
-            - containerPort: 53
-              name: dns-tcp
-              hostPort: 53
-              protocol: TCP
-            - containerPort: 53
-              name: dns-udp
-              hostPort: 53
-              protocol: UDP
-            - containerPort: 5432
-              name: postgres
-              hostPort: 5432
-              protocol: TCP
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -34,7 +6,6 @@ metadata:
   namespace: ingress
 data:
   53: default/blocky-dns:53
-  5432: default/cnpg-ha-rw:5432
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -53,3 +24,31 @@ data:
   # Required for Authentik
   # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#allow-snippet-annotations
   allow-snippet-annotations: "true"
+---
+# Ref: https://kubernetes.github.io/ingress-nginx/user-guide/exposing-tcp-udp-services/
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress-proxy
+  namespace: ingress
+  annotations:
+    # Using `dummy` address pool to prevent this from grabbing address from MetalLB
+    metallb.io/address-pool: dummy
+spec:
+  type: LoadBalancer
+  allocateLoadBalancerNodePorts: false
+  externalIPs:
+    - 192.168.1.211
+    - 192.168.1.212
+    - 192.168.1.213
+  ports:
+    - targetPort: 53
+      name: dns-tcp
+      port: 53
+      protocol: TCP
+    - targetPort: 53
+      name: dns-udp
+      port: 53
+      protocol: UDP
+  selector:
+    name: nginx-ingress-microk8s
