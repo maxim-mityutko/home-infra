@@ -33,7 +33,7 @@ spec:
             # The actual memory and CPU usage is much lower, however ample memory
             # is required to load block lists and avoid OOMKill errors.
             limits:
-              memory: 350Mi
+              memory: 400Mi
           ports:
             - name: dns-tcp
               protocol: TCP
