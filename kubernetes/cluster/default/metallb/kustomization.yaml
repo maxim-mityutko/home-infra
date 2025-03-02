@@ -1,0 +1,49 @@
+# TODO: Revisit and setup BGPAdvertisement if / when BGP becomes available on the Omada
+# NOTE: Could not make L2Advertisement work properly on master nodes, hence moved everything to workers
+#   Ref: https://metallb.io/troubleshooting/#metallb-is-not-advertising-my-service-from-my-control-plane-nodes-or-from-my-single-node-cluster
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: 
+  - ip-pool.yaml
+helmCharts:
+  - name: metallb
+    namespace: metallb-system
+    releaseName: metallb
+    version: 0.14.9
+    repo: https://metallb.github.io/metallb
+    valuesInline:
+      rbac:
+        create: true
+      controller:
+        enabled: true
+        logLevel: info
+        nodeSelector:
+          node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
+        tolerations:
+          - key: "node.kubernetes.io/unschedulable"
+            operator: Exists
+        livenessProbe:
+          enabled: true
+          initialDelaySeconds: 10
+          periodSeconds: 60
+        readinessProbe:
+          enabled: true
+          initialDelaySeconds: 10
+          periodSeconds: 60
+      speaker:
+        enabled: true
+        logLevel: info
+        frr:
+          enabled: false
+        livenessProbe:
+          enabled: true
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          enabled: true
+          initialDelaySeconds: 10
+          periodSeconds: 30
+      crds:
+        enabled: true
+      frrk8s:
+        enabled: false

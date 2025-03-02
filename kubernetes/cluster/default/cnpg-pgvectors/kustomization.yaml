@@ -5,3 +5,4 @@ namespace: default
 resources:
   - cnpg-pgvectors.yaml
   - pod-scrape.yaml
+  - service.yaml
