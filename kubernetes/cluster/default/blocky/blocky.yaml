@@ -22,18 +22,17 @@ spec:
       containers:
         - name: blocky
           image: spx01/blocky:v0.25
-          # command: ["./blocky"]
           args: 
             - --config 
             - ./config/
           resources:
             requests:
-              cpu: 10m
+              cpu: 25m
               memory: 150Mi
             # The actual memory and CPU usage is much lower, however ample memory
             # is required to load block lists and avoid OOMKill errors.
             limits:
-              memory: 400Mi
+              memory: 375Mi
           ports:
             - name: dns-tcp
               protocol: TCP
