@@ -63,7 +63,7 @@ spec:
             name: blocky-config
         - name: blocky-secret-config
           secret:
-            name: blocky-secret-config
+            secretName: blocky-secret-config
       # NOTE: Could not make L2Advertising of MetalLB work on the controlplane, moved everything to worker nodes
       # nodeSelector:
       #   node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
