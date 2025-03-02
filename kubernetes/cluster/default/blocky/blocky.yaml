@@ -22,7 +22,7 @@ spec:
       containers:
         - name: blocky
           image: spx01/blocky:v0.25
-          #command: ["start-notebook.sh"]
+          command: ["./blocky"]
           args: ["--config ./config/"]
           resources:
             requests:
