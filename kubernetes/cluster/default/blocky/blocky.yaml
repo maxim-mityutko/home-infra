@@ -25,7 +25,7 @@ spec:
           # command: ["./blocky"]
           args: 
             - --config 
-            - ./
+            - ./config/
           resources:
             requests:
               cpu: 10m
@@ -49,11 +49,11 @@ spec:
               value: Europe/Amsterdam
           volumeMounts:
             - name: blocky-config
-              mountPath: /app/config.yml
+              mountPath: /app/config/config.yml
               subPath: config.yml
-            # - name: blocky-secret-config
-            #   mountPath: /app/custom-dns.yml
-            #   subPath: custom-dns.yml
+            - name: blocky-secret-config
+              mountPath: /app/config/custom-dns.yml
+              subPath: custom-dns.yml
           readinessProbe:
             tcpSocket:
               port: dns-tcp
