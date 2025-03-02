@@ -25,7 +25,7 @@ spec:
           # command: ["./blocky"]
           args: 
             - --config 
-            - ./config/
+            - ./
           resources:
             requests:
               cpu: 10m
