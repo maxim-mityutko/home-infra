@@ -48,8 +48,8 @@ spec:
               mountPath: /app/config.yml
               subPath: config.yml
             - name: blocky-secret-config
-              mountPath: /app/custom-dns.yaml
-              subPath: custom-dns.yaml
+              mountPath: /app/custom-dns.yml
+              subPath: custom-dns.yml
           readinessProbe:
             tcpSocket:
               port: dns-tcp
