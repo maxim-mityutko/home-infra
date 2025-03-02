@@ -47,6 +47,9 @@ spec:
             - name: blocky-config
               mountPath: /app/config.yml
               subPath: config.yml
+            - name: blocky-secret-config
+              mountPath: /app/custom-dns.yaml
+              subPath: custom-dns.yaml
           readinessProbe:
             tcpSocket:
               port: dns-tcp
@@ -58,6 +61,9 @@ spec:
         - name: blocky-config
           configMap:
             name: blocky-config
+        - name: blocky-secret-config
+          secret:
+            name: blocky-secret-config
       # NOTE: Could not make L2Advertising of MetalLB work on the controlplane, moved everything to worker nodes
       # nodeSelector:
       #   node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
