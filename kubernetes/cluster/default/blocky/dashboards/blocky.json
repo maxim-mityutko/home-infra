@@ -2098,7 +2098,7 @@
       },
       {
         "current": {
-          "text": "default",
+          "text": "Default",
           "value": "default"
         },
         "label": "datasource",
