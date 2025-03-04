@@ -2070,7 +2070,10 @@
   ],
   "refresh": "",
   "schemaVersion": 40,
-  "tags": [],
+  "tags": [
+      "dns",
+      "adblock"
+    ],
   "templating": {
     "list": [
       {
@@ -2134,7 +2137,10 @@
         "type": "query"
       },
       {
-        "current": {},
+        "current": {
+          "text": "default",
+          "value": "default"
+        },
         "label": "datasource",
         "name": "DS_PROMETHEUS",
         "options": [],
