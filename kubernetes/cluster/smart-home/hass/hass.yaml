@@ -51,6 +51,18 @@ spec:
           envFrom:
             - configMapRef:
                 name: home-assistant
+          readinessProbe:
+            httpGet:
+              path: /manifest.json
+              port: 8123
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /manifest.json
+              port: 8123
+            initialDelaySeconds: 30
+            periodSeconds: 60
           volumeMounts:
             - name: home-assistant-config
               mountPath: /config
