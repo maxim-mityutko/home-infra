@@ -10,7 +10,8 @@ spec:
     matchLabels:
       app.kubernetes.io/name: blocky
   # serviceName: blocky
-  updateStrategy: RollingUpdate
+  updateStrategy: 
+    type: RollingUpdate
   replicas: 2
   template:
     metadata:
