@@ -1,6 +1,6 @@
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: blocky
   labels:
@@ -9,10 +9,13 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: blocky
-  strategy:
+  serviceName: blocky
+  updateStrategy: 
     type: RollingUpdate
+  podManagementPolicy: Parallel
+  minReadySeconds: 60
+  revisionHistoryLimit: 2
   replicas: 2
-  revisionHistoryLimit: 1
   template:
     metadata:
       labels:
