@@ -9,10 +9,10 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: blocky
-  strategy:
+  # serviceName: blocky
+  updateStrategy:
     type: RollingUpdate
   replicas: 2
-  revisionHistoryLimit: 1
   template:
     metadata:
       labels:
