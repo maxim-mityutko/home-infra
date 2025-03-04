@@ -25,7 +25,6 @@ spec:
   selector:
     app.kubernetes.io/name: blocky
     apps.kubernetes.io/pod-index: "0"
-# Load Balancer Service (UDP)
 ---
 apiVersion: v1
 kind: Service

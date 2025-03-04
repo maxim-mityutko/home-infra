@@ -13,6 +13,7 @@ spec:
   updateStrategy: 
     type: RollingUpdate
   podManagementPolicy: Parallel
+  minReadySeconds: 60
   revisionHistoryLimit: 2
   replicas: 2
   template:
