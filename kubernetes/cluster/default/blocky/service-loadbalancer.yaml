@@ -24,7 +24,7 @@ spec:
       targetPort: 53
   selector:
     app.kubernetes.io/name: blocky
-    apps.kubernetes.io/pod-index: 0
+    apps.kubernetes.io/pod-index: "0"
 # Load Balancer Service (UDP)
 ---
 apiVersion: v1
@@ -48,7 +48,7 @@ spec:
       targetPort: 53
   selector:
     app.kubernetes.io/name: blocky
-    apps.kubernetes.io/pod-index: 1
+    apps.kubernetes.io/pod-index: "1"
 # Load Balancer Service (TCP)
 ---
 apiVersion: v1
@@ -72,7 +72,7 @@ spec:
       targetPort: 53
   selector:
     app.kubernetes.io/name: blocky
-    apps.kubernetes.io/pod-index: 0
+    apps.kubernetes.io/pod-index: "0"
 ---
 apiVersion: v1
 kind: Service
@@ -95,4 +95,4 @@ spec:
       targetPort: 53
   selector:
     app.kubernetes.io/name: blocky
-    apps.kubernetes.io/pod-index: 1
+    apps.kubernetes.io/pod-index: "1"
