@@ -1,0 +1,98 @@
+# NOTE: Creating multiple services for the same to bypass the L2Advertisement 
+# limitations while using the externalTrafficPolicy = Local
+
+# Load Balancer Service (UDP)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky-dns-lb-udp-0
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+  annotations:
+    metallb.io/address-pool: dns-pool
+    metallb.io/allow-shared-ip: "true"
+    metallb.io/loadBalancerIPs: "192.168.1.220"
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  allocateLoadBalancerNodePorts: false
+  ports:
+    - protocol: UDP
+      port: 53
+      targetPort: 53
+  selector:
+    app.kubernetes.io/name: blocky
+    apps.kubernetes.io/pod-index: 0
+# Load Balancer Service (UDP)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky-dns-lb-udp-1
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+  annotations:
+    metallb.io/address-pool: dns-pool
+    metallb.io/allow-shared-ip: "true"
+    metallb.io/loadBalancerIPs: "192.168.1.221"
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  allocateLoadBalancerNodePorts: false
+  ports:
+    - protocol: UDP
+      port: 53
+      targetPort: 53
+  selector:
+    app.kubernetes.io/name: blocky
+    apps.kubernetes.io/pod-index: 1
+# Load Balancer Service (TCP)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky-dns-lb-tcp-0
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+  annotations:
+    metallb.io/address-pool: dns-pool
+    metallb.io/allow-shared-ip: "true"
+    metallb.io/loadBalancerIPs: "192.168.1.220"
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  allocateLoadBalancerNodePorts: false
+  ports:
+    - protocol: TCP
+      port: 53
+      targetPort: 53
+  selector:
+    app.kubernetes.io/name: blocky
+    apps.kubernetes.io/pod-index: 0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky-dns-lb-tcp-1
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+  annotations:
+    metallb.io/address-pool: dns-pool
+    metallb.io/allow-shared-ip: "true"
+    metallb.io/loadBalancerIPs: "192.168.1.221"
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  allocateLoadBalancerNodePorts: false
+  ports:
+    - protocol: TCP
+      port: 53
+      targetPort: 53
+  selector:
+    app.kubernetes.io/name: blocky
+    apps.kubernetes.io/pod-index: 1
