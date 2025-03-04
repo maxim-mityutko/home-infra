@@ -4,6 +4,7 @@ namespace: default
 resources:
   - blocky.yaml
   - service.yaml
+  - service-loadbalancer.yaml
   - secret.yaml
   - ingress.yaml
   - service-scrape.yaml
