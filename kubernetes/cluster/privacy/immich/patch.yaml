@@ -45,3 +45,39 @@ spec:
         - name: render-device
           hostPath:
             path: /dev/dri/renderD128
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: immich-machine-learning
+spec:
+  template:
+    spec:
+      containers:
+        - name: immich-machine-learning
+          env:
+            - name: DB_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: immich
+                  key: DB_HOSTNAME
+            - name: DB_DATABASE_NAME
+              valueFrom:
+                secretRef:
+                  name: immich
+                  key: DB_DATABASE_NAME
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: immich
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretRef:
+                  name: immich
+                  key: DB_PASSWORD
+            - name: REDIS_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: immich
+                  key: REDIS_HOSTNAME
