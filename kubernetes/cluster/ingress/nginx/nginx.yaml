@@ -234,3 +234,4 @@ spec:
         - --ingress-class=public
         - --default-ssl-certificate=default/brhd-io-tls
         - --publish-status-address=127.0.0.1
+        - --enable-metrics=true
