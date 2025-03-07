@@ -13,7 +13,7 @@ helmCharts:
   - name: immich
     namespace: privacy
     releaseName: immich
-    version: 0.9.0
+    version: 0.9.1
     repo: https://immich-app.github.io/immich-charts
     valuesInline:
       # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
@@ -45,12 +45,6 @@ helmCharts:
         enabled: true
         image:
           tag: v1.126.1
-        env:
-          DB_PASSWORD:
-            valueFrom:
-              secretKeyRef:
-                name: immich
-                key: DB_PASSWORD
         resources:
           requests:
             cpu: 200m
@@ -91,8 +85,8 @@ helmCharts:
 
       machine-learning:
         enabled: true
-        env:
-          TRANSFORMERS_CACHE: /cache
+        # env:
+        #   TRANSFORMERS_CACHE: /cache
         image:
           tag: v1.126.1 # Use <tag>-cuda for NVidia GPUs
         resources:
