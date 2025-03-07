@@ -4,7 +4,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: victoria-metrics
   name: nginx-ingress-metrics
-  namespace: monitoring
+  namespace: ingress
 spec:
   podMetricsEndpoints:
     - port: health
