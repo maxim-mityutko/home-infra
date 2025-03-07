@@ -233,4 +233,4 @@ spec:
         - --udp-services-configmap=$(POD_NAMESPACE)/nginx-ingress-udp-microk8s-conf
         - --ingress-class=public
         - --default-ssl-certificate=default/brhd-io-tls
-        - --publish-status-address=127.0.0.1'
+        - --publish-status-address=127.0.0.1
