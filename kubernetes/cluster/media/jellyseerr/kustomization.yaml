@@ -4,3 +4,4 @@ resources:
   - volumes.yaml
   - jellyseerr.yaml
   - ingress.yaml
+  - secret.yaml

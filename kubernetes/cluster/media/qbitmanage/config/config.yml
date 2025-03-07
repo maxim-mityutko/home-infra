@@ -1,5 +1,3 @@
-# NOTE: this config is currently copied manually to the PV location
-# TODO: automate the deployment of this config
 commands:
   dry_run: false
   cross_seed: false
@@ -38,13 +36,26 @@ directory:
 cat:
   radarr: /downloads/zzz/complete/_radarr
   sonarr: /downloads/zzz/complete/_sonarr
+  lidarr: /downloads/zzz/complete/_lidarr
   stash: /downloads/misc
 
 tracker:
   t-ru:
-    tag: rutracker
+    tag:
+      - rutracker
+      - public
   torrentleech|tleechreload:
-    tag: torrentleech
+    tag:
+      - torrentleech
+      - private
+  hdbits:
+    tag:
+      - hdbits
+      - private
+  trancetraffic:
+    tag:
+    - trancetraffic
+    - private
   racingfor:
     tag: rfm
   other:
@@ -55,28 +66,41 @@ nohardlinks:
   - sonarr
 
 share_limits:
-  media-no-hl:
+  public:
     priority: 1
-    include_all_tags:
-      - no-hl
+    exclude_all_tags:
+      - private
     categories:
       - radarr
       - sonarr
     max_ratio: 2.0
     max_seeding_time: 10080 # 7 days
     cleanup: true
-  media-non-tl:
-    priority: 3
-    exclude_all_tags:
-      - torrentleech
+  no-hard-link-private:
+    priority: 2
+    include_all_tags:
+      - no-hl
+      - private
     categories:
       - radarr
       - sonarr
-    max_ratio: 2.0
-    max_seeding_time: 10080 # 7 days
+    max_ratio: 0.75
+    min_seeding_time: 43200 # 30 days
+    cleanup: true
+  private:
+    priority: 3
+    exclude_all_tags:
+      - no-hl
+    include_all_tags:
+      - private
+    categories:
+      - radarr
+      - sonarr
+      - lidarr
+    max_ratio: -1
     cleanup: false
   stash:
-    priority: 2
+    priority: 4
     categories:
       - stash
     max_ratio: 5.0
@@ -92,6 +116,7 @@ recyclebin:
 
 orphaned:
   empty_after_x_days: 14
+  max_orphaned_files_to_delete: 50
 
 webhooks:
   error: null

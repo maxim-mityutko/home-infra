@@ -1,0 +1,184 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: extras
+resources:
+  - secret.yaml
+  - dns-endpoint.yaml
+helmCharts:
+  - name: gitea
+    namespace: extras
+    releaseName: gitea
+    version: 11.0.0
+    repo: https://dl.gitea.com/charts/
+    valuesInline:
+      image:
+        rootless: true
+      podSecurityContext:
+        fsGroup: 1000
+      containerSecurityContext: {}
+      
+      gitea:
+        # Ref: https://docs.gitea.com/administration/config-cheat-sheet
+        config:
+          server:
+            DISABLE_SSH: true
+            SSH_EXPOSE_ANONYMOUS: false
+            START_SSH_SERVER: false
+            PROTOCOL: http
+            DOMAIN: git.brhd.io
+            ROOT_URL: https://git.brhd.io/
+            LANDING_PAGE: login
+          repository:
+            DEFAULT_PRIVATE: private
+            DISABLED_REPO_UNITS: repo.actions,repo.ext_issues,repo.ext_wiki
+            DEFAULT_REPO_UNITS: repo.code,repo.releases
+          cors:
+            ENABLED: false
+          ui:
+            SHOW_USER_EMAIL: false
+            AMBIGUOUS_UNICODE_DETECTION: false
+            DEFAULT_SHOW_FULL_NAME: false
+          openid:
+            ENABLE_OPENID_SIGNIN: false
+          oauth2_client:
+            REGISTER_EMAIL_CONFIRM: false
+            ENABLE_AUTO_REGISTRATION: true
+            USERNAME: userid
+            ACCOUNT_LINKING: login
+          service:
+            ENABLE_BASIC_AUTHENTICATION: true
+            ALLOW_ONLY_EXTERNAL_REGISTRATION: true
+            DEFAULT_ALLOW_CREATE_ORGANIZATION: false
+            ENABLE_PASSWORD_SIGNIN_FORM: false
+          database:
+            # Ref: https://docs.gitea.com/administration/config-cheat-sheet#database-database
+            DB_TYPE: postgres
+          session:
+            # Ref: https://docs.gitea.com/administration/config-cheat-sheet#session-session
+            PROVIDER: memory
+          cache:
+            # Ref: https://docs.gitea.com/administration/config-cheat-sheet#cache-cache
+            ADAPTER: memory
+          queue:
+            TYPE: level
+          mailer:
+            ENABLED: false
+          log:
+            LEVEL: Info
+            ENABLE_SSH_LOG: false
+          cron:
+            ENABLED: false
+          metrics:
+            ENABLED: false
+          api:
+            ENABLE_SWAGGER: false
+          oauth2:
+            ENABLED: false
+          time:
+            DEFAULT_UI_LOCATION: Europe/Amsterdam
+          storage:
+            STORAGE_TYPE: local # could have used `minio`, but then it makes sense to replace CouchDB for Obsidian
+          actions:
+            ENABLED: false
+          # Render HTML documents instead of showing raw file contents
+          markup.html:
+            ENABLED: true
+            FILE_EXTENSIONS: .html,.htm
+            RENDER_COMMAND: cat
+            IS_INPUT_FILE: true
+          markup.sanitizer.html.1:
+            ELEMENT: div
+            ALLOW_ATTR: class
+          markup.sanitizer.html.2:
+            ELEMENT: a
+            ALLOW_ATTR: class
+
+        additionalConfigSources:
+          - secret:
+              secretName: gitea-db
+        
+        admin:
+          existingSecret: gitea-admin
+          passwordMode: keepUpdated
+
+        metrics:
+          enabled: false
+
+        ldap: []
+        oauth: 
+          # Basic settings: https://gitea.com/gitea/helm-chart#oauth2-settings
+          # All auth config values: https://docs.gitea.com/administration/command-line#admin
+          - name: Authentik
+            provider: openidConnect
+            existingSecret: gitea-oauth
+            autoDiscoverUrl: https://auth.brhd.io/application/o/gitea/.well-known/openid-configuration
+            scopes: email profile gitea
+            iconUrl: https://goauthentik.io/img/icon.png
+            skip-local-2fa: true
+            groupClaimName: group
+            adminGroup: admin
+
+        livenessProbe:
+          enabled: true
+          periodSeconds: 60
+
+        readinessProbe:
+          enabled: false
+
+        startupProbe:
+          enabled: false
+      
+      service:
+        http:
+          type: ClusterIP
+          port: 3000
+
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+        hosts:
+          - host: git.brhd.io
+            paths:
+              - path: /
+                pathType: Prefix
+        tls: []
+        apiVersion: networking.k8s.io/v1
+
+      persistence:
+        enabled: true
+        storageClass: nfs-subdir
+        size: 10Gi
+        accessModes:
+          - ReadWriteOnce
+          - ReadOnlyMany
+
+      resources:
+        limits:
+          memory: 300Mi
+        requests:
+          cpu: 50m
+          memory: 100Mi
+
+      serviceAccount:
+        create: false
+
+      signing:
+        enabled: false
+
+      actions:
+        enabled: false
+
+      redis-cluster:
+        enabled: false
+      redis:
+        enabled: false
+      postgresql:
+        enabled: false
+      postgresql-ha:
+        enabled: false
+
+      checkDeprecation: true
+      test:
+        enabled: false

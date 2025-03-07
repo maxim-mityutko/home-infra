@@ -18,10 +18,10 @@ patterns:
   # Explicitly enable backups of SQLite databases for some pods
   - '+ **/jellyfin-config/data/jellyfin.db*'
   - '+ **/jellyfin-config/data/library.db*'
-  - '+ **/jellyseerr-config/db/db.sqlite*'
   - '+ **/stash-config/stash-go.sqlite*'
   - '+ **/code-server-data/.config/*'
   - '+ **/meshcentral-data/meshcentral.db*'
+  - '+ **/frigate-config/frigate.db*'
 exclude_patterns:
   - '*/jupyter-home'
   - '*/mariadb-data'
@@ -29,6 +29,8 @@ exclude_patterns:
   - '*/omada-data/db'
   - '*/omada-logs'
   - '*/postgres-data'
+  - '*/cnpg-ha'
+  - '*/cnpg-pgvectors'
   - '*/shinobi-plugins'
   - '*/vmsingle-stack'
   - '*/code-server-data'

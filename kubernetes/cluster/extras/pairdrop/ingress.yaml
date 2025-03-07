@@ -2,37 +2,34 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: vaultwarden
+  name: pairdrop
   namespace: extras
   labels:
-    app.kubernetes.io/name: vaultwarden
+    app.kubernetes.io/name: pairdrop
   annotations:
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
 spec:
   rules:
-    - host: vault.brhd.io
+    - host: pd.brhd.io
       http:
         paths:
           - pathType: Prefix
             path: /
             backend:
               service:
-                name: vaultwarden
+                name: pairdrop
                 port:
-                  name: http
-  tls:
-    - hosts:
-        - vault.brhd.io
+                  number: 3000
 ---
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: vault.brhd.io
+  name: pd.brhd.io
   namespace: extras
 spec:
   endpoints:
-    - dnsName: vault.brhd.io
+    - dnsName: pd.brhd.io
       recordTTL: 86400
       recordType: CNAME
       targets:

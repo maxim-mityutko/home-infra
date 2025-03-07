@@ -1,0 +1,100 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: extras
+resources:
+  - secret.yaml
+  - dns-endpoint.yaml
+  - ingress-authentik.yaml
+helmCharts:
+  - name: couchdb
+    namespace: extras
+    releaseName: couchdb
+    version: 4.5.6
+    repo: https://apache.github.io/couchdb-helm
+    valuesInline:
+      clusterSize: 1
+      allowAdminParty: false
+      autoSetup:
+        enabled: true
+      createAdminSecret: false
+      networkPolicy:
+        enabled: false
+      persistentVolume:
+        enabled: true
+        accessModes:
+          - ReadWriteOnce
+          - ReadOnlyMany
+        size: 10Gi
+        storageClass: nfs-subdir
+
+      enableSearch: false
+
+      service:
+        enabled: true
+        type: ClusterIP
+        externalPort: 5984
+        targetPort: 5984
+
+      ingress:
+        enabled: true
+        hosts:
+          - couchdb.brhd.io
+        path: /
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+        limits:
+          cpu: 300m
+          memory: 250Mi
+
+      couchdbConfig:
+        couchdb:
+          uuid: vfexns2c4a9ku265j6jzepu9x7hk
+          single_node: true
+          max_document_size: 50000000        # default: obsidian
+        chttpd:
+          bind_address: any
+          require_valid_user: true
+          max_http_request_size: 4294967296  # default: obsidian
+          enable_cors: true                  # default: obsidian
+          authentication_handlers: "{chttpd_auth, proxy_authentication_handler}, {chttpd_auth, default_authentication_handler}"
+        chttpd_auth:
+          require_valid_user: true           # default: obsidian
+          proxy_use_secret: false
+        cors:
+          credentials: true                  # default: obsidian
+          headers: accept, authorization, content-type, origin, referer
+          origins: app://obsidian.md, capacitor://localhost, http://localhost
+          methods: GET, PUT, POST, HEAD, DELETE
+          max_age: 3600
+        httpd:
+          enable_cors: true                  # default: obsidian
+          WWW-Authenticate: "Basic realm=\"administrator\""
+
+      livenessProbe:
+        enabled: true
+        failureThreshold: 3
+        initialDelaySeconds: 0
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      readinessProbe:
+        enabled: true
+        failureThreshold: 3
+        initialDelaySeconds: 0
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+
+      prometheusPort:
+        enabled: false
+
+      sidecars: {}
+
+      placementConfig:
+        enabled: false

@@ -25,7 +25,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: qbitmanage
-          image: ghcr.io/hotio/qbitmanage:release-4.1.15
+          image: ghcr.io/hotio/qbitmanage:release-4.2.0
           imagePullPolicy: IfNotPresent
           resources:
             requests:
@@ -39,6 +39,26 @@ spec:
               mountPath: /downloads
             - name: qbitmanage-config
               mountPath: /config
+      initContainers:
+        - args:
+            - '-v'
+            - /config.yml
+            - /config/config.yml
+          command:
+            - cp
+          image: busybox:latest
+          imagePullPolicy: IfNotPresent
+          name: qbitmanage-init
+          resources: {}
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          volumeMounts:
+            - name: qbitmanage-config
+              mountPath: /config 
+            - name: qbitmanage-config-yml
+              mountPath: /config.yml
+              subPath: config.yml
       volumes:
         - name: downloads
           persistentVolumeClaim:
@@ -46,3 +66,6 @@ spec:
         - name: qbitmanage-config
           persistentVolumeClaim:
             claimName: qbitmanage-config
+        - name: qbitmanage-config-yml
+          configMap:
+            name: qbitmanage-config-yml

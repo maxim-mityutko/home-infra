@@ -15,7 +15,7 @@ helmCharts:
   - name:  frigate
     namespace: smart-home
     releaseName:  frigate
-    version: 7.6.0
+    version: 7.8.0
     repo: https://blakeblackshear.github.io/blakeshome-charts/
     valuesInline:
       # Container and Environment
@@ -24,7 +24,7 @@ helmCharts:
         kubernetes.io/gpu: intel
         # kubernetes.io/tpu: coral
       image:
-        tag: 0.14.1
+        tag: 0.15.0
         # GPU: If Coral TPU is used `tensorrt` image is unnecessary
         # tag: 0.14.1-tensorrt
       env:
@@ -125,16 +125,30 @@ helmCharts:
           retain:
             default: 30
 
+        # Ref: https://docs.frigate.video/configuration/semantic_search
+        semantic_search:
+          enabled: false
+
+        # Ref: https://docs.frigate.video/configuration/genai
+        genai:
+          enabled: false
+
         record:
           enabled: true
           retain:
             days: 0   # No continuous recordings
             mode: all
-          events:
+          alerts:
             pre_capture: 5
             post_capture: 10
             retain:
-              default: 30
+              days: 30
+              mode: motion
+          detections:
+            pre_capture: 5
+            post_capture: 10
+            retain:
+              days: 30
               mode: motion
 
         # Ref:
@@ -186,7 +200,7 @@ helmCharts:
         tls:
           enabled: false
 
-        version: 0.14
+        version: 0.15
 
       ingress:
         enabled: true

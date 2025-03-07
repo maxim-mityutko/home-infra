@@ -11,7 +11,7 @@ helmCharts:
   - name: nextcloud
     namespace: privacy
     releaseName: nextcloud
-    version: 6.6.2
+    version: 6.6.6
     repo: https://nextcloud.github.io/helm/
     valuesInline:
       ingress:
@@ -116,7 +116,7 @@ helmCharts:
       redis:
         enabled: false
       cronjob:
-        enabled: false
+        enabled: true
       # Probes
       # Setting large initial delays to ensure Nextcloud can initialize properly
       # due to issues described in this thread: https://github.com/nextcloud/helm/issues/10

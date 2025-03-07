@@ -1,0 +1,42 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - pod-scrape.yaml
+  - secret.yaml
+  - storage-class.yaml
+helmCharts:
+    - name: cloudnative-pg
+      namespace: default
+      releaseName: cloudnative-pg
+      version: 0.23.0
+      repo: https://cloudnative-pg.github.io/charts
+      valuesInline:
+        replicaCount: 3
+        updateStrategy:
+          type: RollingUpdate
+        config:
+          clusterWide: true
+          # Ref: https://cloudnative-pg.io/documentation/current/operator_conf/#available-options
+          data: {}
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        monitoring:
+          podMonitorEnabled: false
+          grafanaDashboard:
+            create: true
+            sidecarLabel: "grafana-dashboard"
+            sidecarLabelValue: "true"
+        # Control plane nodes are cordonned due to resource (memory) constraints, which ensures that only
+        # daemon sets are running on that nodes. Forcing the pod to be deployed on the cordoned
+        # node due to criticality and low resource consumption.
+        nodeSelector:
+          node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
+        tolerations:
+          - key: "node.kubernetes.io/unschedulable"
+            operator: Exists

@@ -64,14 +64,13 @@ spec:
       restartPolicy: Always
       containers:
         - name: qbittorrent
-          image: ghcr.io/hotio/qbittorrent:release-5.0.3
+          image: ghcr.io/hotio/qbittorrent:release-5.0.4
           resources:
             requests:
               memory: 100Mi
               cpu: 100m
             limits:
-              memory: 1000Mi
-              cpu: 1000m
+              memory: 1500Mi
           ports:
             - name: ui
               protocol: TCP

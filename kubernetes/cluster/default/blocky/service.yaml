@@ -1,0 +1,38 @@
+# Ingress Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky-dns
+  labels:
+    app.kubernetes.io/name: blocky
+spec:
+  selector:
+    app.kubernetes.io/name: blocky
+  ports:
+    - port: 53
+      targetPort: 53
+      name: dns-tcp
+      protocol: TCP
+    - port: 53
+      targetPort: 53
+      name: dns-udp
+      protocol: UDP
+  type: ClusterIP
+# Blocky API
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blocky
+  labels:
+    app.kubernetes.io/name: blocky
+spec:
+  selector:
+    app.kubernetes.io/name: blocky
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

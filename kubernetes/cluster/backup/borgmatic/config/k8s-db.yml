@@ -19,6 +19,16 @@ postgresql_databases:
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     format: tar
+  - name: all
+    hostname: cnpg-ha-rw.default.svc.cluster.local
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    format: tar
+  - name: all
+    hostname: cnpg-pgvectors-rw.default.svc.cluster.local
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    format: tar
 # mariadb_databases:
 #   - name: all
 #     hostname: mariadb.default.svc.cluster.local
@@ -31,8 +41,6 @@ sqlite_databases:
     path: /mnt/k8s/pods/jellyfin-config/data/jellyfin.db
   - name: jellyfin-library
     path: /mnt/k8s/pods/jellyfin-config/data/library.db
-  - name: jellyseerr
-    path: /mnt/k8s/pods/jellyseerr-config/db/db.sqlite3
   - name: stash
     path: /mnt/k8s/pods/stash-config/stash-go.sqlite
   - name: frigate
