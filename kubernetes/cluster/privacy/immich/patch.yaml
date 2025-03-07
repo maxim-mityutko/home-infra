@@ -3,6 +3,7 @@ kind: Deployment
 metadata: 
   name: immich-server
 spec:
+  revisionHistoryLimit: 2
   template:
     spec:
       securityContext:
@@ -56,6 +57,7 @@ kind: Deployment
 metadata: 
   name: immich-machine-learning
 spec:
+  revisionHistoryLimit: 2
   template:
     spec:
       containers:
