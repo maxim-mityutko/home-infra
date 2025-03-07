@@ -5,9 +5,13 @@ metadata:
   name: nginx-load-balancer-microk8s-conf
   namespace: ingress
 data:
+  # Ref: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
+  
   # Required for Authentik
   # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#allow-snippet-annotations
   allow-snippet-annotations: "true"
+  # Ref: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations-risk/
+  annotations-risk-level: Critical
 ---
 apiVersion: v1
 kind: ConfigMap
