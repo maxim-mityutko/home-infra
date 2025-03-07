@@ -15,6 +15,22 @@ spec:
           volumeMounts:
             - name: render-device
               mountPath: /dev/dri/renderD128
+          env:
+            - name: DB_DATABASE_NAME
+              valueFrom:
+                secretRef:
+                  name: immich
+                  key: DB_DATABASE_NAME
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: immich
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretRef:
+                  name: immich
+                  key: DB_PASSWORD
       volumes:
         - name: render-device
           hostPath:
