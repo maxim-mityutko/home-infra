@@ -1,0 +1,15 @@
+---
+# Music Assistant - Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: music-assistant-config
+  labels:
+    app.kubernetes.io/name: music-assistant
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1G
