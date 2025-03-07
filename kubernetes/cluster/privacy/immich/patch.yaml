@@ -63,7 +63,7 @@ spec:
                   key: DB_HOSTNAME
             - name: DB_DATABASE_NAME
               valueFrom:
-                secretRef:
+                secretKeyRef:
                   name: immich
                   key: DB_DATABASE_NAME
             - name: DB_USERNAME
@@ -73,7 +73,7 @@ spec:
                   key: DB_USERNAME
             - name: DB_PASSWORD
               valueFrom:
-                secretRef:
+                secretKeyRef:
                   name: immich
                   key: DB_PASSWORD
             - name: REDIS_HOSTNAME
