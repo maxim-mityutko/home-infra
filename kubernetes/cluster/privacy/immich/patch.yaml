@@ -16,6 +16,11 @@ spec:
             - name: render-device
               mountPath: /dev/dri/renderD128
           env:
+            - name: DB_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: immich
+                  key: DB_HOSTNAME
             - name: DB_DATABASE_NAME
               valueFrom:
                 secretRef:
@@ -31,6 +36,11 @@ spec:
                 secretRef:
                   name: immich
                   key: DB_PASSWORD
+            - name: REDIS_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: immich
+                  key: REDIS_HOSTNAME
       volumes:
         - name: render-device
           hostPath:
