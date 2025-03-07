@@ -88,7 +88,7 @@ helmCharts:
         # env:
         #   TRANSFORMERS_CACHE: /cache
         image:
-          tag: v1.126.1 # Use <tag>-cuda for NVidia GPUs
+          tag: v1.129.0 # Use <tag>-cuda for NVidia GPUs
         resources:
           requests:
             cpu: 100m
