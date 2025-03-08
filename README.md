@@ -64,6 +64,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Tailscale K8s Operator** | Secure, remote access to on-premises | [repo](https://github.com/tailscale/tailscale)<br>[docs](https://tailscale.com/kb/1236/kubernetes-operator) | [helm](https://github.com/tailscale/tailscale/blob/main/cmd/k8s-operator/deploy/README.md) |
 | **Redis** | In-memory database that persists on disk | [repo](https://github.com/redis/redis) | [helm](https://github.com/bitnami/charts/blob/main/bitnami/redis/README.md) |
 | **MetalLB** | A network load-balancer implementation for Kubernetes using standard routing protocols | [repo](https://github.com/metallb/metallb)<br>[docs](https://metallb.io) | [helm](https://github.com/metallb/metallb/blob/main/charts/metallb/README.md) |
+| **Ingress NGINX** | Ingress NGINX Controller for Kubernetes | [repo](https://github.com/kubernetes/ingress-nginx)<br>[docs](https://kubernetes.github.io/ingress-nginx/) | |
 
 ### Backup
 | Project                | Description                                                                                       |                                                                                                     Docs / Repo                                                                                                      |                                          Docker / Helm                                           |
