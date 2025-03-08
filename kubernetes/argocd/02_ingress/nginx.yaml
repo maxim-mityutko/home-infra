@@ -15,14 +15,13 @@ spec:
     namespace: ingress
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/ingress
+    path: kubernetes/cluster/ingress/nginx
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision:  main
   project: default
   syncPolicy:
     automated:
-      prune: false
-      selfHeal: false
+      prune: true
+      selfHeal: true
     syncOptions:
-      - Validate=false
-      - ServerSideApply=true
+      - CreateNamespace=true
