@@ -60,7 +60,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: mosquitto
-          image: eclipse-mosquitto:2.0.20
+          image: eclipse-mosquitto:2.0.21
           resources:
             requests:
               cpu: 10m
