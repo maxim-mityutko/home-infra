@@ -1,0 +1,15 @@
+---
+# ESPHome - Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: esphome-config
+  labels:
+    app.kubernetes.io/name: esphome
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1G
