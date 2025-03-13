@@ -35,7 +35,7 @@ spec:
             # The actual memory and CPU usage is much lower, however ample memory
             # is required to load block lists and avoid OOMKill errors.
             limits:
-              memory: 375Mi
+              memory: 400Mi
           ports:
             - name: dns-tcp
               protocol: TCP
@@ -71,6 +71,16 @@ spec:
         - name: blocky-secret-config
           secret:
             secretName: blocky-secret-config
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - blocky
+              topologyKey: kubernetes.io/hostname
       # NOTE: Could not make L2Advertising of MetalLB work on the controlplane, moved everything to worker nodes
       # nodeSelector:
       #   node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
