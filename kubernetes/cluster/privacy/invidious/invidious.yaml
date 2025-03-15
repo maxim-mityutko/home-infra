@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: invidious
-          image: quay.io/invidious/invidious:2024.11.10-9892604
+          image: quay.io/invidious/invidious:2.20250314.0
           resources:
             requests:
               memory: 100Mi
