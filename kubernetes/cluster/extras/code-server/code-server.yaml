@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: code-server
-          image: ghcr.io/coder/code-server:4.98.0
+          image: ghcr.io/coder/code-server:4.98.2
           resources:
             requests:
               memory: 500M
