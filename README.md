@@ -9,7 +9,14 @@ the process defined in the [/readme](./readme/) and [/kubernetes/scripts](./kube
 After the initial steps are complete, deployments are handled via ArgoCD application manifests
 defined in the [/kubernetes/argocd](./kubernetes/argocd/).
 
-## Hardware:
+## Hardware
+### Network
+* Router: [TP-Link ER7406](https://www.omadanetworks.com/nl/business-networking/omada-router-wired-router/er7406/)
+* Switch: [TP-Link TL-SG2428P](https://www.omadanetworks.com/nl/business-networking/omada-switch-smart/tl-sg2428p/)
+* Access Points:
+  * [TP-Link EAP245](https://www.omadanetworks.com/nl/business-networking/omada-wifi-ceiling-mount/eap245/v3%20(1-pack)/)
+  * [TP-Link EAP615-Wall](https://www.omadanetworks.com/nl/business-networking/omada-wifi-wall-plate/eap615-wall/)
+### Compute
 * ProxMox VE Host:
   * MOBO: [ASRock IMB-X1231](https://www.asrockind.com/en-gb/IMB-X1231)
   * CPU: Intel Core i5-13500
@@ -24,9 +31,11 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
     4. HDD Seagate IronWolf Pro NAS 12 TB x3
   * Virtual Machines:
     * TrueNAS Scale with 4 CPUs, 8GB RAM and extension cards (1) and (2) as direct passthrough and SSD (3) and HDD (4) in ZFS pulls for storage
-    * Ubuntu Server with 4 CPUs and and 8GB RAM
-    * Ubuntu Server with 6 CPUs and and 16GB RAM 
-* ProxMox VE Host (Spare):  
+    * (Worker) Ubuntu Server with 4 CPUs and 8GB RAM
+    * (Worker) Ubuntu Server with 6 CPUs and 16GB RAM
+    * (Master) Ubuntu Server with 2 CPUs and 4 GB RAM x3
+  * KVM: SiPeed [NanoKVM-PCIe-PoE](https://sipeed.com/nanokvm/pcie)
+* (Disabled) ProxMox VE Host (Spare):  
   * CPU Intel i7-6700
   * RAM 16 GB 
   * Storage:
@@ -34,7 +43,7 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
     2. NVME WD Blue NVME 500 GB
   * Virtual Machines:
     * (x3) Ubuntu Server with 2 CPUs and and 4GB RAM 
-* Raspberry Pi 4B 8GB
+* (Worker) Raspberry Pi 4B 8GB
 * Upcoming: [Compute Blade](https://www.kickstarter.com/projects/uptimelab/compute-blade) with CM4 8GB and 500 GB NVME x 4
 
 ## Services
