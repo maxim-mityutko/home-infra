@@ -34,7 +34,7 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
     * (Worker) Ubuntu Server with 4 CPUs and 8GB RAM
     * (Worker) Ubuntu Server with 6 CPUs and 16GB RAM
     * (Master) Ubuntu Server with 2 CPUs and 4 GB RAM x3
-  * KVM: SiPeed [NanoKVM-PCIe-PoE](https://sipeed.com/nanokvm/pcie)
+  * KVM: [SiPeed NanoKVM-PCIe-PoE](https://sipeed.com/nanokvm/pcie)
 * (Disabled) ProxMox VE Host (Spare):  
   * CPU Intel i7-6700
   * RAM 16 GB 
