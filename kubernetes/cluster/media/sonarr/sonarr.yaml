@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: sonarr
-          image: ghcr.io/hotio/sonarr:release-4.0.13.2932
+          image: ghcr.io/hotio/sonarr:release-4.0.14.2939
           resources:
             requests:
               memory: 500Mi
