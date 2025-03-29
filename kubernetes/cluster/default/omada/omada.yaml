@@ -59,8 +59,8 @@ spec:
               mountPath: /opt/tplink/EAPController/logs
             - name: omada-autobackup
               mountPath: /opt/tplink/EAPController/data/autobackup
-          nodeSelector:
-            kubernetes.io/node-size: large
+      nodeSelector:
+        kubernetes.io/node-size: large
       volumes:
         - name: omada-data
           persistentVolumeClaim:
