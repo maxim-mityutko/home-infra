@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: kubernetes-dashboard
 resources:
   - dns-endpoint.yaml
+  - secret.yaml
 helmCharts:
   - name: kubernetes-dashboard
     namespace: kubernetes-dashboard
