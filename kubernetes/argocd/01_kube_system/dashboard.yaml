@@ -5,11 +5,10 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    name: ''
-    namespace: kubernetes-dashboard
+    namespace: kube-dashboard
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/kube-system/dashboard
+    path: kubernetes/cluster/default/kube-dashboard
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default

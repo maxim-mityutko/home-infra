@@ -2,11 +2,11 @@
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: k8s-dash.brhd.io
-  namespace:  kubernetes-dashboard
+  name: k8s.brhd.io
+  namespace:  kube-dashboard
 spec:
   endpoints:
-    - dnsName: k8s-dash.brhd.io
+    - dnsName: k8s.brhd.io
       recordTTL: 86400
       recordType: CNAME
       targets:
