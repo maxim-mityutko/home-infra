@@ -49,7 +49,7 @@ helmCharts:
       metrics-server:
         enabled: false
       kong:
-        enabled: false
+        enabled: true
       cert-manager:
         enabled: false
       nginx:
