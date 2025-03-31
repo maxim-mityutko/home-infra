@@ -38,7 +38,14 @@ helmCharts:
             cpu: 100m
             memory: 100Mi
       metricsScraper:
-        enabled: false
+        enabled: true
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
       metrics-server:
         enabled: false
       kong:
