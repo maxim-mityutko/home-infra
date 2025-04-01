@@ -68,7 +68,7 @@ replacements:
       kind: Ingress
       name: kubernetes-dashboard
     fieldPaths:
-    - metadata.annotations.[nginx.ingress.kubernetes.io/configuration-snippet]
+    - metadata.annotations.[nginx.ingress.kubernetes.io~1configuration-snippet]
     options:
       delimiter: "/"
       index: 1
