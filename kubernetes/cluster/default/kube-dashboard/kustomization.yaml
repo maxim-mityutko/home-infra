@@ -62,7 +62,7 @@ replacements:
 - source:
     kind: Secret
     name: kubernetes-dashboard-token
-    fieldPath: stringData.token
+    fieldPath: data.token
   targets:
   - select:
       kind: Ingress
