@@ -58,3 +58,14 @@ helmCharts:
       extras:
         serviceMonitor:
           enabled: false
+patches:
+- target:
+    kind: Ingress
+    name: kubernetes-dashboard
+  patch: |-
+    - op: replace
+      path: /metadata/annotations/nginx.ingress.kubernetes.io/ssl-redirect
+      valueFrom:
+        secretKeyRef:
+          name: dashboard-token
+          key: token
