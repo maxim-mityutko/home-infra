@@ -65,7 +65,5 @@ patches:
   patch: |-
     - op: add
       path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
-      valueFrom:
-        secretKeyRef:
-          name: kubernetes-dashboard-token
-          key: token
+      value: |
+        proxy_set_header X-API-Key "$(API_KEY)";
