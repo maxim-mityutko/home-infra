@@ -16,11 +16,11 @@ helmCharts:
         - --enable-insecure-login
       resources:
         requests:
-          cpu: 25m
-          memory: 25Mi
-        limits:
           cpu: 50m
           memory: 100Mi
+        limits:
+          cpu: 100m
+          memory: 150Mi
       ingress:
         enabled: true
         annotations:
