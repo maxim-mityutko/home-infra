@@ -8,7 +8,7 @@ helmCharts:
   - name: kubernetes-dashboard
     namespace: kube-dashboard
     releaseName: kubernetes-dashboard
-    version: 2.7.0
+    version: 6.0.8
     repo: https://kubernetes.github.io/dashboard/
     valuesInline: 
       extraArgs:
