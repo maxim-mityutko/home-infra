@@ -12,12 +12,12 @@ helmCharts:
     repo: https://kubernetes.github.io/dashboard/
     valuesInline: 
       extraArgs:
-        - --enable-skip-login
+        # - --enable-skip-login
         - --enable-insecure-login
       resources:
         requests:
           cpu: 50m
-          memory: 100Mi
+          memory: 50Mi
         limits:
           cpu: 100m
           memory: 150Mi
@@ -33,8 +33,8 @@ helmCharts:
         enabled: true
         resources:
           requests:
-            cpu: 25m
-            memory: 25Mi
+            cpu: 50m
+            memory: 50Mi
           limits:
             cpu: 50m
             memory: 50Mi
