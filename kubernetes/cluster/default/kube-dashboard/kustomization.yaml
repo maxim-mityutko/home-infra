@@ -63,8 +63,8 @@ patches:
     kind: Ingress
     name: kubernetes-dashboard
   patch: |-
-    - op: replace
-      path: /metadata/annotations/nginx.ingress.kubernetes.io~1ssl-redirect
+    - op: add
+      path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
       valueFrom:
         secretKeyRef:
           name: kubernetes-dashboard-token
