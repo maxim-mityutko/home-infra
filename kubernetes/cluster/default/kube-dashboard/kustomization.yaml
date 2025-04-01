@@ -58,21 +58,21 @@ helmCharts:
       extras:
         serviceMonitor:
           enabled: false
-# replacements:
-# - source:
-#     kind: Secret
-#     name: kubernetes-dashboard-token
-#     fieldPath: data.token
-#   targets:
-#   - select:
-#       kind: Ingress
-#       name: kubernetes-dashboard
-#     fieldPaths:
-#     - metadata.annotations.[nginx.ingress.kubernetes.io~1configuration-snippet]
-#     options:
-#       delimiter: "/"
-#       index: 1
-#       create: true
+replacements:
+- source:
+    kind: Secret
+    name: kubernetes-dashboard-token
+    fieldPath: data.token
+  targets:
+  - select:
+      kind: Ingress
+      name: kubernetes-dashboard
+    fieldPaths:
+    - metadata.annotations.[nginx.ingress.kubernetes.io~1configuration-snippet]
+    options:
+      delimiter: "/"
+      index: 1
+      create: true
 patches:
   - target:
       kind: Ingress
@@ -83,4 +83,4 @@ patches:
         valueFrom:
           secretKeyRef:
             name: kubernetes-dashboard-token
-            key: .data.token
+            key: token
