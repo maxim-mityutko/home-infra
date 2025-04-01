@@ -12,7 +12,7 @@ helmCharts:
     repo: https://kubernetes.github.io/dashboard/
     valuesInline: 
       extraArgs:
-        # - --enable-skip-login
+        - --enable-skip-login
         - --enable-insecure-login
       resources:
         requests:
