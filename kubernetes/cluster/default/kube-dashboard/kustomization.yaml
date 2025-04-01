@@ -58,27 +58,29 @@ helmCharts:
       extras:
         serviceMonitor:
           enabled: false
-replacements:
-- source:
-    kind: Secret
-    name: kubernetes-dashboard-token
-    fieldPath: data.token
-  targets:
-  - select:
-      kind: Ingress
-      name: kubernetes-dashboard
-    fieldPaths:
-    - metadata.annotations.[nginx.ingress.kubernetes.io~1configuration-snippet]
-    options:
-      delimiter: "/"
-      index: 1
-      create: true
-# patches:
-#   - target:
+# replacements:
+# - source:
+#     kind: Secret
+#     name: kubernetes-dashboard-token
+#     fieldPath: data.token
+#   targets:
+#   - select:
 #       kind: Ingress
 #       name: kubernetes-dashboard
-#     patch: |-
-#       - op: add
-#         path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
-#         value: |
-#           proxy_set_header Authorization \"Bearer "$(KUBE_DASHBOARD_TOKEN)";
+#     fieldPaths:
+#     - metadata.annotations.[nginx.ingress.kubernetes.io~1configuration-snippet]
+#     options:
+#       delimiter: "/"
+#       index: 1
+#       create: true
+patches:
+  - target:
+      kind: Ingress
+      name: kubernetes-dashboard
+    patch: |-
+      - op: add
+        path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
+        valueFrom:
+          secretKeyRef:
+            name: kubernetes-dashboard-token
+            key: .data.token
