@@ -58,12 +58,20 @@ helmCharts:
       extras:
         serviceMonitor:
           enabled: false
+vars:
+- name: KUBE_DASHBOARD_TOKEN
+  objref:
+    kind: Secret
+    name: kubernetes-dashboard-token
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.token
 patches:
-- target:
-    kind: Ingress
-    name: kubernetes-dashboard
-  patch: |-
-    - op: add
-      path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
-      value: |
-        proxy_set_header X-API-Key "$(API_KEY)";
+  - target:
+      kind: Ingress
+      name: kubernetes-dashboard
+    patch: |-
+      - op: add
+        path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
+        value: |
+          proxy_set_header Authorization \"Bearer "$(KUBE_DASHBOARD_TOKEN)";
