@@ -67,5 +67,5 @@ patches:
       path: /metadata/annotations/nginx.ingress.kubernetes.io~1ssl-redirect
       valueFrom:
         secretKeyRef:
-          name: dashboard-token
+          name: kubernetes-dashboard-token
           key: token
