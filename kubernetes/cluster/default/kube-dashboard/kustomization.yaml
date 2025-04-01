@@ -8,36 +8,27 @@ helmCharts:
   - name: kubernetes-dashboard
     namespace: kube-dashboard
     releaseName: kubernetes-dashboard
-    version: 7.11.1
+    version: 2.7.0
     repo: https://kubernetes.github.io/dashboard/
     valuesInline: 
-      app:
-        mode: 'dashboard'
-        ingress:
-          enabled: true
-          hosts:
-            - k8s.brhd.io
-          useDefaultIngressClass: true
-          useDefaultAnnotations: true
-          issuer:
-            name: lets-encrypt
-            scope: cluster
-      auth:
-        resources:
-          requests:
-            cpu: 25m
-            memory: 25Mi
-          limits:
-            cpu: 50m
-            memory: 50Mi
-      web:
-        resources:
-          requests:
-            cpu: 25m
-            memory: 25Mi
-          limits:
-            cpu: 50m
-            memory: 50Mi
+      extraArgs:
+        - --enable-skip-login
+        - --enable-insecure-login
+      resources:
+        requests:
+          cpu: 25m
+          memory: 25Mi
+        limits:
+          cpu: 50m
+          memory: 100Mi
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+        hosts:
+          - k8s-dash.brhd.io
+          # - k8s.brhd.io
       metricsScraper:
         enabled: true
         resources:
@@ -47,40 +38,80 @@ helmCharts:
           limits:
             cpu: 50m
             memory: 50Mi
-      metrics-server:
-        enabled: false
-      kong:
-        enabled: true
-      cert-manager:
-        enabled: false
-      nginx:
-        enabled: false
-      extras:
-        serviceMonitor:
-          enabled: false
-replacements:
-- source:
-    kind: Secret
-    name: kubernetes-dashboard-token
-    fieldPath: data.token
-  targets:
-  - select:
-      kind: Ingress
-      name: kubernetes-dashboard
-    fieldPaths:
-    - metadata.annotations.[nginx.ingress.kubernetes.io~1configuration-snippet]
-    options:
-      delimiter: "/"
-      index: 1
-      create: true
-patches:
-  - target:
-      kind: Ingress
-      name: kubernetes-dashboard
-    patch: |-
-      - op: add
-        path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
-        valueFrom:
-          secretKeyRef:
-            name: kubernetes-dashboard-token
-            key: token
+      rbac:
+        create: true
+      serviceAccount:
+        create: true
+#       app:
+#         mode: 'dashboard'
+#         ingress:
+#           enabled: true
+#           hosts:
+#             - k8s.brhd.io
+#           useDefaultIngressClass: true
+#           useDefaultAnnotations: true
+#           issuer:
+#             name: lets-encrypt
+#             scope: cluster
+#       auth:
+#         resources:
+#           requests:
+#             cpu: 25m
+#             memory: 25Mi
+#           limits:
+#             cpu: 50m
+#             memory: 50Mi
+#       web:
+#         resources:
+#           requests:
+#             cpu: 25m
+#             memory: 25Mi
+#           limits:
+#             cpu: 50m
+#             memory: 50Mi
+#       metricsScraper:
+#         enabled: true
+#         resources:
+#           requests:
+#             cpu: 25m
+#             memory: 25Mi
+#           limits:
+#             cpu: 50m
+#             memory: 50Mi
+#       metrics-server:
+#         enabled: false
+#       kong:
+#         enabled: true
+#       cert-manager:
+#         enabled: false
+#       nginx:
+#         enabled: false
+#       extras:
+#         serviceMonitor:
+#           enabled: false
+# replacements:
+# - source:
+#     kind: Secret
+#     name: kubernetes-dashboard-token
+#     fieldPath: data.token
+#   targets:
+#   - select:
+#       kind: Ingress
+#       name: kubernetes-dashboard
+#     fieldPaths:
+#     - metadata.annotations.[nginx.ingress.kubernetes.io~1configuration-snippet]
+#     options:
+#       delimiter: "/"
+#       index: 1
+#       create: true
+# patches:
+#   - target:
+#       kind: Ingress
+#       name: kubernetes-dashboard
+#     patch: |-
+#       - op: add
+#         path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
+#         valueFrom:
+#           secretKeyRef:
+#             name: kubernetes-dashboard-token
+#             key: token
