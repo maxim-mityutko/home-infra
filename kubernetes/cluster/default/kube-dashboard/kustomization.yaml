@@ -14,7 +14,6 @@ helmCharts:
       extraArgs:
         - --enable-skip-login
         - --enable-insecure-login
-        - --disable-auth
       resources:
         requests:
           cpu: 50m
