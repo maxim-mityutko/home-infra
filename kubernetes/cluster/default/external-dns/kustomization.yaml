@@ -29,7 +29,7 @@ helmCharts:
     namespace: default
     # WARN: Cannot rollout latest wuth 0.14.2 due to: https://github.com/kubernetes-sigs/external-dns/issues/4487
     releaseName: external-dns
-    version: 8.7.8
+    version: 8.7.9
     repo: oci://registry-1.docker.io/bitnamicharts
     valuesInline:
       sources:
