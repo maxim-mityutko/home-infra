@@ -16,8 +16,8 @@ helmCharts:
         requests:
           cpu: 80m
           memory: 64Mi
-        limits:
-          memory: 128Mi
+        # limits:
+        #   memory: 128Mi
       serviceMonitor:
         enabled: false
       probes:
