@@ -22,8 +22,10 @@ helmCharts:
         enabled: false
       probes:
         liveness:
+          enabled: false
           periodSeconds: 30
         readiness:
+          enabled: false
           periodSeconds: 30
       serviceAccount:
         create: true
