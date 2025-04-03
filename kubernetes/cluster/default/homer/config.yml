@@ -81,7 +81,7 @@ services:
       #   url: "https://longhorn.brhd.io"
       #   target: "_blank"
   - name: "Monitoring"
-    icon: "fas fa-telescope"
+    icon: "fas fa-eye"
     items:
       - name: "Grafana"
         logo: "https://casa.brhd.io/icons/grafana.svg"
@@ -292,7 +292,7 @@ services:
         tag: "db"
         url: "https://couch-db.brhd.io/_utils"
   - name: "Utilities"
-    icon:
+    icon: "fas fa-gears"
     items:
       - name: "IT Tools"
         logo: "https://casa.brhd.io/icons/it-tools.png"
@@ -302,3 +302,6 @@ services:
         logo: "https://casa.brhd.io/icons/pairdrop.svg"
         tag: "development"
         url: "https://pd.brhd.io"
+      - name: "Strirling-PDF"
+        logo: "https://casa.brhd.io/icons/stirling-pdf.svg"
+        url: "https://pdf.brhd.io"
