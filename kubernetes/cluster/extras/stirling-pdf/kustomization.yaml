@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: extras
 resources:
   - dns-endpoint.yaml
+  - config.yaml
 helmCharts:
   - name: stirling-pdf-chart
     namespace: extras
@@ -11,18 +12,9 @@ helmCharts:
     version: 1.9.0
     repo: https://stirling-tools.github.io/Stirling-PDF-chart
     valuesInline:
-      envs:
-        - SECURITY_ENABLELOGIN: "false"
-        - SYSTEM_ENABLEANALYTICS: "false"
-        - SYSTEM_DEFAULTLOCALE: en-US
-        - SYSTEM_GOOGLEVISIBILITY: "false"
-        - ALLOW_GOOGLE_VISIBILITY: "false"
-        - SYSTEM_ENABLEALPHAFUNCTIONALITY: "false"
-        - SYSTEM_SHOWUPDATE: "false"
-        - METRICS_ENABLED: "false"
-        # Ref: https://github.com/Stirling-Tools/Stirling-PDF/blob/v0.36.0/Endpoint-groups.md
-        # - ENDPOINTS_TOREMOVE:
-        # - ENDPOINTS_GROUPSTOREMOVE: "cli,other,opencv,libreoffice,qpdf,tesseract"
+      envsFrom:
+        - configMapRef:
+            name: stirling-pdf
       strategy:
         type: Recreate
       resources:
