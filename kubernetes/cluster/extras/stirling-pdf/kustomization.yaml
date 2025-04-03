@@ -5,9 +5,9 @@ namespace: extras
 resources:
   - dns-endpoint.yaml
 helmCharts:
-  - name: stirling-pdf
+  - name: stirling-pdf-chart
     namespace: extras
-    releaseName: stirling-pdf-chart
+    releaseName: stirling-pdf
     version: 1.9.0
     repo: https://stirling-tools.github.io/Stirling-PDF-chart
     valuesInline:
