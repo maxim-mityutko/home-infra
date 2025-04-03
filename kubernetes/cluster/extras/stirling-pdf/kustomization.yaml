@@ -11,24 +11,35 @@ helmCharts:
     version: 1.9.0
     repo: https://stirling-tools.github.io/Stirling-PDF-chart
     valuesInline:
-      envs: []
+      envs:
+        - SECURITY_ENABLELOGIN: "false"
+        - SYSTEM_ENABLEANALYTICS: "false"
+        - SYSTEM_DEFAULTLOCALE: en-US
+        - SYSTEM_GOOGLEVISIBILITY: "false"
+        - ALLOW_GOOGLE_VISIBILITY: "false"
+        - SYSTEM_ENABLEALPHAFUNCTIONALITY: "false"
+        - SYSTEM_SHOWUPDATE: "false"
+        - METRICS_ENABLED: "false"
+        # Ref: https://github.com/Stirling-Tools/Stirling-PDF/blob/v0.36.0/Endpoint-groups.md
+        # - ENDPOINTS_TOREMOVE:
+        - ENDPOINTS_GROUPSTOREMOVE: cli,other,opencv,libreoffice,qpdf,tesseract
+      strategy:
+        type: Recreate
       resources:
         requests:
-          cpu: 80m
-          memory: 64Mi
-        # limits:
-        #   memory: 128Mi
+          cpu: 100m
+          memory: 250Mi
+        limits:
+          memory: 500Mi
       serviceMonitor:
         enabled: false
       probes:
         liveness:
           enabled: false
-          periodSeconds: 30
         readiness:
           enabled: false
-          periodSeconds: 30
       serviceAccount:
-        create: true
+        create: false
       securityContext:
         enabled: true
         fsGroup: 1000
