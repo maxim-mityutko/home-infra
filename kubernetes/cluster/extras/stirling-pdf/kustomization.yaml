@@ -1,0 +1,42 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: extras
+resources:
+  - dns-endpoint.yaml
+helmCharts:
+  - name: stirling-pdf
+    namespace: extras
+    releaseName: stirling-pdf
+    version: 1.9.0
+    repo: https://stirling-tools.github.io/Stirling-PDF-chart
+    valuesInline:
+      envs: []
+      resources:
+        requests:
+          cpu: 80m
+          memory: 64Mi
+        limits:
+          memory: 128Mi
+      serviceMonitor:
+        enabled: false
+      probes:
+        liveness:
+          periodSeconds: 30
+        readiness:
+          periodSeconds: 30
+      serviceAccount:
+        create: true
+      securityContext:
+        enabled: true
+        fsGroup: 1000
+      persistence:
+        enabled: false
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+        hosts:
+          - name: pdf.brhd.io
+            path: /
