@@ -19,7 +19,8 @@ helmCharts:
           upstreams = [ "http://kubernetes-dashboard" ]
       extraArgs:
         provider: oidc
-        provider-display-name: "Authentik"
+        provider-display-name: Authentik
+        oidc-issuer-url: https://auth.brhd.io/application/o/kubernetes-dashboard/
         skip-provider-button: "false"
         pass-authorization-header: "true" 
         cookie-refresh: 15m
