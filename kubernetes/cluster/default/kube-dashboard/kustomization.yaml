@@ -19,7 +19,6 @@ helmCharts:
           cpu: 50m
           memory: 50Mi
         limits:
-          cpu: 200m
           memory: 150Mi
       ingress:
         enabled: true
