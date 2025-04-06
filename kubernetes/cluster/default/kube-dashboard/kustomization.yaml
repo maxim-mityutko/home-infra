@@ -5,6 +5,63 @@ resources:
   - dns-endpoint.yaml
   - secret.yaml
 helmCharts:
+  - name: oauth2-proxy
+    namespace: kube-dashboard
+    releaseName: oauth2-proxy
+    version: 7.12.8
+    repo: https://oauth2-proxy.github.io/manifests
+    valuesInline:
+      config:
+        existingSecret: oauth2-proxy
+        google: {}
+        configFile: |-
+          email_domains = [ "*" ]
+          upstreams = [ "http://kubernetes-dashboard" ]
+      extraArgs:
+        provider: oidc
+        provider-display-name: "Authentik"
+        skip-provider-button: "false"
+        pass-authorization-header: "true" 
+        cookie-refresh: 15m
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+        path: /
+        pathType: ImplementationSpecific
+        hosts:
+         - k8s-dash.brhd.io
+
+      livenessProbe:
+        enabled: true
+        initialDelaySeconds: 0
+        timeoutSeconds: 1
+      readinessProbe:
+        enabled: true
+        initialDelaySeconds: 0
+        timeoutSeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+
+      serviceAccount:
+        enabled: true
+      securityContext:
+        enabled: true
+      
+      alphaConfig:
+        enabled: false
+      authenticatedEmailsFile:
+        enabled: false
+      htpasswdFile:
+        enabled: false
+      autoscaling:
+        enabled: false
+      redis:
+        enabled: false
+      checkDeprecation: true
+      metrics:
+        enabled: false
   - name: kubernetes-dashboard
     namespace: kube-dashboard
     releaseName: kubernetes-dashboard
@@ -27,7 +84,7 @@ helmCharts:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
         hosts:
-          - k8s-dash.brhd.io
+          - k8s-dash1.brhd.io
           # - k8s.brhd.io
       metricsScraper:
         enabled: true
