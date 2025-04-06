@@ -34,7 +34,6 @@ helmCharts:
           nginx.ingress.kubernetes.io/auth-url: >-
             http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
         hosts:
-          - k8s-dash.brhd.io
           - k8s.brhd.io
       metricsScraper:
         enabled: true
@@ -49,6 +48,11 @@ helmCharts:
         create: true
       serviceAccount:
         create: true
+      nodeSelector:
+        node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
+      tolerations:
+        - key: "node.kubernetes.io/unschedulable"
+          operator: Exists
 #       app:
 #         mode: 'dashboard'
 #         ingress:
