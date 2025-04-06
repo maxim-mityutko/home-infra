@@ -26,7 +26,8 @@ redis:
 server:
   enabled: true
   image:
-    tag: v1.129.0
+    repository: ghcr.io/immich-app/immich-server
+    tag: v1.131.3
   resources:
     requests:
       cpu: 200m
@@ -68,7 +69,8 @@ server:
 machine-learning:
   enabled: true
   image:
-    tag: v1.129.0 # Use <tag>-cuda for NVidia GPUs
+    repository: ghcr.io/immich-app/immich-machine-learning
+    tag: v1.131.2 # Use <tag>-cuda for NVidia GPUs
   resources:
     requests:
       cpu: 100m

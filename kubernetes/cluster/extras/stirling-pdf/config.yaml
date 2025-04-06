@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stirling-pdf
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: stirling-pdf
+data:
+  SECURITY_ENABLELOGIN: "false"
+  SYSTEM_ENABLEANALYTICS: "false"
+  SYSTEM_DEFAULTLOCALE: en-US
+  ALLOW_GOOGLE_VISIBILITY: "false"
+  SYSTEM_ENABLEALPHAFUNCTIONALITY: "false"
+  SYSTEM_SHOWUPDATE: "false"
+  METRICS_ENABLED: "false"
+  # Ref: https://github.com/Stirling-Tools/Stirling-PDF/blob/v0.36.0/Endpoint-groups.md
+  # - ENDPOINTS_TOREMOVE:
+  ENDPOINTS_GROUPSTOREMOVE: "CLI,Other,OpenCV,LibreOffice,qpdf,tesseract,Javascript"
