@@ -5,64 +5,6 @@ resources:
   - dns-endpoint.yaml
   - secret.yaml
 helmCharts:
-  - name: oauth2-proxy
-    namespace: kube-dashboard
-    releaseName: oauth2-proxy
-    version: 7.12.8
-    repo: https://oauth2-proxy.github.io/manifests
-    valuesInline:
-      config:
-        existingSecret: oauth2-proxy
-        google: {}
-        configFile: |-
-          email_domains = [ "*" ]
-          upstreams = [ "http://kubernetes-dashboard" ]
-      extraArgs:
-        provider: oidc
-        provider-display-name: Authentik
-        oidc-issuer-url: https://auth.brhd.io/application/o/kubernetes-dashboard/
-        skip-provider-button: "false"
-        pass-authorization-header: "true" 
-        cookie-refresh: 15m
-      ingress:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: public
-          cert-manager.io/cluster-issuer: lets-encrypt
-        path: /
-        pathType: ImplementationSpecific
-        hosts:
-         - k8s-dash1.brhd.io
-
-      livenessProbe:
-        enabled: true
-        initialDelaySeconds: 0
-        timeoutSeconds: 1
-      readinessProbe:
-        enabled: true
-        initialDelaySeconds: 0
-        timeoutSeconds: 5
-        periodSeconds: 10
-        successThreshold: 1
-
-      serviceAccount:
-        enabled: true
-      securityContext:
-        enabled: true
-      
-      alphaConfig:
-        enabled: false
-      authenticatedEmailsFile:
-        enabled: false
-      htpasswdFile:
-        enabled: false
-      autoscaling:
-        enabled: false
-      redis:
-        enabled: false
-      checkDeprecation: true
-      metrics:
-        enabled: false
   - name: kubernetes-dashboard
     namespace: kube-dashboard
     releaseName: kubernetes-dashboard
@@ -77,7 +19,7 @@ helmCharts:
           cpu: 50m
           memory: 50Mi
         limits:
-          cpu: 100m
+          cpu: 200m
           memory: 150Mi
       ingress:
         enabled: true
@@ -87,14 +29,14 @@ helmCharts:
           nginx.ingress.kubernetes.io/auth-response-headers: >-
             Set-Cookie
           nginx.ingress.kubernetes.io/auth-signin: >-
-            https://k8s-dash.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+            https://k8s.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
           nginx.ingress.kubernetes.io/auth-snippet: |
             proxy_set_header X-Forwarded-Host $http_host;
           nginx.ingress.kubernetes.io/auth-url: >-
             http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
         hosts:
           - k8s-dash.brhd.io
-          # - k8s.brhd.io
+          - k8s.brhd.io
       metricsScraper:
         enabled: true
         resources:
