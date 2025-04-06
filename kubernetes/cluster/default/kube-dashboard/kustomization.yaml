@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: kube-dashboard
 resources:
-  - dns-endpoint.yaml
+  - ingress.yaml
   - secret.yaml
 helmCharts:
   - name: kubernetes-dashboard
@@ -21,20 +21,7 @@ helmCharts:
         limits:
           memory: 150Mi
       ingress:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: public
-          cert-manager.io/cluster-issuer: lets-encrypt
-          nginx.ingress.kubernetes.io/auth-response-headers: >-
-            Set-Cookie
-          nginx.ingress.kubernetes.io/auth-signin: >-
-            https://k8s.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
-          nginx.ingress.kubernetes.io/auth-snippet: |
-            proxy_set_header X-Forwarded-Host $http_host;
-          nginx.ingress.kubernetes.io/auth-url: >-
-            http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
-        hosts:
-          - k8s.brhd.io
+        enabled: false
       metricsScraper:
         enabled: true
         resources:
@@ -53,53 +40,6 @@ helmCharts:
       tolerations:
         - key: "node.kubernetes.io/unschedulable"
           operator: Exists
-#       app:
-#         mode: 'dashboard'
-#         ingress:
-#           enabled: true
-#           hosts:
-#             - k8s.brhd.io
-#           useDefaultIngressClass: true
-#           useDefaultAnnotations: true
-#           issuer:
-#             name: lets-encrypt
-#             scope: cluster
-#       auth:
-#         resources:
-#           requests:
-#             cpu: 25m
-#             memory: 25Mi
-#           limits:
-#             cpu: 50m
-#             memory: 50Mi
-#       web:
-#         resources:
-#           requests:
-#             cpu: 25m
-#             memory: 25Mi
-#           limits:
-#             cpu: 50m
-#             memory: 50Mi
-#       metricsScraper:
-#         enabled: true
-#         resources:
-#           requests:
-#             cpu: 25m
-#             memory: 25Mi
-#           limits:
-#             cpu: 50m
-#             memory: 50Mi
-#       metrics-server:
-#         enabled: false
-#       kong:
-#         enabled: true
-#       cert-manager:
-#         enabled: false
-#       nginx:
-#         enabled: false
-#       extras:
-#         serviceMonitor:
-#           enabled: false
 # replacements:
 # - source:
 #     kind: Secret
