@@ -7,6 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/name: kubernetes-dashboard
   annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
     nginx.ingress.kubernetes.io/auth-response-headers: >-
@@ -18,7 +19,6 @@ metadata:
     nginx.ingress.kubernetes.io/auth-url: >-
       http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-    # service.alpha.kubernetes.io/app-protocols: '{"https":"HTTPS"}'
 spec:
   rules:
     - host: k8s.brhd.io
