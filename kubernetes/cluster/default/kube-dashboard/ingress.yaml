@@ -1,41 +1,42 @@
-# Service: Kubernetes Dashboard
-# Ingress: k8s.brhd.io
-# Label: app.kubernetes.io/name: kubernetes-dashboard
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kubernetes-dashboard
-  namespace: kube-system
+  namespace: kube-dashboard
   labels:
     app.kubernetes.io/name: kubernetes-dashboard
   annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header Authorization "Bearer token";
+    nginx.ingress.kubernetes.io/auth-response-headers: >-
+      Set-Cookie
+    nginx.ingress.kubernetes.io/auth-signin: >-
+      https://k8s.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+    nginx.ingress.kubernetes.io/auth-snippet: |
+      proxy_set_header X-Forwarded-Host $http_host;
+    nginx.ingress.kubernetes.io/auth-url: >-
+      http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
 spec:
   rules:
     - host: k8s.brhd.io
       http:
         paths:
-          - path: /
-            pathType: ImplementationSpecific
+          - pathType: Prefix
+            path: /
             backend:
               service:
                 name: kubernetes-dashboard
                 port:
                   number: 443
-  tls:
-    - hosts:
-        - k8s.brhd.io
 ---
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: k8s.brhd.io
-  namespace: monitoring
+  namespace:  kube-dashboard
 spec:
   endpoints:
     - dnsName: k8s.brhd.io
