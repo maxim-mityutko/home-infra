@@ -1,5 +1,6 @@
 ---
 # TODO: STS - probably don't need
+# TODO: Drop myminio-env-configuration
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -18,8 +19,6 @@ helmCharts:
         env:
           - name: OPERATOR_STS_ENABLED
             value: "on"
-        # image:
-        #   tag: v7.0.1
         replicaCount: 2  
         nodeSelector:
           node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
