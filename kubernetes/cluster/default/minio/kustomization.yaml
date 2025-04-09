@@ -1,9 +1,10 @@
 ---
+# TODO: STS - probably don't need
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - dns-endpoint.yaml
-  # - secret.yaml
+  - secret.yaml
 helmCharts:
   # Ref: https://github.com/minio/operator/tree/v7.0.1/helm/operator
   - name: operator
@@ -64,6 +65,7 @@ helmCharts:
         # Array of Kubernetes secrets from which the Operator generates MinIO users during tenant provisioning.
         # Each secret should specify the ``CONSOLE_ACCESS_KEY`` and ``CONSOLE_SECRET_KEY`` as the access key and secret key for that user
         users: []
+        # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes
         liveness: {}
         readiness: {}
         startup: {}
@@ -76,6 +78,5 @@ helmCharts:
           annotations:
             kubernetes.io/ingress.class: public
             cert-manager.io/cluster-issuer: lets-encrypt
-            # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
             nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           host: minio.brhd.io
