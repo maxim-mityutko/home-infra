@@ -1,0 +1,12 @@
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: minio.brhd.io
+  namespace: minio-tenant
+spec:
+  endpoints:
+    - dnsName: minio.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
