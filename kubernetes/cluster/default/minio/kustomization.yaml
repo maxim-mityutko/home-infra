@@ -1,0 +1,28 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: minio-operator
+resources: []
+helmCharts:
+  - name: operator
+    namespace: minio-operator
+    releaseName: operator
+    version: 1.8.1
+    repo: https://operator.min.io
+    valuesInline:
+      operator:
+        env:
+          - name: OPERATOR_STS_ENABLED
+            value: "on"
+        image:
+          tag: v7.0.0
+        replicaCount: 2  
+        nodeSelector:
+          node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
+        tolerations:
+          - key: "node.kubernetes.io/unschedulable"
+            operator: Exists
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
