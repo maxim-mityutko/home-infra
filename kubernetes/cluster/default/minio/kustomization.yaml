@@ -6,7 +6,7 @@ resources:
   - dns-endpoint.yaml
   - secret.yaml
 helmCharts:
-  # Ref: https://github.com/minio/operator/tree/v7.0.1/helm/operator
+  # Ref: https://github.com/minio/operator/tree/master/helm/operator
   - name: operator
     namespace: minio
     releaseName: operator
@@ -18,8 +18,8 @@ helmCharts:
         env:
           - name: OPERATOR_STS_ENABLED
             value: "on"
-        image:
-          tag: v7.0.1
+        # image:
+        #   tag: v7.0.1
         replicaCount: 2  
         nodeSelector:
           node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
@@ -30,7 +30,7 @@ helmCharts:
           requests:
             cpu: 100m
             memory: 100Mi
-  # Ref: https://github.com/minio/operator/tree/v7.0.1/helm/tenant
+  # Ref: https://github.com/minio/operator/tree/master/helm/tenant
   - name: tenant
     namespace: minio
     releaseName: tenant
