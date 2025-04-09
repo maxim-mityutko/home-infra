@@ -2,13 +2,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - namespace.yaml
   - dns-endpoint.yaml
   # - secret.yaml
 helmCharts:
   # Ref: https://github.com/minio/operator/tree/v7.0.1/helm/operator
   - name: operator
-    namespace: minio-operator
+    namespace: minio
     releaseName: operator
     version: 7.0.1
     repo: https://operator.min.io
@@ -32,7 +31,7 @@ helmCharts:
             memory: 100Mi
   # Ref: https://github.com/minio/operator/tree/v7.0.1/helm/tenant
   - name: tenant
-    namespace: minio-tenant
+    namespace: minio
     releaseName: tenant
     version: 7.0.1
     repo: https://operator.min.io
@@ -42,6 +41,9 @@ helmCharts:
         # Ref: https://github.com/minio/minio/tree/master/docs/config
         configuration:
           name: minio-secret-config
+        configSecret:
+          name: minio-secret-config
+          existingSecret: true
         pools:
           - servers: 1
             name: default
