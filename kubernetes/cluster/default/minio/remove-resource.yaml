@@ -2,5 +2,4 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: myminio-env-configuration
-  namespace: minio
 $patch: delete
