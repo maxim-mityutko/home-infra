@@ -50,7 +50,7 @@ spec:
           name: cnpg-default-secret
           key: username
         secretAccessKey:
-          name: aws-creds
+          name: cnpg-default-secret
           key: password
       data:
         compression: bzip2
