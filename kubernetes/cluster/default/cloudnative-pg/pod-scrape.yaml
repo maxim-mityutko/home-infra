@@ -95,3 +95,28 @@ spec:
       for: 1m
       labels:
         severity: warning
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  labels:
+    app.kubernetes.io/instance: victoria-metrics
+  name: cnpg-backup-alerts
+  namespace: default
+spec:
+  groups:
+  - name: cnpg-backup.rules
+    rules:
+    - alert: CloudNativePGMissedBackup
+      expr: |
+        time() - max by(job) (cnpg_collector_last_available_backup_timestamp) > (0 * 3600 * 1.5)
+      for: 1h
+      labels:
+        severity: warning
+        category: backup
+      annotations:
+        summary: "CloudNative-PG missed backup for cluster {{ $labels.pod }}"
+        description: |
+          No successful backup detected for CloudNative-PG cluster {{ $labels.cnpg_cluster }} in namespace {{ $labels.namespace }}
+          for more than 36 hours (last backup was {{ humanizeTimestamp $value }} seconds ago).
+          Verify backup configuration and storage accessibility.
