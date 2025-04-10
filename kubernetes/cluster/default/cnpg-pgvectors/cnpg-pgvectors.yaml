@@ -54,6 +54,8 @@ spec:
           key: password
       data:
         compression: bzip2
+      wal:
+        compression: bzip2
     retentionPolicy: 30d
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
