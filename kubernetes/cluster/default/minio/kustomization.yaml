@@ -51,7 +51,7 @@ helmCharts:
                 memory: 150m
               limits:
                 cpu: 150m
-                memory: 750m
+                # memory: 750m
         metrics:
           enabled: false
         certificate:
