@@ -44,7 +44,7 @@ spec:
   backup:
     barmanObjectStore:
       destinationPath: "s3://cnpg-backup/"
-      endpointURL: "https://minio.minio.svc.cluster.local"
+      endpointURL: "http://minio.minio.svc.cluster.local"
       s3Credentials:
         accessKeyId:
           name: cnpg-default-secret
