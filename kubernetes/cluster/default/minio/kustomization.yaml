@@ -25,8 +25,11 @@ helmCharts:
             operator: Exists
         resources:
           requests:
-            cpu: 100m
+            cpu: 50m
             memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 250Mi
   # Ref: https://github.com/minio/operator/tree/master/helm/tenant
   - name: tenant
     namespace: minio
@@ -47,11 +50,11 @@ helmCharts:
             size: 20G
             resources:
               requests:
-                cpu: 50m
-                # memory: 150m
-              limits:
                 cpu: 150m
-                # memory: 750m
+                memory: 350Mi
+              limits:
+                cpu: 750m
+                memory: 750Mi
         metrics:
           enabled: false
         certificate:
