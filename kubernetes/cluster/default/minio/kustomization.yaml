@@ -61,7 +61,8 @@ helmCharts:
           - name: sandbox
         # Array of Kubernetes secrets from which the Operator generates MinIO users during tenant provisioning.
         # Each secret should specify the ``CONSOLE_ACCESS_KEY`` and ``CONSOLE_SECRET_KEY`` as the access key and secret key for that user
-        users: []
+        users:
+          - minio-cnpg-user
         # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes
         liveness: {}
         readiness: {}
