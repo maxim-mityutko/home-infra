@@ -89,3 +89,5 @@ helmCharts:
             # Enable when TLS is in place
             # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           host: minio.brhd.io
+patchesStrategicMerge:
+  - remove-resource.yaml
