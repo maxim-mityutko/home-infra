@@ -42,6 +42,8 @@ spec:
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/backup_barmanobjectstore/
   backup:
+    target: primary
+    retentionPolicy: 14d
     barmanObjectStore:
       destinationPath: "s3://cnpg-backup/"
       endpointURL: "http://minio.minio.svc.cluster.local"
@@ -56,7 +58,6 @@ spec:
         compression: bzip2
       wal:
         compression: bzip2
-    retentionPolicy: 30d
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
   startDelay: 15
