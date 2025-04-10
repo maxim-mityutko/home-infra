@@ -16,8 +16,8 @@ helmCharts:
         # Ref: https://github.com/minio/operator/blob/master/docs/env-variables.md
         env:
           - name: OPERATOR_STS_ENABLED
-            value: "on"
-        replicaCount: 2  
+            value: "off"
+        replicaCount: 1
         nodeSelector:
           node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
         tolerations:
