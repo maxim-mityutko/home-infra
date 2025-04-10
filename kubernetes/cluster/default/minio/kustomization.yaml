@@ -37,6 +37,7 @@ helmCharts:
     version: 7.0.1
     repo: https://operator.min.io
     valuesInline:
+      # Ref: https://min.io/docs/minio/kubernetes/upstream/reference/operator-crd.html#tenantspec
       tenant:
         name: sokoban
         # Ref: https://github.com/minio/minio/tree/master/docs/config
@@ -58,7 +59,8 @@ helmCharts:
         metrics:
           enabled: false
         certificate:
-          requestAutoCert: true
+          externalCertSecret: []
+          requestAutoCert: false
         # Ref: https://min.io/docs/minio/kubernetes/upstream/reference/operator-crd.html#features
         features:
           bucketDNS: false
