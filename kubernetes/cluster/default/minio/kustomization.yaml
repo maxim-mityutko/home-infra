@@ -41,11 +41,17 @@ helmCharts:
           name: minio-secret-config
         pools:
           - servers: 1
-            name: pool-01
+            name: crate-01
             volumesPerServer: 1
             storageClassName: nfs-subdir
             size: 20G
-            resources: {}
+            resources:
+              requests:
+                cpu: 50m
+                memory: 150m
+              limits:
+                cpu: 150m
+                memory: 500m
         metrics:
           enabled: false
         certificate:
