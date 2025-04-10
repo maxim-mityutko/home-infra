@@ -42,6 +42,8 @@ helmCharts:
         # Ref: https://github.com/minio/minio/tree/master/docs/config
         configuration:
           name: minio-secret-config
+        configSecret:
+          existingSecret: minio-secret-config
         pools:
           - servers: 1
             name: crate-01
