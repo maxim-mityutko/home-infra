@@ -115,7 +115,7 @@ spec:
         severity: warning
         category: backup
       annotations:
-        summary: CloudNative-PG missed backup for cluster {{ $labels.job | replace "-metrics" "" }}
+        summary: CloudNative-PG missed backup for cluster {{ trimSuffix "-metrics" $labels.job }}
         description: |
-          No successful backup detected for CloudNative-PG cluster {{ $labels.job | replace "-metrics" "" }} for more than 25 hours (last backup was {{ $value / 60 }} minutes ago).
+          No successful backup detected for CloudNative-PG cluster {{ trimSuffix "-metrics" $labels.job }} for more than 25 hours (last backup was {{ $value / 60 }} minutes ago).
           Verify backup configuration and storage accessibility.
