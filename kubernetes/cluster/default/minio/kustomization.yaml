@@ -43,7 +43,7 @@ helmCharts:
         configuration:
           name: minio-secret-config
         configSecret:
-          existingSecret: minio-secret-config
+          existingSecret: true
         pools:
           - servers: 1
             name: crate-01
