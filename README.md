@@ -74,6 +74,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Redis** | In-memory database that persists on disk | [repo](https://github.com/redis/redis) | [helm](https://github.com/bitnami/charts/blob/main/bitnami/redis/README.md) |
 | **MetalLB** | A network load-balancer implementation for Kubernetes using standard routing protocols | [repo](https://github.com/metallb/metallb)<br>[docs](https://metallb.io) | [helm](https://github.com/metallb/metallb/blob/main/charts/metallb/README.md) |
 | **Ingress NGINX** | Ingress NGINX Controller for Kubernetes | [repo](https://github.com/kubernetes/ingress-nginx)<br>[docs](https://kubernetes.github.io/ingress-nginx/) | |
+| **MinIO** | High-performance, S3 compatible object storage | [repo](https://github.com/minio/minio)<br>[docs](https://min.io/docs/minio/kubernetes/upstream/index.html) | [helm-operator](https://github.com/minio/operator/tree/master/helm/operator)<br>[helm-tenant](https://github.com/minio/operator/tree/master/helm/tenant) |
 
 ### Backup
 | Project                | Description                                                                                       |                                                                                                     Docs / Repo                                                                                                      |                                          Docker / Helm                                           |
