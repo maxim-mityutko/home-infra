@@ -5,8 +5,10 @@ metadata:
   namespace: default
   annotations:
     metallb.io/address-pool: service-pool
+    metallb.io/loadBalancerIPs: "192.168.1.232"
 spec:
   externalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: false
   ports:
     - name: postgres
       port: 5432
