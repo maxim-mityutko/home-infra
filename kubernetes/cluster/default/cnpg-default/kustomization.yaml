@@ -5,4 +5,4 @@ resources:
   - cnpg-default.yaml
   - pod-scrape.yaml
   - service.yaml
-  # - backup.yaml
+  - backup.yaml
