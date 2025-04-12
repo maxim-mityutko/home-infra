@@ -7,3 +7,4 @@ resources:
   - volumes.yaml
   - pod-scrape.yaml
   - service.yaml
+  - backup.yaml

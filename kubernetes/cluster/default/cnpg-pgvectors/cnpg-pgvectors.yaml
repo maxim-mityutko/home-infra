@@ -7,7 +7,7 @@ spec:
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.4-v0.3.0
   imagePullPolicy: IfNotPresent
   instances: 1
-  enablePDB: true
+  enablePDB: false
   primaryUpdateStrategy: unsupervised
   logLevel: info
 
@@ -40,6 +40,25 @@ spec:
     # resizeInUseVolumes: true
     storageClass: nfs-subdir
 
+  # Ref: https://cloudnative-pg.io/documentation/1.25/backup_barmanobjectstore/
+  backup:
+    target: primary
+    retentionPolicy: 14d
+    barmanObjectStore:
+      destinationPath: "s3://cnpg-backup/"
+      endpointURL: "http://minio.minio.svc.cluster.local"
+      s3Credentials:
+        accessKeyId:
+          name: cnpg-default-secret
+          key: username
+        secretAccessKey:
+          name: cnpg-default-secret
+          key: password
+      data:
+        compression: bzip2
+      wal:
+        compression: bzip2
+
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
   startDelay: 15
   stopDelay: 30
@@ -61,6 +80,13 @@ spec:
           - matchExpressions:
             - key: kubernetes.io/local-storage
               operator: Exists
+  bootstrap:
+    # Ref: https://cloudnative-pg.io/documentation/1.25/recovery/#recovery-from-a-backup-object
+    recovery:
+      backup:
+        name: cnpg-pgvectors-backup
+      # recoveryTarget:
+      #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR
   # NOTE: keeping `bootstrap` section here for reference, refer to
   # CloudNativePG documentation for more details.
   # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
