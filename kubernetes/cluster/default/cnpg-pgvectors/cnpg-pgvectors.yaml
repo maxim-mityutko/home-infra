@@ -81,7 +81,6 @@ spec:
             - key: kubernetes.io/local-storage
               operator: Exists
   bootstrap:
-    initdb: {}
     # Ref: https://cloudnative-pg.io/documentation/1.25/recovery/#recovery-from-a-backup-object
     recovery:
       backup:
