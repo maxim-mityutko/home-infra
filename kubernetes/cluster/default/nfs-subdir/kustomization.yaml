@@ -39,26 +39,3 @@ helmCharts:
         pathPattern: ${.PVC.name}
       leaderElection:
         enabled: false
-  - name: nfs-subdir-minio
-    namespace: kube-system
-    releaseName: nfs-subdir-external-provisioner
-    version: 4.0.18
-    repo: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
-    valuesInline:
-      replicaCount: 1
-      nfs:
-        server: nas.brhd.io
-        path: /mnt/spin/backup/minio/
-        reclaimPolicy: Retain # Make sure it is 'Retain' otherwise the whole root will be dropped
-        mountOptions:
-          - nfsvers=4.1
-          - hard
-      storageClass:
-        name: nfs-subdir
-        archiveOnDelete: false
-        reclaimPolicy: Retain
-        accessModes: ReadWriteOnce
-        pathPattern: ${.PVC.name}
-      leaderElection:
-        enabled: false
-
