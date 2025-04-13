@@ -2,7 +2,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: cnpg-default
-  # Commenting for now as backups were not working, need further investigation
+  # Ref: https://cloudnative-pg.io/documentation/1.25/labels_annotations/
   annotations:
     cnpg.io/skipWalArchiving: enabled
     cnpg.io/skipEmptyWalArchiveCheck: true
