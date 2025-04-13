@@ -87,6 +87,7 @@ spec:
         name: cnpg-ha-backup
       # recoveryTarget:
       #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR
+      
   # NOTE: keeping `bootstrap` section here for reference, refer to
   # CloudNativePG documentation for more details.
   # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
