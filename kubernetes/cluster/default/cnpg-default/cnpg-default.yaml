@@ -2,8 +2,9 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: cnpg-default
-  annotations:
-    cnpg.io/skipWalArchiving: enabled
+  # Commenting for now as backups were not working, need further investigation
+  # annotations:
+  #   cnpg.io/skipWalArchiving: enabled
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.4
