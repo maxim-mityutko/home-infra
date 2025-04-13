@@ -1,7 +1,23 @@
+# MinIO: Console
+---
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: minio.brhd.io
+  namespace: minio
+spec:
+  endpoints:
+    - dnsName: minio.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
+# MinIO: API
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: s3.brhd.io
   namespace: minio
 spec:
   endpoints:
