@@ -92,6 +92,6 @@ helmCharts:
             cert-manager.io/cluster-issuer: lets-encrypt
             # Enable when TLS is in place
             # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          host: minio.brhd.io
+          host: console.s3.brhd.io
 patches:
   - path: remove-resource.yaml
