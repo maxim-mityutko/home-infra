@@ -1,10 +1,14 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: cnpg-pgvectors
+  name: cnpg-default
+  # Ref: https://cloudnative-pg.io/documentation/1.25/labels_annotations/
+  annotations:
+    cnpg.io/skipWalArchiving: enabled
+    cnpg.io/skipEmptyWalArchiveCheck: true
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.4-v0.3.0
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.4
   imagePullPolicy: IfNotPresent
   instances: 1
   enablePDB: false
@@ -12,9 +16,6 @@ spec:
   logLevel: info
 
   postgresql:
-    # Ref: https://github.com/tensorchord/cloudnative-pgvecto.rs
-    shared_preload_libraries:
-      - "vectors.so"
     parameters:
       timezone: "Etc/UTC"
       max_slot_wal_keep_size: 200MB
@@ -33,10 +34,10 @@ spec:
       memory: 400Mi
       cpu: 100m
     limits:
-      memory: 500Mi
+      memory: 1Gi
   
   storage:
-    size: 5Gi
+    size: 25Gi
     # resizeInUseVolumes: true
     storageClass: nfs-subdir
 
@@ -84,28 +85,51 @@ spec:
     # Ref: https://cloudnative-pg.io/documentation/1.25/recovery/#recovery-from-a-backup-object
     recovery:
       backup:
-        name: cnpg-pgvectors-backup
+        name: cnpg-default-backup
       # recoveryTarget:
-      #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR
+      #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR    
 
   # NOTE: keeping `bootstrap` section here for reference, refer to
   # CloudNativePG documentation for more details.
   # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
-  # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/
+  # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/     
   # bootstrap:
   #   initdb:
   #     import:
   #       type: monolith
   #       databases:
-  #         - immich
+  #         - bazarr_main
+  #         - gitea
+  #         - hass
+  #         - invidious
+  #         - jellyseerr
+  #         - lidarr_log
+  #         - lidarr_main
+  #         - miniflux
+  #         - prowlarr_log
+  #         - prowlarr_main
+  #         - radarr_log
+  #         - radarr_main
+  #         - readarr_cache
+  #         - readarr_main
+  #         - readarr_log
+  #         - sonarr_log
+  #         - sonarr_main
+  #         - speedtest_tracker
   #       roles:
-  #         - immich
+  #         - arr
+  #         - gitea
+  #         - hass
+  #         - invidious
+  #         - jellyseerr
+  #         - miniflux
+  #         - speedtest
   #       source:
-  #         externalCluster: postgres-pgvectors-cnpg
+  #         externalCluster: postgres-default-cluster
   # externalClusters:
-  #   - name: postgres-pgvectors-cnpg
+  #   - name: postgres-default-cluster
   #     connectionParameters: 
-  #       host: postgres-pgvectors-cnpg-rw.default.svc
+  #       host: postgres.default.svc
   #       dbname: postgres
   #       user: postgres
   #     password:

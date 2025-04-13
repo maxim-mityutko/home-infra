@@ -1,0 +1,21 @@
+# Omada: cnpg-default.internal.brhd.io
+apiVersion: v1
+kind: Service
+metadata:
+  name: cnpg-default-lb
+  namespace: default
+  annotations:
+    metallb.io/address-pool: service-pool
+    metallb.io/loadBalancerIPs: "192.168.1.233"
+spec:
+  externalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: false
+  ports:
+    - name: postgres
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    cnpg.io/cluster: cnpg-default
+    cnpg.io/instanceRole: primary
+  type: LoadBalancer
