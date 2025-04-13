@@ -80,52 +80,56 @@ spec:
           - matchExpressions:
             - key: kubernetes.io/local-storage
               operator: Exists
-              
   bootstrap:
-    initdb:
-      import:
-        type: monolith
-        databases:
-          - bazarr_main
-          - gitea
-          - hass
-          - invidious
-          - jellyseerr
-          - lidarr_log
-          - lidarr_main
-          - miniflux
-          - prowlarr_log
-          - prowlarr_main
-          - radarr_log
-          - radarr_main
-          - readarr_cache
-          - readarr_main
-          - readarr_log
-          - sonarr_log
-          - sonarr_main
-          - speedtest_tracker
-        roles:
-          - arr
-          - gitea
-          - hass
-          - invidious
-          - jellyseerr
-          - miniflux
-          - speedtest
-        source:
-          externalCluster: postgres-default-cluster
     # Ref: https://cloudnative-pg.io/documentation/1.25/recovery/#recovery-from-a-backup-object
-    # recovery:
-    #   backup:
-    #     name: cnpg-default-backup
-    #   # recoveryTarget:
-    #   #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR
-  externalClusters:
-    - name: postgres-default-cluster
-      connectionParameters: 
-        host: postgres.default.svc
-        dbname: postgres
-        user: postgres
-      password:
-        name: cnpg-default-secret
-        key: password
+    recovery:
+      backup:
+        name: cnpg-default-backup
+      # recoveryTarget:
+      #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR    
+  # NOTE: keeping `bootstrap` section here for reference, refer to
+  # CloudNativePG documentation for more details.
+  # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
+  # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/     
+  # bootstrap:
+  #   initdb:
+  #     import:
+  #       type: monolith
+  #       databases:
+  #         - bazarr_main
+  #         - gitea
+  #         - hass
+  #         - invidious
+  #         - jellyseerr
+  #         - lidarr_log
+  #         - lidarr_main
+  #         - miniflux
+  #         - prowlarr_log
+  #         - prowlarr_main
+  #         - radarr_log
+  #         - radarr_main
+  #         - readarr_cache
+  #         - readarr_main
+  #         - readarr_log
+  #         - sonarr_log
+  #         - sonarr_main
+  #         - speedtest_tracker
+  #       roles:
+  #         - arr
+  #         - gitea
+  #         - hass
+  #         - invidious
+  #         - jellyseerr
+  #         - miniflux
+  #         - speedtest
+  #       source:
+  #         externalCluster: postgres-default-cluster
+  # externalClusters:
+  #   - name: postgres-default-cluster
+  #     connectionParameters: 
+  #       host: postgres.default.svc
+  #       dbname: postgres
+  #       user: postgres
+  #     password:
+  #       name: cnpg-default-secret
+  #       key: password
