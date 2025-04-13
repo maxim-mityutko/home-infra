@@ -36,6 +36,27 @@ spec:
   selector:
     app.kubernetes.io/name: mosquitto
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mqtt-lb
+  namespace: smart-home
+  annotations:
+    metallb.io/address-pool: service-pool
+    metallb.io/loadBalancerIPs: "192.168.1.234"
+spec:
+  externalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: false
+  ports:
+    - name: mqtt-tcp-listener
+      port: 1883
+      protocol: TCP
+      targetPort: 1883
+  selector:
+    app.kubernetes.io/name: mosquitto
+  type: LoadBalancer
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
