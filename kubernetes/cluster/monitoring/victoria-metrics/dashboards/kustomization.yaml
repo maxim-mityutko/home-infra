@@ -27,9 +27,9 @@ configMapGenerator:
   - name: dashboard-k8s-views-pods
     files:
       - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-views-pods.json
-  # - name: k8s-system-api-server
-  #   files:
-  #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-system-api-server.json
+  - name: k8s-system-api-server
+    files:
+      - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-system-api-server.json
   # - name: k8s-system-coredns
   #   files:
   #     - https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-system-coredns.json

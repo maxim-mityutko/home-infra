@@ -224,7 +224,7 @@ helmCharts:
                       replacement:  brhd.io
         # Service Scrape (disabled)
         kubeApiServer:
-          enabled: false
+          enabled: true
           vmScrape:
             spec:
               endpoints:
