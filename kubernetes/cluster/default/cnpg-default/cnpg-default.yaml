@@ -19,6 +19,7 @@ spec:
     parameters:
       timezone: "Etc/UTC"
       max_slot_wal_keep_size: 200MB
+      archive_timeout: 30min
 
   managed:
     # Ref: https://cloudnative-pg.io/documentation/1.25/service_management/
