@@ -90,5 +90,3 @@ helmCharts:
             # Enable when TLS is in place
             # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           host: s3.brhd.io
-patches:
-  - path: remove-resource.yaml
