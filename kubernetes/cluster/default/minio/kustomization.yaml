@@ -41,8 +41,9 @@ helmCharts:
       tenant:
         name: sokoban
         # Ref: https://github.com/minio/minio/tree/master/docs/config
-        configuration:
+        configSecret:
           name: minio-secret-config
+          existingSecret: true
         pools:
           - servers: 1
             name: crate-01
