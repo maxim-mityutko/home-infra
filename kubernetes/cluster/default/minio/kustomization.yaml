@@ -80,11 +80,7 @@ helmCharts:
         env: []
       ingress:
         api:
-          enabled: true
-          annotations:
-            kubernetes.io/ingress.class: public
-            cert-manager.io/cluster-issuer: lets-encrypt
-          host: s3.brhd.io
+          enabled: false
         console:
           enabled: true
           annotations:
@@ -92,6 +88,6 @@ helmCharts:
             cert-manager.io/cluster-issuer: lets-encrypt
             # Enable when TLS is in place
             # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          host: console.s3.brhd.io
+          host: s3.brhd.io
 patches:
   - path: remove-resource.yaml
