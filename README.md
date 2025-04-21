@@ -25,12 +25,13 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
     1. SATA Controller - 2 Port: JMB58x - M.2 M+B Key
     2. SATA Controller - 6 port: ASM1166 - M.2 M Key
   * Storage:
-    1. SSD Samsung 840 Pro 256 GB x2
-    2. SSD Samsung 860 Evo 1 TB
-    3. SSD Crucial BX500 1TB x2
-    4. HDD Seagate IronWolf Pro NAS 12 TB x3
+    1. (ProxMox System) SSD Samsung 840 Pro 256 GB x2
+    2. (Master Nodes) SSD Samsung 860 Evo 1 TB      
+    3. (Worker Nodes) SSD Crucial BX500 1TB
+    4. (NAS) SSD Crucial BX500 1TB x2 
+    5. (NAS) HDD Seagate IronWolf Pro NAS 12 TB x3
   * Virtual Machines:
-    * TrueNAS Scale with 4 CPUs, 8GB RAM and extension cards (1) and (2) as direct passthrough and SSD (3) and HDD (4) in ZFS pulls for storage
+    * TrueNAS Scale with 4 CPUs, 8GB RAM and extension cards (1) and (2) as direct passthrough and SSD (4) and HDD (5) in ZFS pulls for storage
     * (Worker) Ubuntu Server with 4 CPUs and 8GB RAM
     * (Worker) Ubuntu Server with 6 CPUs and 16GB RAM
     * (Master) Ubuntu Server with 2 CPUs and 4 GB RAM x3
