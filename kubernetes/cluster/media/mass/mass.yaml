@@ -32,6 +32,11 @@ spec:
     - port: 8098
       protocol: TCP
       targetPort: 8098
+      name: stream
+    - port: 8095
+      protocol: TCP
+      targetPort: 8095
+      name: api
   selector:
     app.kubernetes.io/name: music-assistant
   type: LoadBalancer
