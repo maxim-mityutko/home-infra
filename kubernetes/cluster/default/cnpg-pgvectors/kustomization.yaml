@@ -6,3 +6,4 @@ resources:
   - cnpg-pgvectors.yaml
   - pod-scrape.yaml
   - service.yaml
+  - backup.yaml
