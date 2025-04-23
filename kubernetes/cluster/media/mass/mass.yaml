@@ -29,9 +29,9 @@ spec:
   externalTrafficPolicy: Cluster
   allocateLoadBalancerNodePorts: false
   ports:
-    - port: 8098
+    - port: 8097
       protocol: TCP
-      targetPort: 8098
+      targetPort: 8097
       name: stream
     - port: 8095
       protocol: TCP
