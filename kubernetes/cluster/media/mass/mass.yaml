@@ -38,16 +38,16 @@ spec:
         app.kubernetes.io/name: music-assistant
     spec:
       restartPolicy: Always
-      hostNetwork: true
+      hostNetwork: false
       containers:
-        - image: ghcr.io/music-assistant/server:2.5.0
+        - image: ghcr.io/music-assistant/server:2.5.1
           name: music-assistant
           resources:
             requests:
               cpu: 100m
-              memory: 200Mi
-            limits:
               memory: 500Mi
+            limits:
+              memory: 1Gi
           envFrom:
             - configMapRef:
                 name: music-assistant
