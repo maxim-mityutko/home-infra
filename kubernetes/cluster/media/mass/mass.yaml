@@ -29,9 +29,9 @@ spec:
   externalTrafficPolicy: Cluster
   allocateLoadBalancerNodePorts: false
   ports:
-    - port: 8095
+    - port: 8098
       protocol: TCP
-      targetPort: 8095
+      targetPort: 8098
   selector:
     app.kubernetes.io/name: music-assistant
   type: LoadBalancer
