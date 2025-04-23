@@ -17,6 +17,25 @@ spec:
   selector:
     app.kubernetes.io/name: music-assistant
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: music-assistant-lb
+  namespace: media
+  annotations:
+    metallb.io/address-pool: service-pool
+    metallb.io/loadBalancerIPs: "192.168.1.235"
+spec:
+  externalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: false
+  ports:
+    - port: 8095
+      protocol: TCP
+      targetPort: 8095
+  selector:
+    app.kubernetes.io/name: music-assistant
+  type: LoadBalancer
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
