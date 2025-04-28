@@ -1,0 +1,42 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-dashboard
+resources:
+  - ingress.yaml
+  - secret.yaml
+helmCharts:
+  - name: kubernetes-dashboard
+    namespace: kube-dashboard
+    releaseName: kubernetes-dashboard
+    version: 6.0.8
+    repo: https://kubernetes.github.io/dashboard/
+    valuesInline: 
+      extraArgs:
+        - --enable-skip-login
+        - --enable-insecure-login
+      resources:
+        requests:
+          cpu: 50m
+          memory: 50Mi
+        limits:
+          memory: 150Mi
+      ingress:
+        enabled: false
+      metricsScraper:
+        enabled: true
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+          limits:
+            cpu: 2000m
+            memory: 200Mi
+      rbac:
+        create: true
+      serviceAccount:
+        create: true
+      nodeSelector:
+        node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
+      tolerations:
+        - key: "node.kubernetes.io/unschedulable"
+          operator: Exists
