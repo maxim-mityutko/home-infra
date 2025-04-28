@@ -40,7 +40,7 @@ spec:
       restartPolicy: Always
       hostNetwork: true
       containers:
-        - image: mbentley/omada-controller:5.15.20.16
+        - image: mbentley/omada-controller:5.15.20.18
           name: omada
           resources:
             requests:
@@ -48,7 +48,7 @@ spec:
               memory: 1Gi
             limits:
               cpu: 1
-              memory: 1.5Gi
+              memory: 2Gi
           envFrom:
             - configMapRef:
                 name: omada
@@ -59,6 +59,8 @@ spec:
               mountPath: /opt/tplink/EAPController/logs
             - name: omada-autobackup
               mountPath: /opt/tplink/EAPController/data/autobackup
+      nodeSelector:
+        kubernetes.io/node-size: large
       volumes:
         - name: omada-data
           persistentVolumeClaim:

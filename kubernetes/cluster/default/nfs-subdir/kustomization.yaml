@@ -39,4 +39,3 @@ helmCharts:
         pathPattern: ${.PVC.name}
       leaderElection:
         enabled: false
-

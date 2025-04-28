@@ -1,13 +1,17 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: cnpg-ha
+  name: cnpg-default
+  # Ref: https://cloudnative-pg.io/documentation/1.25/labels_annotations/
+  annotations:
+    cnpg.io/skipWalArchiving: enabled
+    cnpg.io/skipEmptyWalArchiveCheck: true
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.2
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.4
   imagePullPolicy: IfNotPresent
-  instances: 2
-  enablePDB: true
+  instances: 1
+  enablePDB: false
   primaryUpdateStrategy: unsupervised
   logLevel: info
 
@@ -28,23 +32,20 @@ spec:
   
   resources:
     requests:
-      memory: 500Mi
-      cpu: 200m
+      memory: 400Mi
+      cpu: 100m
     limits:
       memory: 1Gi
   
   storage:
-    size: 2Gi
-    storageClass: local-storage
-    pvcTemplate:
-      selector:
-        matchLabels: 
-          app.kubernetes.io/name: cnpg-ha
-  
+    size: 25Gi
+    # resizeInUseVolumes: true
+    storageClass: nfs-subdir
+
   # Ref: https://cloudnative-pg.io/documentation/1.25/backup_barmanobjectstore/
   backup:
     target: primary
-    retentionPolicy: 14d
+    retentionPolicy: 7d
     barmanObjectStore:
       destinationPath: "s3://cnpg-backup/"
       endpointURL: "http://minio.minio.svc.cluster.local"
@@ -85,32 +86,51 @@ spec:
     # Ref: https://cloudnative-pg.io/documentation/1.25/recovery/#recovery-from-a-backup-object
     recovery:
       backup:
-        name: cnpg-ha-backup
+        name: cnpg-default-backup
       # recoveryTarget:
-      #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR
-      
+      #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR    
+
   # NOTE: keeping `bootstrap` section here for reference, refer to
   # CloudNativePG documentation for more details.
   # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
-  # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/
+  # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/     
   # bootstrap:
   #   initdb:
   #     import:
   #       type: monolith
   #       databases:
-  #         - authentik
-  #         - guacamole
-  #         - vaultwarden
+  #         - bazarr_main
+  #         - gitea
+  #         - hass
+  #         - invidious
+  #         - jellyseerr
+  #         - lidarr_log
+  #         - lidarr_main
+  #         - miniflux
+  #         - prowlarr_log
+  #         - prowlarr_main
+  #         - radarr_log
+  #         - radarr_main
+  #         - readarr_cache
+  #         - readarr_main
+  #         - readarr_log
+  #         - sonarr_log
+  #         - sonarr_main
+  #         - speedtest_tracker
   #       roles:
-  #         - authentik
-  #         - guacamole
-  #         - vaultwarden         
+  #         - arr
+  #         - gitea
+  #         - hass
+  #         - invidious
+  #         - jellyseerr
+  #         - miniflux
+  #         - speedtest
   #       source:
-  #         externalCluster: postgres-cnpg
+  #         externalCluster: postgres-default-cluster
   # externalClusters:
-  #   - name: postgres-cnpg
+  #   - name: postgres-default-cluster
   #     connectionParameters: 
-  #       host: postgres-cnpg-rw.default.svc
+  #       host: postgres.default.svc
   #       dbname: postgres
   #       user: postgres
   #     password:

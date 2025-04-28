@@ -25,12 +25,13 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
     1. SATA Controller - 2 Port: JMB58x - M.2 M+B Key
     2. SATA Controller - 6 port: ASM1166 - M.2 M Key
   * Storage:
-    1. SSD Samsung 840 Pro 256 GB x2
-    2. SSD Samsung 860 Evo 1 TB
-    3. SSD Crucial BX500 1TB x2
-    4. HDD Seagate IronWolf Pro NAS 12 TB x3
+    1. (ProxMox System) SSD Samsung 840 Pro 256 GB x2
+    2. (Master Nodes) SSD Samsung 860 Evo 1 TB      
+    3. (Worker Nodes) SSD Crucial BX500 1TB
+    4. (NAS) SSD Crucial BX500 1TB x2 
+    5. (NAS) HDD Seagate IronWolf Pro NAS 12 TB x3
   * Virtual Machines:
-    * TrueNAS Scale with 4 CPUs, 8GB RAM and extension cards (1) and (2) as direct passthrough and SSD (3) and HDD (4) in ZFS pulls for storage
+    * TrueNAS Scale with 4 CPUs, 8GB RAM and extension cards (1) and (2) as direct passthrough and SSD (4) and HDD (5) in ZFS pulls for storage
     * (Worker) Ubuntu Server with 4 CPUs and 8GB RAM
     * (Worker) Ubuntu Server with 6 CPUs and 16GB RAM
     * (Master) Ubuntu Server with 2 CPUs and 4 GB RAM x3
@@ -75,6 +76,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **MetalLB** | A network load-balancer implementation for Kubernetes using standard routing protocols | [repo](https://github.com/metallb/metallb)<br>[docs](https://metallb.io) | [helm](https://github.com/metallb/metallb/blob/main/charts/metallb/README.md) |
 | **Ingress NGINX** | Ingress NGINX Controller for Kubernetes | [repo](https://github.com/kubernetes/ingress-nginx)<br>[docs](https://kubernetes.github.io/ingress-nginx/) | [helm](https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/README.md) |
 | **Kubernetes Dashboard** | General-purpose web UI for Kubernetes clusters | [repo](https://github.com/kubernetes/dashboard)<br>[docs](https://github.com/kubernetes/dashboard/blob/master/docs/README.md) | [helm](https://github.com/kubernetes/dashboard/blob/master/charts/kubernetes-dashboard/README.md)
+| **MinIO** | High-performance, S3 compatible object storage | [repo](https://github.com/minio/minio)<br>[docs](https://min.io/docs/minio/kubernetes/upstream/index.html) | [helm-operator](https://github.com/minio/operator/tree/master/helm/operator)<br>[helm-tenant](https://github.com/minio/operator/tree/master/helm/tenant) |
 
 ### Backup
 | Project                | Description                                                                                       |                                                                                                     Docs / Repo                                                                                                      |                                          Docker / Helm                                           |
@@ -104,6 +106,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **CouchDB**              | Open-source document-oriented NoSQL database. Usecase is to enable [Self-hosted LiveSync](https://github.com/vrtmrz/obsidian-livesync) for [Obsidian](https://obsidian.md) |          [docs](https://docs.couchdb.org/)<br>[repo](https://github.com/apache/couchdb)           |                          [helm](https://github.com/apache/couchdb-helm/blob/main/couchdb/README.md)                           |
 | **Gitea**                | Lightweight and easy to use version control system                                                                                                                         |            [repo](https://github.com/go-gitea/gitea)<br>[docs](https://docs.gitea.com)            |                                          [helm](https://gitea.com/gitea/helm-chart)                                           |
 | **PairDrop**             | Transfer Files Cross-Platform. No Setup, No Signup                                                                                                                         |                        [repo](https://github.com/schlagmichdoch/PairDrop)                         |                                   [docker](https://github.com/linuxserver/docker-pairdrop)                                    |
+| **Stirling-PDF** | Locally hosted web application that allows you to perform various operations on PDF files | [repo](https://github.com/Stirling-Tools/Stirling-PDF)<br>[docs](https://docs.stirlingpdf.com) | [helm](https://github.com/Stirling-Tools/Stirling-PDF-chart) |
 
 ### Smart Home
 | Project                | Description                                                                     |                                          Docs / Repo                                           |                                 Docker / Helm                                  |
