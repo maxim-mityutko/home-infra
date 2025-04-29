@@ -1,0 +1,101 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+resources:
+  - ingress.yaml
+  - secret.yaml
+helmCharts:
+  - name: metrics-server
+    namespace: kube-system
+    releaseName: metrics-server
+    version: 0.7.2
+    repo: https://kubernetes-sigs.github.io/metrics-server/
+    valuesInline: 
+      serviceAccount:
+        create: true
+        name: metrics-server
+
+      rbac:
+        create: true
+
+      apiService:
+        create: true
+        insecureSkipTLSVerify: true
+
+      podSecurityContext: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+            - ALL
+
+      priorityClassName: system-cluster-critical
+
+      hostNetwork:
+        enabled: false
+
+      replicas: 1
+
+      revisionHistoryLimit: 3
+
+      updateStrategy:
+        type: RollingUpdate
+
+      defaultArgs: []
+      args:
+        - --cert-dir=/tmp
+        - --secure-port=4443
+        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+        - --kubelet-use-node-status-port
+        - --metric-resolution=15s
+        - --kubelet-insecure-tls=true
+
+      livenessProbe:
+        httpGet:
+          path: /livez
+          port: https
+          scheme: HTTPS
+        initialDelaySeconds: 0
+        periodSeconds: 30
+        failureThreshold: 3
+
+      readinessProbe:
+        httpGet:
+          path: /readyz
+          port: https
+          scheme: HTTPS
+        initialDelaySeconds: 20
+        periodSeconds: 30
+        failureThreshold: 3
+
+      service:
+        type: ClusterIP
+        port: 443
+        annotations: {}
+        labels: {}
+        #  Add these labels to have metrics-server show up in `kubectl cluster-info`
+        #  kubernetes.io/cluster-service: "true"
+        #  kubernetes.io/name: "Metrics-server"
+
+      addonResizer:
+        enabled: false
+
+      metrics:
+        enabled: false
+
+      serviceMonitor:
+        enabled: false
+
+      resources:
+        requests:
+          cpu: 100m
+          memory: 200Mi
+
+      tolerations:
+        - key: "node.kubernetes.io/unschedulable"
+          operator: Exists
