@@ -43,12 +43,12 @@ helmCharts:
       updateStrategy:
         type: RollingUpdate
 
-      defaultArgs: []
-      args:
+      defaultArgs:  # port 10250 instead of 4443
         - --cert-dir=/tmp
-        - --secure-port=4443
+        - --secure-port=4443 
         - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
         - --kubelet-use-node-status-port
+      args:
         - --metric-resolution=15s
         - --kubelet-insecure-tls=true
 
