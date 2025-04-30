@@ -20,7 +20,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: music-assistant-lb
+  name: music-assistant
   namespace: media
   annotations:
     metallb.io/address-pool: service-pool
