@@ -52,6 +52,10 @@ helmCharts:
           configBlock: |-
             lameduck 10s
         - name: ready
+        - name: log
+          parameters: .
+          configBlock: |-
+            class error
         - name: kubernetes
           parameters: cluster.local in-addr.arpa ip6.arpa
           configBlock: |-
@@ -67,10 +71,6 @@ helmCharts:
         - name: loop
         - name: reload
         - name: loadbalance
-        - name: log
-          parameters: .
-          configBlock: |-
-            class error
 
       # To use the livenessProbe, the health plugin needs to be enabled in CoreDNS' server config
       livenessProbe:
