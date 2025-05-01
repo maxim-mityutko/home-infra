@@ -88,12 +88,12 @@
     sudo chown -R <user> ~/.kube
     newgrp microk8s
     ```
-- add **DNS** servers
+- (optional) add **DNS** servers
 
     ```shell
     sudo nano /etc/systemd/resolved.conf
     ```
-    Set `DNS=1.1.1.1` and `FallbackDNS=1.0.0.1`
+    Set `DNS=x.x.x.x` (gateway IP) and ensure that `FallbackDNS=1.0.0.1` is commented out
 
 - move **journald logs** to *volatile* storage to reduce the disk pressure
 
