@@ -100,6 +100,8 @@ helmCharts:
       autoscaler:
         enabled: false
 
+      k8sAppLabelOverride: "kube-dns"
+      
       deployment:
         skipConfig: false
         enabled: true
