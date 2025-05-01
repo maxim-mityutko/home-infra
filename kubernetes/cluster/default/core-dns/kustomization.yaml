@@ -1,0 +1,107 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+helmCharts:
+  - name: coredns
+    namespace: kube-system
+    releaseName: coredns
+    version: 1.42.0
+    repo: https://coredns.github.io/helm
+    valuesInline:
+      resources:
+        limits:
+          cpu: 100m
+          memory: 170Mi
+        requests:
+          cpu: 100m
+          memory: 70Mi
+      
+      rollingUpdate:
+        maxUnavailable: 0
+
+      prometheus:
+        service:
+          enabled: false
+        monitor:
+          enabled: false
+
+      serviceAccount:
+        create: true
+
+      rbac:
+        create: true
+
+      isClusterService: true
+
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          add:
+            - NET_BIND_SERVICE
+          drop:
+            - ALL
+        readOnlyRootFilesystem: true
+
+      # Default zone is what Kubernetes recommends:
+      # https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#coredns-configmap-options
+      servers:
+      - zones:
+        - zone: .
+        port: 53
+        plugins:
+        - name: errors
+        - name: health
+          configBlock: |-
+            lameduck 5s
+        - name: ready
+        - name: log
+          parameters: .
+          configBlock: |-
+            class error
+        - name: kubernetes
+          parameters: cluster.local in-addr.arpa ip6.arpa
+          configBlock: |-
+            pods insecure
+            fallthrough in-addr.arpa ip6.arpa
+            ttl 30
+        # - name: prometheus
+        #   parameters: 0.0.0.0:9153
+        - name: forward
+          parameters: . 192.168.1.1
+          configBlock: |-
+            max_concurrent 1000
+        - name: cache
+          parameters: 30
+        - name: loop
+        - name: reload
+        - name: loadbalance
+
+      # To use the livenessProbe, the health plugin needs to be enabled in CoreDNS' server config
+      livenessProbe:
+        enabled: true
+
+      # To use the readinessProbe, the ready plugin needs to be enabled in CoreDNS' server config
+      readinessProbe:
+        enabled: true
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 1
+        failureThreshold: 3
+        successThreshold: 1
+
+      priorityClassName: system-cluster-critical
+
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+
+      hpa:
+        enabled: false
+      autoscaler:
+        enabled: false
+
+      k8sAppLabelOverride: "kube-dns"
+      
+      deployment:
+        skipConfig: false
+        enabled: true
