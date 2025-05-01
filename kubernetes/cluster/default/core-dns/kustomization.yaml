@@ -8,11 +8,12 @@ helmCharts:
     version: 1.42.0
     repo: https://coredns.github.io/helm
     valuesInline:
-      limits:
-        memory: 170Mi
-      requests:
-        cpu: 100m
-        memory: 70Mi
+      resources:
+        limits:
+          memory: 170Mi
+        requests:
+          cpu: 100m
+          memory: 70Mi
       
       rollingUpdate:
         maxUnavailable: 0
@@ -79,6 +80,13 @@ helmCharts:
       # To use the readinessProbe, the ready plugin needs to be enabled in CoreDNS' server config
       readinessProbe:
         enabled: true
+        failureThreshold: 3
+        periodSeconds: 10
+        timeoutSeconds: 5
+
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
 
       hpa:
         enabled: false
