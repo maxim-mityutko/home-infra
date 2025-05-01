@@ -6,7 +6,7 @@ helmCharts:
     namespace: kube-system
     releaseName: coredns
     version: 1.38.0
-    repo: oci://ghcr.io/coredns/charts/coredns
+    repo: https://coredns.github.io/helm
     valuesInline:
       limits:
         memory: 170Mi
