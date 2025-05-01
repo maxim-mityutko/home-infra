@@ -5,7 +5,7 @@ helmCharts:
   - name: core-dns
     namespace: kube-system
     releaseName: coredns
-    version: coredns-1.42.0
+    version: 1.38.0
     repo: oci://ghcr.io/coredns/charts/coredns
     valuesInline:
       limits:
