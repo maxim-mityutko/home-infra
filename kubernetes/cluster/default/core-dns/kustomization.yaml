@@ -80,10 +80,14 @@ helmCharts:
       # To use the readinessProbe, the ready plugin needs to be enabled in CoreDNS' server config
       readinessProbe:
         enabled: true
-        failureThreshold: 3
+        initialDelaySeconds: 30
         periodSeconds: 10
-        timeoutSeconds: 5
+        timeoutSeconds: 1
+        failureThreshold: 3
+        successThreshold: 1
 
+      priorityClassName: system-cluster-critical
+      
       tolerations:
         - key: CriticalAddonsOnly
           operator: Exists
