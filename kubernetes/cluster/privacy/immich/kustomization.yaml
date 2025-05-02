@@ -13,7 +13,7 @@ helmCharts:
   - name: immich
     namespace: privacy
     releaseName: immich
-    version: 0.9.2
+    version: 0.9.3
     repo: https://immich-app.github.io/immich-charts
     # Leveraging `renovate` ability to detect updates in Helm values
     # Ref: https://docs.renovatebot.com/modules/manager/helm-values/
