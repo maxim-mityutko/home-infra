@@ -16,6 +16,10 @@ spec:
       port: 8554
       targetPort: 8554
       name: rtsp
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      name: http
   selector:
     app.kubernetes.io/name: frigate
   type: LoadBalancer
