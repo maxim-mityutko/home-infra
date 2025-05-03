@@ -21,24 +21,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mqtt-external
-  namespace: smart-home
-  labels:
-    app.kubernetes.io/name: mosquitto
-spec:
-  type: NodePort # 30000-32767
-  ports:
-    - name: mqtt-tcp-listener
-      port: 31883
-      targetPort: 1883
-      nodePort: 31883
-      protocol: TCP
-  selector:
-    app.kubernetes.io/name: mosquitto
----
-apiVersion: v1
-kind: Service
-metadata:
   name: mqtt-lb
   namespace: smart-home
   annotations:
