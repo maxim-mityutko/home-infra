@@ -29,10 +29,10 @@ spec:
   externalTrafficPolicy: Cluster
   allocateLoadBalancerNodePorts: false
   ports:
-    - name: smart-home
+    - protocol: TCP
       port: 5000
-      protocol: TCP
       targetPort: 5000
+      name: http
   selector:
     cnpg.io/cluster: psa-car-controller
   type: LoadBalancer
