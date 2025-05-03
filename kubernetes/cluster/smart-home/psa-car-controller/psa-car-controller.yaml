@@ -16,23 +16,26 @@ spec:
   selector:
     app.kubernetes.io/name: psa-car-controller
 ---
+# Omada: car.internal.brhd.io
 apiVersion: v1
 kind: Service
 metadata:
-  name: psa-car-controller-external
+  name: psa-car-controller-lb
   namespace: smart-home
-  labels:
-    app.kubernetes.io/name: psa-car-controller
+  annotations:
+    metallb.io/address-pool: service-pool
+    metallb.io/loadBalancerIPs: "192.168.1.236"
 spec:
-  type: NodePort # 30000-32767
+  externalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: false
   ports:
-    - name: psa-car-controller
-      port: 31500
+    - protocol: TCP
+      port: 5000
       targetPort: 5000
-      nodePort: 31500
-      protocol: TCP
+      name: http
   selector:
     app.kubernetes.io/name: psa-car-controller
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment

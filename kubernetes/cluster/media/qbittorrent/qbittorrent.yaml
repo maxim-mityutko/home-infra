@@ -21,24 +21,27 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: qbittorrent
+  name: qbittorrent-lb
   labels:
     app.kubernetes.io/name: qbittorrent
+  annotations:
+    metallb.io/address-pool: service-pool
+    metallb.io/loadBalancerIPs: "192.168.1.238"
 spec:
   selector:
     app.kubernetes.io/name: qbittorrent
-  type: NodePort
+  externalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: false
+  type: LoadBalancer
   ports:
    - port: 32412
      name: torrent-tcp
      protocol: TCP
      targetPort: 32412
-     nodePort: 32412
    - port: 32412
      name: torrent-udp
      protocol: UDP
      targetPort: 32412
-     nodePort: 32412
 ---
 apiVersion: apps/v1
 kind: Deployment
