@@ -24,7 +24,7 @@ metadata:
   namespace: smart-home
   annotations:
     metallb.io/address-pool: service-pool
-    metallb.io/loadBalancerIPs: "192.168.1.232"
+    metallb.io/loadBalancerIPs: "192.168.1.236"
 spec:
   externalTrafficPolicy: Cluster
   allocateLoadBalancerNodePorts: false
