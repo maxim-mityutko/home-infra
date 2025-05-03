@@ -20,6 +20,10 @@ spec:
       port: 5000
       targetPort: 5000
       name: http
+    - protocol: TCP
+      port: 8971
+      targetPort: 8971
+      name: http-auth
   selector:
     app.kubernetes.io/name: frigate
   type: LoadBalancer
