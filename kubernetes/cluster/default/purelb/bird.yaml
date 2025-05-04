@@ -1,3 +1,4 @@
+---
 # Ref: https://gitlab.com/purelb/bird_router/-/blob/main/bird.yml-SAMPLE?ref_type=heads
 apiVersion: apps/v1
 kind: Deployment
