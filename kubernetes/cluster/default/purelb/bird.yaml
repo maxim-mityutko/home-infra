@@ -58,8 +58,6 @@ metadata:
   namespace: purelb-system
 data:
   bird.conf: |-
-    # Basic configuration for PureLB Virtual Interface
-
     # Configure logging
     log stderr all;
     #log "/var/log/bird.log" { debug, trace, info, remote, warning, error, auth, fatal, bug };
@@ -103,16 +101,16 @@ data:
 
     # OSPF example
     protocol ospf v2  {
-    ipv4 {
-      import none;
-      export where source ~ [ RTS_STATIC, RTS_DEVICE ];
-    };
-    area 0.0.0.0 {
-      interface "ens18.1" {
-        type broadcast;         # Detected by default
-          cost 10;                # Interface metric
+      ipv4 {
+        import none;
+        export where source ~ [ RTS_STATIC, RTS_DEVICE ];
       };
-    };
+      area 0.0.0.0 {
+        interface "ens18.1" {
+          type broadcast;         # Detected by default
+            cost 10;                # Interface metric
+        };
+      };
     }
 
     #protocol ospf v3 {
