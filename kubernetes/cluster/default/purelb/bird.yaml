@@ -25,6 +25,19 @@ spec:
         - name: bird
           # Ref: https://gitlab.com/purelb/bird_router/container_registry/1323381
           image: registry.gitlab.com/purelb/bird_router:v2.16.1-purelb0
+          env:
+            - name: BIRD_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: BIRD_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: BIRD_ML_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           resources:
             requests:
               memory: 200M
