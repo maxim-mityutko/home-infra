@@ -57,49 +57,30 @@ metadata:
   name: bird
   namespace: purelb-system
 data:
-  bird.conf: |-
-    # Configure logging
+  bird.conf: |
     log stderr all;
-    #log "/var/log/bird.log" { debug, trace, info, remote, warning, error, auth, fatal, bug };
-
-    # birdvars is created by docker_entrypoint.  It reads env variables for use in configuration
     include "/usr/local/include/birdvars.conf";
-
-    # Router ID set using birdvars
     router id k8sipaddr;
-
     watchdog warning 5 s;
     watchdog timeout 30 s;
-
-    # The Device protocol is required, it provide a mechanism for getting 
-    # information from the Linux kernel
     protocol device { 
       scan time 10; 
     }
-
-    # The direct protocol is used to import the routes added by PureLb to kube-lb0
     protocol direct {
       ipv4;
       ipv6;
       interface "kube-lb0";
     }
-
-    # The kernel protocol is used to learn and import kernel routes. 
-    # These are needed to establish connectivity on the local network
-    # Note that no routes from Birds are exported to the kernel, export defaults to false.
     protocol kernel {
       ipv4;
       scan time 10;			
       learn;		
     }
-
     protocol kernel {
       ipv6;
       scan time 10;
       learn;
     }
-
-    # OSPF example
     protocol ospf v2  {
       ipv4 {
         import none;
@@ -112,19 +93,6 @@ data:
         };
       };
     }
-
-    #protocol ospf v3 {
-    #  ipv6 {
-    #    import none;
-    #    export where source = RTS_STATIC;
-    #  };
-    #  area 0 {
-    #    interface "e*" {
-    #      type broadcast;		# Detected by default
-    #      cost 10;		# Interface metric
-    #    };
-    #  };
-    #}
 
 
 
