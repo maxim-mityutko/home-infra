@@ -1,0 +1,57 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: []
+helmCharts:
+  - name: purelb
+    namespace: purelb-system
+    releaseName: purelb
+    version: 0.12.0
+    repo: https://gitlab.com/api/v4/projects/20400619/packages/helm/stable
+    valuesInline:
+      Prometheus:
+        allocator:
+          Metrics:
+            enabled: false
+          serviceMonitor:
+            enabled: false
+          prometheusRules:
+            enabled: false
+        lbnodeagent:
+          Metrics:
+            enabled: false
+          serviceMonitor:
+            enabled: false
+          prometheusRules:
+            enabled: false
+      serviceGroup:
+        name: experimental-group
+        create: true
+        spec:
+          local:
+            subnet: "192.168.12.0/25"
+            pool: "192.168.12.50-192.168.12.55"
+            aggregation: default
+      defaultAnnouncer: "NotThisOne"
+      lbnodeagent:
+        sendgarp: true
+        resources:
+          limits:
+            memory: 100Mi
+        containerSecurityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - NET_RAW
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
+      allocator:
+        resources:
+          limits:
+            memory: 100Mi
+        containerSecurityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - all
+          readOnlyRootFilesystem: true
