@@ -1,6 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources: []
+resources:
+  - bird.yaml
 helmCharts:
   - name: purelb
     namespace: purelb-system
