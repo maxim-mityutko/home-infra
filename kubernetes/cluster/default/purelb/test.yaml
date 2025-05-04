@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/name: lighttpd
 spec:
   type: LoadBalancer
-  LoadBalancerClass: purelb.io/purelb
+  loadBalancerClass: purelb.io/purelb
   externalTrafficPolicy: Cluster
   allocateLoadBalancerNodePorts: false
   ipFamilies:
