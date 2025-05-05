@@ -41,11 +41,11 @@ spec:
                   fieldPath: metadata.namespace
           resources:
             requests:
-              memory: 200M
-              cpu: 50m
+              memory: 20Mi
+              cpu: 20m
             limits:
-              memory: 500M
-              cpu: 250m
+              memory: 25Mi
+              cpu: 20m
           securityContext:
             capabilities:
               add:
