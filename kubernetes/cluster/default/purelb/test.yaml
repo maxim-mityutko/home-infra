@@ -11,7 +11,7 @@ metadata:
 spec:
   type: LoadBalancer
   loadBalancerClass: purelb.io/purelb
-  externalTrafficPolicy: Cluster
+  externalTrafficPolicy: Local
   allocateLoadBalancerNodePorts: false
   ipFamilies:
     - IPv4
