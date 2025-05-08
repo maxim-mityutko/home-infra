@@ -1,0 +1,20 @@
+# Omada: minio.internal.brhd.io
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-lb
+  namespace: minio
+  annotations:
+    metallb.io/address-pool: service-pool
+    metallb.io/loadBalancerIPs: "192.168.1.239"
+spec:
+  externalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: false
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9000
+      name: http-minio
+  selector:
+    v1.min.io/tenant: sokoban
+  type: LoadBalancer
