@@ -6,8 +6,8 @@ metadata:
   name: frigate-lb
   namespace: smart-home
   annotations:
-    metallb.io/address-pool: service-pool
-    metallb.io/loadBalancerIPs: "192.168.1.237"
+    metallb.io/address-pool: forge-pool
+    metallb.io/loadBalancerIPs: "192.168.12.37"
 spec:
   externalTrafficPolicy: Cluster
   allocateLoadBalancerNodePorts: false
