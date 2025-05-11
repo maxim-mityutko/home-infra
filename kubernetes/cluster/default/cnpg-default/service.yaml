@@ -5,8 +5,8 @@ metadata:
   name: cnpg-default-lb
   namespace: default
   annotations:
-    metallb.io/address-pool: service-pool
-    metallb.io/loadBalancerIPs: "192.168.1.233"
+    metallb.io/address-pool: forge-pool
+    metallb.io/loadBalancerIPs: "192.168.12.33"
 spec:
   externalTrafficPolicy: Cluster
   allocateLoadBalancerNodePorts: false

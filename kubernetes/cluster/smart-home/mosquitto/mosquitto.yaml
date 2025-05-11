@@ -24,8 +24,8 @@ metadata:
   name: mqtt-lb
   namespace: smart-home
   annotations:
-    metallb.io/address-pool: service-pool
-    metallb.io/loadBalancerIPs: "192.168.1.234"
+    metallb.io/address-pool: forge-pool
+    metallb.io/loadBalancerIPs: "192.168.12.34"
 spec:
   externalTrafficPolicy: Cluster
   allocateLoadBalancerNodePorts: false

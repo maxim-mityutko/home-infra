@@ -17,7 +17,9 @@ envFromSecrets:
 resources:
   requests:
     cpu: 100m
-    memory: 100M
+    memory: 100Mi
+  limits:
+    cpu: 500m
 shmSize: 1Gi
 
 # Hardware

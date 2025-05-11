@@ -25,8 +25,8 @@ metadata:
   labels:
     app.kubernetes.io/name: qbittorrent
   annotations:
-    metallb.io/address-pool: service-pool
-    metallb.io/loadBalancerIPs: "192.168.1.238"
+    metallb.io/address-pool: forge-pool
+    metallb.io/loadBalancerIPs: "192.168.12.38"
 spec:
   selector:
     app.kubernetes.io/name: qbittorrent
