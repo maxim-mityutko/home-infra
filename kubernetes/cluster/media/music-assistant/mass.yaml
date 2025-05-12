@@ -62,7 +62,7 @@ spec:
         app.kubernetes.io/name: music-assistant
     spec:
       restartPolicy: Always
-      hostNetwork: false
+      hostNetwork: true
       containers:
         - image: ghcr.io/music-assistant/server:2.5.2
           name: music-assistant
