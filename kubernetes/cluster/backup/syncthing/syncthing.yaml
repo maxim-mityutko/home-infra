@@ -1,0 +1,112 @@
+# Service: Syncthing
+# Label: app.kubernetes.io/name: Syncthing
+---
+# Omada: sync.internal.brhd.io
+apiVersion: v1
+kind: Service
+metadata:
+  name: syncthing-lb
+  namespace: backup
+  annotations:
+    metallb.io/address-pool: forge-pool
+    metallb.io/loadBalancerIPs: "192.168.12.30"
+spec:
+  externalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: false
+  ports:
+    - protocol: TCP
+      port: 22000
+      targetPort: 22000
+      name: tcp-transfer
+    - protocol: UDP
+      port: 22000
+      targetPort: 22000
+      name: quic-transfer  
+    - protocol: UDP
+      port: 21027
+      targetPort: 21027
+      name: discovery 
+  selector:
+    app.kubernetes.io/name: syncthing
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syncthing
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: syncthing
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8384
+      targetPort: 8384
+      name: ui
+  selector:
+    app.kubernetes.io/name: syncthing
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncthing
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: syncthing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: syncthing
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: backup
+      labels:
+        app.kubernetes.io/name: syncthing
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: syncthing
+          image: lscr.io/linuxserver/syncthing:1.29.6
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m
+            limits:
+              memory: 500Mi
+          env:
+            - TZ: Europe/Amsterdam
+          ports:
+            - name: ui
+              containerPort: 8384
+              protocol: TCP
+            - name: tcp-transfer
+              containerPort: 22000
+              protocol: TCP
+            - name: quic-transfer
+              containerPort: 22000
+              protocol: UDP
+            - name: discovery
+              containerPort: 21027
+              protocol: UDP
+          livenessProbe:
+            exec:
+              command: ["curl", "-fkLsS", "-m", "2", "127.0.0.1:8384/rest/noauth/health", "|", "grep", "-o", "--color=never", "OK", "||", "exit 1"]
+            initialDelaySeconds: 30
+            periodSeconds: 120
+          volumeMounts:
+            - name: syncthing-config
+              mountPath: /config
+            - name: syncthing-data
+              mountPath: /data
+      volumes:
+        - name: syncthing-config
+          persistentVolumeClaim:
+            claimName: syncthing-config
+        - name: syncthing-data
+          persistentVolumeClaim:
+            claimName: syncthing-data
