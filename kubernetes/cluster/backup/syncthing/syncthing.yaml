@@ -77,7 +77,8 @@ spec:
               memory: 100Mi
               cpu: 100m
             limits:
-              memory: 500Mi
+              memory: 250Mi
+              cpu: 500m
           env:
             - name: TZ
               value: Europe/Amsterdam
@@ -94,11 +95,14 @@ spec:
             - name: discovery
               containerPort: 21027
               protocol: UDP
-          # livenessProbe:
-          #   exec:
-          #     command: ["curl", "-fkLsS", "-m", "2", "127.0.0.1:8384/rest/noauth/health", "|", "grep", "-o", "--color=never", "OK", "||", "exit 1"]
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 120
+          livenessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
+            initialDelaySeconds: 30
+            periodSeconds: 120
           volumeMounts:
             - name: syncthing-config
               mountPath: /config
