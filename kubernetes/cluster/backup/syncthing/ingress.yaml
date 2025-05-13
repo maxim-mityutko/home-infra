@@ -5,7 +5,7 @@ metadata:
   name: syncthing
   namespace: backup
   labels:
-    app.kubernetes.io/name: psa-car-controller
+    app.kubernetes.io/name: syncthing
   annotations:
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
