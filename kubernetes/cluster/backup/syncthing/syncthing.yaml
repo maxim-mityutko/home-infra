@@ -79,7 +79,8 @@ spec:
             limits:
               memory: 500Mi
           env:
-            - TZ: Europe/Amsterdam
+            - name: TZ
+              value: Europe/Amsterdam
           ports:
             - name: ui
               containerPort: 8384
