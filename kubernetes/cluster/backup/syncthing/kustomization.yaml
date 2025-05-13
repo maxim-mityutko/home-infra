@@ -4,4 +4,4 @@ namespace: backup
 resources:
   - syncthing.yaml
   - ingress.yaml
-  - volume.yaml
+  - volumes.yaml
