@@ -44,10 +44,6 @@ spec:
       port: 8384
       targetPort: 8384
       name: ui
-    - protocol: TCP
-      port: 9093
-      targetPort: 9093
-      name: metrics
   selector:
     app.kubernetes.io/name: syncthing
 ---
@@ -74,22 +70,6 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - name: syncthing-exporter
-          image: f100024/syncthing_exporter:0.3.12
-          resources:
-            requests:
-              memory: 50Mi
-              cpu: 50m
-            limits:
-              memory: 50Mi
-              cpu: 50m
-          env:
-            - name: SYNCTHING_URI
-              value: http://syncthing.backup.svc.cluster.local:8384/
-          ports:
-            - name: metrics
-              containerPort: 9093
-              protocol: TCP
         - name: syncthing
           image: lscr.io/linuxserver/syncthing:1.29.6
           resources:

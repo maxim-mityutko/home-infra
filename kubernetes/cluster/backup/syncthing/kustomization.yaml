@@ -5,4 +5,3 @@ resources:
   - syncthing.yaml
   - ingress.yaml
   - volumes.yaml
-  - service-scrape.yaml
