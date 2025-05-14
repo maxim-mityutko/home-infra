@@ -44,25 +44,12 @@ spec:
       port: 8384
       targetPort: 8384
       name: ui
-  selector:
-    app.kubernetes.io/name: syncthing
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: syncthing-exporter
-  namespace: backup
-  labels:
-    app.kubernetes.io/name: syncthing
-spec:
-  type: ClusterIP
-  ports:
     - protocol: TCP
       port: 9093
       targetPort: 9093
       name: metrics
   selector:
-    app.kubernetes.io/name: syncthing-exporter
+    app.kubernetes.io/name: syncthing
 ---
 apiVersion: apps/v1
 kind: Deployment
