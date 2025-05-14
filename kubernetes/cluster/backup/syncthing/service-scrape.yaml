@@ -14,4 +14,4 @@ spec:
       scrapeTimeout: 5s
   selector:
     matchLabels:
-      app.kubernetes.io/name: syncthing-exporter
+      app.kubernetes.io/name: syncthing
