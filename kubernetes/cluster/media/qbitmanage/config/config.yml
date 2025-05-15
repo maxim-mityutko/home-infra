@@ -85,7 +85,8 @@ share_limits:
       - radarr
       - sonarr
     max_ratio: 0.75
-    min_seeding_time: 43200 # 30 days
+    max_seeding_time: 365d
+    min_seeding_time: 30d
     cleanup: true
   private:
     priority: 3
