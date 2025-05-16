@@ -74,14 +74,16 @@ spec:
           image: lscr.io/linuxserver/syncthing:1.29.6
           resources:
             requests:
-              memory: 100Mi
+              memory: 100MiB
               cpu: 100m
             limits:
-              memory: 250Mi
+              memory: 1000MiB
               cpu: 500m
           env:
             - name: TZ
               value: Europe/Amsterdam
+            - name: GOMEMLIMIT
+              value: 750MiB
           ports:
             - name: ui
               containerPort: 8384
