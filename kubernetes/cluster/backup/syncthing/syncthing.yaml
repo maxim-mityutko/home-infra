@@ -74,10 +74,10 @@ spec:
           image: lscr.io/linuxserver/syncthing:1.29.6
           resources:
             requests:
-              memory: 100MiB
+              memory: 100Mi
               cpu: 100m
             limits:
-              memory: 1000MiB
+              memory: 1000Mi
               cpu: 500m
           env:
             - name: TZ
