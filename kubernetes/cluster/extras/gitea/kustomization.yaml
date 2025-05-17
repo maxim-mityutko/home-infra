@@ -171,6 +171,10 @@ helmCharts:
         enabled: false
       redis:
         enabled: false
+      valkey-cluster:
+        enabled: false
+      valkey:
+        enabled: false
       postgresql:
         enabled: false
       postgresql-ha:
