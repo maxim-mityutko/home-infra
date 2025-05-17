@@ -13,7 +13,7 @@ spec:
   storageClassName: nfs
   resources:
     requests:
-      storage: 500G
+      storage: 100G
   selector:
     matchLabels:
       storage.target: borg-repo
@@ -33,9 +33,9 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: nfs
   capacity:
-    storage: 500G
+    storage: 100G
   nfs:
     server: nas.brhd.io
-    path: /mnt/spin/borg
+    path: /mnt/spin/backup/borg
   mountOptions:
     - mountvers=4

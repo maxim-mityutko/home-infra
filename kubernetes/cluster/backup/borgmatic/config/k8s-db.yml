@@ -13,6 +13,7 @@ checks:
 encryption_passphrase: ${BORG_PASSPHRASE}
 archive_name_format: k8s-db-{now}
 read_special: true
+relocated_repo_access_is_ok: true
 postgresql_databases:
   - name: all
     hostname: cnpg-default-rw.default.svc.cluster.local
