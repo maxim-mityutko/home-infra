@@ -7,6 +7,7 @@ repositories:
 keep_daily: 14
 keep_weekly: 8
 keep_monthly: 6
+relocated_repo_access_is_ok: true
 checks:
   - name: repository
     frequency: 2 weeks
