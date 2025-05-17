@@ -74,7 +74,7 @@ spec:
           image: lscr.io/linuxserver/syncthing:1.29.6
           resources:
             requests:
-              memory: 100Mi
+              memory: 300Mi
               cpu: 300m
             limits:
               memory: 1000Mi
