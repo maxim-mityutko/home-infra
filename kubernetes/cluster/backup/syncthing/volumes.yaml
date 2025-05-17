@@ -1,0 +1,56 @@
+---
+# Syncthing - /config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: syncthing-config
+  labels:
+    app.kubernetes.io/name: syncthing
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10M
+---
+# Syncthing - /data
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: syncthing-data
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: syncthing
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: nfs
+  resources:
+    requests:
+      storage: 2T
+  selector:
+    matchLabels:
+      storage.target: syncthing-data
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: syncthing-data
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: syncthing
+    storage.target: syncthing-data
+spec:
+  accessModes:
+    - ReadWriteMany
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  capacity:
+    storage: 2T
+  nfs:
+    server: nas.brhd.io
+    path: /mnt/spin/backup/syncthing
+  mountOptions:
+    - mountvers=4

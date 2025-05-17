@@ -15,7 +15,7 @@
       "description": "Loose versioning for non-semver packages",
       "matchDatasources": ["kubernetes", "docker"],
       "versioning": "regex:^(release)-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.?(?<build>\\d+)?$",
-      "matchPackagePatterns": ["bazarr", "prowlarr", "qbitmanage", "qbittorrent","radarr", "unpackerr"]
+      "matchPackagePatterns": ["bazarr", "prowlarr", "qbitmanage", "qbittorrent","radarr", "unpackerr", "lidarr"]
     },
 	{
       "description": "Readarr: Only `testing` images are available",
