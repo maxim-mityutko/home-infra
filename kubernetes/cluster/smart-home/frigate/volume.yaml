@@ -35,6 +35,6 @@ spec:
     storage: 100G
   nfs:
     server: nas.brhd.io
-    path: /mnt/spin/service/frigate
+    path: /mnt/spin/service/nvr
   mountOptions:
     - mountvers=4
