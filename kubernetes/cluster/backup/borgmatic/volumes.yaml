@@ -28,3 +28,46 @@ spec:
   resources:
     requests:
       storage: 10M
+####################################
+# Repos
+####################################
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: borg-repo
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: borg
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: nfs
+  resources:
+    requests:
+      storage: 100G
+  selector:
+    matchLabels:
+      storage.target: borg-repo
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: borg-repo
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: borg
+    storage.target: borg-repo
+spec:
+  accessModes:
+    - ReadWriteMany
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  capacity:
+    storage: 100G
+  nfs:
+    server: nas.brhd.io
+    path: /mnt/spin/backup/borg
+  mountOptions:
+    - mountvers=4
