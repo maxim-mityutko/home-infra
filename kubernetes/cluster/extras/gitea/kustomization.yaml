@@ -167,9 +167,6 @@ helmCharts:
       signing:
         enabled: false
 
-      actions:
-        enabled: false
-
       redis-cluster:
         enabled: false
       redis:
