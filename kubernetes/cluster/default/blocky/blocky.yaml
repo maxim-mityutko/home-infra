@@ -24,7 +24,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: blocky
-          image: spx01/blocky:v0.25
+          image: spx01/blocky:v0.26
           args: 
             - --config 
             - ./config/
