@@ -1,0 +1,114 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cnpg-vectorchord
+# Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
+spec:
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.5-0.3.0
+  imagePullPolicy: IfNotPresent
+  instances: 1
+  enablePDB: false
+  primaryUpdateStrategy: unsupervised
+  logLevel: info
+
+  postgresql:
+    # Ref: https://github.com/tensorchord/cloudnative-pgvecto.rs
+    shared_preload_libraries:
+      - "vchord.so"
+    parameters:
+      timezone: "Etc/UTC"
+      max_slot_wal_keep_size: 200MB
+      archive_timeout: 60min
+
+  managed:
+    # Ref: https://cloudnative-pg.io/documentation/1.25/service_management/
+    services:
+      disabledDefaultServices: ["r","ro"]
+
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: cnpg-default-secret
+  
+  resources:
+    requests:
+      memory: 400Mi
+      cpu: 100m
+    limits:
+      memory: 500Mi
+  
+  storage:
+    size: 5Gi
+    # resizeInUseVolumes: true
+    storageClass: nfs-subdir
+
+  # Ref: https://cloudnative-pg.io/documentation/1.25/backup_barmanobjectstore/
+  backup:
+    target: primary
+    retentionPolicy: 14d
+    barmanObjectStore:
+      destinationPath: "s3://cnpg-backup/"
+      endpointURL: "http://minio.minio.svc.cluster.local"
+      s3Credentials:
+        accessKeyId:
+          name: cnpg-default-secret
+          key: username
+        secretAccessKey:
+          name: cnpg-default-secret
+          key: password
+      data:
+        compression: bzip2
+      wal:
+        compression: bzip2
+
+  # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
+  startDelay: 15
+  stopDelay: 30
+  smartShutdownTimeout: 15
+  probes:
+    readiness:
+      initialDelaySeconds: 15
+      timeoutSeconds: 5
+      periodSeconds: 30
+    liveness:
+      initialDelaySeconds: 15
+      timeoutSeconds: 5
+      periodSeconds: 30
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/local-storage
+              operator: Exists
+  bootstrap:
+    # Ref: https://cloudnative-pg.io/documentation/1.25/recovery/#recovery-from-a-backup-object
+    recovery:
+      backup:
+        name: cnpg-vectorchord-backup
+      # recoveryTarget:
+      #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR
+
+  # NOTE: keeping `bootstrap` section here for reference, refer to
+  # CloudNativePG documentation for more details.
+  # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
+  # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/
+  # bootstrap:
+  #   initdb:
+  #     import:
+  #       type: monolith
+  #       databases:
+  #         - immich
+  #       roles:
+  #         - immich
+  #       source:
+  #         externalCluster: cnpg-pgvectors
+  # externalClusters:
+  #   - name: cnpg-pgvectors
+  #     connectionParameters: 
+  #       host: cnpg-pgvectors-rw.default.svc
+  #       dbname: postgres
+  #       user: postgres
+  #     password:
+  #       name: cnpg-default-secret
+  #       key: password
