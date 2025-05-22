@@ -102,11 +102,11 @@ spec:
         roles:
           - immich
         source:
-          externalCluster: postgres-pgvectors-cnpg
+          externalCluster: cnpg-pgvectors
   externalClusters:
-    - name: postgres-pgvectors-cnpg
+    - name: cnpg-pgvectors
       connectionParameters: 
-        host: postgres-pgvectors-cnpg-rw.default.svc
+        host: cnpg-pgvectors-rw.default.svc
         dbname: postgres
         user: postgres
       password:
