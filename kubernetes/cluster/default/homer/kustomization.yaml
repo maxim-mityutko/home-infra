@@ -7,4 +7,4 @@ resources:
 configMapGenerator:
 - name: homer-config
   files:
-  - /config/config.yml
+  - config/config.yml
