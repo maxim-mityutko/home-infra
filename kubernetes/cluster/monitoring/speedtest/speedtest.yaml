@@ -80,4 +80,4 @@ data:
   PGID: "1000"
   PUID: "1000"
   PUBLIC_DASHBOARD: "true"
-  APP_URL: "speed.brhd.io"
+  APP_URL: "https://speed.brhd.io"
