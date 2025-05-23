@@ -37,6 +37,8 @@ spec:
           volumeMounts:
             - name: downloads
               mountPath: /downloads
+            - name: qbitmanage-config
+              mountPath: /config
       initContainers:
         - args:
             - '-v'
@@ -52,6 +54,8 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
           volumeMounts:
+            - name: qbitmanage-config
+              mountPath: /config 
             - name: qbitmanage-config-yml
               mountPath: /config.yml
               subPath: config.yml
@@ -59,6 +63,8 @@ spec:
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads
+        - name: qbitmanage-config
+          emptyDir: {}
         - name: qbitmanage-config-yml
           configMap:
             name: qbitmanage-config-yml
