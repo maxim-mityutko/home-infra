@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: media
 resources:
   - qbitmanage.yaml
-  - volumes.yaml
 configMapGenerator:
   - name: qbitmanage-config-yml
     files:
