@@ -532,7 +532,7 @@ engines:
   - name: rottentomatoes
     engine: rottentomatoes
     shortcut: rt
-    disabled: true
+    # disabled: true
 
   - name: soundcloud
     engine: soundcloud
