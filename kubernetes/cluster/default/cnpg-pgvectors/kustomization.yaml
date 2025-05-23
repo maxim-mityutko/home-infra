@@ -1,9 +1,0 @@
-# NOTE: Postgres with pgvecto.rs extension
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-namespace: default
-resources:
-  - cnpg-pgvectors.yaml
-  - pod-scrape.yaml
-  - service.yaml
-  - backup.yaml
