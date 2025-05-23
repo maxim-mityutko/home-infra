@@ -63,13 +63,6 @@ spec:
           ports:
             - containerPort: 80
             - containerPort: 443
-          volumeMounts:
-            - name: speedtest-config
-              mountPath: /config
-      volumes:
-        - name: speedtest-config
-          persistentVolumeClaim:
-            claimName: speedtest-config
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -87,3 +80,4 @@ data:
   PGID: "1000"
   PUID: "1000"
   PUBLIC_DASHBOARD: "true"
+  APP_URL: "speed.brhd.io"
