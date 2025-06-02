@@ -63,14 +63,14 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: garage
+      app.kubernetes.io/name: garage
   serviceName: "garage"
   replicas: 1
   revisionHistoryLimit: 1
   template:
     metadata:
       labels:
-        app: garage
+        app.kubernetes.io/name: garage
     spec:
       terminationGracePeriodSeconds: 10
       containers:
@@ -79,8 +79,8 @@ spec:
         ports:
           - containerPort: 3900
             name: s3-api
-          - containerPort: 3901
-            name: rpc
+          # - containerPort: 3901
+          #   name: rpc
           - containerPort: 3902
             name: web-api
           - containerPort: 3903
@@ -96,6 +96,18 @@ spec:
         envFrom:
           - secretRef:
               name: garage
+        livenessProbe: {}
+          # httpGet:
+          #  path: /health
+          #  port: 3903
+          # initialDelaySeconds: 5
+          # periodSeconds: 30
+        readinessProbe: {}
+          # httpGet:
+          #  path: /health
+          #  port: 3903
+          # initialDelaySeconds: 5
+          # periodSeconds: 30
       volumes:
       - name: garage-config
         configMap:
@@ -136,10 +148,10 @@ spec:
       port: 3900
       targetPort: 3900
       name: s3-api
-    - protocol: TCP
-      port: 3901
-      targetPort: 3901
-      name: rpc
+    # - protocol: TCP
+    #   port: 3901
+    #   targetPort: 3901
+    #   name: rpc
     - protocol: TCP
       port: 3902
       targetPort: 3902
@@ -149,4 +161,4 @@ spec:
       targetPort: 3903
       name: admin-api
   selector:
-    app: garage
+    app.kubernetes.io/name: garage
