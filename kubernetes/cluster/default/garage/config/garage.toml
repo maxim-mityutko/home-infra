@@ -3,7 +3,7 @@ metadata_dir = "/var/lib/garage/meta"
 data_dir = "/var/lib/garage/data"
 
 db_engine = "sqlite"
-block_size = 10485760
+block_size = "10M"
 
 replication_factor  = 1
 compression_level = "none"
