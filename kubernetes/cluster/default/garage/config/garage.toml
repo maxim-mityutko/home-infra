@@ -1,8 +1,9 @@
+# Ref: https://garagehq.deuxfleurs.fr/documentation/reference-manual/configuration/
 metadata_dir = "/var/lib/garage/meta"
 data_dir = "/var/lib/garage/data"
 
-db_engine = "lmdb"
-block_size = 1048576
+db_engine = "sqlite"
+block_size = 10485760
 
 replication_factor  = 1
 compression_level = "none"
@@ -11,6 +12,7 @@ rpc_bind_addr = "[::]:3901"
 rpc_public_addr = "localhost:3901"
 
 bootstrap_peers = []
+allow_punycode = false
 
 [kubernetes_discovery]
 namespace = "garage"
