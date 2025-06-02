@@ -42,7 +42,7 @@ metadata:
     cert-manager.io/cluster-issuer: lets-encrypt
 spec:
   rules:
-    - host: s3w.brhd.io
+    - host: static.s3w.brhd.io
       http:
         paths:
           - pathType: Prefix
