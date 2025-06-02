@@ -87,9 +87,9 @@ spec:
             name: admin-api
         volumeMounts:
           - name: garage-meta
-            mountPath: /mnt/meta
+            mountPath: /var/lib/garage/meta
           - name: garage-data
-            mountPath: /mnt/data
+            mountPath: /var/lib/garage/data
           - name: garage-config
             mountPath: /etc/garage.toml
             subPath: garage.toml

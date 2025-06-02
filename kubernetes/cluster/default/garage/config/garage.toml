@@ -1,5 +1,5 @@
-metadata_dir = "/mnt/meta"
-data_dir = "/mnt/data"
+metadata_dir = "/var/lib/garage/meta"
+data_dir = "/var/lib/garage/data"
 
 db_engine = "lmdb"
 block_size = 1048576
