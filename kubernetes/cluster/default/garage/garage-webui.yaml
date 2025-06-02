@@ -54,7 +54,7 @@ spec:
             - secretRef:
                 name: garage-webui  
             - configMapRef:
-                name: meshcentral
+                name:  garage-webui
           volumeMounts:
             - name: garage-config
               mountPath: /etc/garage.toml
