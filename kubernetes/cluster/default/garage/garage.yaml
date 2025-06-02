@@ -111,7 +111,7 @@ spec:
            path: /health
            port: 3903
           initialDelaySeconds: 5
-          periodSeconds: 30
+          periodSeconds: 15
       volumes:
       - name: garage-config
         configMap:
