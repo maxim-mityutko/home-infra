@@ -71,6 +71,7 @@ spec:
       labels:
         app: garage
     spec:
+      revisionHistoryLimit: 1
       terminationGracePeriodSeconds: 10
       containers:
       - name: garage
