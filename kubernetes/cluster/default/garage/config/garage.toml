@@ -5,7 +5,7 @@ db_engine = "lmdb"
 block_size = 1048576
 
 replication_factor  = 1
-compression_level = 10
+compression_level = "none"
 
 rpc_bind_addr = "[::]:3901"
 rpc_public_addr = "localhost:3901"
@@ -19,7 +19,7 @@ skip_crd = true
 
 [s3_api]
 api_bind_addr = "[::]:3900"
-s3_region = "garage"
+s3_region = "us-east-1"
 root_domain = ".s3.brhd.io"
 
 [s3_web]

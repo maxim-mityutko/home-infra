@@ -5,7 +5,7 @@ resources:
   - garage.yaml
   - secret.yaml
   - garage-webui.yaml
-  - ingress.yaml
+  - ingress.yaml  # TODO: Authentik / Readme / Test CNPG
 configMapGenerator:
 - name: garage-config
   files:
