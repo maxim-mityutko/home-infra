@@ -33,16 +33,16 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: garage-web
+  name: garage-cdn
   namespace: garage
   labels:
-    app.kubernetes.io/name: garage-web
+    app.kubernetes.io/name: garage-cdn
   annotations:
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
 spec:
   rules:
-    - host: "static.brhd.io"
+    - host: "cdn.brhd.io"
       http:
         paths:
           - pathType: Prefix
