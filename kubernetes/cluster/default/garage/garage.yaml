@@ -135,10 +135,18 @@ spec:
     - protocol: TCP
       port: 3900
       targetPort: 3900
-      name: api
+      name: s3-api
+    - protocol: TCP
+      port: 3901
+      targetPort: 3901
+      name: rpc
+    - protocol: TCP
+      port: 3902
+      targetPort: 3902
+      name: web-api
     - protocol: TCP
       port: 3903
       targetPort: 3903
-      name: admin
+      name: admin-api
   selector:
     app: garage
