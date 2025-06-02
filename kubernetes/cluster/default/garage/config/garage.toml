@@ -4,7 +4,7 @@ data_dir = "/mnt/data"
 db_engine = "lmdb"
 block_size = 1048576
 
-replication_mode = "2"
+replication_mode = "1"
 compression_level = 10
 
 rpc_bind_addr = "[::]:3901"
