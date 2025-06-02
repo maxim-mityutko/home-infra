@@ -64,7 +64,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: garage
-  serviceName: "garage"
+  serviceName: garage
   replicas: 1
   revisionHistoryLimit: 1
   template:
