@@ -114,6 +114,8 @@ spec:
            port: 3903
           initialDelaySeconds: 5
           periodSeconds: 15
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
       volumes:
       - name: garage-config
         configMap:
