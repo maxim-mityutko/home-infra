@@ -1,0 +1,113 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: garagenodes.deuxfleurs.fr
+spec:
+  conversion:
+    strategy: None
+  group: deuxfleurs.fr
+  names:
+    kind: GarageNode
+    listKind: GarageNodeList
+    plural: garagenodes
+    singular: garagenode
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: Auto-generated derived type for Node via `CustomResource`
+        properties:
+          spec:
+            properties:
+              address:
+                format: ip
+                type: string
+              hostname:
+                type: string
+              port:
+                format: uint16
+                minimum: 0
+                type: integer
+            required:
+            - address
+            - hostname
+            - port
+            type: object
+        required:
+        - spec
+        title: GarageNode
+        type: object
+    served: true
+    storage: true
+    subresources: {}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: garage-admin
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: system:serviceaccount:default:default
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: garage
+spec:
+  selector:
+    matchLabels:
+      app: garage
+  serviceName: "garage"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: garage
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: garage
+        image: dxflrs/garage:v1.1.0
+        ports:
+        - containerPort: 3900
+          name: s3-api
+        - containerPort: 3901
+          name: rpc
+        - containerPort: 3902
+          name: web-api
+        - containerPort: 3903
+          name: admin-api
+        volumeMounts:
+        # - name: fast
+        #   mountPath: /mnt/fast
+        # - name: slow
+        #   mountPath: /mnt/slow
+        - name: etc
+          mountPath: /etc/garage.toml
+          subPath: garage.toml
+      volumes:
+      - name: etc
+        configMap:
+          name: garage-config
+  # volumeClaimTemplates:
+  # - metadata:
+  #     name: fast
+  #   spec:
+  #     accessModes: [ "ReadWriteOnce" ]
+  #     resources:
+  #       requests:
+  #         storage: 100Mi
+  # - metadata:
+  #     name: slow
+  #   spec:
+  #     accessModes: [ "ReadWriteOnce" ]
+  #     resources:
+  #       requests:
+  #         storage: 100Mi

@@ -1,0 +1,34 @@
+metadata_dir = "/mnt/meta"
+data_dir = "/mnt/data"
+
+db_engine = "lmdb"
+block_size = 1048576
+
+replication_mode = "1"
+compression_level = 10
+
+rpc_bind_addr = "[::]:3901"
+rpc_public_addr = "localhost:3901"
+
+bootstrap_peers = []
+
+[kubernetes_discovery]
+namespace = "garage"
+service_name = "garage-daemon"
+skip_crd = false
+
+[s3_api]
+api_bind_addr = "[::]:3900"
+s3_region = "garage"
+root_domain = ".s3.brhd.io"
+
+[s3_web]
+bind_addr = "[::]:3902"
+root_domain = ".s3w.brhd.io"
+
+[admin]
+bind_addr = "[::]:3903"
+
+# GARAGE_RPC_SECRET
+# GARAGE_ADMIN_TOKEN
+# GARAGE_METRICS_TOKEN 

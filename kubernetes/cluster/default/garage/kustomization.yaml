@@ -1,96 +1,101 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources: []
+resources:
+  - garage.yaml
   # - garage-webui.yaml
-helmCharts:
-  - name: garage
-    namespace: garage
-    releaseName: garage
-    version: 0.7.0
-    repo: https://git.deuxfleurs.fr/Deuxfleurs/garage/src/branch/main/script/helm
-    valuesInline:
-      # Ref: https://garagehq.deuxfleurs.fr/documentation/reference-manual/configuration/#replication-mode
-      garage:
-        dbEngine: lmdb
-        blockSize: 1048576 # 1MB
-        replicationMode: 1
-        compressionLevel: 10
-        metadataAutoSnapshotInterval: ""
-        rpcBindAddr: "[::]:3901"
-        kubernetesSkipCrd: false
-        s3:
-          api:
-            region: garage
-            rootDomain: .s3a.brhd.io
-          web:
-            rootDomain: .s3w.brhd.io
-            index: index.html
-        existingConfigMap: ""
-      persistence:
-        enabled: true
-        meta:
-          storageClass: nfs-subdir
-          size: 100Mi
-        data:
-          storageClass: nfs-subdir
-          size: 50Gi
-      deployment:
-        kind: StatefulSet # Switchable to DaemonSet
-        replicaCount: 1
-        podManagementPolicy: OrderedReady
-      image:
-        # -- default to amd64 docker image
-        repository: dxflrs/garage
-      serviceAccount:
-        create: true
-      podSecurityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        runAsNonRoot: true
-      securityContext:
-        capabilities:
-          drop:
-            - ALL
-        readOnlyRootFilesystem: true
-      service:
-        type: ClusterIP
-        s3:
-          api:
-            port: 3900
-          web:
-            port: 3902
-      ingress:
-        s3:
-          api:
-            enabled: false
-          web:
-            enabled: false
-      resources:
-        limits:
-          cpu: 100m
-          memory: 512Mi
-        requests:
-          cpu: 100m
-          memory: 256Mi
+configMapGenerator:
+- name: garage-config
+  files:
+  - config/config.toml
+# helmCharts:
+#   - name: garage
+#     namespace: garage
+#     releaseName: garage
+#     version: 0.7.0
+#     repo: https://git.deuxfleurs.fr/Deuxfleurs/garage/src/branch/main/script/helm
+#     valuesInline:
+#       # Ref: https://garagehq.deuxfleurs.fr/documentation/reference-manual/configuration/#replication-mode
+#       garage:
+#         dbEngine: lmdb
+#         blockSize: 1048576 # 1MB
+#         replicationMode: 1
+#         compressionLevel: 10
+#         metadataAutoSnapshotInterval: ""
+#         rpcBindAddr: "[::]:3901"
+#         kubernetesSkipCrd: false
+#         s3:
+#           api:
+#             region: garage
+#             rootDomain: .s3a.brhd.io
+#           web:
+#             rootDomain: .s3w.brhd.io
+#             index: index.html
+#         existingConfigMap: ""
+#       persistence:
+#         enabled: true
+#         meta:
+#           storageClass: nfs-subdir
+#           size: 100Mi
+#         data:
+#           storageClass: nfs-subdir
+#           size: 50Gi
+#       deployment:
+#         kind: StatefulSet # Switchable to DaemonSet
+#         replicaCount: 1
+#         podManagementPolicy: OrderedReady
+#       image:
+#         # -- default to amd64 docker image
+#         repository: dxflrs/garage
+#       serviceAccount:
+#         create: true
+#       podSecurityContext:
+#         runAsUser: 1000
+#         runAsGroup: 1000
+#         fsGroup: 1000
+#         runAsNonRoot: true
+#       securityContext:
+#         capabilities:
+#           drop:
+#             - ALL
+#         readOnlyRootFilesystem: true
+#       service:
+#         type: ClusterIP
+#         s3:
+#           api:
+#             port: 3900
+#           web:
+#             port: 3902
+#       ingress:
+#         s3:
+#           api:
+#             enabled: false
+#           web:
+#             enabled: false
+#       resources:
+#         limits:
+#           cpu: 100m
+#           memory: 512Mi
+#         requests:
+#           cpu: 100m
+#           memory: 256Mi
 
-      # -- Specifies a livenessProbe
-      livenessProbe: {}
-        # httpGet:
-        #  path: /health
-        #  port: 3903
-        # initialDelaySeconds: 5
-        # periodSeconds: 30
-      # -- Specifies a readinessProbe
-      readinessProbe: {}
-        # httpGet:
-        #  path: /health
-        #  port: 3903
-        # initialDelaySeconds: 5
-        # periodSeconds: 30
-      nodeSelector: {}
-      tolerations: []
-      monitoring:
-        metrics:
-          enabled: false
+#       # -- Specifies a livenessProbe
+#       livenessProbe: {}
+#         # httpGet:
+#         #  path: /health
+#         #  port: 3903
+#         # initialDelaySeconds: 5
+#         # periodSeconds: 30
+#       # -- Specifies a readinessProbe
+#       readinessProbe: {}
+#         # httpGet:
+#         #  path: /health
+#         #  port: 3903
+#         # initialDelaySeconds: 5
+#         # periodSeconds: 30
+#       nodeSelector: {}
+#       tolerations: []
+#       monitoring:
+#         metrics:
+#           enabled: false
