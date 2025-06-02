@@ -19,7 +19,7 @@ skip_crd = true
 
 [s3_api]
 api_bind_addr = "[::]:3900"
-s3_region = "us-east-1"
+s3_region = "garage"
 root_domain = ".s3.brhd.io"
 
 [s3_web]
