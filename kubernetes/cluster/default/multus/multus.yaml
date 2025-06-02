@@ -168,7 +168,7 @@ spec:
       volumes:
         - name: cni
           hostPath:
-            path: "var/snap/microk8s/current/args/cni-network/"
+            path: "/var/snap/microk8s/current/args/cni-network/"
         - name: cnibin
           hostPath:
-            path: "var/snap/microk8s/current/opt/cni/bin/"
+            path: "/var/snap/microk8s/current/opt/cni/bin/"
