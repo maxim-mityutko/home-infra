@@ -27,4 +27,4 @@ bind_addr = "[::]:3902"
 root_domain = ".s3w.brhd.io"
 
 [admin]
-bind_addr = "[::]:3903"
+api_bind_addr = "[::]:3903"
