@@ -1,0 +1,164 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: garagenodes.deuxfleurs.fr
+spec:
+  conversion:
+    strategy: None
+  group: deuxfleurs.fr
+  names:
+    kind: GarageNode
+    listKind: GarageNodeList
+    plural: garagenodes
+    singular: garagenode
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: Auto-generated derived type for Node via `CustomResource`
+        properties:
+          spec:
+            properties:
+              address:
+                format: ip
+                type: string
+              hostname:
+                type: string
+              port:
+                format: uint16
+                minimum: 0
+                type: integer
+            required:
+            - address
+            - hostname
+            - port
+            type: object
+        required:
+        - spec
+        title: GarageNode
+        type: object
+    served: true
+    storage: true
+    subresources: {}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: garage-admin
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: system:serviceaccount:default:default
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: garage
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: garage
+  serviceName: garage
+  replicas: 1
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: garage
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: garage
+        image: dxflrs/garage:v1.1.0
+        ports:
+          - containerPort: 3900
+            name: s3-api
+          - containerPort: 3902
+            name: web-api
+          - containerPort: 3903
+            name: admin-api
+        volumeMounts:
+          - name: garage-meta
+            mountPath: /var/lib/garage/meta
+          - name: garage-data
+            mountPath: /var/lib/garage/data
+          - name: garage-config
+            mountPath: /etc/garage.toml
+            subPath: garage.toml
+        envFrom:
+          - secretRef:
+              name: garage
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            memory: 250Mi
+        livenessProbe:
+          httpGet:
+           path: /health
+           port: 3903
+          initialDelaySeconds: 5
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+           path: /health
+           port: 3903
+          initialDelaySeconds: 5
+          periodSeconds: 15
+      volumes:
+      - name: garage-config
+        configMap:
+          name: garage-config
+  volumeClaimTemplates:
+    - metadata:
+        name: garage-meta
+      spec:
+        storageClassName: nfs-subdir
+        accessModes: 
+          - ReadWriteOnce
+          - ReadOnlyMany
+        resources:
+          requests:
+            storage: 100Mi
+    - metadata:
+        name: garage-data
+      spec:
+        storageClassName: nfs-subdir
+        accessModes: 
+          - ReadWriteOnce
+          - ReadOnlyMany
+        resources:
+          requests:
+            storage: 50Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: garage
+  namespace: garage
+  labels:
+    app.kubernetes.io/name: garage
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 3900
+      targetPort: 3900
+      name: s3-api
+    - protocol: TCP
+      port: 3902
+      targetPort: 3902
+      name: web-api
+    - protocol: TCP
+      port: 3903
+      targetPort: 3903
+      name: admin-api
+  selector:
+    app.kubernetes.io/name: garage
