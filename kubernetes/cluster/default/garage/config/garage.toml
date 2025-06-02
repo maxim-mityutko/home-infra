@@ -14,7 +14,7 @@ bootstrap_peers = []
 
 [kubernetes_discovery]
 namespace = "garage"
-service_name = "garage-daemon"
+service_name = "garage"
 skip_crd = true
 
 [s3_api]
