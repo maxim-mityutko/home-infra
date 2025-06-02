@@ -50,16 +50,11 @@ spec:
               memory: 100Mi
           ports:
             - containerPort: 3909
-          env:
-            - name: API_BASE_URL
-              value: http://garage.garage.svc.cluster.local:3903
-            - name: S3_ENDPOINT_URL
-              value: http://garage.garage.svc.cluster.local:3900
-            - name: S3_REGION
-              value: garage
           envFrom:
             - secretRef:
-                name: garage-webui
+                name: garage-webui  
+            - configMapRef:
+                name: meshcentral
           volumeMounts:
             - name: garage-config
               mountPath: /etc/garage.toml
@@ -68,3 +63,15 @@ spec:
         - name: garage-config
           configMap:
             name: garage-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: garage-webui
+  namespace: garage
+  labels:
+    app.kubernetes.io/name: garage-webui
+data:
+  API_BASE_URL: http://garage.garage.svc.cluster.local:3903
+  S3_ENDPOINT_URL: http://garage.garage.svc.cluster.local:3900
+  S3_REGION: garage
