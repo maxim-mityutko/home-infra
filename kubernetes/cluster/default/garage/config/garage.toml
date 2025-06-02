@@ -5,6 +5,11 @@ data_dir = "/var/lib/garage/data"
 db_engine = "sqlite"
 block_size = "10M"
 
+metadata_fsync = false
+data_fsync = false
+metadata_auto_snapshot_interval = "1d"
+disable_scrub = false
+
 replication_factor  = 1
 compression_level = "none"
 
