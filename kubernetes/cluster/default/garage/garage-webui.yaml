@@ -74,4 +74,4 @@ metadata:
 data:
   API_BASE_URL: http://garage.garage.svc.cluster.local:3903
   S3_ENDPOINT_URL: http://garage.garage.svc.cluster.local:3900
-  S3_REGION: garage
+  S3_REGION: us-east-1
