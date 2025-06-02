@@ -26,7 +26,7 @@ root_domain = ".s3.brhd.io"
 
 [s3_web]
 bind_addr = "[::]:3902"
-root_domain = ".s3w.brhd.io"
+root_domain = ".brhd.io"
 
 [admin]
 api_bind_addr = "[::]:3903"
