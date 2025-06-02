@@ -5,6 +5,7 @@ resources:
   - garage.yaml
   - secret.yaml
   - garage-webui.yaml
+  - ingress.yaml
 configMapGenerator:
 - name: garage-config
   files:
