@@ -15,7 +15,7 @@ bootstrap_peers = []
 [kubernetes_discovery]
 namespace = "garage"
 service_name = "garage-daemon"
-skip_crd = false
+skip_crd = true
 
 [s3_api]
 api_bind_addr = "[::]:3900"
