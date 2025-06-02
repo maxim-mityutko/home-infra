@@ -7,7 +7,7 @@ resources:
 configMapGenerator:
 - name: garage-config
   files:
-  - config/config.toml
+  - config/garage.toml
 # helmCharts:
 #   - name: garage
 #     namespace: garage
