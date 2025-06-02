@@ -128,8 +128,10 @@ spec:
     - protocol: TCP
       port: 3900
       targetPort: 3900
+      name: api
     - protocol: TCP
       port: 3903
       targetPort: 3903
+      name: admin
   selector:
     app: garage
