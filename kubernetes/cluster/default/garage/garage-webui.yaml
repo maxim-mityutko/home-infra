@@ -52,7 +52,7 @@ spec:
             - containerPort: 3909
           volumeMounts:
             - name: garage-config
-              mountPath: ./garage.toml
+              mountPath: /etc/garage.toml
               subPath: garage.toml
       volumes:
         - name: garage-config
