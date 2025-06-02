@@ -66,12 +66,12 @@ spec:
       app: garage
   serviceName: "garage"
   replicas: 1
+  revisionHistoryLimit: 1
   template:
     metadata:
       labels:
         app: garage
     spec:
-      revisionHistoryLimit: 1
       terminationGracePeriodSeconds: 10
       containers:
       - name: garage
