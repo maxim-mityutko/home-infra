@@ -1,0 +1,77 @@
+# Service: Garage WebUI
+# Ingress: garage.brhd.io
+# Label: app.kubernetes.io/name: garage-webui
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: garage-webui
+  namespace: garage
+  labels:
+    app.kubernetes.io/name: garage-webui
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 3909
+      targetPort: 3909
+  selector:
+    app.kubernetes.io/name: garage-webui
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: garage-webui
+  labels:
+    app.kubernetes.io/name: garage-webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: garage-webui
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: garage-webui
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: garage-webui
+          image: khairul169/garage-webui:1.0.9
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 50Mi
+          ports:
+            - containerPort: 3909
+          envFrom:
+            - secretRef:
+                name: garage-webui  
+            - configMapRef:
+                name:  garage-webui
+          volumeMounts:
+            - name: garage-config
+              mountPath: /etc/garage.toml
+              subPath: garage.toml
+      volumes:
+        - name: garage-config
+          configMap:
+            name: garage-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: garage-webui
+  namespace: garage
+  labels:
+    app.kubernetes.io/name: garage-webui
+data:
+  API_BASE_URL: http://garage.garage.svc.cluster.local:3903
+  S3_ENDPOINT_URL: http://garage.garage.svc.cluster.local:3900
+  S3_REGION: us-east-1
