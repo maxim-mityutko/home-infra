@@ -5,7 +5,7 @@ resources:
   - garage.yaml
   - secret.yaml
   - garage-webui.yaml
-  - ingress.yaml  # TODO: Authentik / Readme
+  - ingress.yaml  # TODO: Authentik
 configMapGenerator:
 - name: garage-config
   files:
