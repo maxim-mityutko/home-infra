@@ -28,7 +28,3 @@ root_domain = ".s3w.brhd.io"
 
 [admin]
 bind_addr = "[::]:3903"
-
-# GARAGE_RPC_SECRET
-# GARAGE_ADMIN_TOKEN
-# GARAGE_METRICS_TOKEN 
