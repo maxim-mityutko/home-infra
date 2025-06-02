@@ -57,7 +57,7 @@ apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: s3.brhd.io
-  namespace: default
+  namespace: garage
 spec:
   endpoints:
     - dnsName: s3.brhd.io
@@ -65,7 +65,15 @@ spec:
       recordType: CNAME
       targets:
         - casa.brhd.io
-    - dnsName: s3w.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: cdn.brhd.io
+  namespace: garage
+spec:
+  endpoints:
+    - dnsName: cdn.brhd.io
       recordTTL: 86400
       recordType: CNAME
       targets:
