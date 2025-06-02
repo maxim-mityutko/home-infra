@@ -57,6 +57,9 @@ spec:
               value: http://garage.garage.svc.cluster.local:3900
             - name: S3_REGION
               value: garage
+          envFrom:
+            - secretRef:
+                name: garage-webui
           volumeMounts:
             - name: garage-config
               mountPath: /etc/garage.toml
