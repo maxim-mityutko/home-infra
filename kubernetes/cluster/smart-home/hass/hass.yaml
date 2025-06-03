@@ -52,13 +52,13 @@ spec:
           envFrom:
             - configMapRef:
                 name: home-assistant
-          livenessProbe:
-            httpGet:
-              path: /manifest.json
-              port: 8123
-            initialDelaySeconds: 60
-            periodSeconds: 120
-            failureThreshold: 3
+          # livenessProbe:
+          #   httpGet:
+          #     path: /manifest.json
+          #     port: 8123
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 120
+          #   failureThreshold: 3
           volumeMounts:
             - name: home-assistant-config
               mountPath: /config
