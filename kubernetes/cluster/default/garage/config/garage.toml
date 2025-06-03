@@ -1,0 +1,37 @@
+# Ref: https://garagehq.deuxfleurs.fr/documentation/reference-manual/configuration/
+metadata_dir = "/var/lib/garage/meta"
+data_dir = "/var/lib/garage/data"
+
+db_engine = "lmdb"
+block_size = "10M"
+
+metadata_fsync = false
+data_fsync = false
+metadata_auto_snapshot_interval = "1d"
+disable_scrub = false
+
+replication_factor  = 1
+compression_level = "none"
+
+rpc_bind_addr = "[::]:3901"
+rpc_public_addr = "localhost:3901"
+
+bootstrap_peers = []
+allow_punycode = false
+
+[kubernetes_discovery]
+namespace = "garage"
+service_name = "garage"
+skip_crd = true
+
+[s3_api]
+api_bind_addr = "[::]:3900"
+s3_region = "us-east-1"
+root_domain = ".s3.brhd.io"
+
+[s3_web]
+bind_addr = "[::]:3902"
+root_domain = ".brhd.io"
+
+[admin]
+api_bind_addr = "[::]:3903"
