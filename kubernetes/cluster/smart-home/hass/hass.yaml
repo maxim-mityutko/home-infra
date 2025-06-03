@@ -52,6 +52,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: home-assistant
+          # TODO: fix me
           # livenessProbe:
           #   httpGet:
           #     path: /manifest.json
