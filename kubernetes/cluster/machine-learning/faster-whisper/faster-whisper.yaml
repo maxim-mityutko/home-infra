@@ -74,4 +74,4 @@ data:
   # Ref #2: https://github.com/SYSTRAN/faster-whisper/blob/master/faster_whisper/utils.py#L12-L31 (all with -int8 compressed variants)
   WHISPER_MODEL: medium-int8
   WHISPER_BEAM: "1"
-  # WHISPER_LANG: en
+  WHISPER_LANG: en
