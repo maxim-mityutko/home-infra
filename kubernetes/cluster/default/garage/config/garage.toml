@@ -2,7 +2,7 @@
 metadata_dir = "/var/lib/garage/meta"
 data_dir = "/var/lib/garage/data"
 
-db_engine = "sqlite"
+db_engine = "lmdb"
 block_size = "10M"
 
 metadata_fsync = false
