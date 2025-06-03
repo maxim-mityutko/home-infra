@@ -4,5 +4,6 @@ namespace: default
 resources:
   - cnpg-default.yaml
   - pod-scrape.yaml
-  - service.yaml
+  # NOTE: re-enable if needs to be exposed via LoadBalancer
+  # - service.yaml
   - backup.yaml
