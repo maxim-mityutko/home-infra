@@ -71,7 +71,8 @@ data:
   PUID: "1000"
   PGID: "1000"
   TZ: Etc/UTC
-  # Ref: https://github.com/rhasspy/piper/blob/master/VOICES.md
+  # Ref #1: https://github.com/rhasspy/piper/blob/master/VOICES.md
+  # Ref #2: https://rhasspy.github.io/piper-samples/
   PIPER_VOICE: en_US-lessac-medium
   PIPER_LENGTH: "1.0"
   PIPER_NOISE: "0.667"

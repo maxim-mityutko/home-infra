@@ -158,6 +158,7 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | Project            | Description                                                                                                            |                                           Docs / Repo                                            |                         Docker / Helm                         |
 |--------------------|------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------:|
 | **Faster Whisper** | Robust Speech Recognition via Large-Scale Weak Supervision from OpenAI. Faster Whisper transcription with CTranslate2. | [repo](https://github.com/SYSTRAN/faster-whisper)<br>[openai](https://github.com/openai/whisper) | [docker](https://hub.docker.com/r/linuxserver/faster-whisper) |
+| **Piper** | A fast, local neural text to speech system | [repo](https://github.com/rhasspy/piper/) | [docker](https://github.com/linuxserver/docker-piper) |
 
 ### Standalone Applications
 
