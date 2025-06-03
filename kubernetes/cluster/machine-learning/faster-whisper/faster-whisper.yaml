@@ -1,0 +1,81 @@
+# Service: Bazarr
+# Ingress: bazarr.brhd.io
+# Label: app.kubernetes.io/name: bazarr
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: bazarr
+#   namespace: media
+#   labels:
+#     app.kubernetes.io/name: bazarr
+# spec:
+#   type: ClusterIP
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 6767
+#   selector:
+#     app.kubernetes.io/name: bazarr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faster-whisper
+  namespace: machine-learning
+  labels:
+    app.kubernetes.io/name: faster-whisper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: faster-whisper
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: machine-learning
+      labels:
+        app.kubernetes.io/name: faster-whisper
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: faster-whisper
+          image: lscr.io/linuxserver/faster-whisper:2.4.0
+          resources:
+            requests:
+              memory: 4Gi
+              cpu: '2'
+            limits:
+              memory: 4Gi
+              cpu: '2'
+          ports:
+            - containerPort: 10300
+          envFrom:
+            - configMapRef:
+                name: faster-whisper
+      #     volumeMounts:
+      #       - name: faster-whisper-config
+      #         mountPath: /config
+      # volumes:
+      #   - name: faster-whisper-config
+      #     persistentVolumeClaim:
+      #       claimName: faster-whisper-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: faster-whisper
+  namespace: machine-learning
+  labels:
+    app.kubernetes.io/name: faster-whisper
+data:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: Etc/UTC
+  # Ref #1: https://huggingface.co/Systran
+  # Ref #2: https://github.com/SYSTRAN/faster-whisper/blob/master/faster_whisper/utils.py#L12-L31 (all with -int8 compressed variants)
+  WHISPER_MODEL: small
+  WHISPER_BEAM: "1"
+  # WHISPER_LANG: en
