@@ -39,7 +39,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: piper
-          image: lscr.io/linuxserver/piper:v1.5.2
+          image: lscr.io/linuxserver/piper:1.5.3
           resources:
             requests:
               memory: 500Mi
