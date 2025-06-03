@@ -45,8 +45,8 @@ spec:
           image: lscr.io/linuxserver/faster-whisper:2.4.0
           resources:
             requests:
-              memory: 4Gi
-              cpu: '2'
+              memory: 2Gi
+              cpu: '1'
             limits:
               memory: 4Gi
               cpu: '2'
