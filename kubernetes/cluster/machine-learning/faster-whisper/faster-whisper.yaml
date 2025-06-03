@@ -1,22 +1,19 @@
-# Service: Bazarr
-# Ingress: bazarr.brhd.io
-# Label: app.kubernetes.io/name: bazarr
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: bazarr
-#   namespace: media
-#   labels:
-#     app.kubernetes.io/name: bazarr
-# spec:
-#   type: ClusterIP
-#   ports:
-#     - protocol: TCP
-#       port: 80
-#       targetPort: 6767
-#   selector:
-#     app.kubernetes.io/name: bazarr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: faster-whisper
+  namespace: machine-learning
+  labels:
+    app.kubernetes.io/name: faster-whisper
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 10300
+      targetPort: 10300
+  selector:
+    app.kubernetes.io/name: faster-whisper
 ---
 apiVersion: apps/v1
 kind: Deployment
