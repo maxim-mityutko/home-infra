@@ -42,11 +42,10 @@ spec:
           image: lscr.io/linuxserver/piper:1.5.3
           resources:
             requests:
-              memory: 500Mi
-              cpu: '1'
+              memory: 200Mi
+              cpu: 100m
             limits:
-              memory: 1Gi
-              cpu: '2'
+              memory: 500Mi
           ports:
             - containerPort: 10300
           envFrom:
