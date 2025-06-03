@@ -29,13 +29,13 @@ spec:
   strategy:
     type: Recreate
   selector:
-    annotations:
-      k8s.v1.cni.cncf.io/networks: macvlan-music-assistant
     matchLabels:
       app.kubernetes.io/name: music-assistant
   revisionHistoryLimit: 1
   template:
     metadata:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: macvlan-music-assistant
       labels:
         app.kubernetes.io/name: music-assistant
     spec:
