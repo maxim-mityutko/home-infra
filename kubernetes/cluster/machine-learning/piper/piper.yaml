@@ -1,0 +1,80 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: piper
+  namespace: machine-learning
+  labels:
+    app.kubernetes.io/name: piper
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 10200
+      targetPort: 10200
+  selector:
+    app.kubernetes.io/name: piper
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: piper
+  namespace: machine-learning
+  labels:
+    app.kubernetes.io/name: piper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: piper
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: machine-learning
+      labels:
+        app.kubernetes.io/name: piper
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: piper
+          image: lscr.io/linuxserver/piper:1.5.3
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 100m
+            limits:
+              memory: 500Mi
+          ports:
+            - containerPort: 10300
+          envFrom:
+            - configMapRef:
+                name: piper
+      #     volumeMounts:
+      #       - name: piper-config
+      #         mountPath: /config
+      # volumes:
+      #   - name: piper-config
+      #     persistentVolumeClaim:
+      #       claimName: piper-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: piper
+  namespace: machine-learning
+  labels:
+    app.kubernetes.io/name: piper
+data:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: Etc/UTC
+  # Ref #1: https://github.com/rhasspy/piper/blob/master/VOICES.md
+  # Ref #2: https://rhasspy.github.io/piper-samples/
+  PIPER_VOICE: en_GB-alba-medium
+  PIPER_LENGTH: "1.0"
+  PIPER_NOISE: "0.667"
+  PIPER_NOISEW: "0.333"
+  PIPER_SPEAKER: "0"
+  PIPER_PROCS: "1"
