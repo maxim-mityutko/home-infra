@@ -12,6 +12,7 @@ helmCharts:
     repo: https://dl.gitea.com/charts/
     valuesInline:
       image:
+        tag: 1.24.0
         rootless: true
       podSecurityContext:
         fsGroup: 1000
