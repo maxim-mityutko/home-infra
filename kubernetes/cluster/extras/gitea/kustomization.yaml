@@ -74,18 +74,27 @@ helmCharts:
             archive_cleanup:
               ENABLED: false
             update_mirrors:
-              SCHEDULE: "@midnight"
+              ENABLED: true
+              SCHEDULE: 30 12 * * *
             repo_health_check:
-              SCHEDULE: "@midnight"
+              ENABLED: true
+              SCHEDULE: 30 12 * * *
             check_repo_stats:
-              RUN_AT_START: true
-              SCHEDULE: "@midnight"
+              ENABLED: false
             cleanup_hook_task_table:
               ENABLED: false
             cleanup_packages:
               ENABLED: false
             update_migration_poster_id:
-              SCHEDULE: "@midnight"
+              ENABLED: false
+            sync_external_users:
+              ENABLED: false
+            cleanup_actions:
+              ENABLED: false
+            deleted_branches_cleanup:
+              ENABLED: false
+            delete_repo_archives:
+              ENABLED: false
             git_gc_repos:
               ENABLED: false
             resync_all_sshkeys:
