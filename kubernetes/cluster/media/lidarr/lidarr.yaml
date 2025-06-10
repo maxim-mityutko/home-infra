@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: lidarr
-          image: ghcr.io/hotio/lidarr:release-2.11.2.4629
+          image: ghcr.io/hotio/lidarr:release-2.12.4.4658
           resources:
             requests:
               memory: 500Mi
