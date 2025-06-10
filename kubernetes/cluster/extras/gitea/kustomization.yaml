@@ -68,7 +68,44 @@ helmCharts:
             LEVEL: Info
             ENABLE_SSH_LOG: false
           cron:
-            ENABLED: false
+            ENABLED: true
+            RUN_AT_START: false
+            NOTICE_ON_SUCCESS: false
+            archive_cleanup:
+              ENABLED: false
+            update_mirrors:
+              SCHEDULE: "@midnight"
+            repo_health_check:
+              SCHEDULE: "@midnight"
+            check_repo_stats:
+              RUN_AT_START: true
+              SCHEDULE: "@midnight"
+            cleanup_hook_task_table:
+              ENABLED: false
+            cleanup_packages:
+              ENABLED: false
+            update_migration_poster_id:
+              SCHEDULE: "@midnight"
+            git_gc_repos:
+              ENABLED: false
+            resync_all_sshkeys:
+              ENABLED: false
+            resync_all_hooks:
+              ENABLED: false
+            reinit_missing_repos:
+              ENABLED: false
+            delete_missing_repos:
+              ENABLED: false
+            delete_generated_repository_avatars:
+              ENABLED: false
+            delete_old_actions:
+              ENABLED: false
+            update_checker:
+              ENABLED: false
+            delete_old_system_notices:
+              ENABLED: false
+            gc_lfs:
+              ENABLED: false
           metrics:
             ENABLED: false
           api:
