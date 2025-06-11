@@ -17,30 +17,6 @@ spec:
   selector:
     app.kubernetes.io/name: music-assistant
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: music-assistant-lb
-  namespace: media
-  annotations:
-    metallb.io/address-pool: forge-pool
-    metallb.io/loadBalancerIPs: "192.168.12.35"
-spec:
-  externalTrafficPolicy: Cluster
-  allocateLoadBalancerNodePorts: false
-  ports:
-    - port: 8097
-      protocol: TCP
-      targetPort: 8097
-      name: stream
-    - port: 8095
-      protocol: TCP
-      targetPort: 8095
-      name: api
-  selector:
-    app.kubernetes.io/name: music-assistant
-  type: LoadBalancer
----
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -58,13 +34,14 @@ spec:
   revisionHistoryLimit: 1
   template:
     metadata:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: macvlan-music-assistant
       labels:
         app.kubernetes.io/name: music-assistant
     spec:
       restartPolicy: Always
-      hostNetwork: true
       containers:
-        - image: ghcr.io/music-assistant/server:2.5.2
+        - image: ghcr.io/music-assistant/server:2.5.4
           name: music-assistant
           resources:
             requests:
@@ -80,6 +57,12 @@ spec:
               mountPath: /data
             - name: downloads
               mountPath: /downloads
+      # Enforcing specific set of nodes till network interface names 
+      # can be aligned across all nodes of the cluster
+      # TODO: to be removed
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        node.kubernetes.io/microk8s-worker: microk8s-worker
       volumes:
         - name: music-assistant-config
           persistentVolumeClaim:

@@ -12,6 +12,7 @@ helmCharts:
     repo: https://dl.gitea.com/charts/
     valuesInline:
       image:
+        tag: 1.24.0
         rootless: true
       podSecurityContext:
         fsGroup: 1000
@@ -67,6 +68,53 @@ helmCharts:
             LEVEL: Info
             ENABLE_SSH_LOG: false
           cron:
+            ENABLED: true
+            RUN_AT_START: false
+            NOTICE_ON_SUCCESS: false
+          cron.archive_cleanup:
+            ENABLED: false
+          cron.update_mirrors:
+            ENABLED: true
+            SCHEDULE: 0 30 12 * * *
+          cron.repo_health_check:
+            ENABLED: true
+            SCHEDULE: 0 30 12 * * *
+          cron.check_repo_stats:
+            ENABLED: false
+          cron.cleanup_hook_task_table:
+            ENABLED: false
+          cron.cleanup_packages:
+            ENABLED: false
+          cron.update_migration_poster_id:
+            ENABLED: false
+          cron.sync_external_users:
+            ENABLED: false
+          cron.cleanup_actions:
+            ENABLED: false
+          cron.deleted_branches_cleanup:
+            ENABLED: true
+            SCHEDULE: 0 0 13 * * 0
+          cron.delete_repo_archives:
+            ENABLED: false
+          cron.git_gc_repos:
+            ENABLED: false
+          cron.resync_all_sshkeys:
+            ENABLED: false
+          cron.resync_all_hooks:
+            ENABLED: false
+          cron.reinit_missing_repos:
+            ENABLED: false
+          cron.delete_missing_repos:
+            ENABLED: false
+          cron.delete_generated_repository_avatars:
+            ENABLED: false
+          cron.delete_old_actions:
+            ENABLED: false
+          cron.update_checker:
+            ENABLED: false
+          cron.delete_old_system_notices:
+            ENABLED: false
+          cron.gc_lfs:
             ENABLED: false
           metrics:
             ENABLED: false
