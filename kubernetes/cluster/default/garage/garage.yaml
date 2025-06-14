@@ -75,7 +75,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: garage
-        image: dxflrs/garage:v1.1.0
+        image: dxflrs/garage:v1.2.0
         ports:
           - containerPort: 3900
             name: s3-api
