@@ -35,7 +35,7 @@ spec:
     metadata:
       namespace: media
       labels:
-        app.kubernetes.io/name: calibre
+        app.kubernetes.io/name: calibre-web-automated
     spec:
       restartPolicy: Always
       containers:
