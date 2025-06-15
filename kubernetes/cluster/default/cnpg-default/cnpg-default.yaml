@@ -4,8 +4,9 @@ metadata:
   name: cnpg-default
   # Ref: https://cloudnative-pg.io/documentation/1.25/labels_annotations/
   annotations:
-    cnpg.io/skipWalArchiving: enabled
-    cnpg.io/skipEmptyWalArchiveCheck: true
+    # Fully disable WAL archiving with below annotations
+    # cnpg.io/skipWalArchiving: enabled
+    # cnpg.io/skipEmptyWalArchiveCheck: true
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.4
@@ -19,7 +20,7 @@ spec:
     parameters:
       timezone: "Etc/UTC"
       max_slot_wal_keep_size: 200MB
-      archive_timeout: 30min
+      archive_timeout: 720min
 
   managed:
     # Ref: https://cloudnative-pg.io/documentation/1.25/service_management/
