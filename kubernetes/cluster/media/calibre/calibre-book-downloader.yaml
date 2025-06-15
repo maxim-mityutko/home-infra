@@ -1,0 +1,95 @@
+# Ingress: calibre.brhd.io/request
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calibre-book-downloader
+  namespace: media
+  labels:
+    app.kubernetes.io/name: calibre-book-downloader
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8084
+      targetPort: 8084
+  selector:
+    app.kubernetes.io/name: calibre-book-downloader
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calibre-book-downloader
+  namespace: media
+  labels:
+    app.kubernetes.io/name: calibre-book-downloader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: calibre-book-downloader
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: calibre-book-downloader
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: calibre-book-downloader
+          image: ghcr.io/calibrain/calibre-web-automated-book-downloader:20250615
+          # resources:
+          #   requests:
+          #     memory: 500Mi
+          #     cpu: 500m
+          #   limits:
+          #     memory: 1000Mi
+          #     cpu: 1000m
+          ports:
+            - containerPort: 8084
+          envFrom:
+            configMapRef:
+              - name: calibre-book-downloader
+          volumeMounts:
+            - name: calibre-config
+              mountPath: /auth/app.db
+              subPath: app.db
+              readOnly: true
+            - name: calibre-ingest
+              mountPath: /cwa-book-ingest
+            # - name: downloads
+            #   mountPath: /downloads
+      volumes:
+        - name: calibre-config
+          persistentVolumeClaim:
+            claimName: calibre-config
+        - name: calibre-ingest
+          persistentVolumeClaim:
+            claimName: calibre-ingest
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: calibre-book-downloader
+  namespace: media
+  labels:
+    app.kubernetes.io/name: calibre
+data:
+  # General
+  TZ: Europe/Amsterdam
+  ENABLE_LOGGING: "true"
+  LOG_LEVEL: info
+  DEBUG: "false"
+  # Download
+  MAX_RETRY: "3"
+  DEFAULT_SLEEP: "5"
+  MAIN_LOOP_SLEEP_TIME: "5"
+  SUPPORTED_FORMATS: epub,mobi,azw3,fb2
+  BOOK_LANGUAGE: en
+  USE_BOOK_TITLE: "false"
