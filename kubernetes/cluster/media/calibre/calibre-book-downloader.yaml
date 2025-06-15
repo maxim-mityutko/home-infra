@@ -79,7 +79,7 @@ metadata:
   name: calibre-book-downloader
   namespace: media
   labels:
-    app.kubernetes.io/name: calibre
+    app.kubernetes.io/name: calibre-book-downloader
 data:
   # General
   TZ: Europe/Amsterdam
