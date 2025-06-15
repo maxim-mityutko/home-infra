@@ -10,7 +10,7 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  - readOnlyMany
+  - ReadOnlyMany
   storageClassName: nfs-subdir
   resources:
     requests:
