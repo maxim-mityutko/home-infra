@@ -51,8 +51,8 @@ spec:
           ports:
             - containerPort: 8084
           envFrom:
-            configMapRef:
-              - name: calibre-book-downloader
+            - configMapRef:
+              name: calibre-book-downloader
           volumeMounts:
             - name: calibre-config
               mountPath: /auth/app.db
