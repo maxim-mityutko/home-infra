@@ -4,9 +4,8 @@ metadata:
   name: cnpg-default
   # Ref: https://cloudnative-pg.io/documentation/1.25/labels_annotations/
   annotations:
-    # Fully disable WAL archiving with below annotations
-    # cnpg.io/skipWalArchiving: enabled
-    # cnpg.io/skipEmptyWalArchiveCheck: true
+    cnpg.io/skipWalArchiving: enabled
+    cnpg.io/skipEmptyWalArchiveCheck: true
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.4
