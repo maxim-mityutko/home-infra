@@ -52,7 +52,7 @@ spec:
             - containerPort: 8083
           envFrom:
             - configMapRef:
-              name: calibre-web-automated
+                name: calibre-web-automated
           volumeMounts:
             - name: calibre-config
               mountPath: /config
