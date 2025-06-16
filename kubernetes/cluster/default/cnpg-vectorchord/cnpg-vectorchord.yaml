@@ -44,7 +44,7 @@ spec:
   # Ref: https://cloudnative-pg.io/documentation/1.25/backup_barmanobjectstore/
   backup:
     target: primary
-    retentionPolicy: 14d
+    retentionPolicy: 7d
     barmanObjectStore:
       destinationPath: "s3://cnpg-backup/"
       endpointURL: "http://garage.garage.svc.cluster.local:3900"
