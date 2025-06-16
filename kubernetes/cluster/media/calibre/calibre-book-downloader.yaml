@@ -54,10 +54,10 @@ spec:
             - configMapRef:
                 name: calibre-book-downloader
           volumeMounts:
-            - name: calibre-config
-              mountPath: /auth/app.db
-              subPath: app.db
-              readOnly: true
+            # - name: calibre-config
+            #   mountPath: /auth/app.db
+            #   subPath: app.db
+            #   readOnly: true
             - name: calibre-ingest
               mountPath: /cwa-book-ingest
             # - name: downloads
