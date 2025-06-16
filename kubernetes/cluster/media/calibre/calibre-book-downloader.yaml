@@ -86,7 +86,7 @@ data:
   ENABLE_LOGGING: "true"
   LOG_LEVEL: info
   DEBUG: "false"
-  CWA_DB_PATH: /auth/app.db
+  # CWA_DB_PATH: /auth/app.db
   # Download
   MAX_RETRY: "3"
   DEFAULT_SLEEP: "5"
