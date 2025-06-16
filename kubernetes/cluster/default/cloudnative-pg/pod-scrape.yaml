@@ -109,7 +109,9 @@ spec:
     rules:
     - alert: CloudNativePGMissedBackup
       expr: |
-        time() - max by(job) (cnpg_collector_last_available_backup_timestamp) > (25 * 3600 * 1) # 25 hours
+        (time() - max by(job) (cnpg_collector_last_available_backup_timestamp{job="cnpg-default-metrics"}) > 25*3600*7)
+        or
+        (time() - max by(job) (cnpg_collector_last_available_backup_timestamp{job!="cnpg-default-metrics"}) > 25*3600*1)
       for: 1m
       labels:
         severity: warning
@@ -117,5 +119,5 @@ spec:
       annotations:
         summary: CloudNative-PG missed backup for cluster '{{ $labels.job | reReplaceAll "-metrics" "" }}'
         description: |
-          No successful backup detected for CloudNative-PG cluster '{{ $labels.job | reReplaceAll "-metrics" "" }}' for more than 25 hours (last backup was {{ humanizeDuration $value }} ago).
+          Last successful backup for CloudNative-PG cluster '{{ $labels.job | reReplaceAll "-metrics" "" }}' exceeds the expected threshold, last backup was {{ humanizeDuration $value }} ago.
           Verify backup configuration and storage accessibility.
