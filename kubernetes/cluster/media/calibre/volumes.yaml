@@ -1,0 +1,73 @@
+---
+# Calibre -- Config
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: calibre-config
+  namespace: media
+  labels:
+    app.kubernetes.io/name: calibre
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadOnlyMany
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 500Mi
+---
+# Calibre Web Automated -- Ingest
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: calibre-ingest
+  namespace: media
+  labels:
+    app.kubernetes.io/name: calibre
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 100Mi
+---
+# Calibre - Library
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: calibre-library
+  namespace: media
+  labels:
+    app.kubernetes.io/name: calibre
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs
+  resources:
+    requests:
+      storage: 2G
+  selector:
+    matchLabels:
+      storage.target: calibre-library
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: calibre-library
+  namespace: media
+  labels:
+    app.kubernetes.io/name: calibre
+    storage.target: calibre-library
+spec:
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  capacity:
+    storage: 2G
+  nfs:
+    server: nas.brhd.io
+    path: /mnt/spin/service/books
+  mountOptions:
+    - mountvers=4
