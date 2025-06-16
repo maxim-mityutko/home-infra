@@ -54,24 +54,12 @@ spec:
             - configMapRef:
                 name: calibre-book-downloader
           volumeMounts:
-            # - name: calibre-config
-            #   mountPath: /auth/app.db
-            #   subPath: app.db
-            #   readOnly: true
             - name: calibre-ingest
               mountPath: /cwa-book-ingest
-            # - name: downloads
-            #   mountPath: /downloads
       volumes:
-        - name: calibre-config
-          persistentVolumeClaim:
-            claimName: calibre-config
         - name: calibre-ingest
           persistentVolumeClaim:
             claimName: calibre-ingest
-        - name: downloads
-          persistentVolumeClaim:
-            claimName: downloads
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -86,7 +74,6 @@ data:
   ENABLE_LOGGING: "true"
   LOG_LEVEL: info
   DEBUG: "false"
-  # CWA_DB_PATH: /auth/app.db
   # Download
   MAX_RETRY: "3"
   DEFAULT_SLEEP: "5"

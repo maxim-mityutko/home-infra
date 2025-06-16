@@ -56,15 +56,15 @@ spec:
           volumeMounts:
             - name: calibre-config
               mountPath: /config
-            # - name: downloads
-            #   mountPath: /downloads
+            - name: calibre-library
+              mountPath: /calibre-library
       volumes:
         - name: calibre-config
           persistentVolumeClaim:
             claimName: calibre-config
-        - name: downloads
+        - name: calibre-library
           persistentVolumeClaim:
-            claimName: downloads
+            claimName: calibre-library
 ---
 apiVersion: v1
 kind: ConfigMap
