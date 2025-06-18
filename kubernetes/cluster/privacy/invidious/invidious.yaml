@@ -56,6 +56,11 @@ spec:
                 name: invidious
             - configMapRef:
                 name: invidious
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           # readinessProbe:
           #   httpGet:
           #     path: /
@@ -72,14 +77,28 @@ spec:
           image: quay.io/invidious/inv-sig-helper:latest
           args: ["--tcp", "0.0.0.0:12999"]
           ports:
-            - containerPort: 12999
-          # environment:
-          #   - RUST_LOG=info
-            # cap_drop:
-            #   - ALL
-            # read_only: true
-            # security_opt:
-            #   - no-new-privileges:true
+            - name: sighelper
+              containerPort: 12999
+              protocol: TCP
+          env:
+            - name: RUST_LOG
+              value: info
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: 12999
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+          # readinessProbe:
+          #   tcpSocket:
+          #     port: 12999
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+
       nodeSelector:
         beta.kubernetes.io/arch: amd64
 ---
@@ -95,7 +114,7 @@ data:
   INVIDIOUS_DOMAIN: "yt.brhd.io"
   INVIDIOUS_PORT: "3000"
   INVIDIOUS_EXTERNAL_PORT: "80"
-  INVIDIOUS_HTTPS_ONLY: "true"
+  INVIDIOUS_HTTPS_ONLY: "false"
   INVIDIOUS_LOG_LEVEL: "Info"
 
   INVIDIOUS_POPULAR_ENABLED: "true"
