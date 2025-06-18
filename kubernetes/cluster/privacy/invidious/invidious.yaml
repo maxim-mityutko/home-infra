@@ -56,18 +56,18 @@ spec:
                 name: invidious
             - configMapRef:
                 name: invidious
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 3000
-            initialDelaySeconds: 10
-            periodSeconds: 60
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 3000
-            initialDelaySeconds: 30
-            periodSeconds: 120
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 3000
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 60
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 3000
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 120
         - name: inv-sig-helper
           image: quay.io/invidious/inv-sig-helper:latest
           args: ["--tcp", "0.0.0.0:12999"]
