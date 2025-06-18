@@ -61,12 +61,6 @@ spec:
             capabilities:
               drop:
                 - ALL
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: 3000
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 60
           # livenessProbe:
           #   httpGet:
           #     path: /
@@ -92,13 +86,7 @@ spec:
           #   tcpSocket:
           #     port: 12999
           #   initialDelaySeconds: 5
-          #   periodSeconds: 10
-          # readinessProbe:
-          #   tcpSocket:
-          #     port: 12999
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 10
-
+          #   periodSeconds: 60
       nodeSelector:
         beta.kubernetes.io/arch: amd64
 ---
@@ -110,12 +98,13 @@ metadata:
   labels:
     app.kubernetes.io/name: invidious
 data:
+  # Ref: https://github.com/iv-org/invidious/blob/master/config/config.example.yml
   INVIDIOUS_CHECK_TABLES: "true"
   INVIDIOUS_DOMAIN: "yt.brhd.io"
   INVIDIOUS_PORT: "3000"
   INVIDIOUS_EXTERNAL_PORT: "80"
-  INVIDIOUS_HTTPS_ONLY: "false"
-  INVIDIOUS_LOG_LEVEL: "Info"
+  INVIDIOUS_HTTPS_ONLY: "true"
+  INVIDIOUS_LOG_LEVEL: "Warn"
 
   INVIDIOUS_POPULAR_ENABLED: "true"
   INVIDIOUS_STATISTICS_ENABLED: "false"
@@ -131,7 +120,7 @@ data:
   INVIDIOUS_CONFIG: |
     signature_server: 127.0.0.1:12999
     default_user_preferences: 
-      region: US
+      region: NL
       dark_mode: dark
       player_style: youtube
       quality: dash
