@@ -99,6 +99,8 @@ metadata:
     app.kubernetes.io/name: invidious
 data:
   # Ref: https://github.com/iv-org/invidious/blob/master/config/config.example.yml
+  # NOTE: Run "microk8s kubectl run yt-trusted-session-generator --image=quay.io/invidious/youtube-trusted-session-generator"
+  # to generate PO_TOKEN and VISITOR_DATA
   INVIDIOUS_CHECK_TABLES: "true"
   INVIDIOUS_DOMAIN: "yt.brhd.io"
   INVIDIOUS_PORT: "3000"
