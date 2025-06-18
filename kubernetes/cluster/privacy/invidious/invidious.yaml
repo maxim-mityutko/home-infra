@@ -71,6 +71,8 @@ spec:
         - name: inv_sig_helper
           image: quay.io/invidious/inv-sig-helper:latest
           args: ["--tcp", "0.0.0.0:12999"]
+          ports:
+            - containerPort: 12999
           # environment:
           #   - RUST_LOG=info
             # cap_drop:
