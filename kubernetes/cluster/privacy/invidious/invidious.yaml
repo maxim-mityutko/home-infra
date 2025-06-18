@@ -68,6 +68,16 @@ spec:
               port: 3000
             initialDelaySeconds: 30
             periodSeconds: 120
+        - name: inv_sig_helper
+          image: quay.io/invidious/inv-sig-helper:latest
+          args: ["--tcp", "0.0.0.0:12999"]
+          # environment:
+          #   - RUST_LOG=info
+            # cap_drop:
+            #   - ALL
+            # read_only: true
+            # security_opt:
+            #   - no-new-privileges:true
       nodeSelector:
         beta.kubernetes.io/arch: amd64
 ---
@@ -98,6 +108,7 @@ data:
   INVIDIOUS_FULL_REFRESH: "false"
 
   INVIDIOUS_CONFIG: |
+    signature_server: inv_sig_helper:12999
     default_user_preferences: 
       region: US
       dark_mode: dark
