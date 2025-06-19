@@ -9,7 +9,7 @@ helmCharts:
   - name: couchdb
     namespace: extras
     releaseName: couchdb
-    version: 4.6.0
+    version: 4.6.1
     repo: https://apache.github.io/couchdb-helm
     valuesInline:
       clusterSize: 1
