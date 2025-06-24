@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: argocd
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.3/manifests/install.yaml
-  - config.yaml
   - ingress.yaml
   - namespace.yaml
   - repo.yaml
@@ -11,3 +10,5 @@ resources:
   - dns-endpoint.yaml
   # TODO: Enable service scrape if necessary
   # - service-scrape.yaml
+patches:
+  - path: config.yaml
