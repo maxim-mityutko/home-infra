@@ -8,7 +8,7 @@ metadata:
 spec:
   endpoints:
     - port: metrics
-      interval: 300s
+      interval: 30s
   namespaceSelector:
     matchNames:
       - argocd
