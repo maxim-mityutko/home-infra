@@ -11,4 +11,12 @@ resources:
   # TODO: Enable service scrape if necessary
   # - service-scrape.yaml
 patches:
-  - path: config.yaml
+  - target:
+      kind: ConfigMap
+      name: argocd-cm
+    path: config.yaml
+  - target:
+      kind: ConfigMap
+      name: argocd-rbac-cm
+    path: config.yaml
+
