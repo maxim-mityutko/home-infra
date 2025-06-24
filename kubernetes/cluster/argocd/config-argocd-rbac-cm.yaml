@@ -11,3 +11,4 @@ data:
   # Authentik Auth
   policy.csv: |
     g, Authentik Admins, role:admin
+    p, role:admin, logs, get, */*, allow
