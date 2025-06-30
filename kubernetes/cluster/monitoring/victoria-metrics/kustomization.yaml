@@ -31,6 +31,8 @@ helmCharts:
           enabled: true
           revisionHistoryLimit: 1
           sidecar:
+            datasources:
+              enabled: false
             dashboards:
               enabled: true
               searchNamespace: ALL
