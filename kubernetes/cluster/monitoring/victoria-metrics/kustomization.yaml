@@ -31,6 +31,9 @@ helmCharts:
           enabled: true
           revisionHistoryLimit: 1
           sidecar:
+            skipTlsVerify: true
+            datasources:
+              enabled: true
             dashboards:
               enabled: true
               searchNamespace: ALL
