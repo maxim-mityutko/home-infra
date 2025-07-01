@@ -1,8 +1,10 @@
 # Home Infrastructure
-[![k8s](https://img.shields.io/badge/Microk8s-v1.32.1-black?style=flat-square)](https://k8s.io/)
+
+[![k8s](https://img.shields.io/badge/MicroK8s-v1.32.3-black?style=flat-square)](https://k8s.io/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/maxim-mityutko/home-infra/main?style=flat-square)](https://github.com/maxim-mityutko/home-infra/commits/main)
 
 ## Notes
+
 The rollout from scratch has not been fully automated yet, and generally requires following
 the process defined in the [/readme](./readme/) and [/kubernetes/scripts](./kubernetes/scripts/) folders for the initial setup.
 
@@ -10,13 +12,17 @@ After the initial steps are complete, deployments are handled via ArgoCD applica
 defined in the [/kubernetes/argocd](./kubernetes/argocd/).
 
 ## Hardware
+
 ### Network
+
 * Router: [TP-Link ER7406](https://www.omadanetworks.com/nl/business-networking/omada-router-wired-router/er7406/)
 * Switch: [TP-Link TL-SG2428P](https://www.omadanetworks.com/nl/business-networking/omada-switch-smart/tl-sg2428p/)
 * Access Points:
   * [TP-Link EAP245](https://www.omadanetworks.com/nl/business-networking/omada-wifi-ceiling-mount/eap245/v3%20(1-pack)/)
   * [TP-Link EAP615-Wall](https://www.omadanetworks.com/nl/business-networking/omada-wifi-wall-plate/eap615-wall/)
+
 ### Compute
+
 * ProxMox VE Host:
   * MOBO: [ASRock IMB-X1231](https://www.asrockind.com/en-gb/IMB-X1231)
   * CPU: Intel Core i5-13500
@@ -26,9 +32,9 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
     2. SATA Controller - 6 port: ASM1166 - M.2 M Key
   * Storage:
     1. (ProxMox System) SSD Samsung 840 Pro 256 GB x2
-    2. (Master Nodes) SSD Samsung 860 Evo 1 TB      
+    2. (Master Nodes) SSD Samsung 860 Evo 1 TB
     3. (Worker Nodes) SSD Crucial BX500 1TB
-    4. (NAS) SSD Crucial BX500 1TB x2 
+    4. (NAS) SSD Crucial BX500 1TB x2
     5. (NAS) HDD Seagate IronWolf Pro NAS 12 TB x3
   * Virtual Machines:
     * TrueNAS Scale with 4 CPUs, 8GB RAM and extension cards (1) and (2) as direct passthrough and SSD (4) and HDD (5) in ZFS pulls for storage
@@ -38,20 +44,23 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
   * KVM: [SiPeed NanoKVM-PCIe-PoE](https://sipeed.com/nanokvm/pcie)
 * (Disabled) ProxMox VE Host (Spare):  
   * CPU Intel i7-6700
-  * RAM 16 GB 
+  * RAM 16 GB
   * Storage:
     1. SSD SanDisk SD7TB3Q-256G-1006 256GB
     2. NVME WD Blue NVME 500 GB
   * Virtual Machines:
-    * (x3) Ubuntu Server with 2 CPUs and and 4GB RAM 
+    * (x3) Ubuntu Server with 2 CPUs and and 4GB RAM
 * (Worker) Raspberry Pi 4B 8GB
 * Upcoming: [Compute Blade](https://www.kickstarter.com/projects/uptimelab/compute-blade) with CM4 8GB and 500 GB NVME x 4
 
 ## Services
+
 ### Microk8s
+
 Some services are installed out of the box in Microk8s, refer to `kubernetes/scripts/00.0-init.sh`
 
 ### Default (Tier 1)
+
 | Project                    | Description                                                                                        |                                Docs / Repo                                 |                             Docker / Helm                              |
 |----------------------------|----------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------:|:----------------------------------------------------------------------:|
 | **ArgoCD**                 | Declarative GitOps CD for Kubernetes                                                               |             [docs](https://argo-cd.readthedocs.io/en/stable/)              |                                                                        |
@@ -75,6 +84,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Tailscale K8s Operator** | Secure, remote access to on-premises | [repo](https://github.com/tailscale/tailscale)<br>[docs](https://tailscale.com/kb/1236/kubernetes-operator) | [helm](https://github.com/tailscale/tailscale/blob/main/cmd/k8s-operator/deploy/README.md) |
 
 ### Default (Tier 2)
+
 | Project                    | Description                                                                                        |                                Docs / Repo                                 |                             Docker / Helm                              |
 |----------------------------|----------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------:|:----------------------------------------------------------------------:|
 | **Cloudflare DDNS**        | Dynamic DNS implementation for the Cloudflare service                                              |           [repo](https://github.com/oznu/docker-cloudflare-ddns)           |        [docker](https://hub.docker.com/r/oznu/cloudflare-ddns/)        |
@@ -82,8 +92,8 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Homer**                  | A dead simple static HOMe for your servER to keep your  services on hand from a simple yaml config |               [repo](https://github.com/bastienwirtz/homer)                |             [docker](https://hub.docker.com/r/b4bz/homer)              |
 | **Omada Controller**       | TP-Link Omada Controller                                                                            |                                     [repo](https://github.com/mbentley/docker-omada-controller)                                     |                                                [docker](https://hub.docker.com/r/mbentley/omada-controller)                                                |                                                    |
 
-
 ### Backup
+
 | Project                | Description                                                                                       |                                                                                                     Docs / Repo                                                                                                      |                                          Docker / Helm                                           |
 |------------------------|---------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|
 | **Borgmatic Exporter** | Prometheus exporter for Borgmatic seamlessly integrated into official Borgmatic image             |                                                                             [repo](https://github.com/maxim-mityutko/borgmatic-exporter)                                                                             | [docker](https://github.com/maxim-mityutko/borgmatic-exporter/pkgs/container/borgmatic-exporter) |
@@ -91,6 +101,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Syncthing** | Open source continuous file synchronization | [repo](https://github.com/syncthing/syncthing)<br>[docs](https://syncthing.net) | [docker](https://docs.linuxserver.io/images/docker-syncthing/) |
 
 ### Monitoring
+
 | Project                           | Description                                                                         |                                      Docs / Repo                                       |                                            Docker / Helm                                             |
 |-----------------------------------|-------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|
 | **Victoria Metrics**              | Fast, cost-effective monitoring solution and time series database                   | [docs](https://docs.victoriametrics.com/) / [repo](https://github.com/VictoriaMetrics) | [helm](https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-metrics-k8s-stack) |
@@ -99,6 +110,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Exportarr**                     | AIO Prometheus Exporter for *arr applications                                       |                      [repo](https://github.com/onedr0p/exportarr)                      |               [docker](https://github.com/onedr0p/exportarr/pkgs/container/exportarr)                |
 
 ### Extras
+
 | Project                  | Description                                                                                                                                                                |                                            Docs / Repo                                            |                                                         Docker / Helm                                                         |
 |--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------:|
 | **Apache Guacamole**     | Clientless remote desktop gateway                                                                                                                                          |                [docs](https://guacamole.apache.org/doc/gug/guacamole-docker.html)                 | [docker-guacd](https://hub.docker.com/r/guacamole/guacd)<br/>[docker-guacamole](https://hub.docker.com/r/guacamole/guacamole) |
@@ -113,6 +125,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Stirling-PDF** | Locally hosted web application that allows you to perform various operations on PDF files | [repo](https://github.com/Stirling-Tools/Stirling-PDF)<br>[docs](https://docs.stirlingpdf.com) | [helm](https://github.com/Stirling-Tools/Stirling-PDF-chart) |
 
 ### Smart Home
+
 | Project                | Description                                                                     |                                          Docs / Repo                                           |                                 Docker / Helm                                  |
 |------------------------|---------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|
 | **Tuya Gateway**       | Lightweight gateway for Tuya / Smartlife                                        |                     [repo](https://github.com/maxim-mityutko/tuya-gateway)                     |            [docker](https://hub.docker.com/r/beerhead/tuya-gateway)            |
@@ -122,16 +135,17 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Zigbee2MQTT**        | Zigbee to MQTT bridge                                                           |      [docs](https://www.zigbee2mqtt.io)<br/>[repo](https://github.com/Koenkk/zigbee2mqtt)      |             [docker](https://hub.docker.com/r/koenkk/zigbee2mqtt)              |
 | **PSA Car Controller** | Control PSA car with connected_car v4 API                                       |                      [repo](https://github.com/flobz/psa_car_controller)                       |          [docker](https://hub.docker.com/r/flobz/psa_car_controller)           |
 
-
 ### Privacy
+
 | Project       | Description                                                                                                                       | Docs / Repo                                                                               | Docker / Helm                                                                                                                              |
 |---------------|-----------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
 | **SearXNG**   | Privacy-respecting, hackable metasearch engine                                                                                    | [repo](https://github.com/searxng/searxng)<br>[docs](https://docs.searxng.org/index.html) | [docker](https://hub.docker.com/r/searxng/searxng)                                                                                         |
 | **Invidious** | **STOPPED WORKING DUE TO YOUTUBE CHANGES, NO FIX** <br>Invidious is an open source alternative front-end to YouTube               | [repo](https://github.com/iv-org/invidious)<br>[docs](https://docs.invidious.io/)         | [docker](https://quay.io/repository/invidious/invidious?tab=info)                                                                          |
 | **Immich**    | High-performance self-hosted solution for backing up, viewing, managing, and sharing photos from your phone or existing galleries | [repo](https://github.com/immich-app/immich)<br>[docs](https://immich.app/docs)           | [helm](https://github.com/immich-app/immich-charts)                                                                                        |
-| **Vaultwarden**          | Password management (alternative Bitwarden server)                                                                                                                         |                        [repo](https://github.com/dani-garcia/vaultwarden)                         |                                     [docker](https://hub.docker.com/r/vaultwarden/server)   
+| **Vaultwarden**          | Password management (alternative Bitwarden server)                                                                                                                         |                        [repo](https://github.com/dani-garcia/vaultwarden)                         |                                     [docker](https://hub.docker.com/r/vaultwarden/server)
 
 ### Media
+
 A lot of general information on the topic: [TRaSH Guides](https://trash-guides.info/)
 
 | Project               | Description                                                                             |                                                           Docs / Repo                                                           |                               Docker / Helm                               |
@@ -165,8 +179,8 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | **Floccus** | Sync your bookmarks privately across browsers and devices. Uses **Gitea** for bookmarks storage. |[repo](https://github.com/floccusaddon/floccus)<br>[docs](https://floccus.org/guides) |  
 | **Immich-Go** | An alternative to the immich-CLI command that doesn't depend on nodejs installation. It tries its best for importing google photos takeout archives. | [repo](https://github.com/simulot/immich-go)<br>[docs](https://github.com/simulot/immich-go#running-immich-go) |
 
-
 ### Decomissioned / Unused
+
 | Project       | Description                                                                                                                       | Docs / Repo                                                                               | Docker / Helm                                                                                                                              |
 |---------------|-----------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
 | **Longhorn**               | Longhorn is a lightweight, reliable and easy-to-use distributed block storage system for Kubernetes |                                                     [docs](https://longhorn.io)                                                     |                                                   [helm](https://github.com/longhorn/charts/tree/master)                                                   |
