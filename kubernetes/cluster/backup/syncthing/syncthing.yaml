@@ -71,7 +71,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: syncthing
-          image: lscr.io/linuxserver/syncthing:1.29.7
+          image: lscr.io/linuxserver/syncthing:1.30.0
           resources:
             requests:
               memory: 300Mi
