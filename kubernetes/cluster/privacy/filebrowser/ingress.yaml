@@ -9,6 +9,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
+    nginx.ingress.kubernetes.io/proxy-body-size: '0'
 spec:
   rules:
     - host: drive.brhd.io
