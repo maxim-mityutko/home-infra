@@ -37,7 +37,7 @@ server:
         defaultUserScope: /
         defaultEnabled: true
         createUserDir: false
-    - path: /home/filebrowser/data/sources/drive
+    - path: /home/filebrowser/data/sources/drive/users
       name: DeGoogle
       config:
         indexingIntervalMinutes: 0
@@ -56,7 +56,7 @@ server:
         include:
           rootFolders: []
           rootFiles: []
-        defaultUserScope: /users
+        defaultUserScope: /
         defaultEnabled: true
         createUserDir: true
   externalUrl: https://drive.brhd.io
