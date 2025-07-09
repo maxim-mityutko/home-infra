@@ -15,7 +15,7 @@ server:
       utc: true
   debugMedia: false
   sources:
-    - path: /home/filebrowser/data/sources/drive
+    - path: data/sources/drive
       name: Shared
       config:
         indexingIntervalMinutes: 0
