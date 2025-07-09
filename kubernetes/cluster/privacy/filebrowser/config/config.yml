@@ -15,7 +15,7 @@ server:
       utc: true
   debugMedia: false
   sources:
-    - path: data/sources/drive
+    - path: /home/filebrowser/data/sources/drive
       name: DeGoogle
       config:
         indexingIntervalMinutes: 0
@@ -34,7 +34,7 @@ server:
         include:
           rootFolders: []
           rootFiles: []
-        defaultUserScope: /
+        defaultUserScope: /users
         defaultEnabled: true
         createUserDir: true
   externalUrl: https://drive.brhd.io
