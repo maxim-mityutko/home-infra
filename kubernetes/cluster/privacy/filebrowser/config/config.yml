@@ -9,7 +9,7 @@ server:
   baseURL: /
   logging:
     - levels: "info|warning|error"
-      apiLevels: "info|warning|error"
+      apiLevels: "warning|error"
       output: stdout
       noColors: false
       utc: true
