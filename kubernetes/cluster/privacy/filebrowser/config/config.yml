@@ -18,8 +18,25 @@ server:
     - path: /home/filebrowser/data/sources/drive
       name: Shared
       config:
-        defaultUserScope: /
+        indexingIntervalMinutes: 0
+        disableIndexing: false
+        maxWatchers: 0
+        neverWatchPaths: []
+        exclude:
+          hidden: true
+          ignoreZeroSizeFolders: false
+          filePaths: []
+          folderPaths: []
+          fileNames: []
+          folderNames: []
+          fileEndsWith: []
+          folderEndsWith: []
+        include:
+          rootFolders: []
+          rootFiles: []
+        defaultUserScope: /shared
         defaultEnabled: true
+        createUserDir: false
     - path: /home/filebrowser/data/sources/drive
       name: DeGoogle
       config:
