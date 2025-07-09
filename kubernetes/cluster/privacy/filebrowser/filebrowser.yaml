@@ -64,6 +64,7 @@ spec:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
+            runAsGroup: 1000
           volumeMounts:
             - name: filebrowser-data
               mountPath: /home/filebrowser/data
