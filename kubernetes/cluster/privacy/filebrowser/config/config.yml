@@ -1,3 +1,5 @@
+# Ref: https://github.com/gtsteffaniak/filebrowser/wiki/Full-Config-Example
+# Ref: https://github.com/gtsteffaniak/filebrowser/wiki/Configuration-And-Examples
 server:
   numImageProcessors: 2
   disablePreviews: false
@@ -56,6 +58,7 @@ auth:
       disableVerifyTLS: false
       logoutRedirectUrl: "https://auth.brhd.io/application/o/filebrowser/end-session/"
       adminGroup: "admin"
+      createUser: true
   adminUsername: admin
 frontend:
   name: Drive
