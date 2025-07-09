@@ -15,8 +15,8 @@ server:
       utc: true
   debugMedia: false
   sources:
-    - path: /mnt/drive
-      name: drive
+    - path: data/sources/drive
+      name: DeGoogle
       config:
         indexingIntervalMinutes: 0
         disableIndexing: false
@@ -34,7 +34,7 @@ server:
         include:
           rootFolders: []
           rootFiles: []
-        defaultUserScope: /
+        defaultUserScope: /users
         defaultEnabled: true
         createUserDir: true
   externalUrl: https://drive.brhd.io
@@ -61,7 +61,7 @@ auth:
       createUser: true
   adminUsername: admin
 frontend:
-  name: Drive
+  name: Filebrowser Quantum
   disableDefaultLinks: false
   disableUsedPercentage: false
 userDefaults:

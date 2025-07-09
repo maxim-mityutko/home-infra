@@ -74,7 +74,7 @@ spec:
             - name: filebrowser-cache
               mountPath: /home/filebrowser/tmp
             - name: drive
-              mountPath: /mnt/drive
+              mountPath: /home/filebrowser/data/sources/drive
       volumes:
         - name: filebrowser-data
           persistentVolumeClaim:
