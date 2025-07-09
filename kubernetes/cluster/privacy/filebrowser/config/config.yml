@@ -15,7 +15,7 @@ server:
       utc: true
   debugMedia: false
   sources:
-    - path: /home/filebrowser/data/sources/drive
+    - path: /home/filebrowser/data/sources/drive/shared
       name: Shared
       config:
         indexingIntervalMinutes: 0
@@ -34,7 +34,7 @@ server:
         include:
           rootFolders: []
           rootFiles: []
-        defaultUserScope: /shared
+        defaultUserScope: /
         defaultEnabled: true
         createUserDir: false
     - path: /home/filebrowser/data/sources/drive
