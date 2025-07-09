@@ -17,8 +17,9 @@ server:
   sources:
     - path: /home/filebrowser/data/sources/drive
       name: Shared
-      defaultUserScope: /
-      defaultEnabled: true
+      config:
+        defaultUserScope: /
+        defaultEnabled: true
     - path: /home/filebrowser/data/sources/drive
       name: DeGoogle
       config:
