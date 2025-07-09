@@ -16,6 +16,10 @@ server:
   debugMedia: false
   sources:
     - path: /home/filebrowser/data/sources/drive
+      name: Shared
+      defaultUserScope: /
+      defaultEnabled: true
+    - path: /home/filebrowser/data/sources/drive
       name: DeGoogle
       config:
         indexingIntervalMinutes: 0
