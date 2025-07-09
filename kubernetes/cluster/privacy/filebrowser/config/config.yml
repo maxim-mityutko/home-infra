@@ -1,0 +1,98 @@
+server:
+  numImageProcessors: 2
+  disablePreviews: false
+  disablePreviewResize: false
+  disableTypeDetectionByHeader: false
+  port: 80
+  baseURL: /
+  logging:
+    - levels: "info|warning|error"
+      apiLevels: "info|warning|error"
+      output: stdout
+      noColors: false
+      utc: true
+  debugMedia: false
+  sources:
+    - path: /mnt/drive
+      name: drive
+      config:
+        indexingIntervalMinutes: 0
+        disableIndexing: false
+        maxWatchers: 0
+        neverWatchPaths: []
+        exclude:
+          hidden: true
+          ignoreZeroSizeFolders: false
+          filePaths: []
+          folderPaths: []
+          fileNames: []
+          folderNames: []
+          fileEndsWith: []
+          folderEndsWith: []
+        include:
+          rootFolders: []
+          rootFiles: []
+        defaultUserScope: /
+        defaultEnabled: true
+        createUserDir: true
+  externalUrl: https://drive.brhd.io
+  internalUrl: ""
+  cacheDir: tmp
+  maxArchiveSize: 1 # in GB
+auth:
+  tokenExpirationHours: 2
+  methods:
+    proxy:
+      enabled: false
+    noauth: false
+    password:
+      enabled: false
+    # Ref: https://github.com/gtsteffaniak/filebrowser/wiki/Configuration-And-Examples#openid-connect-configuration-oidc
+    oidc:
+      enabled: true
+      issuerUrl: "https://auth.brhd.io/application/o/filebrowser/"
+      scopes: "email openid profile groups"
+      userIdentifier: "email"
+      disableVerifyTLS: false
+      logoutRedirectUrl: "https://auth.brhd.io/application/o/filebrowser/end-session/"
+      adminGroup: "admin"
+  adminUsername: admin
+frontend:
+  name: Drive
+  disableDefaultLinks: false
+  disableUsedPercentage: false
+userDefaults:
+  stickySidebar: true
+  darkMode: true
+  locale: en
+  viewMode: normal
+  singleClick: true
+  showHidden: false
+  dateFormat: false
+  gallerySize: 3
+  themeColor: var(--blue)
+  quickDownload: true
+  disableOnlyOfficeExt: .txt .csv .html .pdf
+  disableOfficePreviewExt: ""
+  lockPassword: true
+  disableSettings: false
+  preview:
+    disableHideSidebar: false
+    highQuality: false
+    image: false
+    video: false
+    motionVideoPreview: false
+    office: false
+    popup: false
+    autoplayMedia: false
+  permissions:
+    api: false
+    admin: false
+    modify: true
+    share: true
+    realtime: false
+  loginMethod: oidc
+  disableUpdateNotifications: true 
+integrations:
+  media:
+    ffmpegPath: /usr/local/bin
