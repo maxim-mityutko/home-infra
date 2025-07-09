@@ -20,7 +20,7 @@ spec:
               service:
                 name: filebrowser
                 port:
-                  number: 80
+                  number: 8080
   tls:
     - hosts:
         - drive.brhd.io

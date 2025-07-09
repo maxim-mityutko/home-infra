@@ -13,8 +13,8 @@ spec:
   type: ClusterIP
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 8080
+      targetPort: 8080
   selector:
     app.kubernetes.io/name: filebrowser
 ---
@@ -50,7 +50,7 @@ spec:
             limits:
               memory: 500Mi
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           # Ref: https://github.com/gtsteffaniak/filebrowser/wiki/Environment-Variables
           envFrom:
             - secretRef:
@@ -60,8 +60,6 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
-              add:
-                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
