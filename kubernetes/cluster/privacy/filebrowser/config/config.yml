@@ -34,7 +34,7 @@ server:
         include:
           rootFolders: []
           rootFiles: []
-        defaultUserScope: /users
+        defaultUserScope: /
         defaultEnabled: true
         createUserDir: true
   externalUrl: https://drive.brhd.io
