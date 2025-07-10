@@ -25,15 +25,6 @@ server:
         exclude:
           hidden: true
           ignoreZeroSizeFolders: false
-          filePaths: []
-          folderPaths: []
-          fileNames: []
-          folderNames: []
-          fileEndsWith: []
-          folderEndsWith: []
-        include:
-          rootFolders: []
-          rootFiles: []
         defaultUserScope: /
         defaultEnabled: true
         createUserDir: false
@@ -47,15 +38,6 @@ server:
         exclude:
           hidden: true
           ignoreZeroSizeFolders: false
-          filePaths: []
-          folderPaths: []
-          fileNames: []
-          folderNames: []
-          fileEndsWith: []
-          folderEndsWith: []
-        include:
-          rootFolders: []
-          rootFiles: []
         defaultUserScope: /
         defaultEnabled: true
         createUserDir: true
@@ -71,6 +53,7 @@ auth:
     noauth: false
     password:
       enabled: false
+      signup: false
     # Ref: https://github.com/gtsteffaniak/filebrowser/wiki/Configuration-And-Examples#openid-connect-configuration-oidc
     oidc:
       enabled: true
