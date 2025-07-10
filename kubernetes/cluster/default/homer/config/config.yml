@@ -136,6 +136,9 @@ services:
   - name: "Security / Privacy"
     icon: "fas fa-shield"
     items:
+      - name: "FileBrowser Quantum"
+        logo: "https://cdn.brhd.io/icons/filebrowser-quantum.svg"
+        url: "https://drive.brhd.io"
       - name: "Immich"
         logo: "https://cdn.brhd.io/icons/immich.svg"
         url: "https://photos.brhd.io"
