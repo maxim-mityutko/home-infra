@@ -9,7 +9,7 @@ helmCharts:
   - name: stirling-pdf-chart
     namespace: extras
     releaseName: stirling-pdf
-    version: 1.10.0
+    version: 2.0.2
     repo: https://stirling-tools.github.io/Stirling-PDF-chart
     valuesInline:
       envsFrom:
