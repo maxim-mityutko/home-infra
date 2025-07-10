@@ -51,7 +51,6 @@ spec:
               memory: 250Mi
           ports:
             - containerPort: 8080
-          # Ref: https://github.com/gtsteffaniak/filebrowser/wiki/Environment-Variables
           envFrom:
             - secretRef:
                 name: filebrowser
