@@ -5,7 +5,7 @@ nodeSelector:
   # kubernetes.io/tpu: coral
 image:
   repository: ghcr.io/blakeblackshear/frigate
-  tag: 0.15.1
+  tag: 0.15.2
   # GPU: If Coral TPU is used `tensorrt` image is unnecessary
   # tag: 0.14.1-tensorrt
 env:
