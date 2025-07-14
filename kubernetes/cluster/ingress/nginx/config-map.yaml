@@ -12,6 +12,9 @@ data:
   allow-snippet-annotations: "true"
   # Ref: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations-risk/
   annotations-risk-level: Critical
+  # Ref: https://github.com/kubernetes/ingress-nginx/issues/13598
+  proxy-busy-buffers-size: 4k
+  proxy-buffer-size: 4k
 ---
 apiVersion: v1
 kind: ConfigMap
