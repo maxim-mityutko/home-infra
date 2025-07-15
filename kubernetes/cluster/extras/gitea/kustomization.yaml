@@ -186,6 +186,7 @@ helmCharts:
         annotations:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
+          nginx.ingress.kubernetes.io/proxy-body-size: 128m
         hosts:
           - host: git.brhd.io
             paths:
