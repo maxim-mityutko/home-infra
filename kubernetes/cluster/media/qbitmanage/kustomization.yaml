@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: media
 resources:
   - qbitmanage.yaml
+  - ingress.yaml
 configMapGenerator:
   - name: qbitmanage-config-yml
     files:
