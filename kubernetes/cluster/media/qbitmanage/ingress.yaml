@@ -2,46 +2,46 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: readarr
+  name: qbitmanage
   namespace: media
   labels:
-    app.kubernetes.io/name: readarr
+    app.kubernetes.io/name: qbitmanage
   annotations:
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
     nginx.ingress.kubernetes.io/auth-response-headers: >-
       Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,authorization
     nginx.ingress.kubernetes.io/auth-signin: >-
-      https://readarr.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+      https://qbt.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
     nginx.ingress.kubernetes.io/auth-snippet: |
       proxy_set_header X-Forwarded-Host $http_host;
     nginx.ingress.kubernetes.io/auth-url: >-
       http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
 spec:
   rules:
-    - host: readarr.brhd.io
+    - host: qbt.brhd.io
       http:
         paths:
           - pathType: Prefix
             path: /
             backend:
               service:
-                name: readarr
+                name: qbitmanage
                 port:
-                  number: 80
+                  number: 8080
   tls:
     - hosts:
-        - readarr.brhd.io
+        - qbt.brhd.io
 ---
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: readarr.brhd.io
+  name: qbt.brhd.io
   namespace: media
 spec:
   endpoints:
-    - dnsName: readarr.brhd.io
+    - dnsName: qbt.brhd.io
       recordTTL: 86400
       recordType: CNAME
       targets:
-        - casa.brhd.io
+        - forge.brhd.io

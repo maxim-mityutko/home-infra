@@ -1,0 +1,41 @@
+# Drive
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: drive
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: x-privacy-shared
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: nfs
+  resources:
+    requests:
+      storage: 100G
+  selector:
+    matchLabels:
+      storage.target:  drive
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name:  drive
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: x-privacy-shared
+    storage.target: drive
+spec:
+  accessModes:
+    - ReadOnlyMany
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  capacity:
+    storage: 100G
+  nfs:
+    server: nas.brhd.io
+    path: /mnt/spin/service/drive
+  mountOptions:
+    - mountvers=4

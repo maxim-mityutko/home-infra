@@ -1,6 +1,22 @@
 # Service: Qbitmanage
 # Label: app.kubernetes.io/name: qbitmanage
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbitmanage
+  namespace: media
+  labels:
+    app.kubernetes.io/name: qbitmanage
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: qbitmanage
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,7 +41,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: qbitmanage
-          image: ghcr.io/hotio/qbitmanage:release-4.4.0
+          image: ghcr.io/hotio/qbitmanage:release-4.5.1
           imagePullPolicy: IfNotPresent
           resources:
             requests:
@@ -34,6 +50,11 @@ spec:
             limits:
               cpu: 500m
               memory: 1000Mi
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: qbitmanage
           volumeMounts:
             - name: downloads
               mountPath: /downloads
@@ -68,3 +89,15 @@ spec:
         - name: qbitmanage-config-yml
           configMap:
             name: qbitmanage-config-yml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: qbitmanage
+  namespace: media
+  labels:
+    app.kubernetes.io/name: qbitmanage
+data:
+  TZ: Europe/Amsterdam
+  QBT_WEB_SERVER: "true"
+  QBT_PORT: "8080"

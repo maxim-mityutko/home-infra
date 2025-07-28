@@ -1,12 +1,11 @@
 ---
-# Radarr -- Config
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: readarr-config
-  namespace: media
+  name: filebrowser-data
+  namespace: privacy
   labels:
-    app.kubernetes.io/name: readarr
+    app.kubernetes.io/name: filebrowser
 spec:
   accessModes:
   - ReadWriteOnce

@@ -1,0 +1,100 @@
+# Service: Filebrowser
+# Ingress: drive.brhd.io
+# Label: app.kubernetes.io/name: filebrowser
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: filebrowser
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: filebrowser
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: filebrowser
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filebrowser
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: filebrowser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: filebrowser
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: privacy
+      labels:
+        app.kubernetes.io/name: filebrowser
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: filebrowser
+          image: ghcr.io/gtsteffaniak/filebrowser:0.7.17-beta
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 50m
+            limits:
+              memory: 250Mi
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: filebrowser
+            - configMapRef:
+                name: filebrowser
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1337
+            runAsGroup: 1337
+          volumeMounts:
+            - name: filebrowser-data
+              mountPath: /home/filebrowser/data
+            - name: filebrowser-config-yml
+              mountPath: /home/filebrowser/data/config.yml
+              subPath: config.yml
+            - name: filebrowser-cache
+              mountPath: /home/filebrowser/tmp
+            - name: drive
+              mountPath: /home/filebrowser/data/sources/drive
+      volumes:
+        - name: filebrowser-data
+          persistentVolumeClaim:
+            claimName: filebrowser-data
+        - name: filebrowser-config-yml
+          configMap:
+            name: filebrowser-config-yml
+        - name: filebrowser-cache
+          emptyDir: {}
+        - name: drive
+          persistentVolumeClaim:
+            claimName: drive
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebrowser
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: filebrowser
+data:
+  # Ref: https://github.com/gtsteffaniak/filebrowser/wiki/Environment-Variables
+  FILEBROWSER_CONFIG: "data/config.yml"
+
