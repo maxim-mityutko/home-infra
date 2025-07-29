@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: miniflux
-          image: miniflux/miniflux:2.2.10
+          image: miniflux/miniflux:2.2.11
           resources:
             requests:
               memory: 50Mi
