@@ -24,6 +24,7 @@ helmCharts:
         enabled: false
       ingress:
         enabled: true
+        class: public
         annotations:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
