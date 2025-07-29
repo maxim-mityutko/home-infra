@@ -7,7 +7,7 @@ helmCharts:
   - name: open-webui
     namespace: machine-learning
     releaseName: open-webui
-    version: 5.4.0
+    version: 7.0.0
     repo: https://helm.openwebui.com/
     valuesInline:
       ollama:
