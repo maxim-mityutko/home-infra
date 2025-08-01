@@ -42,13 +42,13 @@ spec:
       restartPolicy: Always
       containers:
         - name: invidious
-          image: quay.io/invidious/invidious:2024.11.10-9892604
+          image: quay.io/invidious/invidious:2.20250517.0
           resources:
             requests:
               memory: 100Mi
               cpu: 50m
             limits:
-              memory: 200Mi
+              memory: 500Mi
           ports:
             - containerPort: 3000
           envFrom:
@@ -56,18 +56,37 @@ spec:
                 name: invidious
             - configMapRef:
                 name: invidious
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 3000
-            initialDelaySeconds: 10
-            periodSeconds: 60
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 3000
-            initialDelaySeconds: 30
-            periodSeconds: 120
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 3000
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 120
+        - name: inv-sig-helper
+          image: quay.io/invidious/inv-sig-helper:latest
+          args: ["--tcp", "0.0.0.0:12999"]
+          ports:
+            - name: sighelper
+              containerPort: 12999
+              protocol: TCP
+          env:
+            - name: RUST_LOG
+              value: info
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: 12999
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 60
       nodeSelector:
         beta.kubernetes.io/arch: amd64
 ---
@@ -79,12 +98,15 @@ metadata:
   labels:
     app.kubernetes.io/name: invidious
 data:
+  # Ref: https://github.com/iv-org/invidious/blob/master/config/config.example.yml
+  # NOTE: Run "microk8s kubectl run yt-trusted-session-generator --image=quay.io/invidious/youtube-trusted-session-generator"
+  # to generate PO_TOKEN and VISITOR_DATA
   INVIDIOUS_CHECK_TABLES: "true"
   INVIDIOUS_DOMAIN: "yt.brhd.io"
   INVIDIOUS_PORT: "3000"
   INVIDIOUS_EXTERNAL_PORT: "80"
   INVIDIOUS_HTTPS_ONLY: "true"
-  INVIDIOUS_LOG_LEVEL: "Info"
+  INVIDIOUS_LOG_LEVEL: "Warn"
 
   INVIDIOUS_POPULAR_ENABLED: "true"
   INVIDIOUS_STATISTICS_ENABLED: "false"
@@ -98,8 +120,9 @@ data:
   INVIDIOUS_FULL_REFRESH: "false"
 
   INVIDIOUS_CONFIG: |
+    signature_server: 127.0.0.1:12999
     default_user_preferences: 
-      region: US
+      region: NL
       dark_mode: dark
       player_style: youtube
       quality: dash

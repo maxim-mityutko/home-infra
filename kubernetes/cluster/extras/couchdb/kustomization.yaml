@@ -9,7 +9,7 @@ helmCharts:
   - name: couchdb
     namespace: extras
     releaseName: couchdb
-    version: 4.5.3
+    version: 4.6.2
     repo: https://apache.github.io/couchdb-helm
     valuesInline:
       clusterSize: 1
@@ -43,13 +43,14 @@ helmCharts:
         annotations:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
+          nginx.ingress.kubernetes.io/proxy-body-size: '0'
 
       resources:
         requests:
           cpu: 100m
           memory: 100Mi
         limits:
-          cpu: 200m
+          cpu: 300m
           memory: 250Mi
 
       couchdbConfig:

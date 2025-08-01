@@ -88,12 +88,12 @@
     sudo chown -R <user> ~/.kube
     newgrp microk8s
     ```
-- add **DNS** servers
+- (optional) add **DNS** servers
 
     ```shell
     sudo nano /etc/systemd/resolved.conf
     ```
-    Set `DNS=1.1.1.1` and `FallbackDNS=1.0.0.1`
+    Set `DNS=x.x.x.x` (gateway IP) and ensure that `FallbackDNS=1.0.0.1` is commented out
 
 - move **journald logs** to *volatile* storage to reduce the disk pressure
 
@@ -119,9 +119,9 @@
 - enable **plugins**
 
     ```shell
-    microk8s enable dashboard
-    microk8s enable dns
-    microk8s enable ingress:default-ssl-certificate=default/brhd-io-tls
+    # microk8s enable dashboard
+    # microk8s enable dns
+    # microk8s enable ingress:default-ssl-certificate=default/brhd-io-tls
     # When NVIDIA drivers can be preinstalled on the node `--gpu-operator-driver host`, more info https://microk8s.io/docs/addon-gpu
     microk8s enable nvidia --gpu-operator-driver host
     ```
@@ -210,9 +210,19 @@
 ### Tags
 
 - add custom tags to nodes
-  ```shell
-  # type = intel / nvidia
-  kubectl label nodes <node> kubernetes.io/gpu=<type>
-  # size = large / medium / small
-  kubectl label nodes <node> kubernetes.io/node-size=<size>
-  ```
+```shell
+# type = intel / nvidia
+kubectl label nodes <node> kubernetes.io/gpu=<type>
+# size = large / medium / small
+kubectl label nodes <node> kubernetes.io/node-size=<size>
+```
+
+### Local Storage
+- create and / or mount drive that will be used for local storage
+```shell
+sudo mkdir /mnt/my-local-storage
+```
+- tag the node
+```shell
+kubectl label nodes <node> kubernetes.io/local-storage=true
+```

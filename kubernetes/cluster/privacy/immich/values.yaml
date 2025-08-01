@@ -1,0 +1,99 @@
+# Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
+# Ref: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
+env: {}
+envFrom:
+  - configMapRef:
+      name: immich
+  - secretRef: 
+      name: immich
+
+immich:
+  metrics:
+    enabled: false
+  persistence:
+    library:
+      existingClaim: immich-data
+
+# Dependencies
+postgresql:
+  enabled: false
+redis:
+  enabled: false
+
+# Immich Components
+# TODO: possibility to separate API and WORKERS: https://immich.app/docs/administration/jobs-workers/
+# Ref: https://github.com/immich-app/immich-charts/pull/137
+server:
+  enabled: true
+  image:
+    repository: ghcr.io/immich-app/immich-server
+    tag: v1.136.0
+  resources:
+    requests:
+      cpu: 200m
+      memory: 250Mi
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+  persistence:
+    # External Library
+    external:
+      enabled: true
+      existingClaim: immich-external
+      mountPath: /media/external
+      readOnly: true
+  probes:
+    liveness:
+      spec:
+        initialDelaySeconds: 90
+        periodSeconds: 30
+    readiness:
+      spec:
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        failureThreshold: 5
+  ingress:
+    main:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: public
+        cert-manager.io/cluster-issuer: lets-encrypt
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      hosts:
+        - host: photos.brhd.io
+          paths:
+            - path: "/"
+  nodeSelector:
+    kubernetes.io/gpu: intel
+
+machine-learning:
+  enabled: true
+  image:
+    repository: ghcr.io/immich-app/immich-machine-learning
+    tag: v1.136.0 # Use <tag>-cuda for NVidia GPUs
+  resources:
+    requests:
+      cpu: 100m
+      memory: 150Mi
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+  probes:
+    liveness:
+      spec:
+        initialDelaySeconds: 90
+        periodSeconds: 30
+    readiness:
+      spec:
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        failureThreshold: 5
+  persistence:
+    cache:
+      enabled: true
+      size: 10Gi
+      type: pvc
+      accessMode: ReadWriteMany
+      storageClass: nfs-subdir
+  nodeSelector:
+    kubernetes.io/node-size: large

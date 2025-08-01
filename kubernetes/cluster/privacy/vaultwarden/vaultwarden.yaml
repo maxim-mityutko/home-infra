@@ -1,0 +1,88 @@
+# Service: Vaultwarden
+# Ingress: vault.brhd.io
+# Label: app.kubernetes.io/name: vaultwarden
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vaultwarden
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: vaultwarden
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      name: http
+  selector:
+    app.kubernetes.io/name: vaultwarden
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vaultwarden
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: vaultwarden
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: vaultwarden
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: privacy
+      labels:
+        app.kubernetes.io/name: vaultwarden
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: vaultwarden
+          image: vaultwarden/server:1.34.2
+          resources:
+            requests:
+              memory: 200M
+              cpu: 100m
+            limits:
+              memory: 1G
+              cpu: 1000m
+          ports:
+            - containerPort: 80
+              name: http
+          envFrom:
+            - configMapRef:
+                name: vaultwarden
+            - secretRef:
+                name: vaultwarden
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vaultwarden
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: vaultwarden
+data:
+  # Ref: https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
+  DOMAIN: "https://vault.brhd.io"
+  SIGNUPS_ALLOWED: "true"
+  EMERGENCY_ACCESS_ALLOWED: "true"
+
+  SENDS_ALLOWED: "true"
+  USER_SEND_LIMIT: "1024" # in KB
+
+  WEBSOCKET_ENABLED: "true"
+
+  ORG_ATTACHMENT_LIMIT: "0"
+  USER_ATTACHMENT_LIMIT: "0"
+
+  DISABLE_ADMIN_TOKEN: "false"
+
+  DISABLE_ICON_DOWNLOAD: "true"
+  ICON_CACHE_TTL: "0"
+  ICON_SERVICE: duckduckgo # internal / bitwarden / duckduckgo / google

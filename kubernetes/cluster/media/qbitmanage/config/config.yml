@@ -1,5 +1,3 @@
-# NOTE: this config is currently copied manually to the PV location
-# TODO: automate the deployment of this config
 commands:
   dry_run: false
   cross_seed: false
@@ -41,23 +39,22 @@ cat:
   lidarr: /downloads/zzz/complete/_lidarr
   stash: /downloads/misc
 
-# replace (*) with full names from url
 tracker:
   t-ru:
     tag:
       - rutracker
       - public
-  t**********h|t*****reload:
+  torrentleech|tleechreload:
     tag:
-      - t**********h
+      - torrentleech
       - private
-  h****s:
+  hdbits:
     tag:
-      - h****s
+      - hdbits
       - private
-  t***********c:
+  trancetraffic:
     tag:
-    - t***********c
+    - trancetraffic
     - private
   racingfor:
     tag: rfm
@@ -88,7 +85,8 @@ share_limits:
       - radarr
       - sonarr
     max_ratio: 0.75
-    min_seeding_time: 43200 # 30 days
+    max_seeding_time: 365d
+    min_seeding_time: 30d
     cleanup: true
   private:
     priority: 3

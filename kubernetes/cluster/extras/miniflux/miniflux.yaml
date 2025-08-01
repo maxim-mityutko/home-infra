@@ -43,13 +43,13 @@ spec:
       restartPolicy: Always
       containers:
         - name: miniflux
-          image: miniflux/miniflux:2.2.4
+          image: miniflux/miniflux:2.2.11
           resources:
             requests:
               memory: 50Mi
               cpu: 10m
             limits:
-              memory: 100Mi
+              memory: 250Mi
               cpu: 500m
           ports:
             - containerPort: 8080

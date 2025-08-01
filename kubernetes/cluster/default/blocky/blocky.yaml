@@ -1,54 +1,21 @@
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: blocky-dns
-  labels:
-    app.kubernetes.io/name: blocky
-spec:
-  selector:
-    app.kubernetes.io/name: blocky
-  ports:
-    - port: 53
-      targetPort: 53
-      name: dns-tcp
-      protocol: TCP
-    - port: 53
-      targetPort: 53
-      name: dns-udp
-      protocol: UDP
-  type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: blocky
-  labels:
-    app.kubernetes.io/name: blocky
-spec:
-  selector:
-    app.kubernetes.io/name: blocky
-  type: ClusterIP
-  ports:
-    - name: http
-      protocol: TCP
-      port: 4000
-      targetPort: 4000
----
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: blocky
   labels:
     app.kubernetes.io/name: blocky
 spec:
-  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: blocky
-  strategy:
+  serviceName: blocky
+  updateStrategy: 
     type: RollingUpdate
-  revisionHistoryLimit: 1
+  podManagementPolicy: Parallel
+  minReadySeconds: 60
+  revisionHistoryLimit: 2
+  replicas: 2
   template:
     metadata:
       labels:
@@ -57,11 +24,14 @@ spec:
       restartPolicy: Always
       containers:
         - name: blocky
-          image: spx01/blocky:v0.25
+          image: spx01/blocky:v0.26
+          args: 
+            - --config 
+            - ./config/
           resources:
             requests:
-              cpu: 10m
-              memory: 100Mi
+              cpu: 25m
+              memory: 150Mi
             # The actual memory and CPU usage is much lower, however ample memory
             # is required to load block lists and avoid OOMKill errors.
             limits:
@@ -81,12 +51,16 @@ spec:
               value: Europe/Amsterdam
           volumeMounts:
             - name: blocky-config
-              mountPath: /app/config.yml
+              mountPath: /app/config/config.yml
               subPath: config.yml
+            # Ref: https://0xerr0r.github.io/blocky/latest/configuration/#custom-dns
+            - name: blocky-secret-config
+              mountPath: /app/config/custom-dns.yml
+              subPath: custom-dns.yml
           readinessProbe:
             tcpSocket:
               port: dns-tcp
-            initialDelaySeconds: 30
+            initialDelaySeconds: 15
             periodSeconds: 30
             timeoutSeconds: 1
             failureThreshold: 5
@@ -94,3 +68,19 @@ spec:
         - name: blocky-config
           configMap:
             name: blocky-config
+        - name: blocky-secret-config
+          secret:
+            secretName: blocky-secret-config
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - blocky
+              topologyKey: kubernetes.io/hostname
+      # NOTE: Could not make L2Advertising of MetalLB work on the controlplane, moved everything to worker nodes
+      # nodeSelector:
+      #   node.kubernetes.io/microk8s-controlplane: microk8s-controlplane

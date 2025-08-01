@@ -2,10 +2,20 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: argocd
 resources:
-  - config.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v3.0.11/manifests/install.yaml
   - ingress.yaml
+  - namespace.yaml
   - repo.yaml
   - secret.yaml
   - dns-endpoint.yaml
   # TODO: Enable service scrape if necessary
   # - service-scrape.yaml
+patches:
+  - target:
+      kind: ConfigMap
+      name: argocd-cm
+    path: config-argocd-cm.yaml
+  - target:
+      kind: ConfigMap
+      name: argocd-rbac-cm
+    path: config-argocd-rbac-cm.yaml

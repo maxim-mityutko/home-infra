@@ -1,0 +1,10 @@
+# NOTE: Postgres with pgvecto.rs extension
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - cnpg-vectorchord.yaml
+  - pod-scrape.yaml
+  # Enable the `service` manifest if LoadBalancer is required
+  # - service.yaml
+  - backup.yaml

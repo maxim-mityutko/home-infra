@@ -34,13 +34,14 @@ spec:
   revisionHistoryLimit: 1
   template:
     metadata:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: macvlan-home-assistant
       labels:
         app.kubernetes.io/name: home-assistant
     spec:
       restartPolicy: Always
-      hostNetwork: true
       containers:
-        - image: ghcr.io/home-assistant/home-assistant:2025.1.2
+        - image: ghcr.io/home-assistant/home-assistant:2025.7.1
           name: home-assistant
           resources:
             requests:
@@ -51,6 +52,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: home-assistant
+          # TODO: fix me
+          # livenessProbe:
+          #   httpGet:
+          #     path: /manifest.json
+          #     port: 8123
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 120
+          #   failureThreshold: 3
           volumeMounts:
             - name: home-assistant-config
               mountPath: /config
@@ -58,6 +67,12 @@ spec:
               mountPath: /config/secrets.yaml
               subPath: secrets.yaml
               readOnly: true
+      # Enforcing specific set of nodes till network interface names 
+      # can be aligned across all nodes of the cluster
+      # TODO: to be removed
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        node.kubernetes.io/microk8s-worker: microk8s-worker
       volumes:
         - name: home-assistant-config
           persistentVolumeClaim:

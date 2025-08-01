@@ -1,0 +1,27 @@
+---
+# Ref: https://kubernetes.github.io/ingress-nginx/user-guide/exposing-tcp-udp-services/
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress-proxy
+  namespace: ingress
+  annotations:
+    metallb.io/address-pool: service-pool
+spec:
+  type: LoadBalancer
+  allocateLoadBalancerNodePorts: false
+  externalIPs:
+    - 192.168.1.211
+    - 192.168.1.212
+    - 192.168.1.213
+  ports:
+    - targetPort: 53
+      name: dns-tcp
+      port: 53
+      protocol: TCP
+    - targetPort: 53
+      name: dns-udp
+      port: 53
+      protocol: UDP
+  selector:
+    name: nginx-ingress-microk8s

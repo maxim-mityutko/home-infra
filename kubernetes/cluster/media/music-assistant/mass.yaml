@@ -1,0 +1,83 @@
+# Service: Music Assistant
+# Ingress: mass.brhd.io
+# Label: app.kubernetes.io/name: music-assistant
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: music-assistant
+  labels:
+    app.kubernetes.io/name: music-assistant
+  namespace: media
+spec:
+  ports:
+    - protocol: TCP
+      port: 8095
+      targetPort: 8095
+  selector:
+    app.kubernetes.io/name: music-assistant
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: music-assistant
+  labels:
+    app.kubernetes.io/name: music-assistant
+  namespace: media
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: music-assistant
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: macvlan-music-assistant
+      labels:
+        app.kubernetes.io/name: music-assistant
+    spec:
+      restartPolicy: Always
+      containers:
+        - image: ghcr.io/music-assistant/server:2.5.5
+          name: music-assistant
+          resources:
+            requests:
+              cpu: 100m
+              memory: 500Mi
+            limits:
+              memory: 1Gi
+          envFrom:
+            - configMapRef:
+                name: music-assistant
+          volumeMounts:
+            - name: music-assistant-config
+              mountPath: /data
+            - name: downloads
+              mountPath: /downloads
+      # Enforcing specific set of nodes till network interface names 
+      # can be aligned across all nodes of the cluster
+      # TODO: to be removed
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        node.kubernetes.io/microk8s-worker: microk8s-worker
+      volumes:
+        - name: music-assistant-config
+          persistentVolumeClaim:
+            claimName: music-assistant-config
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads
+            readOnly: true
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: music-assistant
+  namespace: media
+  labels:
+    app.kubernetes.io/name: music-assistant
+data:
+  LOG_LEVEL: info

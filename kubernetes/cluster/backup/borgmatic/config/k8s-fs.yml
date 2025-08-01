@@ -7,6 +7,7 @@ repositories:
 keep_daily: 14
 keep_weekly: 8
 keep_monthly: 6
+relocated_repo_access_is_ok: true
 checks:
   - name: repository
     frequency: 2 weeks
@@ -29,6 +30,8 @@ exclude_patterns:
   - '*/omada-data/db'
   - '*/omada-logs'
   - '*/postgres-data'
+  # Cloudnative-PG (CNPG) cluster data and MinIO bucket 'cngp-backup'
+  - '*/cnpg-*'
   - '*/shinobi-plugins'
   - '*/vmsingle-stack'
   - '*/code-server-data'

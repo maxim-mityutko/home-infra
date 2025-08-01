@@ -8,10 +8,11 @@ helmCharts:
   - name: gitea
     namespace: extras
     releaseName: gitea
-    version: 10.6.0
+    version: 12.1.2
     repo: https://dl.gitea.com/charts/
     valuesInline:
       image:
+        tag: 1.24.0
         rootless: true
       podSecurityContext:
         fsGroup: 1000
@@ -67,6 +68,53 @@ helmCharts:
             LEVEL: Info
             ENABLE_SSH_LOG: false
           cron:
+            ENABLED: true
+            RUN_AT_START: false
+            NOTICE_ON_SUCCESS: false
+          cron.archive_cleanup:
+            ENABLED: false
+          cron.update_mirrors:
+            ENABLED: true
+            SCHEDULE: 0 30 12 * * *
+          cron.repo_health_check:
+            ENABLED: true
+            SCHEDULE: 0 30 12 * * *
+          cron.check_repo_stats:
+            ENABLED: false
+          cron.cleanup_hook_task_table:
+            ENABLED: false
+          cron.cleanup_packages:
+            ENABLED: false
+          cron.update_migration_poster_id:
+            ENABLED: false
+          cron.sync_external_users:
+            ENABLED: false
+          cron.cleanup_actions:
+            ENABLED: false
+          cron.deleted_branches_cleanup:
+            ENABLED: true
+            SCHEDULE: 0 0 13 * * 0
+          cron.delete_repo_archives:
+            ENABLED: false
+          cron.git_gc_repos:
+            ENABLED: false
+          cron.resync_all_sshkeys:
+            ENABLED: false
+          cron.resync_all_hooks:
+            ENABLED: false
+          cron.reinit_missing_repos:
+            ENABLED: false
+          cron.delete_missing_repos:
+            ENABLED: false
+          cron.delete_generated_repository_avatars:
+            ENABLED: false
+          cron.delete_old_actions:
+            ENABLED: false
+          cron.update_checker:
+            ENABLED: false
+          cron.delete_old_system_notices:
+            ENABLED: false
+          cron.gc_lfs:
             ENABLED: false
           metrics:
             ENABLED: false
@@ -80,6 +128,18 @@ helmCharts:
             STORAGE_TYPE: local # could have used `minio`, but then it makes sense to replace CouchDB for Obsidian
           actions:
             ENABLED: false
+          # Render HTML documents instead of showing raw file contents
+          markup.html:
+            ENABLED: true
+            FILE_EXTENSIONS: .html,.htm
+            RENDER_COMMAND: cat
+            IS_INPUT_FILE: true
+          markup.sanitizer.html.1:
+            ELEMENT: div
+            ALLOW_ATTR: class
+          markup.sanitizer.html.2:
+            ELEMENT: a
+            ALLOW_ATTR: class
 
         additionalConfigSources:
           - secret:
@@ -126,6 +186,7 @@ helmCharts:
         annotations:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
+          nginx.ingress.kubernetes.io/proxy-body-size: 128m
         hosts:
           - host: git.brhd.io
             paths:
@@ -144,8 +205,7 @@ helmCharts:
 
       resources:
         limits:
-          cpu: 100m
-          memory: 200Mi
+          memory: 300Mi
         requests:
           cpu: 50m
           memory: 100Mi
@@ -156,12 +216,13 @@ helmCharts:
       signing:
         enabled: false
 
-      actions:
-        enabled: false
-
       redis-cluster:
         enabled: false
       redis:
+        enabled: false
+      valkey-cluster:
+        enabled: false
+      valkey:
         enabled: false
       postgresql:
         enabled: false

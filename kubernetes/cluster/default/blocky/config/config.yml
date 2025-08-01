@@ -14,19 +14,22 @@ upstreams:
   groups:
     default:
       # Cloudflare
+      - tcp-tls:one.one.one.one:853 # DoT
+      - tcp-tls:dns.quad9.net:853   # DoT
       - https://cloudflare-dns.com/dns-query
-      - 1.1.1.1
-      - 1.0.0.1
+      - https://dns.quad9.net/dns-query
+      # - 1.1.1.1
+      # - 1.0.0.1
       # Other
       # - https://dns.google/dns-query
       # - https://dns.digitale-gesellschaft.ch/dns-query
     family:
       # Cloudflare
       - https://family.cloudflare-dns.com/dns-query
-      - 1.1.1.3
-      - 1.0.0.3
+      - https://doh.cleanbrowsing.org/doh/family-filter/
+      # - 1.1.1.3
+      # - 1.0.0.3
       # Other
-      # - https://doh.cleanbrowsing.org/doh/family-filter/
       # - 208.67.222.123  # OpenDNS - FamilyFilter
       # - 208.67.220.123  # OpenDNS - FamilyFilter
   timeout: 2s
@@ -62,6 +65,15 @@ blocking:
       timeout: 120s
       cooldown: 10s
       attempts: 5
+conditional:
+  mapping:
+    # Route all internal domains to router, which essentially renders the custom
+    # DNS configured via secret useless. However the advantage is that Blocky is 
+    # used as a DNS server only inside the client (default) VLAN, however router
+    # DNS is rolled out for all extra VLANs (eg IoT, cameras) and servers.
+    internal.brhd.io: 192.168.1.1
+clientLookup:
+  upstream: 192.168.1.1
 caching:
   maxItemsCount: 10000
   prefetching: true
