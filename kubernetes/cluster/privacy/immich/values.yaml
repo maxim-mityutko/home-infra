@@ -70,7 +70,7 @@ machine-learning:
   enabled: true
   image:
     repository: ghcr.io/immich-app/immich-machine-learning
-    tag: v1.136.0 # Use <tag>-cuda for NVidia GPUs
+    tag: v1.137.3 # Use <tag>-cuda for NVidia GPUs
   resources:
     requests:
       cpu: 100m
