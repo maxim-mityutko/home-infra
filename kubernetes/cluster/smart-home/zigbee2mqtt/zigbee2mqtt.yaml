@@ -39,7 +39,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: koenkk/zigbee2mqtt:2.5.1
+        - image: koenkk/zigbee2mqtt:2.6.0
           name: zigbee2mqtt
           resources:
             requests:
