@@ -178,8 +178,10 @@ config: |
   auth:
     enabled: false
   proxy:
+    default_role: viewer
     header_map:
       user: X-authentik-username
+      role: X-authentik-groups
   tls:
     enabled: false
 
