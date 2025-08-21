@@ -178,6 +178,7 @@ config: |
   auth:
     enabled: false
   proxy:
+    # Ref: https://docs.frigate.video/configuration/authentication/#header-mapping
     default_role: viewer
     separator: '|'
     header_map:
