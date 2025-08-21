@@ -178,7 +178,7 @@ config: |
   auth:
     enabled: false
   proxy:
-    default_role: admin
+    default_role: viewer
     separator: "|"
     header_map:
       user: X-authentik-username
@@ -186,7 +186,7 @@ config: |
   tls:
     enabled: false
 
-  version: 0.15
+  version: 0.16
 
 ingress:
   enabled: true
