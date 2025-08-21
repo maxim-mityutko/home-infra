@@ -91,7 +91,7 @@ config: |
     height: 320
     input_tensor: nchw
     input_pixel_format: bgr
-    path: /config/yolo_nas_s.onnx
+    path: /config/model_cache/yolo_nas_s.onnx
     labelmap_path: /labelmap/coco-80.txt
 
     # General Config (enable for TPU or GPU)
