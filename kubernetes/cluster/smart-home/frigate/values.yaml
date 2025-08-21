@@ -178,7 +178,7 @@ config: |
   auth:
     enabled: false
   proxy:
-    default_role: viewer
+    default_role: admin
     separator: "|"
     header_map:
       user: X-authentik-username
