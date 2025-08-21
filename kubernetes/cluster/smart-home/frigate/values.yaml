@@ -179,6 +179,7 @@ config: |
     enabled: false
   proxy:
     default_role: viewer
+    separator: "|"
     header_map:
       user: X-authentik-username
       role: X-authentik-groups
