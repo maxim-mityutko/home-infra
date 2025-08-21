@@ -69,12 +69,12 @@ config: |
     # input_tensor: nchw
 
     # OpenVINO (on CPU)
-    width: 300
-    height: 300
-    input_tensor: nhwc
-    input_pixel_format: bgr
-    path: /openvino-model/ssdlite_mobilenet_v2.xml
-    labelmap_path: /openvino-model/coco_91cl_bkgr.txt
+    # width: 300
+    # height: 300
+    # input_tensor: nhwc
+    # input_pixel_format: bgr
+    # path: /openvino-model/ssdlite_mobilenet_v2.xml
+    # labelmap_path: /openvino-model/coco_91cl_bkgr.txt
 
     # D-FINE
     # model_type: dfine
@@ -84,6 +84,15 @@ config: |
     # input_dtype: float
     # path: /config/model_cache/dfine_s_obj2coco.onnx
     # labelmap_path: /labelmap/coco-80.txt
+
+    # YOLO-NAS
+    model_type: yolonas
+    width: 320
+    height: 320
+    input_tensor: nchw
+    input_pixel_format: bgr
+    path: /config/yolo_nas_s.onnx
+    labelmap_path: /labelmap/coco-80.txt
 
     # General Config (enable for TPU or GPU)
     # input_pixel_format: rgb
