@@ -8,3 +8,7 @@ spec:
   backupOwnerReference: self
   cluster:
     name: cnpg-default
+  online: true
+  onlineConfiguration:
+    waitForArchive: false
+
