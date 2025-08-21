@@ -21,8 +21,8 @@ spec:
       max_slot_wal_keep_size: 200MB
       archive_timeout: 30min
       log_min_messages: WARNING
-      wal_level: minimal
-      max_wal_senders: '0'
+      wal_level: minimal    # Ref: https://postgresqlco.nf/doc/en/param/wal_level/
+      max_wal_senders: '0'  # Ref: https://postgresqlco.nf/doc/en/param/max_wal_senders/
 
   managed:
     # Ref: https://cloudnative-pg.io/documentation/1.25/service_management/
