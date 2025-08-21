@@ -82,7 +82,7 @@ config: |
     height: 640
     input_tensor: nchw
     input_dtype: float
-    path: /config/model_cache/dfine_m_obj2coco.onnx
+    path: /config/model_cache/dfine_s_obj2coco.onnx
     labelmap_path: /labelmap/coco-80.txt
 
     # General Config (enable for TPU or GPU)
