@@ -179,12 +179,14 @@ config: |
     enabled: false
   proxy:
     default_role: viewer
-    separator: "|"
+    separator: '|'
     header_map:
       user: X-authentik-username
       role: X-authentik-groups
   tls:
     enabled: false
+
+  version: 0.16-0
 
 ingress:
   enabled: true
