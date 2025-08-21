@@ -186,8 +186,6 @@ config: |
   tls:
     enabled: false
 
-  version: 0.16
-
 ingress:
   enabled: true
   annotations: 
