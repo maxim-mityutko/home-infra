@@ -239,13 +239,13 @@ persistence:
 
 probes:
   liveness:
-    enabled: false
+    enabled: true
     initialDelaySeconds: 60
     periodSeconds: 60
     failureThreshold: 5
     timeoutSeconds: 10
   readiness:
-    enabled: false
+    enabled: true
     initialDelaySeconds: 10
     periodSeconds: 60
     failureThreshold: 10
