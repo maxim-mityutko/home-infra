@@ -40,7 +40,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: psa-car-controller
-          image: flobz/psa_car_controller:v3.5.6
+          image: flobz/psa_car_controller:v3.5.7
           resources:
             requests:
               cpu: 100m
