@@ -27,10 +27,11 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             requests:
-              cpu: 50m
+              cpu: 25m
               memory: 50Mi
             limits:
-              memory: 250Mi
+              cpu: 100m
+              memory: 100Mi
           volumeMounts:
             - name: isponsorblocktv-config-json
               mountPath: /app/data/config.json
