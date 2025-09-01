@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: isponsorblocktv
+  namespace: media
+  labels:
+    app.kubernetes.io/name: isponsorblocktv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: isponsorblocktv
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: media
+      labels:
+        app.kubernetes.io/name: isponsorblocktv
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: isponsorblocktv
+          image: ghcr.io/dmunozv04/isponsorblocktv:v2.6.0
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 50m
+              memory: 50Mi
+            limits:
+              memory: 250Mi
+          volumeMounts:
+            - name: isponsorblocktv-config-json
+              mountPath: /app/data/config.json
+              subPath: config.json
+      volumes:
+        - name: isponsorblocktv-config-json
+          configMap:
+            name: isponsorblocktv-config-json
