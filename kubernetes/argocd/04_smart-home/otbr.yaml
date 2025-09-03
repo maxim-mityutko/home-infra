@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: otbr
+  name: openthread-border-router
   namespace: argocd
 spec:
   destination:
