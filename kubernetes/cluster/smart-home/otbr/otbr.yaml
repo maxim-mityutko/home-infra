@@ -48,7 +48,8 @@ spec:
       hostNetwork: true
       containers:
         - name: otbr
-          image: openthread/otbr:latest
+          # image: openthread/otbr:latest
+          image: openthread/border-router:latest
           resources:
             requests:
               cpu: 50m
