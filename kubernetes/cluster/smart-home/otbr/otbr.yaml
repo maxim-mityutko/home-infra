@@ -39,6 +39,8 @@ spec:
   template:
     metadata:
       namespace: smart-home
+      annotations:
+        k8s.v1.cni.cncf.io/networks: macvlan-otbr
       labels:
         app.kubernetes.io/name: otbr
     spec:
