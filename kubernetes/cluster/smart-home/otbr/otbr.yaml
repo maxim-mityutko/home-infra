@@ -1,0 +1,67 @@
+# Ref: https://openthread.io/guides/border-router/build-docker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: otbr
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: otbr
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+  selector:
+    app.kubernetes.io/name: otbr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otbr
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: otbr
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: otbr
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: smart-home
+      labels:
+        app.kubernetes.io/name: otbr
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: otbr
+          image: openthread/border-router:latest
+          resources:
+            requests:
+              cpu: 50m
+              memory: 50Mi
+            limits:
+              memory: 250Mi
+          ports:
+            - containerPort: 8081
+          envFrom:
+            - configMapRef:
+                name: otbr
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otbr
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: otbr
+data:
+  OT_RCP_DEVICE: "192.168.1.74:6638"
+  OT_INFRA_IF: net1
+  OT_THREAD_IF: wpan0
+  OT_LOG_LEVEL: "7"

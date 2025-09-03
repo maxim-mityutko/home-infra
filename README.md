@@ -133,6 +133,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Frigate**            | Open source NVR built around real-time AI object detection                      |   [docs](https://docs.frigate.video)<br/>[repo](https://github.com/blakeblackshear/frigate)    |    [helm](https://github.com/blakeblackshear/blakeshome-charts/tree/master)    |
 | **Zigbee2MQTT**        | Zigbee to MQTT bridge                                                           |      [docs](https://www.zigbee2mqtt.io)<br/>[repo](https://github.com/Koenkk/zigbee2mqtt)      |             [docker](https://hub.docker.com/r/koenkk/zigbee2mqtt)              |
 | **PSA Car Controller** | Control PSA car with connected_car v4 API                                       |                      [repo](https://github.com/flobz/psa_car_controller)                       |          [docker](https://hub.docker.com/r/flobz/psa_car_controller)           |
+| **OpenThread Border Router (OTBR)**        | Thread border router bridge                                                           |      [docs](https://openthread.io/guides/border-router)      |             [docker](https://hub.docker.com/r/openthread/border-router)              |
 
 ### Privacy
 
