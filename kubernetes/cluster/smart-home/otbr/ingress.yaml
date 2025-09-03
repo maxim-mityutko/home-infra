@@ -1,0 +1,39 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: otbr
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: otbr
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: otbr.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: otbr
+                port:
+                  number: 8888
+  tls:
+    - hosts:
+        - otbr.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: otbr.brhd.io
+  namespace: smart-home
+spec:
+  endpoints:
+    - dnsName: otbr.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

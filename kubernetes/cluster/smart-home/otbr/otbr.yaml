@@ -13,6 +13,9 @@ spec:
     - protocol: TCP
       port: 8081
       targetPort: 8081
+    - protocol: TCP
+      port: 8088
+      targetPort: 8088
   selector:
     app.kubernetes.io/name: otbr
 ---
@@ -40,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: otbr
-          image: openthread/border-router:latest
+          image: openthread/otbr:latest
           resources:
             requests:
               cpu: 50m
@@ -49,9 +52,10 @@ spec:
               memory: 250Mi
           ports:
             - containerPort: 8081
-          envFrom:
-            - configMapRef:
-                name: otbr
+            - containerPort: 8088
+          # envFrom:
+          #   - configMapRef:
+          #       name: otbr
 ---
 apiVersion: v1
 kind: ConfigMap

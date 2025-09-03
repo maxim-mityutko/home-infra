@@ -4,3 +4,4 @@ namespace: smart-home
 resources:
   - otbr.yaml
   - network-attachment.yaml
+  - ingress.yaml
