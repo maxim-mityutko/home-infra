@@ -85,5 +85,5 @@ data:
   HTTP_PORT: "8080"
   DEBUG_LEVEL: "7"
   BACKBONE_INTERFACE: enp6s18
-  RADIO_URL: "spinel+hdlc+uart://192.168.1.74:6638?uart-baudrate=460800"
+  RADIO_URL: "spinel+socket:///192.168.1.74:6638?uart-baudrate=460800"
   TUN_INTERFACE_NAME: wpan0
