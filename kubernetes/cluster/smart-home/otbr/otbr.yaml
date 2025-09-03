@@ -18,6 +18,14 @@ spec:
       port: 80
       targetPort: 80
       name: webui
+    - protocol: TCP
+      port: 8888
+      targetPort: 8888
+      name: t1
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      name: t2
   selector:
     app.kubernetes.io/name: otbr
 ---
@@ -57,6 +65,8 @@ spec:
           ports:
             - containerPort: 8081
             - containerPort: 80
+            - containerPort: 8080
+            - containerPort: 8888
           securityContext:
             capabilities:
               add:
