@@ -65,6 +65,9 @@ spec:
           # envFrom:
           #   - configMapRef:
           #       name: otbr
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        node.kubernetes.io/microk8s-worker: microk8s-worker
 ---
 apiVersion: v1
 kind: ConfigMap
