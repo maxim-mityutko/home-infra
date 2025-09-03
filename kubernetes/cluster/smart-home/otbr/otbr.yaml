@@ -14,8 +14,8 @@ spec:
       port: 8081
       targetPort: 8081
     - protocol: TCP
-      port: 8088
-      targetPort: 8088
+      port: 8888
+      targetPort: 8888
   selector:
     app.kubernetes.io/name: otbr
 ---
