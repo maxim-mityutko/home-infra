@@ -20,7 +20,7 @@ spec:
               service:
                 name: otbr
                 port:
-                  number: 80
+                  number: 8080
   tls:
     - hosts:
         - otbr.brhd.io
