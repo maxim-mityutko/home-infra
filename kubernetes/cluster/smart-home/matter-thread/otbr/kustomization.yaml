@@ -5,4 +5,3 @@ resources:
   - otbr.yaml
   - network-attachment.yaml
   - ingress.yaml
-  - matter-server/

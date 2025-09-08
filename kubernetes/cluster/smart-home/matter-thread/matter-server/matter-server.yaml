@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: otbr
-          image: ghcr.io/home-assistant-libs/python-matter-server:stable
+          image: ghcr.io/home-assistant-libs/python-matter-server:8.1.0
           resources:
             requests:
               cpu: 50m
@@ -58,6 +58,7 @@ spec:
         - name: matter-server-data
           persistentVolumeClaim:
             claimName: matter-server-data
+      # TODO: Remove nodeSelector
       nodeSelector:
         beta.kubernetes.io/arch: amd64
         node.kubernetes.io/microk8s-worker: microk8s-worker
