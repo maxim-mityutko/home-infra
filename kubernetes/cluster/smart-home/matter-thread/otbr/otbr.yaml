@@ -80,9 +80,9 @@ metadata:
     app.kubernetes.io/name: otbr
 data:
   # Ref: https://github.com/openthread/ot-br-posix/blob/9ab69e2e90bc2c9594948627f5af4016d02e5981/etc/docker/test/docker_entrypoint.sh#L79-L86
-  HTTP_HOST: 0.0.0.0 # internal
+  HTTP_HOST: 0.0.0.0 # all
   HTTP_PORT: "8080"
-  # REST_HOST: <multus-network>
+  REST_HOST: 0.0.0.0 # all
   DEBUG_LEVEL: "7"
   BACKBONE_INTERFACE: net1  # multus interface
   # Ref "socat": https://github.com/home-assistant/addons/blob/master/openthread_border_router/rootfs/etc/s6-overlay/s6-rc.d/socat-otbr-tcp/run
