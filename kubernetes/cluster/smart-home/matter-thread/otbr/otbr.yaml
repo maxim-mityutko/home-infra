@@ -54,9 +54,9 @@ spec:
               memory: 50Mi
             limits:
               memory: 250Mi
-          # ports:
-          #   - containerPort: 8081
-          #   - containerPort: 8080
+          ports:
+            - containerPort: 8081
+            - containerPort: 8080
           securityContext:
             capabilities:
               add:
