@@ -102,6 +102,6 @@ data:
 
   HTTP_PORT: "8080"
   DEBUG_LEVEL: "7"
-  BACKBONE_INTERFACE: enp6s18
+  BACKBONE_INTERFACE: net1
   RADIO_URL: spinel+hdlc+uart:///tmp/ttyOTBR?uart-baudrate=460800
   TUN_INTERFACE_NAME: wpan0
