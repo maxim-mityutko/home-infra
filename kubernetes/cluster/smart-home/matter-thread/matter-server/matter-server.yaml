@@ -49,8 +49,8 @@ spec:
               memory: 50Mi
             limits:
               memory: 250Mi
-          ports:
-            - containerPort: 5580
+          # ports:
+          #   - containerPort: 5580
           volumeMounts:
             - name: matter-server-data
               mountPath: /data
