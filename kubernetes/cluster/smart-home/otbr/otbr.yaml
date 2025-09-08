@@ -45,11 +45,27 @@ spec:
         app.kubernetes.io/name: otbr
     spec:
       restartPolicy: Always
-      hostNetwork: true
+      # hostNetwork: true
       containers:
         - name: otbr
-          # image: openthread/otbr:latest
-          image: openthread/border-router:latest
+          image: openthread/otbr:latest
+          # image: openthread/border-router:latest
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - apt-get
+                  - update
+                  - '&&'
+                  - apt-get
+                  - '-y'
+                  - install
+                  - socat
+                  - '&&'
+                  - socat 
+                  - '-d'
+                  - pty,raw,echo=0,link=/tmp/ttyOTBR,ignoreeof 
+                  - '"tcp:192.168.1.74:6638"'
           resources:
             requests:
               cpu: 50m
@@ -79,12 +95,13 @@ metadata:
   labels:
     app.kubernetes.io/name: otbr
 data:
-  OT_RCP_DEVICE: "spinel+socket:///192.168.1.74:6638?uart-baudrate=460800"
-  OT_INFRA_IF: enp6s18
-  OT_THREAD_IF: wpan0
-  OT_LOG_LEVEL: "7"
-  # HTTP_PORT: "8080"
-  # DEBUG_LEVEL: "7"
-  # BACKBONE_INTERFACE: enp6s18
-  # RADIO_URL: "spinel+socket:///192.168.1.74:6638?uart-baudrate=460800"
-  # TUN_INTERFACE_NAME: wpan0
+  # OT_RCP_DEVICE: "spinel+socket:///192.168.1.74:6638?uart-baudrate=460800"
+  # OT_INFRA_IF: enp6s18
+  # OT_THREAD_IF: wpan0
+  # OT_LOG_LEVEL: "7"
+
+  HTTP_PORT: "8080"
+  DEBUG_LEVEL: "7"
+  BACKBONE_INTERFACE: enp6s18
+  RADIO_URL: spinel+hdlc+uart:///tmp/ttyOTBR?uart-baudrate=460800
+  TUN_INTERFACE_NAME: wpan0
