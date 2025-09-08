@@ -39,8 +39,8 @@ spec:
   template:
     metadata:
       namespace: smart-home
-      # annotations:
-      #   k8s.v1.cni.cncf.io/networks: macvlan-otbr
+      annotations:
+        k8s.v1.cni.cncf.io/networks: macvlan-otbr
       labels:
         app.kubernetes.io/name: otbr
     spec:
@@ -50,22 +50,22 @@ spec:
         - name: otbr
           image: openthread/otbr:latest
           # image: openthread/border-router:latest
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - apt-get
-                  - update
-                  - '&&'
-                  - apt-get
-                  - '-y'
-                  - install
-                  - socat
-                  - '&&'
-                  - socat 
-                  - '-d'
-                  - pty,raw,echo=0,link=/tmp/ttyOTBR,ignoreeof 
-                  - '"tcp:192.168.1.74:6638"'
+          lifecycle: {}
+            # postStart:
+            #   exec:
+            #     command:
+            #       - apt-get
+            #       - update
+            #       - '&&'
+            #       - apt-get
+            #       - '-y'
+            #       - install
+            #       - socat
+            #       - '&&'
+            #       - socat 
+            #       - '-d'
+            #       - pty,raw,echo=0,link=/tmp/ttyOTBR,ignoreeof 
+            #       - '"tcp:192.168.1.74:6638"'
           resources:
             requests:
               cpu: 50m
