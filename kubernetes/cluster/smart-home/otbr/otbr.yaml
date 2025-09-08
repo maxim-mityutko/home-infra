@@ -100,7 +100,9 @@ data:
   # OT_THREAD_IF: wpan0
   # OT_LOG_LEVEL: "7"
 
+  HTTP_HOST: 0.0.0.0 # internal
   HTTP_PORT: "8080"
+  # REST_HOST: <multus-network>
   DEBUG_LEVEL: "7"
   BACKBONE_INTERFACE: net1
   RADIO_URL: spinel+hdlc+uart:///tmp/ttyOTBR?uart-baudrate=460800
