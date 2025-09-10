@@ -62,7 +62,7 @@ spec:
             capabilities:
               add:
               - NET_ADMIN
-          #   privileged: true
+            privileged: true
           envFrom:
             - configMapRef:
                 # name: otbr
