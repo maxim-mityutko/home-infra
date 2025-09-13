@@ -8,6 +8,10 @@ helmCharts:
     version: 22.0.4
     repo: oci://registry-1.docker.io/bitnamicharts
     valuesInline:
+      image:
+        registry: public.ecr.aws
+        repository: docker/library/redis
+        tag: 8.2.1
       # global:
       #   storageClass: nfs-subdir
       auth:
