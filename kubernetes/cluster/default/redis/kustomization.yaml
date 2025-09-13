@@ -8,12 +8,14 @@ helmCharts:
     version: 22.0.4
     repo: oci://registry-1.docker.io/bitnamicharts
     valuesInline:
+      global:
+        security:
+          # Required for non-Bitnami images
+          allowInsecureImages: true
       image:
         registry: public.ecr.aws
         repository: docker/library/redis
         tag: 8.2.1
-      # global:
-      #   storageClass: nfs-subdir
       auth:
         enabled: false
       architecture: standalone
