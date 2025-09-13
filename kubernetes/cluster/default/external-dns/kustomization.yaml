@@ -38,7 +38,7 @@ helmCharts:
       image:
         registry: registry.k8s.io
         repository: external-dns/external-dns
-        tag: 0.19.0
+        tag: v0.19.0
       sources:
         - crd
         # - ingress
