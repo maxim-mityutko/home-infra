@@ -1,0 +1,64 @@
+# Ref: https://openthread.io/guides/border-router/build-docker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matter-server
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: matter-server
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 5580
+      targetPort: 5580
+  selector:
+    app.kubernetes.io/name: matter-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matter-server
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: matter-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: matter-server
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: smart-home
+      annotations:
+        k8s.v1.cni.cncf.io/networks: macvlan-matter-server
+      labels:
+        app.kubernetes.io/name: matter-server
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: matter-server
+          image: ghcr.io/home-assistant-libs/python-matter-server:8.1.0
+          resources:
+            requests:
+              cpu: 50m
+              memory: 50Mi
+            limits:
+              memory: 250Mi
+          ports:
+            - containerPort: 5580
+          volumeMounts:
+            - name: matter-server-data
+              mountPath: /data
+      volumes:
+        - name: matter-server-data
+          persistentVolumeClaim:
+            claimName: matter-server-data
+      # TODO: Remove nodeSelector
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        node.kubernetes.io/microk8s-worker: microk8s-worker

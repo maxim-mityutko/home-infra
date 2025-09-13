@@ -1,0 +1,110 @@
+# Ref: https://openthread.io/guides/border-router/build-docker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: otbr
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: otbr
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+      name: api
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      name: webui
+  selector:
+    app.kubernetes.io/name: otbr
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otbr
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: otbr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: otbr
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: smart-home
+      annotations:
+        k8s.v1.cni.cncf.io/networks: macvlan-otbr
+      labels:
+        app.kubernetes.io/name: otbr
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: otbr
+          # image: openthread/otbr:latest
+          image: ghcr.io/ownbee/hass-otbr-docker:latest
+          resources:
+            requests:
+              cpu: 50m
+              memory: 50Mi
+            limits:
+              memory: 250Mi
+          ports:
+            - containerPort: 8081
+            - containerPort: 8080
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+            privileged: true
+          envFrom:
+            - configMapRef:
+                # name: otbr
+                name: hass-otbr
+      # TODO: Remove nodeSelector
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        node.kubernetes.io/microk8s-worker: microk8s-worker
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otbr
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: otbr
+data:
+  # Ref: https://github.com/openthread/ot-br-posix/blob/9ab69e2e90bc2c9594948627f5af4016d02e5981/etc/docker/test/docker_entrypoint.sh#L79-L86
+  HTTP_HOST: 0.0.0.0 # all
+  HTTP_PORT: "8080"
+  REST_HOST: 0.0.0.0 # all
+  DEBUG_LEVEL: "7"
+  BACKBONE_INTERFACE: net1  # multus interface
+  # Ref "socat": https://github.com/home-assistant/addons/blob/master/openthread_border_router/rootfs/etc/s6-overlay/s6-rc.d/socat-otbr-tcp/run
+  RADIO_URL: spinel+hdlc+uart:///tmp/ttyOTBR?uart-baudrate=460800
+  TUN_INTERFACE_NAME: wpan0
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hass-otbr
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: hass-otbr
+data:
+  DEVICE: /tmp/ttyOTBR
+  BAUDRATE: "460800"
+  FLOW_CONTROL: "0"
+  AUTOFLASH_FIRMWARE: "0"
+  OTBR_REST_PORT: "8081"
+  OTBR_WEB_PORT: "8080"
+  FIREWALL: "0"
+  NAT64: "0"
+  BACKBONE_IF: net1
+  NETWORK_DEVICE: "192.168.1.74:6638"
