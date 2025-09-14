@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: filebrowser
-          image: ghcr.io/gtsteffaniak/filebrowser:0.8.4-beta
+          image: ghcr.io/gtsteffaniak/filebrowser:0.8.5-beta
           resources:
             requests:
               memory: 50Mi
