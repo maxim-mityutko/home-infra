@@ -46,6 +46,8 @@ blocking:
       - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt
       # Threat Intelligence Feeds - Medium version
       - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.medium.txt
+      # Native Tracker - Samsung
+      - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/native.samsung.txt
     adult:
       - https://nsfw.oisd.nl/domainswild
   allowlists:
