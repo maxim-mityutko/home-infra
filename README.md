@@ -51,7 +51,9 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
   * Virtual Machines:
     * (x3) Ubuntu Server with 2 CPUs and and 4GB RAM
 * (Worker) Raspberry Pi 4B 8GB
-* Upcoming: [Compute Blade](https://www.kickstarter.com/projects/uptimelab/compute-blade) with CM4 8GB and 500 GB NVME x 4
+* [Compute Blade](https://computeblade.com):
+  * Raspberry Pi CM4 8GB + Crucial P3 Plus 500GB x 2
+  * Raspberry Pi CM-TBD x 2
 
 ## Services
 
