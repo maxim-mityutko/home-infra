@@ -6,7 +6,7 @@ metadata:
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.2
   imagePullPolicy: IfNotPresent
-  instances: 2
+  instances: 3
   enablePDB: true
   primaryUpdateStrategy: unsupervised
   logLevel: info
