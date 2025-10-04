@@ -45,6 +45,9 @@ configMapGenerator:
       - https://raw.githubusercontent.com/rfmoz/grafana-dashboards/refs/heads/master/prometheus/node-exporter-full.json
   # - TODO: ArgoCD
   # - TODO: Longhorn
+  - name: hardware-monitor
+    files:
+      - hardware-monitor.json
 generatorOptions:
   labels:
     grafana-dashboard: "true"
