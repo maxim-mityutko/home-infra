@@ -68,3 +68,26 @@ spec:
         - matchExpressions:
           - key: kubernetes.io/local-storage
             operator: Exists
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cnpg-ha-1c7453eb-8fe0-4a4a-99bc-fb9dd31364db
+  labels:
+    app.kubernetes.io/name: cnpg-ha
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /mnt/cnpg-ha
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/local-storage
+            operator: Exists
