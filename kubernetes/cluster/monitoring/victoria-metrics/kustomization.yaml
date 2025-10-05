@@ -6,6 +6,7 @@ resources:
   - secret.yaml
   - dns-endpoint.yaml
   - dashboards/
+  - scrapers/
 helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring

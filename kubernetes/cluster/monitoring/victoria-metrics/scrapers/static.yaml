@@ -4,7 +4,7 @@ apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMStaticScrape
 namespace: monitoring
 metadata:
-  name: proxmox-ve
+  name: proxmox-ve-metrics
 spec:
   jobName: static
   targetEndpoints:
