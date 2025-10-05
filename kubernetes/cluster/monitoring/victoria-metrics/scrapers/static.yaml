@@ -2,7 +2,6 @@
 #   apt install prometheus-node-exporter
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMStaticScrape
-namespace: monitoring
 metadata:
   name: proxmox-ve-metrics
 spec:
