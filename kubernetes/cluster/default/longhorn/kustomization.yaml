@@ -26,7 +26,7 @@ helmCharts:
         storageMinimalAvailablePercentage: "20"
         upgradeChecker: false
         # For Kubernetes configuration, modify the `numberOfReplicas` field in the StorageClass.
-        defaultReplicaCount: 3  
+        defaultReplicaCount: "3"  
         autoDeletePodWhenVolumeDetachedUnexpectedly: true
         detachManuallyAttachedVolumesWhenCordoned: true
         disableSchedulingOnCordonedNode: true
@@ -36,10 +36,10 @@ helmCharts:
         logLevel: Info
         deletingConfirmationFlag: true
         allowCollectingLonghornUsageMetrics: false
-        recurringSuccessfulJobsHistoryLimit: 7
-        recurringFailedJobsHistoryLimit: 7
-        recurringJobMaxRetention: 14
-        snapshotMaxCount: 14
+        recurringSuccessfulJobsHistoryLimit: "7"
+        recurringFailedJobsHistoryLimit: "7"
+        recurringJobMaxRetention: "14"
+        snapshotMaxCount: "14"
       defaultBackupStore:
         backupTarget: nfs://nas.brhd.io:/mnt/spin/backup/longhorn
       persistence:
