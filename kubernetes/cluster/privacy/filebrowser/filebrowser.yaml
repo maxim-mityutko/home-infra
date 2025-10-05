@@ -51,6 +51,14 @@ spec:
               memory: 500Mi
           ports:
             - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 3
+            failureThreshold: 5
           envFrom:
             - secretRef:
                 name: filebrowser
