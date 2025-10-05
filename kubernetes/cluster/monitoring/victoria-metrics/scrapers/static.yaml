@@ -1,0 +1,14 @@
+# Requires "Prometheus Node Exporter" on the node
+#   apt install prometheus-node-exporter
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMStaticScrape
+namespace: monitoring
+metadata:
+  name: proxmox-ve
+spec:
+  jobName: static
+  targetEndpoints:
+    - targets: [pve-01.internal.brhd.io:9100]
+      interval: 30s
+      labels:
+        instance: pve-01
