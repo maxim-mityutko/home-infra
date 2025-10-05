@@ -17,9 +17,9 @@ helmCharts:
     version: 1.10.0
     repo: https://charts.longhorn.io
     valuesInline:
-      global:
-        nodeSelector:
-          beta.kubernetes.io/arch: amd64
+      # global:
+      #   nodeSelector:
+      #     beta.kubernetes.io/arch: amd64
       defaultSettings:
         replicaAutoBalance: least-effort
         storageOverProvisioningPercentage: "50"
