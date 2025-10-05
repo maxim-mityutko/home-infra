@@ -22,8 +22,8 @@ helmCharts:
           beta.kubernetes.io/arch: amd64
       defaultSettings:
         replicaAutoBalance: least-effort
-        storageOverProvisioningPercentage: 50
-        storageMinimalAvailablePercentage: 20
+        storageOverProvisioningPercentage: "50"
+        storageMinimalAvailablePercentage: "20"
         upgradeChecker: false
         # For Kubernetes configuration, modify the `numberOfReplicas` field in the StorageClass.
         defaultReplicaCount: 3  
