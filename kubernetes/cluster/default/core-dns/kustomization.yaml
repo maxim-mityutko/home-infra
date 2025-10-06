@@ -10,6 +10,7 @@ helmCharts:
     valuesInline:
       resources:
         limits:
+          cpu: 250m
           memory: 170Mi
         requests:
           cpu: 100m
