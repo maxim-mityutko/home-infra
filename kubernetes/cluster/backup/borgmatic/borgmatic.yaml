@@ -49,6 +49,10 @@ spec:
               mountPath: /etc/borgmatic.d/k8s-db.yml
               subPath: k8s-db.yml
               readOnly: true
+            - name: borgmatic-k8s-db-ha-config-yml
+              mountPath: /etc/borgmatic.d/k8s-db-ha.yml
+              subPath: k8s-db-ha.yml
+              readOnly: true
             - name: borgmatic-k8s-fs-config-yml
               mountPath: /etc/borgmatic.d/k8s-fs.yml
               subPath: k8s-fs.yml
@@ -72,6 +76,9 @@ spec:
         - name: borgmatic-k8s-db-config-yml
           configMap:
             name: borgmatic-k8s-db-config-yml
+        - name: borgmatic-k8s-db-ha-config-yml
+          configMap:
+            name: borgmatic-k8s-db-ha-config-yml
         - name: borgmatic-k8s-fs-config-yml
           configMap:
             name: borgmatic-k8s-fs-config-yml

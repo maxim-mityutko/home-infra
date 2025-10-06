@@ -20,16 +20,6 @@ postgresql_databases:
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     format: tar
-  - name: all
-    hostname: cnpg-ha-rw.default.svc.cluster.local
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
-    format: tar
-  - name: all
-    hostname: cnpg-vectorchord-rw.default.svc.cluster.local
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
-    format: tar
 # mariadb_databases:
 #   - name: all
 #     hostname: mariadb.default.svc.cluster.local
@@ -38,10 +28,10 @@ postgresql_databases:
 #     format: sql
 #     add_drop_database: true
 sqlite_databases:
-  - name: jellyfin
-    path: /mnt/k8s/pods/jellyfin-config/data/jellyfin.db
-  - name: jellyfin-library
-    path: /mnt/k8s/pods/jellyfin-config/data/library.db
+  # - name: jellyfin
+  #   path: /mnt/k8s/pods/jellyfin-config/data/jellyfin.db
+  # - name: jellyfin-library
+  #   path: /mnt/k8s/pods/jellyfin-config/data/library.db
   - name: stash
     path: /mnt/k8s/pods/stash-config/stash-go.sqlite
   - name: frigate
