@@ -156,7 +156,7 @@ helmCharts:
                 cpu: 100m
                 memory: 200Mi
               limits:
-                cpu: 400m
+                cpu: 600m
                 memory: 500Mi
             extraArgs:
               # Do not store original labels in vmagent's memory by default. This reduces the amount of memory used by vmagent
