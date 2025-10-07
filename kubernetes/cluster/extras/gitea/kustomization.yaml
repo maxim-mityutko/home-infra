@@ -8,7 +8,7 @@ helmCharts:
   - name: gitea
     namespace: extras
     releaseName: gitea
-    version: 12.3.0
+    version: 12.4.0
     repo: https://dl.gitea.com/charts/
     valuesInline:
       image:
