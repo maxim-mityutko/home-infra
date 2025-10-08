@@ -18,10 +18,10 @@ localpv-provisioner:
     basePath: "/var/openebs/local"
     resources:
       requests:
-        cpu: 100m
-        memory: 100Mi
+        cpu: 50m
+        memory: 50Mi
       limits:
-        memory: 200Mi
+        memory: 75Mi
     nodeSelector: {}
   serviceAccount:
     create: true
