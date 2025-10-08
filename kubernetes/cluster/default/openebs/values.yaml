@@ -9,32 +9,32 @@ localpv-provisioner:
   rbac:
     create: true
 
-zfs-localpv:
-  crds:
-    zfsLocalPv:
-      enabled: false
-    csi:
-      volumeSnapshots:
-        enabled: false
+# zfs-localpv:
+#   crds:
+#     zfsLocalPv:
+#       enabled: false
+#     csi:
+#       volumeSnapshots:
+#         enabled: false
 
-lvm-localpv:
-  crds:
-    lvmLocalPv:
-      enabled: false
-    csi:
-      volumeSnapshots:
-        enabled: false
+# lvm-localpv:
+#   crds:
+#     lvmLocalPv:
+#       enabled: false
+#     csi:
+#       volumeSnapshots:
+#         enabled: false
 
-# Refer to https://github.com/openebs/mayastor-extensions/blob/v2.8.0/chart/values.yaml for complete set of values.
-mayastor:
-  localpv-provisioner:
-    enabled: false
-  crds:
-    enabled: false
-  loki:
-    enabled: false
-  alloy:
-    enabled: false
+# # Refer to https://github.com/openebs/mayastor-extensions/blob/v2.8.0/chart/values.yaml for complete set of values.
+# mayastor:
+#   localpv-provisioner:
+#     enabled: false
+#   crds:
+#     enabled: false
+#   loki:
+#     enabled: false
+#   alloy:
+#     enabled: false
 
 engines:
   local:
