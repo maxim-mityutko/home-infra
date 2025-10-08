@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: openebs
+helmCharts:
+  - name: openebs
+    namespace: openebs
+    releaseName: openebs
+    version: 4.3.3
+    repo: https://openebs.github.io/openebs
+    # Leveraging `renovate` ability to detect updates in Helm values
+    # Ref: https://docs.renovatebot.com/modules/manager/helm-values/
+    valuesFile: values.yaml
+
