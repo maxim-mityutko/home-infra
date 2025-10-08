@@ -5,9 +5,9 @@ openebs-crds:
       keep: true
 
 # Refer to https://github.com/openebs/dynamic-localpv-provisioner/blob/v4.2.0/deploy/helm/charts/values.yaml for complete set of values.
-# localpv-provisioner:
-#   rbac:
-#     create: true
+localpv-provisioner:
+  rbac:
+    create: true
 
 engines:
   local:
