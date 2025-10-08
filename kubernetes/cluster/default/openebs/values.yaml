@@ -41,7 +41,7 @@ engines:
     lvm:
       enabled: false
     zfs:
-      enabled: true
+      enabled: false
   replicated:
     mayastor:
       enabled: false
