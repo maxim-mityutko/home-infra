@@ -1,0 +1,53 @@
+# NOTE: The paths on the node have to be created manually with `sudo mkdir /mnt/my-vol`
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cnpg-riss-1
+  labels:
+    app.kubernetes.io/name: cnpg-riss
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /mnt/cnpg-riss
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/local-storage
+            operator: Exists
+          - key: kubernetes.io/hostname
+            operator: In
+            values: ["kcb-01"]
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cnpg-riss-2
+  labels:
+    app.kubernetes.io/name: cnpg-riss
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /mnt/cnpg-riss
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/local-storage
+            operator: Exists
+          - key: kubernetes.io/hostname
+            operator: In
+            values: ["kcb-02"]
