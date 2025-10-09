@@ -33,8 +33,6 @@ helmCharts:
           periodSeconds: 60
       speaker:
         enabled: true
-        podAnnotations:
-          container.apparmor.security.beta.kubernetes.io/speaker: unconfined
         logLevel: info
         frr:
           enabled: false
