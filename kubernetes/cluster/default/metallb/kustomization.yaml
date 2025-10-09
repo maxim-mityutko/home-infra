@@ -44,7 +44,9 @@ helmCharts:
         #       - NET_ADMIN
         #     drop:
         #       - ALL
-          readOnlyRootFilesystem: true
+          # readOnlyRootFilesystem: true
+        podAnnotations:
+          container.apparmor.security.beta.kubernetes.io/speaker: unconfined
         resources:
           limits:
             cpu: 100m
@@ -60,5 +62,5 @@ helmCharts:
         enabled: true
       frrk8s:
         enabled: false
-patches:
-  - path: patch.yaml
+# patches:
+#   - path: patch.yaml
