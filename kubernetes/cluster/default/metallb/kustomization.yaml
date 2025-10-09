@@ -36,6 +36,15 @@ helmCharts:
         logLevel: info
         frr:
           enabled: false
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            add:
+              - NET_RAW
+              - NET_ADMIN
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
         resources:
           limits:
             cpu: 100m
