@@ -36,16 +36,16 @@ helmCharts:
         logLevel: info
         frr:
           enabled: false
-        # securityContext:
-        #   allowPrivilegeEscalation: false
-        #   capabilities:
-        #     add:
-        #       - NET_RAW
-        #       - NET_ADMIN
-        #     drop:
-        #       - ALL
-          # readOnlyRootFilesystem: true
         podAnnotations:
+          # Default NET_RAW capability used in the chart is not enough and LB stopped working with the following:
+          # {
+          #   "caller":"announcer.go:122",
+          #   "error":"creating ARP responder for \"ens18\": listen packet bc:24:11:d8:50:d9: bind: permission denied",
+          #   "interface":"ens18","level":"error",
+          #   "msg":"failed to create ARP responder",
+          #   "op":"createARPResponder","ts":"2025-10-09T10:43:29Z"
+          # }
+          # FIXME: Disabling AppArmor seems to help, however it is unclear why the LB stopped working in the first place
           container.apparmor.security.beta.kubernetes.io/speaker: unconfined
         resources:
           limits:
@@ -62,5 +62,3 @@ helmCharts:
         enabled: true
       frrk8s:
         enabled: false
-# patches:
-#   - path: patch.yaml
