@@ -37,4 +37,4 @@ spec:
     server: nas.brhd.io
     path: /mnt/spin/service/nvr
   mountOptions:
-    - mountvers=4
+    - nfsvers=4.1

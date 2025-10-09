@@ -53,4 +53,4 @@ spec:
     server: nas.brhd.io
     path: /mnt/spin/backup/syncthing
   mountOptions:
-    - mountvers=4
+    - nfsvers=4.1
