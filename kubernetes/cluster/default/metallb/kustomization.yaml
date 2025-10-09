@@ -51,3 +51,5 @@ helmCharts:
         enabled: true
       frrk8s:
         enabled: false
+patches:
+  - path: patch.yaml
