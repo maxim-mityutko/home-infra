@@ -10,7 +10,7 @@ spec:
         - name: speaker
           securityContext:
             privileged: true
-            # allowPrivilegeEscalation: true
+            allowPrivilegeEscalation: true
             # runAsUser: 0
             # capabilities:
             #   add:
