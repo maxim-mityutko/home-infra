@@ -9,12 +9,13 @@ spec:
       containers:
         - name: speaker
           securityContext:
-            allowPrivilegeEscalation: true
-            runAsUser: 0
-            capabilities:
-              add:
-                - NET_RAW
-                - NET_ADMIN
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
+            privileged: true
+            # allowPrivilegeEscalation: true
+            # runAsUser: 0
+            # capabilities:
+            #   add:
+            #     - NET_RAW
+            #     - NET_ADMIN
+            #   drop:
+            #     - ALL
+            # readOnlyRootFilesystem: true
