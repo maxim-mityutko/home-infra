@@ -19,7 +19,7 @@ resources:
     cpu: 100m
     memory: 100Mi
   limits:
-    cpu: 500m
+    cpu: 1000m
 shmSize: 1Gi
 
 # Hardware
