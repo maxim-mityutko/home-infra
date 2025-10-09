@@ -27,7 +27,7 @@ localpv-provisioner:
     create: true
   hostpathClass:
     enabled: true
-    reclaimPolicy: Retain
+    reclaimPolicy: Delete
     isDefaultClass: false
     # NOTE: If not specified, this defaults to the value of localpv.basePath.
     basePath: ""
