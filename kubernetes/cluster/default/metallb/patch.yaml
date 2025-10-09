@@ -9,7 +9,7 @@ spec:
       containers:
         - name: speaker
           securityContext:
-            # allowPrivilegeEscalation: false
+            allowPrivilegeEscalation: true
             runAsUser: 0
             capabilities:
               add:
