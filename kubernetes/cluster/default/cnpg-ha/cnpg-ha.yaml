@@ -44,6 +44,7 @@ spec:
     barmanObjectStore:
       destinationPath: "s3://cnpg-backup/"
       endpointURL: "http://garage.garage.svc.cluster.local:3900"
+      serverName: cnpg-ha-recovery
       s3Credentials:
         accessKeyId:
           name: cnpg-backup-secret
