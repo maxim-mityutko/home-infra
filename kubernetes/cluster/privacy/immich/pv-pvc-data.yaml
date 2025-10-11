@@ -38,7 +38,7 @@ spec:
     server: nas.brhd.io
     path: /mnt/spin/service/photos/immich
   mountOptions:
-    - mountvers=4
+    - nfsvers=4.1
 # Immich - External Library
 ---
 kind: PersistentVolumeClaim
@@ -78,4 +78,4 @@ spec:
     server: nas.brhd.io
     path: /mnt/spin/service/photos/external
   mountOptions:
-    - mountvers=4
+    - nfsvers=4.1

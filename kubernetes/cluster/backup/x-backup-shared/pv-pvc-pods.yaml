@@ -37,5 +37,5 @@ spec:
     server: nas.brhd.io
     path: /mnt/master/k8s/pods
   mountOptions:
-    - mountvers=4
+    - nfsvers=4.1
     - ro

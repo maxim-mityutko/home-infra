@@ -38,4 +38,4 @@ spec:
     server: nas.brhd.io
     path: /mnt/spin/torrent/downloads
   mountOptions:
-    - mountvers=4
+    - nfsvers=4.1
