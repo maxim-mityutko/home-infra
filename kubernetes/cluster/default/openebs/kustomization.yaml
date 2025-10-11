@@ -30,7 +30,7 @@ helmCharts:
               cpu: 50m
               memory: 50Mi
             limits:
-              cpu: 50m
+              cpu: 100m
               memory: 75Mi
           nodeSelector: {}
         serviceAccount:
