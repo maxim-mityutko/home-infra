@@ -90,7 +90,7 @@ spec:
     - name: cnpg-ha-backup
       barmanObjectStore:
         destinationPath: "s3://cnpg-backup/"
-        serverName: cnpg-ha
+        serverName: cnpg-ha-v2
         endpointURL: "http://garage.garage.svc.cluster.local:3900"
         s3Credentials:
           accessKeyId:
