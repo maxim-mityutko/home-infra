@@ -42,9 +42,8 @@ spec:
     target: primary
     retentionPolicy: 14d
     barmanObjectStore:
-      destinationPath: "s3://cnpg-backup/"
+      destinationPath: "s3://cnpg-backup/cnpg-ha-recovery/"
       endpointURL: "http://garage.garage.svc.cluster.local:3900"
-      serverName: cnpg-ha-recovery
       s3Credentials:
         accessKeyId:
           name: cnpg-backup-secret
