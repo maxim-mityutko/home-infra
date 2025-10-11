@@ -87,7 +87,7 @@ spec:
   externalClusters:
     - name: cnpg-ha-backup
       barmanObjectStore:
-        destinationPath: "s3://cnpg-backup/"
+        destinationPath: "s3://cnpg-backup/cnpg-ha/"
         endpointURL: "http://garage.garage.svc.cluster.local:3900"
         s3Credentials:
           accessKeyId:
