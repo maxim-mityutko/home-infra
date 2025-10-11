@@ -18,7 +18,7 @@ spec:
       archive_timeout: 30min
 
   managed:
-    # Ref: https://cloudnative-pg.io/documentation/1.25/service_management/
+    # Ref: https://cloudnative-pg.io/documentation/current/service_management/
     services:
       disabledDefaultServices: ["r","ro"]
 
@@ -37,7 +37,7 @@ spec:
     size: 5Gi
     storageClass: openebs-hostpath
   
-  # Ref: https://cloudnative-pg.io/documentation/1.25/backup_barmanobjectstore/
+  # Ref: https://cloudnative-pg.io/documentation/current/backup_barmanobjectstore/
   backup:
     target: primary
     retentionPolicy: 14d
@@ -57,7 +57,7 @@ spec:
       wal:
         compression: bzip2
 
-  # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
+  # Ref: https://cloudnative-pg.io/documentation/current/instance_manager/
   startDelay: 15
   stopDelay: 30
   smartShutdownTimeout: 15
@@ -78,8 +78,9 @@ spec:
           - matchExpressions:
             - key: kubernetes.io/local-storage
               operator: Exists
+
   bootstrap:
-    # Ref: https://cloudnative-pg.io/documentation/1.25/recovery/#recovery-from-a-backup-object
+    # Ref: https://cloudnative-pg.io/documentation/current/recovery/#recovery-from-a-backup-object
     recovery:
       source: cnpg-ha-backup
       # recoveryTarget:
@@ -98,29 +99,3 @@ spec:
           secretAccessKey:
             name: cnpg-backup-secret
             key: password
-
-  # NOTE: keeping `bootstrap` section here for reference, refer to
-  # CloudNativePG documentation for more details.
-  # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
-  # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/
-  # bootstrap:
-  #   initdb:
-  #     import:
-  #       type: monolith
-  #       databases:
-  #         - authentik
-  #         - vaultwarden
-  #       roles:
-  #         - authentik
-  #         - vaultwarden         
-  #       source:
-  #         externalCluster: postgres-cnpg
-  # externalClusters:
-  #   - name: postgres-cnpg
-  #     connectionParameters: 
-  #       host: postgres-cnpg-rw.default.svc
-  #       dbname: postgres
-  #       user: postgres
-  #     password:
-  #       name: cnpg-default-secret
-  #       key: password
