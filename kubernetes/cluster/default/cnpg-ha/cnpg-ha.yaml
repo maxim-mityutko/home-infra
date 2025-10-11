@@ -34,12 +34,8 @@ spec:
       memory: 1Gi
   
   storage:
-    size: 2Gi
-    storageClass: local-storage
-    pvcTemplate:
-      selector:
-        matchLabels: 
-          app.kubernetes.io/name: cnpg-ha
+    size: 5Gi
+    storageClass: openebs-hostpath
   
   # Ref: https://cloudnative-pg.io/documentation/1.25/backup_barmanobjectstore/
   backup:
