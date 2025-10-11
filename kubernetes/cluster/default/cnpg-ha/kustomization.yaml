@@ -9,3 +9,4 @@ resources:
   # Enable the `service` manifest if LoadBalancer is required
   # - service.yaml
   - backup.yaml
+  - cnpg-ha-temp.yaml
