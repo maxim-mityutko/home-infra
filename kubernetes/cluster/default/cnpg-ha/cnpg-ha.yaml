@@ -84,7 +84,20 @@ spec:
         name: cnpg-ha-backup
       # recoveryTarget:
       #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR
-      
+
+  externalClusters:
+    - name: cnpg-ha-backup
+      barmanObjectStore:
+        destinationPath: "s3://cnpg-backup/"
+        endpointURL: "http://garage.garage.svc.cluster.local:3900"
+        s3Credentials:
+          accessKeyId:
+            name: cnpg-backup-secret
+            key: username
+          secretAccessKey:
+            name: cnpg-backup-secret
+            key: password
+
   # NOTE: keeping `bootstrap` section here for reference, refer to
   # CloudNativePG documentation for more details.
   # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
