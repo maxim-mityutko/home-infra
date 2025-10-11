@@ -4,8 +4,7 @@ kind: Kustomization
 namespace: default
 resources:
   - cnpg-ha.yaml
-  - volumes.yaml
   - pod-scrape.yaml
+  - backup.yaml
   # Enable the `service` manifest if LoadBalancer is required
   # - service.yaml
-  - backup.yaml
