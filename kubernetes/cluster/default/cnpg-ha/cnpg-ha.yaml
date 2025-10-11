@@ -38,23 +38,23 @@ spec:
     storageClass: openebs-hostpath
   
   # Ref: https://cloudnative-pg.io/documentation/1.25/backup_barmanobjectstore/
-  backup:
-    target: primary
-    retentionPolicy: 14d
-    barmanObjectStore:
-      destinationPath: "s3://cnpg-backup/"
-      endpointURL: "http://garage.garage.svc.cluster.local:3900"
-      s3Credentials:
-        accessKeyId:
-          name: cnpg-backup-secret
-          key: username
-        secretAccessKey:
-          name: cnpg-backup-secret
-          key: password
-      data:
-        compression: bzip2
-      wal:
-        compression: bzip2
+  # backup:
+  #   target: primary
+  #   retentionPolicy: 14d
+  #   barmanObjectStore:
+  #     destinationPath: "s3://cnpg-backup/"
+  #     endpointURL: "http://garage.garage.svc.cluster.local:3900"
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: cnpg-backup-secret
+  #         key: username
+  #       secretAccessKey:
+  #         name: cnpg-backup-secret
+  #         key: password
+  #     data:
+  #       compression: bzip2
+  #     wal:
+  #       compression: bzip2
 
   # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
   startDelay: 15
@@ -87,7 +87,7 @@ spec:
   externalClusters:
     - name: cnpg-ha-backup
       barmanObjectStore:
-        destinationPath: "s3://cnpg-backup/cnpg-ha/"
+        destinationPath: "s3://cnpg-backup/"
         endpointURL: "http://garage.garage.svc.cluster.local:3900"
         s3Credentials:
           accessKeyId:
