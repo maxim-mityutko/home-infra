@@ -17,7 +17,6 @@ helmCharts:
         defaultDashboards:
           enabled: false
         defaultRules:
-          create: true
           groups:
             vmalert:
               create: false
