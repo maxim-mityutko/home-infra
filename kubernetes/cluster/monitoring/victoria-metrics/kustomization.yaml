@@ -16,6 +16,10 @@ helmCharts:
       valuesInline:
         defaultDashboards:
           enabled: false
+        defaultRules:
+          groups:
+            vmalert:
+              create: false
         fullnameOverride: stack
         victoria-metrics-operator:
           enabled: true
