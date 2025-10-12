@@ -2,6 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: kube-system
 resources:
-  - calico.yaml  # Source: /snap/microk8s/current/upgrade-scripts/000-switch-to-calico/resources/calico.yaml
+  # Sourced from (either):
+  #   - Use the version that matches the cluster: 
+  #     https://github.com/canonical/microk8s/blob/v1.32/upgrade-scripts/000-switch-to-calico/resources/calico.yaml
+  #   - /snap/microk8s/current/upgrade-scripts/000-switch-to-calico/resources/calico.yaml
+  - calico.yaml
 patches:
   - path: patch.yaml
