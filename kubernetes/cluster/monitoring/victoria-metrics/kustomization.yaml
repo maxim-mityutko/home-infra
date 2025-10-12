@@ -75,6 +75,8 @@ helmCharts:
             # auth.anonymous:
             #   enabled: true
             #   org_role: Editor
+          readinessProbe:
+            initialDelaySeconds: 30
           ingress:
             enabled: true
             annotations:
