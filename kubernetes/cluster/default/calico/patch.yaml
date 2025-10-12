@@ -6,7 +6,8 @@ spec:
   template:
     spec:
       containers:
-        - env:
+        - name: calico-node
+          env:
             # Ref: https://microk8s.io/docs/change-cidr#configure-calico-ip-autodetection-method
             # Ref: https://docs.tigera.io/calico/latest/networking/ipam/ip-autodetection#change-the-autodetection-method
             - name: IP_AUTODETECTION_METHOD
