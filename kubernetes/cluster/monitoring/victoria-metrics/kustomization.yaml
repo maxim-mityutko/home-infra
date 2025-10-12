@@ -35,6 +35,10 @@ helmCharts:
         grafana:
           enabled: true
           revisionHistoryLimit: 1
+          admin:
+            existingSecret: grafana
+            userKey: admin-user
+            passwordKey: admin-password
           sidecar:
             skipTlsVerify: true
             datasources:
@@ -71,6 +75,8 @@ helmCharts:
             # auth.anonymous:
             #   enabled: true
             #   org_role: Editor
+          readinessProbe:
+            initialDelaySeconds: 30
           ingress:
             enabled: true
             annotations:
