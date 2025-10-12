@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata: 
+  name: calico-node
+spec:
+  template:
+    spec:
+      containers:
+        - env:
+            # Ref: https://microk8s.io/docs/change-cidr#configure-calico-ip-autodetection-method
+            # Ref: https://docs.tigera.io/calico/latest/networking/ipam/ip-autodetection#change-the-autodetection-method
+            - name: IP_AUTODETECTION_METHOD
+              value: cidr=192.168.1.0/24

@@ -3,3 +3,5 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - calico.yaml  # Source: /snap/microk8s/current/upgrade-scripts/000-switch-to-calico/resources/calico.yaml
+patches:
+  - path: patch.yaml
