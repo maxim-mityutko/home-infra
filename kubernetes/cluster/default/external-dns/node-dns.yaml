@@ -30,7 +30,7 @@ spec:
                 kubectl delete dnsendpoint "node-$node" -n default --ignore-not-found=true
               done
 
-              # Get all Ready master nodes and ensure DNSEndpoint exists
+              # Get all Ready master nodes and deploy DNSEndpoint
               READY_NODES=$(kubectl get nodes \
                 -l node.kubernetes.io/microk8s-controlplane \
                 -o json | jq -r '.items[] |
@@ -53,13 +53,24 @@ spec:
                   recordType: A
                   targets:
                   - $ip
-                - dnsName: casa.brhd.io
+              EOF
+              done
+
+              # Create casa.brhd.io with all master IPs
+              cat <<EOF | kubectl apply -f -
+              apiVersion: externaldns.k8s.io/v1alpha1
+              kind: DNSEndpoint
+              metadata:
+                name: casa.brhd.io
+                namespace: default
+              spec:
+                endpoints:
+                - dnsName: test.brhd.io
                   recordTTL: 300
                   recordType: A
                   targets:
-                  - $ip
+              $(echo "$READY_NODES" | awk '{print "    - " $2}')
               EOF
-              done
           restartPolicy: OnFailure
 ---
 apiVersion: v1
