@@ -24,7 +24,6 @@ kind: Kustomization
 namespace: default
 resources:
   - secret.yaml
-  - node-dns.yaml
 helmCharts:
   - name: external-dns
     namespace: default

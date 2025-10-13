@@ -1,3 +1,11 @@
+# ================================================================================================
+# A CronJob that runs every 10 minutes to automatically maintain DNS records for MicroK8s master
+# nodes. It creates individual A records for each healthy control plane node (e.g. node-01.brhd.io)
+# and a shared cluster endpoint (casa.brhd.io) that load-balances across all ready masters. When
+# nodes become unavailable, their DNS records are automatically removed by native External-DNS. The
+# generated DNSEndpoint resources are marked with ArgoCD annotations to prevent pruning and exclude
+# them from application sync status, allowing dynamic DNS management without GitOps conflicts.
+# ================================================================================================
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -50,7 +58,7 @@ spec:
                 name: $name.brhd.io
                 namespace: default
                 annotations:
-                  argocd.argoproj.io/tracking-id: external-dns:externaldns.k8s.io/DNSEndpoint:default/$name.brhd.io
+                  argocd.argoproj.io/tracking-id: cloudflare:externaldns.k8s.io/DNSEndpoint:default/$name.brhd.io
                   argocd.argoproj.io/sync-options: Prune=false
                   argocd.argoproj.io/compare-options: IgnoreExtraneous
               spec:
@@ -71,7 +79,7 @@ spec:
                 name: casa.brhd.io
                 namespace: default
                 annotations:
-                  argocd.argoproj.io/tracking-id: external-dns:externaldns.k8s.io/DNSEndpoint:default/casa.brhd.io
+                  argocd.argoproj.io/tracking-id: cloudflare:externaldns.k8s.io/DNSEndpoint:default/casa.brhd.io
                   argocd.argoproj.io/sync-options: Prune=false
                   argocd.argoproj.io/compare-options: IgnoreExtraneous
               spec:
