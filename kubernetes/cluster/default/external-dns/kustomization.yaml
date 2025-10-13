@@ -42,18 +42,18 @@ helmCharts:
         tag: v0.19.0
       sources:
         - crd
-        - node
+        # - node
         # - ingress
       policy: sync
-      logLevel: debug
+      logLevel: info
       rbac:
         create: true
       provider: cloudflare
       cloudflare:
         secretName: cloudflare-external-dns
         proxied: false
-      # domainFilters:
-      #   - brhd.io
+      domainFilters:
+        - brhd.io
       crd:
         create: true
       interval: 5m
