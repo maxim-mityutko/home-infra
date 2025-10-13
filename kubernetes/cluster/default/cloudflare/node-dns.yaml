@@ -1,0 +1,124 @@
+# ================================================================================================
+# A CronJob that runs every 10 minutes to automatically maintain DNS records for MicroK8s master
+# nodes. It creates individual A records for each healthy control plane node (e.g. node-01.brhd.io)
+# and a shared cluster endpoint (casa.brhd.io) that load-balances across all ready masters. When
+# nodes become unavailable, their DNS records are automatically removed by native External-DNS. The
+# generated DNSEndpoint resources are marked with ArgoCD annotations to prevent pruning and exclude
+# them from application sync status, allowing dynamic DNS management without GitOps conflicts.
+# ================================================================================================
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: node-dns
+  namespace: default
+spec:
+  schedule: "*/10 * * * *"  # Every 10 minutes
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: node-dns-manager
+          containers:
+          - name: cleanup
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              # Get all NotReady master nodes
+              NOTREADY_NODES=$(kubectl get nodes \
+                -l node.kubernetes.io/microk8s-controlplane \
+                -o json | jq -r '.items[] |
+                select(.status.conditions[] |
+                select(.type=="Ready" and .status=="False")) |
+                .metadata.name')
+
+              # Delete DNSEndpoint for NotReady nodes
+              for node in $NOTREADY_NODES; do
+                kubectl delete dnsendpoint "node-$node" -n default --ignore-not-found=true
+              done
+
+              # Get all Ready master nodes and deploy DNSEndpoint
+              READY_NODES=$(kubectl get nodes \
+                -l node.kubernetes.io/microk8s-controlplane \
+                -o json | jq -r '.items[] |
+                select(.status.conditions[] |
+                select(.type=="Ready" and .status=="True")) |
+                .metadata.name + " " +
+                (.status.addresses[] | select(.type=="InternalIP") | .address)')
+
+              echo "$READY_NODES" | while read name ip; do
+                cat <<EOF | kubectl apply -f -
+              apiVersion: externaldns.k8s.io/v1alpha1
+              kind: DNSEndpoint
+              metadata:
+                name: $name.brhd.io
+                namespace: default
+                annotations:
+                  argocd.argoproj.io/tracking-id: cloudflare:externaldns.k8s.io/DNSEndpoint:default/$name.brhd.io
+                  argocd.argoproj.io/sync-options: Prune=false
+                  argocd.argoproj.io/compare-options: IgnoreExtraneous
+              spec:
+                endpoints:
+                - dnsName: $name.brhd.io
+                  recordTTL: 86400
+                  recordType: A
+                  targets:
+                  - $ip
+              EOF
+              done
+
+              # Create casa.brhd.io with all master IPs
+              cat <<EOF | kubectl apply -f -
+              apiVersion: externaldns.k8s.io/v1alpha1
+              kind: DNSEndpoint
+              metadata:
+                name: casa.brhd.io
+                namespace: default
+                annotations:
+                  argocd.argoproj.io/tracking-id: cloudflare:externaldns.k8s.io/DNSEndpoint:default/casa.brhd.io
+                  argocd.argoproj.io/sync-options: Prune=false
+                  argocd.argoproj.io/compare-options: IgnoreExtraneous
+              spec:
+                endpoints:
+                - dnsName: casa.brhd.io
+                  recordTTL: 300
+                  recordType: A
+                  targets:
+              $(echo "$READY_NODES" | awk '{print "    - " $2}')
+              EOF
+          restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: node-dns-manager
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: node-dns-manager
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["externaldns.k8s.io"]
+  resources: ["dnsendpoints"]
+  verbs: ["get", "list", "create", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: node-dns-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: node-dns-manager
+subjects:
+- kind: ServiceAccount
+  name: node-dns-manager
+  namespace: default
