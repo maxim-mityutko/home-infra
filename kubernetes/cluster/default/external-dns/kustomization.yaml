@@ -44,6 +44,9 @@ helmCharts:
         - crd
         - node
         # - ingress
+      policy: sync
+      rbac:
+        create: true
       provider: cloudflare
       cloudflare:
         secretName: cloudflare-external-dns
