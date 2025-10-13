@@ -52,8 +52,8 @@ helmCharts:
       cloudflare:
         secretName: cloudflare-external-dns
         proxied: false
-      domainFilters:
-        - brhd.io
+      # domainFilters:
+      #   - brhd.io
       crd:
         create: true
       interval: 5m
