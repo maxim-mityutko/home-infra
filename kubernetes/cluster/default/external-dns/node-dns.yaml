@@ -70,6 +70,10 @@ spec:
               metadata:
                 name: casa.brhd.io
                 namespace: default
+                annotations:
+                  argocd.argoproj.io/tracking-id: external-dns:externaldns.k8s.io/DNSEndpoint:default/casa.brhd.io
+                  argocd.argoproj.io/sync-options: Prune=false
+                  argocd.argoproj.io/compare-options: IgnoreExtraneous
               spec:
                 endpoints:
                 - dnsName: casa.brhd.io
