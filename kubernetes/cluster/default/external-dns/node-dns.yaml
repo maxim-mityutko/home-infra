@@ -52,7 +52,7 @@ spec:
                 annotations:
                   argocd.argoproj.io/tracking-id: external-dns:externaldns.k8s.io/DNSEndpoint:default/$name.brhd.io
                   argocd.argoproj.io/sync-options: Prune=false
-                  argocd.argoproj.io/compare-options: IgnoreDifferences
+                  argocd.argoproj.io/compare-options: IgnoreExtraneous
               spec:
                 endpoints:
                 - dnsName: $name.brhd.io
