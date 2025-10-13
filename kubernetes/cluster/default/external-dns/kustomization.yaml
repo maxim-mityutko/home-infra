@@ -45,7 +45,7 @@ helmCharts:
         # - node
         # - ingress
       policy: sync
-      logLevel: info
+      logLevel: debug
       rbac:
         create: true
       provider: cloudflare
