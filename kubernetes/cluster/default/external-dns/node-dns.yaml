@@ -1,0 +1,94 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: node-dns
+  namespace: default
+spec:
+  schedule: "*/5 * * * *"  # Every 5 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: node-dns-manager
+          containers:
+          - name: cleanup
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              # Get all NotReady master nodes
+              NOTREADY_NODES=$(kubectl get nodes \
+                -l node.kubernetes.io/microk8s-controlplane \
+                -o json | jq -r '.items[] |
+                select(.status.conditions[] |
+                select(.type=="Ready" and .status=="False")) |
+                .metadata.name')
+
+              # Delete DNSEndpoint for NotReady nodes
+              for node in $NOTREADY_NODES; do
+                kubectl delete dnsendpoint "node-$node" -n default --ignore-not-found=true
+              done
+
+              # Get all Ready master nodes and ensure DNSEndpoint exists
+              READY_NODES=$(kubectl get nodes \
+                -l node.kubernetes.io/microk8s-controlplane \
+                -o json | jq -r '.items[] |
+                select(.status.conditions[] |
+                select(.type=="Ready" and .status=="True")) |
+                .metadata.name + " " +
+                (.status.addresses[] | select(.type=="InternalIP") | .address)')
+
+              echo "$READY_NODES" | while read name ip; do
+                cat <<EOF | kubectl apply -f -
+              apiVersion: externaldns.k8s.io/v1alpha1
+              kind: DNSEndpoint
+              metadata:
+                name: node-$name
+                namespace: default
+              spec:
+                endpoints:
+                - dnsName: $name.brhd.io
+                  recordTTL: 86400
+                  recordType: A
+                  targets:
+                  - $ip
+                - dnsName: casa.brhd.io
+                  recordTTL: 300
+                  recordType: A
+                  targets:
+                  - $ip
+              EOF
+              done
+          restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: node-dns-manager
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: node-dns-manager
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["externaldns.k8s.io"]
+  resources: ["dnsendpoints"]
+  verbs: ["get", "list", "create", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: node-dns-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: node-dns-manager
+subjects:
+- kind: ServiceAccount
+  name: node-dns-manager
+  namespace: default
