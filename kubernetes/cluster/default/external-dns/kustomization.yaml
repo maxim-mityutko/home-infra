@@ -45,6 +45,7 @@ helmCharts:
         - node
         # - ingress
       policy: sync
+      logLevel: debug
       rbac:
         create: true
       provider: cloudflare
@@ -55,7 +56,7 @@ helmCharts:
         - brhd.io
       crd:
         create: true
-      interval: 5m
+      interval: 1m
       resourcesPreset: nano
       metrics:
         enabled: true
