@@ -68,11 +68,16 @@ helmCharts:
                     nodeFit: true
                     minReplicas: 2
                     minPodAge: 12h
-                    noEvictionPolicy: Mandatory
-                    podProtections:
-                      defaultDisabled:
-                        - PodsWithLocalStorage
-                        - FailedBarePods
+                    evictLocalStoragePods: true
+                    evictDaemonSetPods: false
+                    evictSystemCriticalPods: false
+                    ignorePvcPods: false
+                    ignorePodsWithoutPDB: false
+                    # noEvictionPolicy: Mandatory
+                    # podProtections:
+                    #   defaultDisabled:
+                    #     - PodsWithLocalStorage
+                    #     - FailedBarePods
                 - name: LowNodeUtilization
                   args:
                     thresholds:
@@ -96,12 +101,17 @@ helmCharts:
               - name: DefaultEvictor
                 args:
                   nodeFit: false
-                  podProtections:
-                    defaultDisabled:
-                      - PodsWithLocalStorage
-                      - DaemonSetPods
-                      - SystemCriticalPods
-                      - FailedBarePods
+                  evictSystemCriticalPods: true
+                  evictFailedBarePods: true
+                  evictDaemonSetPods: true
+                  evictLocalStoragePods: true
+                  ignorePvcPods: false
+                  # podProtections:
+                  #   defaultDisabled:
+                  #     - PodsWithLocalStorage
+                  #     - DaemonSetPods
+                  #     - SystemCriticalPods
+                  #     - FailedBarePods
               - name: RemoveFailedPods
                 args:
                   reasons:
