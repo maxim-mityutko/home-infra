@@ -67,7 +67,7 @@ helmCharts:
                   args:
                     nodeFit: true
                     minReplicas: 2
-                    minPodAge: 3600
+                    minPodAge: 12h
                     noEvictionPolicy: Mandatory
                     podProtections:
                       defaultDisabled:
