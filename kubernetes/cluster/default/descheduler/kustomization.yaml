@@ -5,7 +5,7 @@ helmCharts:
     - name: descheduler
       namespace: kube-system
       releaseName: descheduler
-      version: v0.30.1
+      version: v0.33.0
       repo: https://kubernetes-sigs.github.io/descheduler/
       valuesInline:
         kind: CronJob
@@ -64,8 +64,8 @@ helmCharts:
               pluginConfig:
                 - name: DefaultEvictor
                   args:
-                    # evictLocalStoragePods: true
                     nodeFit: true
+                    minReplicas: 2
                     minPodAge: 3600
                     noEvictionPolicy: Mandatory
                     podProtections:
