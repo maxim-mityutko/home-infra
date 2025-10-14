@@ -8,71 +8,13 @@ helmCharts:
       version: v0.30.1
       repo: https://kubernetes-sigs.github.io/descheduler/
       valuesInline:
-        kind: Deployment
-        replicas: 1
-        
-        cmdOptions:
-          v: 4  # verbosity: log all reasons why any pod is not evictable
-        deschedulingInterval: 60m
-        deschedulerPolicyAPIVersion: descheduler/v1alpha2
-        deschedulerPolicy:
-          profiles:
-            - name: balancing
-              pluginConfig:
-                - name: DefaultEvictor
-                  args:
-                    evictLocalStoragePods: true
-                    nodeFit: true
-                    # minPodAge: 3600
-                - name: LowNodeUtilization
-                  args:
-                    thresholds:
-                      # cpu: 40
-                      memory: 50
-                      pods: 25
-                    targetThresholds:
-                      # cpu : 60
-                      memory: 60
-                      pods: 30
-              plugins:
-                balance:
-                  enabled:
-                    - LowNodeUtilization
-            - name: health
-              pluginConfig:
-              - name: DefaultEvictor
-                args:
-                  nodeFit: false
-                  evictSystemCriticalPods: true
-                  evictFailedBarePods: true
-                  evictDaemonSetPods: true
-                  evictLocalStoragePods: true
-                  ignorePvcPods: false
-              - name: RemoveFailedPods
-                args:
-                  reasons:
-                    - BackOff
-                  includingInitContainers: true
-                  minPodLifetimeSeconds: 600
-              - name: RemovePodsHavingTooManyRestarts
-                args:
-                  podRestartThreshold: 10
-                  includingInitContainers: true
-              plugins:
-                deschedule:
-                  enabled:
-                    - RemoveFailedPods
-                    - RemovePodsHavingTooManyRestarts
+        kind: CronJob
+        cronJobApiVersion: "batch/v1"
+        schedule: "35 * * * *"
+        successfulJobsHistoryLimit: 3
+        failedJobsHistoryLimit: 1
 
-        rbac:
-          create: true
-        serviceAccount:
-          create: false
-        service:
-          enabled: true
-        serviceMonitor:
-          enabled: false
-        
+        priorityClassName: system-cluster-critical
         resources:
           requests: 
             cpu: 50m
@@ -80,7 +22,7 @@ helmCharts:
           limits:
             cpu: 100m
             memory: 50Mi
-            
+
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -91,11 +33,79 @@ helmCharts:
           runAsNonRoot: true
           runAsUser: 1000
 
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /healthz
-            port: 10258
-            scheme: HTTPS
-          initialDelaySeconds: 5
-          periodSeconds: 60
+        cmdOptions:
+          v: 4  # verbosity: log all reasons why any pod is not evictable
+
+        rbac:
+          create: true
+        serviceAccount:
+          create: true
+        service:
+          enabled: false
+        serviceMonitor:
+          enabled: false
+
+        deschedulerPolicyAPIVersion: "descheduler/v1alpha2"
+        deschedulerPolicy:
+          maxNoOfPodsToEvictTotal: 5
+          metricsCollector:
+            enabled: true
+          profiles:
+            - name: balancing
+              pluginConfig:
+                - name: DefaultEvictor
+                  args:
+                    # evictLocalStoragePods: true
+                    nodeFit: true
+                    minPodAge: 3600
+                    noEvictionPolicy: Mandatory
+                    podProtections:
+                      defaultDisabled:
+                        - PodsWithLocalStorage
+                        - FailedBarePods
+                - name: LowNodeUtilization
+                  args:
+                    thresholds:
+                      cpu: 40
+                      memory: 50
+                      pods: 25
+                    targetThresholds:
+                      cpu : 60
+                      memory: 60
+                      pods: 30
+                    evictionLimits:
+                      node: 3
+                    metricsUtilization:
+                      source: KubernetesMetrics
+              plugins:
+                balance:
+                  enabled:
+                    - LowNodeUtilization
+            - name: health
+              pluginConfig:
+              - name: DefaultEvictor
+                args:
+                  nodeFit: false
+                  podProtections:
+                    defaultDisabled:
+                      - PodsWithLocalStorage
+                      - DaemonSetPods
+                      - SystemCriticalPods
+                      - FailedBarePods
+              - name: RemoveFailedPods
+                args:
+                  reasons:
+                    - BackOff
+                  includingInitContainers: true
+                  minPodLifetimeSeconds: 3600
+                  excludeOwnerKinds:
+                    - Job
+              - name: RemovePodsHavingTooManyRestarts
+                args:
+                  podRestartThreshold: 10
+                  includingInitContainers: true
+              plugins:
+                deschedule:
+                  enabled:
+                    - RemoveFailedPods
+                    - RemovePodsHavingTooManyRestarts
