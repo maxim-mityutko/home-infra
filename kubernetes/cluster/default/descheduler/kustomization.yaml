@@ -13,6 +13,7 @@ helmCharts:
         schedule: "35 * * * *"
         successfulJobsHistoryLimit: 3
         failedJobsHistoryLimit: 1
+        activeDeadlineSeconds: 120
 
         priorityClassName: system-cluster-critical
         resources:
