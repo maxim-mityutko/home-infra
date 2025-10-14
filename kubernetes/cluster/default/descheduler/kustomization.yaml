@@ -21,7 +21,6 @@ helmCharts:
             cpu: 50m
             memory: 25Mi
           limits:
-            cpu: 100m
             memory: 50Mi
 
         securityContext:
@@ -46,14 +45,14 @@ helmCharts:
         serviceMonitor:
           enabled: false
 
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /healthz
-            port: 10258
-            scheme: HTTPS
-          initialDelaySeconds: 5
-          periodSeconds: 60
+        # livenessProbe:
+        #   failureThreshold: 3
+        #   httpGet:
+        #     path: /healthz
+        #     port: 10258
+        #     scheme: HTTPS
+        #   initialDelaySeconds: 5
+        #   periodSeconds: 60
 
         deschedulerPolicyAPIVersion: "descheduler/v1alpha2"
         deschedulerPolicy:
