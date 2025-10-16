@@ -58,7 +58,7 @@ spec:
         compression: bzip2
 
   # Ref: https://cloudnative-pg.io/documentation/current/instance_manager/
-  startDelay: 15
+  startDelay: 120
   stopDelay: 30
   smartShutdownTimeout: 15
   probes:
