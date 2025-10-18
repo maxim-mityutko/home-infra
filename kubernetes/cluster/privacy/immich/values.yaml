@@ -6,9 +6,6 @@ controllers:
     revisionHistoryLimit: 2
     containers:
       main:
-        image:
-          repository: ghcr.io/immich-app/immich-server
-          tag: v2.1.0 # Use <tag>-cuda for NVidia GPUs
         env:
           DB_HOSTNAME:
             valueFrom:
@@ -61,6 +58,9 @@ server:
         main:
           securityContext:
             privileged: true # Required for iGPU access
+          image:
+            repository: ghcr.io/immich-app/immich-server
+            tag: v2.1.0 # Use <tag>-cuda for NVidia GPUs
           resources:
             requests:
               cpu: 200m
