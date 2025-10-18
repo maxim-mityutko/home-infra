@@ -63,8 +63,8 @@ server:
                 failureThreshold: 5
       pod:
         securityContext:
-          supplementalGroups:
-            - 993
+          supplementalGroups: 
+            - 993 # Required for iGPU access
         nodeSelector:
           kubernetes.io/gpu: intel
   persistence:
@@ -74,6 +74,11 @@ server:
       existingClaim: immich-external
       mountPath: /media/external
       readOnly: true
+    render-device:
+      enabled: true
+      type: hostPath
+      path: /dev/dri/renderD128
+      mountPath: /dev/dri/renderD128
   ingress:
     main:
       enabled: true
