@@ -4,7 +4,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: calico-restart
+  name: calico-node-restart
   namespace: kube-system
 spec:
   schedule: "5 7 * * *"
