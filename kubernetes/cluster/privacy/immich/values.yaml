@@ -115,6 +115,8 @@ machine-learning:
     main:
       containers:
         main:
+          securityContext:
+            privileged: true
           image:
             repository: ghcr.io/immich-app/immich-machine-learning
             tag: v2.1.0-openvino # Use <tag>-cuda for NVidia GPUs
@@ -136,11 +138,18 @@ machine-learning:
                 periodSeconds: 30
                 failureThreshold: 5
       pod:
+        securityContext:
+          supplementalGroups: 
+            - 993 # Required for iGPU access
         nodeSelector:
-          kubernetes.io/node-size: large
+          kubernetes.io/gpu: intel
   persistence:
     cache:
       size: 10Gi
       type: persistentVolumeClaim
       accessMode: ReadWriteMany
       storageClass: nfs-subdir
+    render-device:
+      type: hostPath
+      hostPath: /dev/dri/renderD128
+      mountPath: /dev/dri/renderD128
