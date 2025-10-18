@@ -62,6 +62,9 @@ server:
                 periodSeconds: 30
                 failureThreshold: 5
       pod:
+        securityContext:
+          supplementalGroups:
+            - 993
         nodeSelector:
           kubernetes.io/gpu: intel
   persistence:
