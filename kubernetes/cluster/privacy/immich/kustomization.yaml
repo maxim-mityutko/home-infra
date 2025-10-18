@@ -18,6 +18,6 @@ helmCharts:
     # Leveraging `renovate` ability to detect updates in Helm values
     # Ref: https://docs.renovatebot.com/modules/manager/helm-values/
     valuesFile: values.yaml
-patches:
-  # Patch is required to enable Intel iGPU within the container for hardware decoding
-  - path: patch.yaml  
+# patches:
+#   # Patch is required to enable Intel iGPU within the container for hardware decoding
+#   - path: patch.yaml  

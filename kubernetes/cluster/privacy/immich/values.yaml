@@ -1,11 +1,24 @@
 # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
 # Ref: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
-env: {}
-envFrom:
-  - configMapRef:
-      name: immich
-  - secretRef: 
-      name: immich
+# env: {}
+# envFrom:
+#   - configMapRef:
+#       name: immich
+#   - secretRef: 
+#       name: immich
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/immich-app/immich-server
+          tag: v2.0.1
+        envFrom:
+          - configMapRef:
+              name: immich
+          - secretRef: 
+              name: immich
 
 immich:
   metrics:
@@ -23,9 +36,9 @@ valkey:
 # Ref: https://github.com/immich-app/immich-charts/pull/137
 server:
   enabled: true
-  image:
-    repository: ghcr.io/immich-app/immich-server
-    tag: v2.0.1
+  # image:
+  #   repository: ghcr.io/immich-app/immich-server
+  #   tag: v2.0.1
   resources:
     requests:
       cpu: 200m
@@ -66,9 +79,9 @@ server:
 
 machine-learning:
   enabled: true
-  image:
-    repository: ghcr.io/immich-app/immich-machine-learning
-    tag: v2.0.1 # Use <tag>-cuda for NVidia GPUs
+  # image:
+  #   repository: ghcr.io/immich-app/immich-machine-learning
+  #   tag: v2.0.1 # Use <tag>-cuda for NVidia GPUs
   resources:
     requests:
       cpu: 100m
