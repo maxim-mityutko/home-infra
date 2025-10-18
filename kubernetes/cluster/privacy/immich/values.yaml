@@ -15,7 +15,12 @@ controllers:
         image:
           repository: ghcr.io/immich-app/immich-server
           tag: v2.1.0 # Use <tag>-cuda for NVidia GPUs
-        env: {}
+        env:
+          REDIS_HOSTNAME:
+            valueFrom:
+              configMapKeyRef:
+                name: immich
+                key: REDIS_HOSTNAME
         envFrom:
           - configMapRef:
               name: immich
