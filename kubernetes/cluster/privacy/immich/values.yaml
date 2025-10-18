@@ -86,24 +86,27 @@ machine-learning:
   # image:
   #   repository: ghcr.io/immich-app/immich-machine-learning
   #   tag: v2.0.1 # Use <tag>-cuda for NVidia GPUs
-  main:
-    resources:
-      requests:
-        cpu: 100m
-        memory: 150Mi
-      limits:
-        cpu: 2000m
-        memory: 4Gi
-    probes:
-      liveness:
-        spec:
-          initialDelaySeconds: 90
-          periodSeconds: 30
-      readiness:
-        spec:
-          initialDelaySeconds: 30
-          periodSeconds: 30
-          failureThreshold: 5
+  controllers:
+    main:
+      containers:
+        main:
+          resources:
+            requests:
+              cpu: 100m
+              memory: 150Mi
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          probes:
+            liveness:
+              spec:
+                initialDelaySeconds: 90
+                periodSeconds: 30
+            readiness:
+              spec:
+                initialDelaySeconds: 30
+                periodSeconds: 30
+                failureThreshold: 5
   persistence:
     cache:
       enabled: true
