@@ -48,11 +48,6 @@ immich:
   persistence:
     library:
       existingClaim: immich-data
-    external:
-      enabled: true
-      existingClaim: immich-external
-      mountPath: /media/external
-      readOnly: true
 
 # Dependencies
 valkey:
@@ -96,6 +91,14 @@ server:
           kubernetes.io/gpu: intel
   persistence:
     # External Library
+    external:
+      enabled: true
+      existingClaim: immich-external
+      mountPath: /media/external
+      readOnly: true
+      globalMounts:
+        - path: /media/external
+          readOnly: true
     render-device:
       enabled: true
       type: hostPath
