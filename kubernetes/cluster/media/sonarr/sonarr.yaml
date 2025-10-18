@@ -50,6 +50,11 @@ spec:
             limits:
               memory: 1000Mi
               cpu: 1000m
+          envFrom:
+            - secretRef:
+                name: sonarr
+            - configMapRef:
+                name: sonarr
           ports:
             - containerPort: 8989
           volumeMounts:
@@ -58,9 +63,39 @@ spec:
             - name: downloads
               mountPath: /downloads
       volumes:
+        # Config is managed through environment variables, using `emptyDir` 
+        # to avoid cover art redownload in case of pod crash.
         - name: sonarr-config
-          persistentVolumeClaim:
-            claimName: sonarr-config
+          emptyDir: {}
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sonarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: sonarr
+data:
+  SONARR__APP__INSTANCENAME: Sonarr
+  SONARR__APP__THEME: dark
+  SONARR__APP__LAUNCHBROWSER: "False"
+
+  SONARR__SERVER__BINDADDRESS: "*"
+  SONARR__SERVER__PORT: "8989"
+  SONARR__SERVER__SSLPORT: "9898"
+  SONARR__SERVER__ENABLESSL: "False"
+  SONARR__SERVER__URLBASE: ""
+
+  SONARR__AUTH__METHOD: Basic
+  SONARR__AUTH__REQUIRED: Enabled
+
+  SONARR__UPDATE__MECHANISM: Docker
+
+  SONARR__LOG__LEVEL: info
+  SONARR__LOG__ANALYTICSENABLED: "False"
+
+  SONARR__POSTGRES__HOST: cnpg-default-rw.default.svc.cluster.local
+  SONARR__POSTGRES__PORT: "5432"
