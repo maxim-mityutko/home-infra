@@ -43,7 +43,7 @@ controllers:
                 key: REDIS_HOSTNAME
         envFrom:
           - configMapRef:
-            name: immich
+              name: immich
 
 immich:
   metrics:
