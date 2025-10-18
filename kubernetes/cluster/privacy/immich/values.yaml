@@ -14,7 +14,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/immich-app/immich-server
-          tag: v2.1.0
+          tag: v2.1.0 # Use <tag>-cuda for NVidia GPUs
         env: {}
         envFrom:
           - configMapRef:
@@ -38,16 +38,29 @@ valkey:
 # Ref: https://github.com/immich-app/immich-charts/pull/137
 server:
   enabled: true
-  # image:
-  #   repository: ghcr.io/immich-app/immich-server
-  #   tag: v2.0.1
-  resources:
-    requests:
-      cpu: 200m
-      memory: 250Mi
-    limits:
-      cpu: 2000m
-      memory: 2Gi
+  controllers:
+    main:
+      containers:
+        main:
+          resources:
+            requests:
+              cpu: 200m
+              memory: 250Mi
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+          probes:
+            liveness:
+              enabled: true
+              spec:
+                initialDelaySeconds: 90
+                periodSeconds: 30
+            readiness:
+              enabled: true
+              spec:
+                initialDelaySeconds: 30
+                periodSeconds: 30
+                failureThreshold: 5
   persistence:
     # External Library
     external:
@@ -55,18 +68,6 @@ server:
       existingClaim: immich-external
       mountPath: /media/external
       readOnly: true
-  probes:
-    liveness:
-      enabled: true
-      spec:
-        initialDelaySeconds: 90
-        periodSeconds: 30
-    readiness:
-      enabled: true
-      spec:
-        initialDelaySeconds: 30
-        periodSeconds: 30
-        failureThreshold: 5
   ingress:
     main:
       enabled: true
@@ -83,9 +84,6 @@ server:
 
 machine-learning:
   enabled: true
-  # image:
-  #   repository: ghcr.io/immich-app/immich-machine-learning
-  #   tag: v2.0.1 # Use <tag>-cuda for NVidia GPUs
   controllers:
     main:
       containers:
@@ -107,6 +105,9 @@ machine-learning:
                 initialDelaySeconds: 30
                 periodSeconds: 30
                 failureThreshold: 5
+    pod:
+      nodeSelector:
+        kubernetes.io/node-size: large
   persistence:
     cache:
       enabled: true
@@ -114,5 +115,3 @@ machine-learning:
       type: persistentVolumeClaim
       accessMode: ReadWriteMany
       storageClass: nfs-subdir
-  nodeSelector:
-    kubernetes.io/node-size: large
