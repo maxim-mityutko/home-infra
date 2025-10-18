@@ -89,6 +89,16 @@ spec:
                   recordType: A
                   targets:
               $(echo "$READY_NODES" | awk '{print "    - " $2}')
+                - dnsName: forge.brhd.io
+                  recordTTL: 300
+                  recordType: A
+                  targets:
+              $(echo "$READY_NODES" | awk -F' ' '{
+                split($2, octets, ".")
+                new_third = octets[3] substr(octets[4], 1, 1)
+                new_fourth = substr(octets[4], 2)
+                print "    - " octets[1] "." octets[2] "." new_third "." new_fourth
+              }') 
               EOF
           restartPolicy: OnFailure
 ---
