@@ -9,6 +9,7 @@
 
 controllers:
   main:
+    revisionHistoryLimit: 2
     containers:
       main:
         image:
