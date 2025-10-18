@@ -76,12 +76,12 @@ server:
               memory: 2Gi
           probes:
             liveness:
-              enabled: true
+              enabled: false
               spec:
                 initialDelaySeconds: 90
                 periodSeconds: 30
             readiness:
-              enabled: true
+              enabled: false
               spec:
                 initialDelaySeconds: 30
                 periodSeconds: 30
