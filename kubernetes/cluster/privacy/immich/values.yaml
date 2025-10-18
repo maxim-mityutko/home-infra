@@ -76,14 +76,12 @@ server:
               memory: 2Gi
           probes:
             liveness:
-              enabled: false
               spec:
                 initialDelaySeconds: 90
                 periodSeconds: 30
             readiness:
-              enabled: false
               spec:
-                initialDelaySeconds: 30
+                initialDelaySeconds: 90 #30
                 periodSeconds: 30
                 failureThreshold: 5
       pod:
