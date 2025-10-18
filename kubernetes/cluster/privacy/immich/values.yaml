@@ -96,9 +96,10 @@ server:
       existingClaim: immich-external
       mountPath: /media/external
       readOnly: true
-      globalMounts:
-        - path: /media/external
-          readOnly: true
+      path: /media/external
+      # globalMounts:
+      #   - path: /media/external
+      #     readOnly: true
     render-device:
       enabled: true
       type: hostPath
