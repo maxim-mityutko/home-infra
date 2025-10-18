@@ -49,7 +49,7 @@ controllers:
           - configMapRef:
               name: immich
           - secretRef: 
-              name: immich
+              identifier: immich
 
 immich:
   metrics:
