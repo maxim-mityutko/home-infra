@@ -42,6 +42,8 @@ server:
     main:
       containers:
         main:
+          securityContext:
+            privileged: true
           resources:
             requests:
               cpu: 200m
