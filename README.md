@@ -1,6 +1,6 @@
 # Home Infrastructure
 
-[![k8s](https://img.shields.io/badge/MicroK8s-v1.32.3-black?style=flat-square)](https://k8s.io/)
+[![k8s](https://img.shields.io/badge/MicroK8s-v1.32.9-black?style=flat-square)](https://k8s.io/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/maxim-mityutko/home-infra/main?style=flat-square)](https://github.com/maxim-mityutko/home-infra/commits/main)
 
 ## Notes

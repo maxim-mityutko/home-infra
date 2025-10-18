@@ -27,7 +27,7 @@ server:
   enabled: true
   image:
     repository: ghcr.io/immich-app/immich-server
-    tag: v2.0.1
+    tag: v2.1.0
   resources:
     requests:
       cpu: 200m
@@ -70,7 +70,7 @@ machine-learning:
   enabled: true
   image:
     repository: ghcr.io/immich-app/immich-machine-learning
-    tag: v2.0.1 # Use <tag>-cuda for NVidia GPUs
+    tag: v2.1.0 # Use <tag>-cuda for NVidia GPUs
   resources:
     requests:
       cpu: 100m
