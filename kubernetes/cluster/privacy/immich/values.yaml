@@ -81,7 +81,7 @@ server:
                 periodSeconds: 30
             readiness:
               spec:
-                initialDelaySeconds: 90 #30
+                initialDelaySeconds: 30
                 periodSeconds: 30
                 failureThreshold: 5
       pod:
