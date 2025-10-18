@@ -105,9 +105,9 @@ machine-learning:
                 initialDelaySeconds: 30
                 periodSeconds: 30
                 failureThreshold: 5
-    pod:
-      nodeSelector:
-        kubernetes.io/node-size: large
+      pod:
+        nodeSelector:
+          kubernetes.io/node-size: large
   persistence:
     cache:
       enabled: true
