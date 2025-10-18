@@ -60,7 +60,7 @@ server:
       containers:
         main:
           securityContext:
-            privileged: true
+            privileged: true # Required for iGPU access
           resources:
             requests:
               cpu: 200m
@@ -116,7 +116,7 @@ machine-learning:
       containers:
         main:
           securityContext:
-            privileged: true
+            privileged: true # Required for iGPU access
           image:
             repository: ghcr.io/immich-app/immich-machine-learning
             tag: v2.1.0-openvino # Use <tag>-cuda for NVidia GPUs
