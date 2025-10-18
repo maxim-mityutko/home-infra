@@ -47,7 +47,7 @@ controllers:
           #       key: REDIS_HOSTNAME
         envFrom:
           - configMapRef:
-              identifier: immich
+              name: immich
           - secretRef: 
               name: immich
 
