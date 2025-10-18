@@ -145,59 +145,11 @@ machine-learning:
           kubernetes.io/gpu: intel
   persistence:
     cache:
-      size: 10Gi
+      size: 10G
       type: persistentVolumeClaim
       accessMode: ReadWriteMany
-      storageClass: nfs-subdir
+      storageClass: openebs-hostpath
     render-device:
       type: hostPath
       hostPath: /dev/dri/renderD128
       mountPath: /dev/dri/renderD128
-
-worker:
-  enabled: true
-  controllers:
-    main:
-      containers:
-        main:
-          securityContext:
-            privileged: true # Required for iGPU access
-          image:
-            repository: ghcr.io/immich-app/immich-server
-            tag: v2.1.0 # Use <tag>-cuda for NVidia GPUs
-          resources:
-            requests:
-              cpu: 200m
-              memory: 250Mi
-            limits:
-              cpu: 2000m
-              memory: 2Gi
-          probes:
-            liveness:
-              spec:
-                initialDelaySeconds: 90
-                periodSeconds: 30
-            readiness:
-              spec:
-                initialDelaySeconds: 30
-                periodSeconds: 30
-                failureThreshold: 5
-      pod:
-        securityContext:
-          supplementalGroups: 
-            - 993 # Required for iGPU access
-        nodeSelector:
-          kubernetes.io/gpu: intel
-  persistence:
-    # External Library
-    external:
-      existingClaim: immich-external
-      globalMounts:
-        - path: /media/external
-          readOnly: true
-    render-device:
-      type: hostPath
-      hostPath: /dev/dri/renderD128
-      mountPath: /dev/dri/renderD128
-  nodeSelector:
-    kubernetes.io/gpu: intel
