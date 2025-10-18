@@ -115,6 +115,9 @@ machine-learning:
     main:
       containers:
         main:
+          image:
+            repository: ghcr.io/immich-app/immich-server
+            tag: v2.1.0-openvino # Use <tag>-cuda for NVidia GPUs
           resources:
             requests:
               cpu: 100m
