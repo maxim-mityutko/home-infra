@@ -1,0 +1,27 @@
+# ================================================================================================
+# Daily restart of the Multus DaemonSet
+# ================================================================================================
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: multus-restart
+  namespace: kube-system
+spec:
+  schedule: "15 7 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: multus
+          containers:
+          - name: kubectl
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              kubectl rollout restart daemonset/multus
+          restartPolicy: Never

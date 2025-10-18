@@ -100,7 +100,7 @@ spec:
                 print "    - " octets[1] "." octets[2] "." new_third "." new_fourth
               }') 
               EOF
-          restartPolicy: OnFailure
+          restartPolicy: Never
 ---
 apiVersion: v1
 kind: ServiceAccount
