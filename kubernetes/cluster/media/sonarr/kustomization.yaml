@@ -4,3 +4,4 @@ resources:
   - sonarr.yaml
   - ingress.yaml
   - secret.yaml
+  - volumes.yaml

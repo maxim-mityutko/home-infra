@@ -4,3 +4,4 @@ resources:
   - radarr.yaml
   - ingress.yaml
   - secret.yaml
+  - volumes.yaml

@@ -63,10 +63,9 @@ spec:
             - name: downloads
               mountPath: /downloads
       volumes:
-        # Config is managed through environment variables, using `emptyDir` 
-        # to avoid cover art redownload in case of pod crash.
         - name: sonarr-config
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: sonarr-config
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads
