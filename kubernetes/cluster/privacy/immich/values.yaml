@@ -147,7 +147,7 @@ machine-learning:
     cache:
       size: 10G
       type: persistentVolumeClaim
-      accessMode: ReadWriteMany
+      accessMode: ReadWriteOnce
       storageClass: openebs-hostpath
     render-device:
       type: hostPath
