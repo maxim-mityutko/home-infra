@@ -1,11 +1,5 @@
 # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
 # Ref: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
-# env: {}
-# envFrom:
-#   - configMapRef:
-#       name: immich
-#   - secretRef: 
-#       name: immich
 
 controllers:
   main:
