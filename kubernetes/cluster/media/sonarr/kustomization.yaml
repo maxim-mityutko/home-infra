@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - sonarr.yaml
   - ingress.yaml
-  - secrets.yaml
+  - secret.yaml
