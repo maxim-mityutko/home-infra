@@ -5,7 +5,7 @@ nodeSelector:
   # kubernetes.io/tpu: coral
 image:
   repository: ghcr.io/blakeblackshear/frigate
-  tag: 0.16.1
+  tag: 0.16.2
   # GPU: If Coral TPU is used `tensorrt` image is unnecessary
   # tag: 0.14.1-tensorrt
 env:
@@ -18,8 +18,6 @@ resources:
   requests:
     cpu: 100m
     memory: 100Mi
-  limits:
-    cpu: 500m
 shmSize: 1Gi
 
 # Hardware

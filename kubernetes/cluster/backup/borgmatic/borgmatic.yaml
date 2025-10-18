@@ -63,8 +63,6 @@ spec:
             - name: borg-k8s-pods
               mountPath: /mnt/k8s/pods
               readOnly: true # Read-Only is set on the PV as well
-      nodeSelector:
-        beta.kubernetes.io/arch: amd64
       volumes:
         - name: borgmatic-keyfiles
           persistentVolumeClaim:

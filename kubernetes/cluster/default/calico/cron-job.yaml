@@ -1,0 +1,27 @@
+# ================================================================================================
+# Daily restart of the Calico DaemonSet
+# ================================================================================================
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: calico-node-restart
+  namespace: kube-system
+spec:
+  schedule: "5 7 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: calico-node
+          containers:
+          - name: kubectl
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              kubectl rollout restart daemonset/calico-node
+          restartPolicy: Never

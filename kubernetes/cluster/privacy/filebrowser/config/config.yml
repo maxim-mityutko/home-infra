@@ -19,11 +19,11 @@ server:
       config:
         indexingIntervalMinutes: 0
         disableIndexing: false
-        maxWatchers: 0
-        neverWatchPaths: []
-        exclude:
+        conditionals:
           hidden: true
           ignoreZeroSizeFolders: false
+          rules:
+            - fileNames: ".DS_Store"
         defaultUserScope: /
         defaultEnabled: true
         createUserDir: false
@@ -32,11 +32,11 @@ server:
       config:
         indexingIntervalMinutes: 0
         disableIndexing: false
-        maxWatchers: 0
-        neverWatchPaths: []
-        exclude:
+        conditionals:
           hidden: true
           ignoreZeroSizeFolders: false
+          rules:
+            - fileNames: ".DS_Store"
         defaultUserScope: /
         defaultEnabled: true
         createUserDir: true

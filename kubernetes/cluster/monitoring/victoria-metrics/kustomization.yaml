@@ -11,11 +11,15 @@ helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring
       releaseName: victoria-metrics
-      version: 0.59.4
+      version: 0.61.6
       repo: https://victoriametrics.github.io/helm-charts/
       valuesInline:
         defaultDashboards:
           enabled: false
+        defaultRules:
+          groups:
+            vmalert:
+              create: false
         fullnameOverride: stack
         victoria-metrics-operator:
           enabled: true
@@ -31,6 +35,10 @@ helmCharts:
         grafana:
           enabled: true
           revisionHistoryLimit: 1
+          admin:
+            existingSecret: grafana
+            userKey: admin-user
+            passwordKey: admin-password
           sidecar:
             skipTlsVerify: true
             datasources:
@@ -67,6 +75,8 @@ helmCharts:
             # auth.anonymous:
             #   enabled: true
             #   org_role: Editor
+          readinessProbe:
+            initialDelaySeconds: 30
           ingress:
             enabled: true
             annotations:

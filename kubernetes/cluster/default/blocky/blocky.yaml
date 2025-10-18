@@ -24,7 +24,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: blocky
-          image: spx01/blocky:v0.26
+          image: ghcr.io/0xerr0r/blocky:v0.27.0
           args: 
             - --config 
             - ./config/
@@ -81,6 +81,3 @@ spec:
                     values:
                       - blocky
               topologyKey: kubernetes.io/hostname
-      # NOTE: Could not make L2Advertising of MetalLB work on the controlplane, moved everything to worker nodes
-      # nodeSelector:
-      #   node.kubernetes.io/microk8s-controlplane: microk8s-controlplane

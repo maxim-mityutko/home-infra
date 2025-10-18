@@ -1,0 +1,58 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: openebs
+helmCharts:
+  - name: openebs
+    namespace: openebs
+    releaseName: openebs
+    version: 4.3.3
+    repo: https://openebs.github.io/openebs
+    valuesInline:
+      openebs-crds:
+        csi:
+          volumeSnapshots:
+            enabled: false
+            keep: true
+      # Refer to https://github.com/openebs/dynamic-localpv-provisioner/blob/v4.2.0/deploy/helm/charts/values.yaml for complete set of values.
+      localpv-provisioner:
+        rbac:
+          create: true
+        localpv:
+          enabled: true
+          healthCheck:
+            initialDelaySeconds: 30
+            periodSeconds: 60
+          replicas: 1
+          enableLeaderElection: false
+          basePath: "/var/openebs/local"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 50Mi
+            limits:
+              cpu: 100m
+              memory: 75Mi
+          nodeSelector: {}
+        serviceAccount:
+          create: true
+        hostpathClass:
+          enabled: true
+          reclaimPolicy: Delete
+          isDefaultClass: false
+          # NOTE: If not specified, this defaults to the value of localpv.basePath.
+          basePath: ""
+        analytics:
+          enabled: false
+      engines:
+        local:
+          lvm:
+            enabled: false
+          zfs:
+            enabled: false
+        replicated:
+          mayastor:
+            enabled: false
+      loki:
+        enabled: false
+      alloy:
+        enabled: false
