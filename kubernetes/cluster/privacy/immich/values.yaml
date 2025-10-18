@@ -15,9 +15,7 @@ immich:
       existingClaim: immich-data
 
 # Dependencies
-postgresql:
-  enabled: false
-redis:
+valkey:
   enabled: false
 
 # Immich Components
