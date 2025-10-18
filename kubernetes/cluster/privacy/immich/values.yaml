@@ -92,16 +92,11 @@ server:
   persistence:
     # External Library
     external:
-      enabled: true
       existingClaim: immich-external
-      mountPath: /media/external
-      readOnly: true
-      path: /media/external
-      # globalMounts:
-      #   - path: /media/external
-      #     readOnly: true
+      globalMounts:
+        - path: /media/external
+          readOnly: true
     render-device:
-      enabled: true
       type: hostPath
       hostPath: /dev/dri/renderD128
       mountPath: /dev/dri/renderD128
@@ -147,7 +142,6 @@ machine-learning:
           kubernetes.io/node-size: large
   persistence:
     cache:
-      enabled: true
       size: 10Gi
       type: persistentVolumeClaim
       accessMode: ReadWriteMany
