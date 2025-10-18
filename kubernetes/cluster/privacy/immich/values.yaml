@@ -1,11 +1,40 @@
 # Ref: https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
 # Ref: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
-env: {}
-envFrom:
-  - configMapRef:
-      name: immich
-  - secretRef: 
-      name: immich
+
+controllers:
+  main:
+    revisionHistoryLimit: 2
+    containers:
+      main:
+        env:
+          DB_HOSTNAME:
+            valueFrom:
+              configMapKeyRef:
+                name: immich
+                key: DB_HOSTNAME
+          DB_DATABASE_NAME:
+            valueFrom:
+              secretKeyRef:
+                name: immich
+                key: DB_DATABASE_NAME
+          DB_USERNAME:
+            valueFrom:
+              secretKeyRef:
+                name: immich
+                key: DB_USERNAME
+          DB_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: immich
+                key: DB_PASSWORD
+          REDIS_HOSTNAME:
+            valueFrom:
+              configMapKeyRef:
+                name: immich
+                key: REDIS_HOSTNAME
+        envFrom:
+          - configMapRef:
+              name: immich
 
 immich:
   metrics:
@@ -15,9 +44,7 @@ immich:
       existingClaim: immich-data
 
 # Dependencies
-postgresql:
-  enabled: false
-redis:
+valkey:
   enabled: false
 
 # Immich Components
@@ -25,33 +52,49 @@ redis:
 # Ref: https://github.com/immich-app/immich-charts/pull/137
 server:
   enabled: true
-  image:
-    repository: ghcr.io/immich-app/immich-server
-    tag: v2.1.0
-  resources:
-    requests:
-      cpu: 200m
-      memory: 250Mi
-    limits:
-      cpu: 2000m
-      memory: 2Gi
+  controllers:
+    main:
+      containers:
+        main:
+          securityContext:
+            privileged: true # Required for iGPU access
+          image:
+            repository: ghcr.io/immich-app/immich-server
+            tag: v2.1.0 # Use <tag>-cuda for NVidia GPUs
+          resources:
+            requests:
+              cpu: 200m
+              memory: 250Mi
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+          probes:
+            liveness:
+              spec:
+                initialDelaySeconds: 90
+                periodSeconds: 30
+            readiness:
+              spec:
+                initialDelaySeconds: 30
+                periodSeconds: 30
+                failureThreshold: 5
+      pod:
+        securityContext:
+          supplementalGroups: 
+            - 993 # Required for iGPU access
+        nodeSelector:
+          kubernetes.io/gpu: intel
   persistence:
     # External Library
     external:
-      enabled: true
       existingClaim: immich-external
-      mountPath: /media/external
-      readOnly: true
-  probes:
-    liveness:
-      spec:
-        initialDelaySeconds: 90
-        periodSeconds: 30
-    readiness:
-      spec:
-        initialDelaySeconds: 30
-        periodSeconds: 30
-        failureThreshold: 5
+      globalMounts:
+        - path: /media/external
+          readOnly: true
+    render-device:
+      type: hostPath
+      hostPath: /dev/dri/renderD128
+      mountPath: /dev/dri/renderD128
   ingress:
     main:
       enabled: true
@@ -68,32 +111,45 @@ server:
 
 machine-learning:
   enabled: true
-  image:
-    repository: ghcr.io/immich-app/immich-machine-learning
-    tag: v2.1.0 # Use <tag>-cuda for NVidia GPUs
-  resources:
-    requests:
-      cpu: 100m
-      memory: 150Mi
-    limits:
-      cpu: 2000m
-      memory: 4Gi
-  probes:
-    liveness:
-      spec:
-        initialDelaySeconds: 90
-        periodSeconds: 30
-    readiness:
-      spec:
-        initialDelaySeconds: 30
-        periodSeconds: 30
-        failureThreshold: 5
+  controllers:
+    main:
+      containers:
+        main:
+          securityContext:
+            privileged: true # Required for iGPU access
+          image:
+            repository: ghcr.io/immich-app/immich-machine-learning
+            tag: v2.1.0-openvino # Use <tag>-cuda for NVidia GPUs
+          resources:
+            requests:
+              cpu: 100m
+              memory: 150Mi
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          probes:
+            liveness:
+              spec:
+                initialDelaySeconds: 90
+                periodSeconds: 30
+            readiness:
+              spec:
+                initialDelaySeconds: 30
+                periodSeconds: 30
+                failureThreshold: 5
+      pod:
+        securityContext:
+          supplementalGroups: 
+            - 993 # Required for iGPU access
+        nodeSelector:
+          kubernetes.io/gpu: intel
   persistence:
     cache:
-      enabled: true
-      size: 10Gi
-      type: pvc
-      accessMode: ReadWriteMany
-      storageClass: nfs-subdir
-  nodeSelector:
-    kubernetes.io/node-size: large
+      size: 10G
+      type: persistentVolumeClaim
+      accessMode: ReadWriteOnce
+      storageClass: openebs-hostpath
+    render-device:
+      type: hostPath
+      hostPath: /dev/dri/renderD128
+      mountPath: /dev/dri/renderD128
