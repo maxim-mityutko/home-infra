@@ -42,7 +42,7 @@ controllers:
                 name: immich
                 key: REDIS_HOSTNAME
         envFrom:
-          - configMapKeyRef:
+          - configMapRef:
             name: immich
 
 immich:
