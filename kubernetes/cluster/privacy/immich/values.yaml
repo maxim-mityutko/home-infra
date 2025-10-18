@@ -92,7 +92,7 @@ machine-learning:
     cache:
       enabled: true
       size: 10Gi
-      type: pvc
+      type: persistentVolumeClaim
       accessMode: ReadWriteMany
       storageClass: nfs-subdir
   nodeSelector:
