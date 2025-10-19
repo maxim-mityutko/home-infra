@@ -47,12 +47,13 @@ spec:
     storageClass: nfs-subdir
 
   # Ref: https://cloudnative-pg.io/documentation/current/wal_archiving/#plugin-based-architecture
-  # plugins:
-  #   - name: barman-cloud.cloudnative-pg.io
-  #     isWALArchiver: false
-  #     parameters:
-  #       serverName: cnpg-default-v2
-  #       barmanObjectName: cnpg-default-s3
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      enabled: false
+      isWALArchiver: false
+      parameters:
+        serverName: cnpg-default-v2
+        barmanObjectName: cnpg-default-s3
 
   # Ref: https://cloudnative-pg.io/documentation/current/instance_manager/
   startDelay: 120
