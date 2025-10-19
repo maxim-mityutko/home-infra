@@ -49,7 +49,7 @@ spec:
   # Ref: https://cloudnative-pg.io/documentation/current/wal_archiving/#plugin-based-architecture
   plugins:
     - name: barman-cloud.cloudnative-pg.io
-      isWALArchiver: true
+      isWALArchiver: false
       parameters:
         serverName: cnpg-default-v2
         barmanObjectName: cnpg-default-s3
@@ -84,10 +84,9 @@ spec:
     - name: cnpg-default-backup
       plugin:
         name: barman-cloud.cloudnative-pg.io
-        isWALArchiver: true
         parameters:
           barmanObjectName: cnpg-default-s3
-          serverName: cnpg-default
+          serverName: cnpg-default-v2
 
   # NOTE: keeping `bootstrap` section here for reference, refer to
   # CloudNativePG documentation for more details.
