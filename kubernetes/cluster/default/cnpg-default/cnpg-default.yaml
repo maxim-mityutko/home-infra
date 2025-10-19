@@ -48,10 +48,10 @@ spec:
 
   # Ref: https://cloudnative-pg.io/documentation/current/wal_archiving/#plugin-based-architecture
   plugins:
-  - name: barman-cloud.cloudnative-pg.io
-    isWALArchiver: false
-    parameters:
-      barmanObjectName: cnpg-default-s3
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: false
+      parameters:
+        barmanObjectName: cnpg-default-s3
 
   # Ref: https://cloudnative-pg.io/documentation/current/instance_manager/
   startDelay: 120
