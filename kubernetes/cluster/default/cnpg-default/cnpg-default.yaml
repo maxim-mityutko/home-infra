@@ -85,6 +85,7 @@ spec:
     - name: cnpg-default-backup
       plugin:
         name: barman-cloud.cloudnative-pg.io
+        isWALArchiver: false
         parameters:
           barmanObjectName: cnpg-default-barman
           serverName: cnpg-default
