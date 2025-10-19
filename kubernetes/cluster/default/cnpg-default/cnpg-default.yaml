@@ -5,7 +5,7 @@ metadata:
   # Ref: https://cloudnative-pg.io/documentation/current/labels_annotations/
   annotations:
     cnpg.io/skipWalArchiving: enabled
-    cnpg.io/skipEmptyWalArchiveCheck: true
+    cnpg.io/skipEmptyWalArchiveCheck: false
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.4
@@ -19,10 +19,11 @@ spec:
     parameters:
       timezone: "Etc/UTC"
       max_slot_wal_keep_size: 200MB
-      archive_timeout: 30min
+      archive_timeout: 10min   # Ref: https://postgresqlco.nf/doc/en/param/archive_timeout/
       log_min_messages: WARNING
-      wal_level: minimal    # Ref: https://postgresqlco.nf/doc/en/param/wal_level/
-      max_wal_senders: '0'  # Ref: https://postgresqlco.nf/doc/en/param/max_wal_senders/
+      wal_level: logical      # Ref: https://postgresqlco.nf/doc/en/param/wal_level/
+      # wal_level: minimal    # Ref: https://postgresqlco.nf/doc/en/param/wal_level/
+      # max_wal_senders: '0'  # Ref: https://postgresqlco.nf/doc/en/param/max_wal_senders/
 
   managed:
     # Ref: https://cloudnative-pg.io/documentation/current/service_management/
