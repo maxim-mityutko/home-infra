@@ -4,7 +4,7 @@ metadata:
   name: cnpg-default-backup
 spec:
   immediate: true
-  schedule: "0 0 2 * * SUN"
+  schedule: "0 0 2 * * *"
   backupOwnerReference: self
   cluster:
     name: cnpg-default
