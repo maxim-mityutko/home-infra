@@ -51,6 +51,7 @@ spec:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: false
       parameters:
+        serverName: cnpg-default-v2
         barmanObjectName: cnpg-default-s3
 
   # Ref: https://cloudnative-pg.io/documentation/current/instance_manager/
