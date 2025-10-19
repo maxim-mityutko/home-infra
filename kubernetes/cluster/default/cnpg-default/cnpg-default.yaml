@@ -4,7 +4,7 @@ metadata:
   name: cnpg-default
   # Ref: https://cloudnative-pg.io/documentation/current/labels_annotations/
   annotations:
-    # cnpg.io/skipWalArchiving: enabled
+    cnpg.io/skipWalArchiving: enabled
     # cnpg.io/skipEmptyWalArchiveCheck: false
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
@@ -23,7 +23,7 @@ spec:
       log_min_messages: WARNING
       wal_level: logical      # Ref: https://postgresqlco.nf/doc/en/param/wal_level/
       # wal_level: minimal    # Ref: https://postgresqlco.nf/doc/en/param/wal_level/
-      max_wal_senders: '2'  # Ref: https://postgresqlco.nf/doc/en/param/max_wal_senders/
+      # max_wal_senders: '0'  # Ref: https://postgresqlco.nf/doc/en/param/max_wal_senders/
 
   managed:
     # Ref: https://cloudnative-pg.io/documentation/current/service_management/
@@ -49,7 +49,7 @@ spec:
   # Ref: https://cloudnative-pg.io/documentation/current/wal_archiving/#plugin-based-architecture
   plugins:
     - name: barman-cloud.cloudnative-pg.io
-      isWALArchiver: true
+      isWALArchiver: false
       parameters:
         serverName: cnpg-default-v2
         barmanObjectName: cnpg-default-s3
