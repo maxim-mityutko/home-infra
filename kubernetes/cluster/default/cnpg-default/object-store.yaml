@@ -1,0 +1,21 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: cnpg-default-s3
+spec:
+  retentionPolicy: 7d
+  configuration:
+    destinationPath: s3://cnpg-backup/
+    endpointURL: http://garage.garage.svc.cluster.local:3900
+    serverName: cnpg-default
+    s3Credentials:
+      accessKeyId:
+        name: cnpg-backup-secret
+        key: username
+      secretAccessKey:
+        name: cnpg-backup-secret
+        key: password
+    data:
+      compression: bzip2
+    wal:
+      compression: bzip2

@@ -8,3 +8,6 @@ spec:
   backupOwnerReference: self
   cluster:
     name: cnpg-default
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io

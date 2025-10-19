@@ -7,3 +7,4 @@ resources:
   # NOTE: re-enable if needs to be exposed via LoadBalancer
   # - service.yaml
   - backup.yaml
+  - object-store.yaml

@@ -46,24 +46,12 @@ spec:
     # resizeInUseVolumes: true
     storageClass: nfs-subdir
 
-  # Ref: https://cloudnative-pg.io/documentation/current/backup_barmanobjectstore/
-  backup:
-    target: primary
-    retentionPolicy: 7d
-    barmanObjectStore:
-      destinationPath: "s3://cnpg-backup/"
-      endpointURL: "http://garage.garage.svc.cluster.local:3900"
-      s3Credentials:
-        accessKeyId:
-          name: cnpg-backup-secret
-          key: username
-        secretAccessKey:
-          name: cnpg-backup-secret
-          key: password
-      data:
-        compression: bzip2
-      wal:
-        compression: bzip2
+  # Ref: https://cloudnative-pg.io/documentation/current/wal_archiving/#plugin-based-architecture
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: cnpg-default-s3
 
   # Ref: https://cloudnative-pg.io/documentation/current/instance_manager/
   startDelay: 120
@@ -86,13 +74,19 @@ spec:
           - matchExpressions:
             - key: kubernetes.io/local-storage
               operator: Exists
+
+  # Ref: https://cloudnative-pg.io/plugin-barman-cloud/docs/concepts/#recovery-of-a-postgres-cluster
   bootstrap:
-    # Ref: https://cloudnative-pg.io/documentation/current/recovery/#recovery-from-a-backup-object
     recovery:
-      backup:
-        name: cnpg-default-backup
-      # recoveryTarget:
-      #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR    
+      source: cnpg-default-backup
+  externalClusters:
+    - name: cnpg-default-backup
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        isWALArchiver: true
+        parameters:
+          barmanObjectName: cnpg-default-s3
+          serverName: cnpg-default
 
   # NOTE: keeping `bootstrap` section here for reference, refer to
   # CloudNativePG documentation for more details.
