@@ -7,7 +7,6 @@ spec:
   configuration:
     destinationPath: s3://cnpg-backup/
     endpointURL: http://garage.garage.svc.cluster.local:3900
-    serverName: cnpg-default-v2
     s3Credentials:
       accessKeyId:
         name: cnpg-backup-secret
