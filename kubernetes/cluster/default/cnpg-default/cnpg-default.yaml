@@ -77,17 +77,17 @@ spec:
               operator: Exists
 
   # Ref: https://cloudnative-pg.io/plugin-barman-cloud/docs/concepts/#recovery-of-a-postgres-cluster
-  bootstrap:
-    recovery:
-      source: cnpg-default-backup
-  externalClusters:
-    - name: cnpg-default-backup
-      plugin:
-        name: barman-cloud.cloudnative-pg.io
-        isWALArchiver: true
-        parameters:
-          barmanObjectName: cnpg-default-s3
-          serverName: cnpg-default
+  # bootstrap:
+  #   recovery:
+  #     source: cnpg-default-backup
+  # externalClusters:
+  #   - name: cnpg-default-backup
+  #     plugin:
+  #       name: barman-cloud.cloudnative-pg.io
+  #       isWALArchiver: true
+  #       parameters:
+  #         barmanObjectName: cnpg-default-s3
+  #         serverName: cnpg-default
 
   # NOTE: keeping `bootstrap` section here for reference, refer to
   # CloudNativePG documentation for more details.
