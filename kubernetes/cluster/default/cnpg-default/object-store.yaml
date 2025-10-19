@@ -1,18 +1,18 @@
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
-  name: cnpg-default-s3
+  name: cnpg-default-barman
 spec:
-  retentionPolicy: 7d
+  retentionPolicy: 1d
   configuration:
     destinationPath: s3://cnpg-backup/
-    endpointURL: http://garage.garage.svc.cluster.local:3900
+    endpointURL: http://minio.minio.svc.cluster.local
     s3Credentials:
       accessKeyId:
-        name: cnpg-backup-secret
+        name: cnpg-default-secret
         key: username
       secretAccessKey:
-        name: cnpg-backup-secret
+        name: cnpg-default-secret
         key: password
     data:
       compression: bzip2

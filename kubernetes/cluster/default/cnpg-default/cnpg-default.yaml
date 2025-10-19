@@ -49,11 +49,11 @@ spec:
   # Ref: https://cloudnative-pg.io/documentation/current/wal_archiving/#plugin-based-architecture
   plugins:
     - name: barman-cloud.cloudnative-pg.io
-      enabled: false
+      enabled: true
       isWALArchiver: false
       parameters:
-        serverName: cnpg-default-v2
-        barmanObjectName: cnpg-default-s3
+        serverName: cnpg-default
+        barmanObjectName: cnpg-default-barman
 
   # Ref: https://cloudnative-pg.io/documentation/current/instance_manager/
   startDelay: 120
@@ -86,8 +86,8 @@ spec:
       plugin:
         name: barman-cloud.cloudnative-pg.io
         parameters:
-          barmanObjectName: cnpg-default-s3
-          serverName: cnpg-default-v2
+          barmanObjectName: cnpg-default-barman
+          serverName: cnpg-default
 
   # NOTE: keeping `bootstrap` section here for reference, refer to
   # CloudNativePG documentation for more details.
