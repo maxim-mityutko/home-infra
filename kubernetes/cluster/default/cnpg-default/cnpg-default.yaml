@@ -4,7 +4,7 @@ metadata:
   name: cnpg-default
   # Ref: https://cloudnative-pg.io/documentation/current/labels_annotations/
   annotations:
-    cnpg.io/skipWalArchiving: enabled
+    # cnpg.io/skipWalArchiving: enabled
     cnpg.io/skipEmptyWalArchiveCheck: false
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
