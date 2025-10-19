@@ -49,7 +49,7 @@ spec:
   # Ref: https://cloudnative-pg.io/documentation/current/wal_archiving/#plugin-based-architecture
   plugins:
   - name: barman-cloud.cloudnative-pg.io
-    isWALArchiver: true
+    isWALArchiver: false
     parameters:
       barmanObjectName: cnpg-default-s3
 
