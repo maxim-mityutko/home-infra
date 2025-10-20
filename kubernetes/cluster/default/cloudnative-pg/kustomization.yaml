@@ -5,8 +5,6 @@ resources:
   - pod-scrape.yaml
   - secret.yaml
   - storage-class.yaml
-  # Barman Cloud CNPG-I plugin
-  # - https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.7.0/manifest.yaml
 helmCharts:
     - name: cloudnative-pg
       namespace: default

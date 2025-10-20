@@ -102,7 +102,9 @@ spec:
 #   - cnpg_collector_first_recoverability_point
 #   - cnpg_collector_last_available_backup_timestamp
 #   - cnpg_collector_last_failed_backup_timestamp
-# More details: https://github.com/cloudnative-pg/plugin-barman-cloud/issues/380#issuecomment-3166059945
+# Refs: 
+#   - https://github.com/cloudnative-pg/plugin-barman-cloud/issues/380#issuecomment-3166059945
+#   - https://github.com/cloudnative-pg/grafana-dashboards/issues/37
 # The expectation however is that new `barman_cloud_cloudnative_pg_io_` metrics should replace those,
 # however these metrics are not available right now and the issue is under the investiagation.
 # More over Grafana dashboards need to be updated as well to accomodate that change.
