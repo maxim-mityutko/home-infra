@@ -1,3 +1,6 @@
+# Container: https://github.com/project-zot/zot/pkgs/container/zot
+# Helm: https://github.com/project-zot/helm-charts/blob/main/charts/zot/values.yaml
+# Docs: https://zotregistry.dev
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -22,6 +25,7 @@ helmCharts:
         annotations:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
+          nginx.ingress.kubernetes.io/proxy-body-size: '0'
         className: public
         hosts:
           - host: cr.brhd.io
