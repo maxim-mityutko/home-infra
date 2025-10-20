@@ -5,7 +5,6 @@ metadata:
   # Ref: https://cloudnative-pg.io/documentation/current/labels_annotations/
   annotations:
     cnpg.io/skipWalArchiving: enabled
-    # cnpg.io/skipEmptyWalArchiveCheck: false
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.4
@@ -43,7 +42,6 @@ spec:
   
   storage:
     size: 25Gi
-    # resizeInUseVolumes: true
     storageClass: nfs-subdir
 
   # Ref: https://cloudnative-pg.io/documentation/current/wal_archiving/#plugin-based-architecture
@@ -85,7 +83,6 @@ spec:
     - name: cnpg-default-backup
       plugin:
         name: barman-cloud.cloudnative-pg.io
-        isWALArchiver: false
         parameters:
           barmanObjectName: cnpg-default-barman
           serverName: cnpg-default

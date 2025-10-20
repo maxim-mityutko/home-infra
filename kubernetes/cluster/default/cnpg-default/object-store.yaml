@@ -3,7 +3,16 @@ kind: ObjectStore
 metadata:
   name: cnpg-default-barman
 spec:
-  retentionPolicy: 1d
+  retentionPolicy: 7d
+  instanceSidecarConfiguration:
+    retentionPolicyIntervalSeconds: 21600 # 6 hours
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 100m
+      limits:
+        memory: 500Mi
+        cpu: 2
   configuration:
     destinationPath: s3://cnpg-backup/
     endpointURL: http://minio.minio.svc.cluster.local
