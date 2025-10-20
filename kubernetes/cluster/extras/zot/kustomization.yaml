@@ -1,0 +1,54 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: extras
+resources:
+  - dns-endpoint.yaml
+  - config.yaml
+helmCharts:
+  - name: zot
+    namespace: extras
+    releaseName: zot
+    version: v2.1.9
+    repo: http://zotregistry.dev/helm-charts
+    valuesInline:
+      serviceAccount:
+        create: true
+      serviceHeadless:
+        enabled: false
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+        hosts:
+          - host: registry.brhd.io
+            paths:
+              - path: /
+        tls: []
+      startupProbe:
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        failureThreshold: 3
+      mountConfig: true
+      configFiles:
+        config.json: |-
+          {
+            "storage": { "rootDirectory": "/var/lib/registry" },
+            "http": { "address": "0.0.0.0", "port": "5000" },
+            "log": { "level": "debug" }
+          }
+      persistence: true
+      pvc:
+        create: true
+        accessModes: ["ReadWriteOnce"]
+        storage: 5Gi
+        storageClassName: openebs-hostpath
+      # List of environment variables to set on the container
+      env: []
+      strategy:
+        type: RollingUpdate
+      metrics:
+        enabled: false
+        serviceMonitor:
+          enabled: false
