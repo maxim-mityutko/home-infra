@@ -7,7 +7,7 @@ helmCharts:
   - name: zot
     namespace: extras
     releaseName: zot
-    version: v2.1.9
+    version: 2.1.9
     repo: http://zotregistry.dev/helm-charts
     valuesInline:
       serviceAccount:
