@@ -6,7 +6,7 @@ resources:
   - secret.yaml
   - storage-class.yaml
   # Barman Cloud CNPG-I plugin
-  - https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.7.0/manifest.yaml
+  # - https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.7.0/manifest.yaml
 helmCharts:
     - name: cloudnative-pg
       namespace: default
@@ -39,3 +39,20 @@ helmCharts:
         tolerations:
           - key: "node.kubernetes.io/unschedulable"
             operator: Exists
+    # Barman Cloud CNPG-I plugin
+    - name: plugin-barman-cloud
+      namespace: default
+      releaseName: plugin-barman-cloud
+      version: 0.2.0
+      repo: https://cloudnative-pg.github.io/charts
+      valuesInline:
+        crds:
+          create: true
+        serviceAccount:
+          create: true
+        resources:
+          requests:
+            memory: 25Mi
+            cpu: 50m
+          limits:
+            memory: 50Mi
