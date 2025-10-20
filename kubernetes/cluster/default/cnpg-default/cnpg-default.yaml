@@ -96,32 +96,11 @@ spec:
   #     import:
   #       type: monolith
   #       databases:
-  #         - bazarr_main
-  #         - gitea
-  #         - hass
-  #         - invidious
-  #         - jellyseerr
-  #         - lidarr_log
-  #         - lidarr_main
-  #         - miniflux
-  #         - prowlarr_log
-  #         - prowlarr_main
-  #         - radarr_log
-  #         - radarr_main
-  #         - readarr_cache
-  #         - readarr_main
-  #         - readarr_log
-  #         - sonarr_log
-  #         - sonarr_main
-  #         - speedtest_tracker
+  #         - db_1
+  #         - db_2
   #       roles:
-  #         - arr
-  #         - gitea
-  #         - hass
-  #         - invidious
-  #         - jellyseerr
-  #         - miniflux
-  #         - speedtest
+  #         - role_1
+  #         - role_2
   #       source:
   #         externalCluster: postgres-default-cluster
   # externalClusters:
