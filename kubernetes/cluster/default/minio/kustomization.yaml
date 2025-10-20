@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - dns-endpoint.yaml
   - secret.yaml
+  - anon-ingress.yaml
 helmCharts:
   # Ref: https://github.com/minio/operator/tree/master/helm/operator
   - name: operator
@@ -70,6 +71,7 @@ helmCharts:
         buckets:
           - name: cnpg-backup
           - name: sandbox
+          - name: cdn
         # Each secret should specify the ``CONSOLE_ACCESS_KEY`` and ``CONSOLE_SECRET_KEY`` as the access key and secret key for that user
         users:
           - name: minio-cnpg-user

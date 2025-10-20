@@ -1,0 +1,41 @@
+# =============================================================================
+# This ingress endpoint is used to serve content from the buckets without any
+# authentication. Anonymous read-only access needs to be configured on the full
+# bucket or specific path.
+# =============================================================================
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-cdn
+  namespace: minio
+  labels:
+    app.kubernetes.io/name: minio-cdn
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: cdn.brhd.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: minio
+                port:
+                  name: http-minio
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: cdn.brhd.io
+  namespace: minio
+spec:
+  endpoints:
+    - dnsName: cdn.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
