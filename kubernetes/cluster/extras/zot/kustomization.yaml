@@ -45,7 +45,26 @@ helmCharts:
             "log": { "level": "debug" },
             "extensions": {
               "search": {"enable": true},
-              "ui": {"enable": true}
+              "ui": {"enable": true},
+              "mgmt": { "enable": true },
+              "sync": {
+                "enable": true,
+                "registries": [
+                  {
+                    "urls": [
+                      "https://index.docker.io",
+                      "https://ghcr.io"
+                    ],
+                    "tlsVerify": true,
+                    "onDemand": true,
+                    "maxRetries": 3,
+                    "retryDelay": "15m"
+                  }
+                ]
+              },
+              "scrub": {
+                "interval": "24h"
+              }
             }
           }
       persistence: true
