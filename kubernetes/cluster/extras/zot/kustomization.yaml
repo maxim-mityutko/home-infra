@@ -38,7 +38,8 @@ helmCharts:
           {
             "storage": { "rootDirectory": "/var/lib/registry" },
             "http": { "address": "0.0.0.0", "port": "5000" },
-            "log": { "level": "debug" }
+            "log": { "level": "debug" },
+            "ui": { "enable": true }
           }
       persistence: true
       pvc:
