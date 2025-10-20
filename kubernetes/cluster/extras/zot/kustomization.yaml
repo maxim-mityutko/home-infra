@@ -10,6 +10,8 @@ helmCharts:
     version: 0.1.87
     repo: http://zotregistry.dev/helm-charts
     valuesInline:
+      image:
+        repository: ghcr.io/project-zot/zot
       serviceAccount:
         create: true
       serviceHeadless:
@@ -19,6 +21,7 @@ helmCharts:
         annotations:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
+        ingressClassName: public
         hosts:
           - host: registry.brhd.io
             paths:
