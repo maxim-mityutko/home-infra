@@ -108,6 +108,7 @@ spec:
 # The expectation however is that new `barman_cloud_cloudnative_pg_io_` metrics should replace those,
 # however these metrics are not available right now and the issue is under the investiagation.
 # More over Grafana dashboards need to be updated as well to accomodate that change.
+# TODO: fix metrics / rule and dashboards
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMRule
 metadata:
