@@ -36,10 +36,36 @@ helmCharts:
         failureThreshold: 3
       mountConfig: true
       configFiles:
+        # Refs:
+        #   Authorization: https://zotregistry.dev/latest/articles/authn-authz/
+        #   OIDC: https://zotregistry.dev/latest/articles/authn-authz/#using-openidoauth2-when-zot-is-behind-a-proxy-or-load-balancer
         config.json: |-
           {
             "storage": { "rootDirectory": "/var/lib/registry" },
-            "http": { "address": "0.0.0.0", "port": "5000" },
+            "http": { 
+              "address": "0.0.0.0", 
+              "port": "5000",
+              "externalUrl": "https://registry.brhd.io",
+              "auth": {
+                "openid": {
+                  "providers": {
+                    "oidc": {
+                      "issuer": "https://auth.brhd.io/application/o/zot/",
+                      "credentialsFile": "/secrets/oidc.json"
+                      "scopes": ["openid", "profile", "email"]
+                    }
+                  }
+                }
+              },
+              "accessControl": {
+                "repositories": {
+                  "**": {
+                    "defaultPolicy": ["read", "create", "update", "delete"],
+                    "anonymousPolicy": ["read"]
+                  }
+                }
+              }
+            },
             "log": { "level": "warn" },
             "extensions": {
               "search": {"enable": true},
@@ -84,6 +110,9 @@ helmCharts:
               }
             }
           }
+      externalSecrets:
+        - secretName: zot-oidc
+          mountPath: /secrets/
       persistence: true
       pvc:
         create: true
