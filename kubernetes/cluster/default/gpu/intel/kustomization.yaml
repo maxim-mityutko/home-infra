@@ -23,3 +23,12 @@ helmCharts:
       requests:
         cpu: 100m
         memory: 100Mi
+  - name: intel-gpu-device-plugin
+    namespace: gpu
+    releaseName: intel-device-plugins-gpu
+    version: 03.34.0
+    repo: https://intel.github.io/helm-charts/
+    valuesInline:
+      nodeSelector:
+        # intel.feature.node.kubernetes.io/gpu: 'true'
+        kubernetes.io/gpu: intel
