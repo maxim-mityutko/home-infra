@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: extras
 resources:
   - dns-endpoint.yaml
+  - secret.yaml
 helmCharts:
   - name: zot
     namespace: extras
