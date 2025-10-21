@@ -23,7 +23,7 @@ helmCharts:
       requests:
         cpu: 100m
         memory: 100Mi
-  - name: intel-gpu-device-plugin
+  - name: intel-device-plugins-gpu
     namespace: gpu
     releaseName: intel-device-plugins-gpu
     version: 0.34.0
