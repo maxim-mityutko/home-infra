@@ -52,7 +52,7 @@ helmCharts:
                   "providers": {
                     "oidc": {
                       "issuer": "https://auth.brhd.io/application/o/zot/",
-                      "credentialsFile": "/secrets/oidc.json",
+                      "credentialsFile": "secrets/oidc.json",
                       "scopes": ["openid", "profile", "email"]
                     }
                   }
