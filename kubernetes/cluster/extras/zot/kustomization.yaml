@@ -26,7 +26,7 @@ helmCharts:
           nginx.ingress.kubernetes.io/proxy-body-size: '0'
         className: public
         hosts:
-          - host: cr.brhd.io
+          - host: registry.brhd.io
             paths:
               - path: /
         tls: []
@@ -91,7 +91,6 @@ helmCharts:
         accessModes: ["ReadWriteOnce"]
         storage: 5Gi
         storageClassName: openebs-hostpath
-      # List of environment variables to set on the container
       env: []
       strategy:
         type: RollingUpdate

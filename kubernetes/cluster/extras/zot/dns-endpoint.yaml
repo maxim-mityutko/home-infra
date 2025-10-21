@@ -1,12 +1,13 @@
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: cr.brhd.io
+  name: registry.brhd.io
   namespace: extras
 spec:
   endpoints:
-    - dnsName: cr.brhd.io
+    - dnsName: registry.brhd.io
       recordTTL: 86400
       recordType: CNAME
       targets:
         - casa.brhd.io
+        - forge.brhd.io
