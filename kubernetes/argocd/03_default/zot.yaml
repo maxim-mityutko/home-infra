@@ -6,10 +6,10 @@ metadata:
 spec:
   destination:
     name: ''
-    namespace: extras
+    namespace: default
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/extras/zot
+    path: kubernetes/cluster/default/zot
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default

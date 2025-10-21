@@ -2,7 +2,7 @@ apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: registry.brhd.io
-  namespace: extras
+  namespace: default
 spec:
   endpoints:
     - dnsName: registry.brhd.io
