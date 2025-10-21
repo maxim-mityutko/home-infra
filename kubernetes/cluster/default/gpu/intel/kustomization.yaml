@@ -3,10 +3,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: gpu
 resources:
-  - https://raw.githubusercontent.com/intel/intel-device-plugins-for-kubernetes/refs/tags/v0.32.0/deployments/nfd/
-  - https://raw.githubusercontent.com/intel/intel-device-plugins-for-kubernetes/refs/tags/v0.32.0/deployments/nfd/overlays/node-feature-rules/
   - https://raw.githubusercontent.com/intel/helm-charts/refs/tags/intel-device-plugins-operator-0.32.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
 helmCharts:
+  - name: nfd
+    namespace: gpu
+    releaseName: node-feature-discovery
+    version: 0.16.4
+    repo: https://kubernetes-sigs.github.io/node-feature-discovery/charts
   - name: intel-device-plugins-operator
     namespace: gpu
     releaseName: intel-device-plugins-operator
@@ -31,6 +34,7 @@ helmCharts:
     version: 0.32.0
     repo: https://intel.github.io/helm-charts/
     valuesInline:
-      nodeSelector:
-        # intel.feature.node.kubernetes.io/gpu: 'true'
-        kubernetes.io/gpu: intel
+      nodeFeatureRule: true
+      # nodeSelector:
+      #   # intel.feature.node.kubernetes.io/gpu: 'true'
+      #   kubernetes.io/gpu: intel
