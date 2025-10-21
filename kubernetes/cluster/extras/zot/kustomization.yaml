@@ -44,7 +44,6 @@ helmCharts:
             "extensions": {
               "search": {"enable": true},
               "ui": {"enable": true},
-              "mgmt": { "enable": true },
               "sync": {
                 "enable": true,
                 "registries": [
