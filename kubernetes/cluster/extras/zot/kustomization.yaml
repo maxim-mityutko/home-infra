@@ -1,6 +1,3 @@
-# Container: https://github.com/project-zot/zot/pkgs/container/zot
-# Helm: https://github.com/project-zot/helm-charts/blob/main/charts/zot/values.yaml
-# Docs: https://zotregistry.dev
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -15,6 +12,7 @@ helmCharts:
     repo: http://zotregistry.dev/helm-charts
     valuesInline:
       image:
+        # Override repo path to get access to different image architectures
         repository: ghcr.io/project-zot/zot
       serviceAccount:
         create: true
