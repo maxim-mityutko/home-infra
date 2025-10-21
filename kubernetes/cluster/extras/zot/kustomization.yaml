@@ -1,6 +1,7 @@
 # Container: https://github.com/project-zot/zot/pkgs/container/zot
 # Helm: https://github.com/project-zot/helm-charts/blob/main/charts/zot/values.yaml
 # Docs: https://zotregistry.dev
+# TODO: add revision history limit
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -51,24 +52,32 @@ helmCharts:
                 "enable": true,
                 "registries": [
                   {
-                    "urls": ["https://ghcr.io"],
-                    "content": [
-                      {
-                        "prefix": "**", 
-                        "destination": "/ghcr.io"
-                      }
-                    ],
+                    "urls": ["https://index.docker.io"],
+                    "content": [{"prefix": "**", "destination": "/docker.io"}],
                     "onDemand": true,
                     "tlsVerify": true
                   },
                   {
-                    "urls": ["https://docker.io"],
-                    "content": [
-                      {
-                        "prefix": "**", 
-                        "destination": "/docker.io"
-                      }
-                    ],
+                    "urls": ["https://ghcr.io"],
+                    "content": [{"prefix": "**", "destination": "/ghcr.io"}],
+                    "onDemand": true,
+                    "tlsVerify": true
+                  },
+                  {
+                    "urls": ["https://quay.io"],
+                    "content": [{"prefix": "**", "destination": "/quay.io"}],
+                    "onDemand": true,
+                    "tlsVerify": true
+                  },
+                  {
+                    "urls": ["https://gcr.io"],
+                    "content": [{"prefix": "**", "destination": "/gcr.io"}],
+                    "onDemand": true,
+                    "tlsVerify": true
+                  },
+                  {
+                    "urls": ["https://registry.k8s.io"],
+                    "content": [{"prefix": "**", "destination": "/k8s.io"}],
                     "onDemand": true,
                     "tlsVerify": true
                   }
