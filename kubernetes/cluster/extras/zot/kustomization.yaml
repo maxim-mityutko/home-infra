@@ -102,3 +102,5 @@ helmCharts:
         enabled: false
         serviceMonitor:
           enabled: false
+patches:
+  - path: patch.yaml
