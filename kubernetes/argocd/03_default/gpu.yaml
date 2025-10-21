@@ -8,7 +8,7 @@ spec:
     namespace: gpu
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/default/gpu
+    path: kubernetes/cluster/default/gpu/intel
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
