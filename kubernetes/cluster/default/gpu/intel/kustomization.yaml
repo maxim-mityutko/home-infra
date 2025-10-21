@@ -1,9 +1,14 @@
+# Ref: https://github.com/intel/helm-charts/blob/intel-device-plugins-gpu-0.32.0/charts/gpu-device-plugin/README.md
+# Ref: https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.32.0/INSTALL.md
+# Ref: https://github.com/intel/intel-device-plugins-for-kubernetes/tree/v0.32.0/deployments/nfd
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: gpu
 resources:
   - https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/refs/tags/v0.16.4/deployment/helm/node-feature-discovery/crds/nfd-api-crds.yaml
+  - https://raw.githubusercontent.com/intel/intel-device-plugins-for-kubernetes/refs/tags/v0.32.0/deployments/nfd/overlays/node-feature-rules/node-feature-rules.yaml
+  - https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.32.0/deployments/nfd/overlays/node-feature-rules/platform-labeling-rules.yaml
   - https://raw.githubusercontent.com/intel/helm-charts/refs/tags/intel-device-plugins-operator-0.32.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
 helmCharts:
   - name: node-feature-discovery
