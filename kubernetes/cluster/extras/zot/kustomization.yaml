@@ -34,7 +34,7 @@ helmCharts:
               - path: /
         tls: []
       startupProbe:
-        initialDelaySeconds: 30
+        initialDelaySeconds: 10
         periodSeconds: 10
         failureThreshold: 3
       mountConfig: true
