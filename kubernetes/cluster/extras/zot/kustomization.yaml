@@ -112,7 +112,7 @@ helmCharts:
           }
       externalSecrets:
         - secretName: zot-oidc
-          mountPath: /secrets/
+          mountPath: /secrets
       persistence: true
       pvc:
         create: true
