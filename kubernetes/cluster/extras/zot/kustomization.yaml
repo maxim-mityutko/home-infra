@@ -1,7 +1,6 @@
 # Container: https://github.com/project-zot/zot/pkgs/container/zot
 # Helm: https://github.com/project-zot/helm-charts/blob/main/charts/zot/values.yaml
 # Docs: https://zotregistry.dev
-# TODO: add revision history limit
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
