@@ -5,7 +5,7 @@ namespace: gpu
 resources:
   - https://raw.githubusercontent.com/intel/helm-charts/refs/tags/intel-device-plugins-operator-0.32.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
 helmCharts:
-  - name: nfd
+  - name: node-feature-discovery
     namespace: gpu
     releaseName: node-feature-discovery
     version: 0.16.4
