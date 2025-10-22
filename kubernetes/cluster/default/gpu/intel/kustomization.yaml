@@ -7,7 +7,12 @@
 # Ref: https://github.com/intel/intel-device-plugins-for-kubernetes/blob/a8b11406e375c8c41c70eaa73898175e287691b1/demo/intelgpu-job.yaml
 # NOTE: https://intel.github.io/intel-device-plugins-for-kubernetes/cmd/gpu_plugin/README.html#running-gpu-plugin-as-non-root
 # ================================================================================================
-
+# Charts:
+#   - Intel Device Plugins Operator:
+#         https://github.com/intel/helm-charts/blob/intel-device-plugins-operator-0.32.1/charts/device-plugin-operator/README.md
+# Note:
+#   - Both operator and GPU plugin only support amd64 architecture
+#
 # Documentation:
 #   - Supported Kubernetes Versions: https://intel.github.io/intel-device-plugins-for-kubernetes/README.html#supported-kubernetes-versions
 # ================================================================================================
@@ -25,21 +30,22 @@ helmCharts:
   - name: intel-device-plugins-operator
     namespace: gpu
     releaseName: intel-device-plugins-operator
-    version: 0.32.0
+    version: 0.32.1
     repo: https://intel.github.io/helm-charts
     valuesInline:
       manager:
+        image:
+          hub: registry.brhd.io/docker.io/intel
         devices:
           gpu: true
       nodeSelector:
         kubernetes.io/arch: amd64
       resources:
       limits:
-        cpu: 100m
-        memory: 120Mi
-      requests:
-        cpu: 100m
         memory: 100Mi
+      requests:
+        cpu: 5m
+        memory: 50Mi
   - name: intel-device-plugins-gpu
     namespace: gpu
     releaseName: intel-device-plugins-gpu
