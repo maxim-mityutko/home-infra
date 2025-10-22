@@ -4,11 +4,11 @@
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard",
   "registryAliases": {
-    "registry.brhd.io/docker.io": "https://index.docker.io",
-    "registry.brhd.io/ghcr.io": "https://ghcr.io",
-    "registry.brhd.io/quay.io": "https://quay.io",
-    "registry.brhd.io/gcr.io": "https://gcr.io",
-    "registry.brhd.io/k8s.io": "https://registry.k8s.io"
+    "registry.brhd.io/docker.io": "index.docker.io",
+    "registry.brhd.io/ghcr.io": "ghcr.io",
+    "registry.brhd.io/quay.io": "quay.io",
+    "registry.brhd.io/gcr.io": "gcr.io",
+    "registry.brhd.io/k8s.io": "registry.k8s.io"
   },
   "kubernetes": {
     "managerFilePatterns": [
