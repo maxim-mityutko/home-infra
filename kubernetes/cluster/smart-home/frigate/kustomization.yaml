@@ -16,5 +16,5 @@ helmCharts:
     version: 7.8.0
     repo: https://blakeblackshear.github.io/blakeshome-charts/
     valuesFile: values.yaml
-patches:
-  - path: patch.yaml  # Patch is required to enable Intel iGPU within the container for hardware decoding
+# patches:
+  # - path: patch.yaml  # Patch is required to enable Intel iGPU within the container for hardware decoding
