@@ -59,7 +59,7 @@ helmCharts:
   - name: intel-device-plugins-gpu
     namespace: gpu
     releaseName: intel-device-plugins-gpu
-    version: 0.32.1
+    version: 0.32.0
     repo: https://intel.github.io/helm-charts/
     valuesInline:
       name: i915
