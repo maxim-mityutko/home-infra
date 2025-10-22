@@ -45,7 +45,7 @@ helmCharts:
     repo: https://intel.github.io/helm-charts/
     valuesInline:
       nodeFeatureRule: true
-      enableMonitoring: false
+      enableMonitoring: true
       # nodeSelector:
       #   # intel.feature.node.kubernetes.io/gpu: 'true'
       #   kubernetes.io/gpu: intel
