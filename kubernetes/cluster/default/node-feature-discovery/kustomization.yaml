@@ -7,7 +7,7 @@ helmCharts:
     namespace: kube-system
     releaseName: node-feature-discovery
     version: 0.18.2
-    repo: oci://registry.brhd.io/k8s.io/nfd/charts/node-feature-discovery
+    repo: http://registry.brhd.io/k8s.io/nfd/charts/node-feature-discovery
     valuesInline:
       featureGates:
         NodeFeatureAPI: true

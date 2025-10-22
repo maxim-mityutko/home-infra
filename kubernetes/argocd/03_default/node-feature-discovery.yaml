@@ -12,3 +12,7 @@ spec:
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
