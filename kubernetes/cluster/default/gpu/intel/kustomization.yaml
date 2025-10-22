@@ -48,6 +48,7 @@ helmCharts:
     valuesInline:
       nodeFeatureRule: true
       enableMonitoring: true
+      sharedDevNum: 10
       # nodeSelector:
       #   # intel.feature.node.kubernetes.io/gpu: 'true'
       #   kubernetes.io/gpu: intel
