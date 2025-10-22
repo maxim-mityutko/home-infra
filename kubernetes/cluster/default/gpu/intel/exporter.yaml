@@ -1,6 +1,10 @@
 # Ref: https://github.com/onedr0p/intel-gpu-exporter
 # Ref: https://grafana.com/grafana/dashboards/23251-intel-gpu-metrics/
-# Ref: Other option https://hub.docker.com/r/intel/xpumanager (need to assess resource requirements) / https://github.com/intel/xpumanager/tree/master/deployment
+
+# NOTE: [Intel XPU Manager](https://github.com/intel/xpumanager/) can be potentially relelvant 
+# for Arc B-series cards:
+#   - Repo: https://github.com/intel/xpumanager/blob/v1.3.3/deployment/README.md
+#   - Image: https://hub.docker.com/r/intel/xpumanager
 ---
 apiVersion: apps/v1
 kind: Deployment
