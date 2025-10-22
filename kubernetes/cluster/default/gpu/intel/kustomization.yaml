@@ -1,30 +1,40 @@
-# Ref: https://github.com/intel/helm-charts/blob/intel-device-plugins-gpu-0.32.0/charts/gpu-device-plugin/README.md
-# Ref: https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.32.0/INSTALL.md
-# Ref: https://github.com/intel/intel-device-plugins-for-kubernetes/tree/v0.32.0/deployments/nfd
-# Ref: https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.32.0/cmd/operator/README.md#installation
-# Ref: https://github.com/intel/helm-charts/blob/intel-device-plugins-gpu-0.32.0/charts/gpu-device-plugin/templates/gpu.yaml
-# Ref: https://intel.github.io/intel-device-plugins-for-kubernetes/cmd/gpu_plugin/README.html#testing-and-demos
-# Ref: https://github.com/intel/intel-device-plugins-for-kubernetes/blob/a8b11406e375c8c41c70eaa73898175e287691b1/demo/intelgpu-job.yaml
-# NOTE: https://intel.github.io/intel-device-plugins-for-kubernetes/cmd/gpu_plugin/README.html#running-gpu-plugin-as-non-root
 # ================================================================================================
-# Charts:
+# Intel GPU Device Plugin and Operator - Helm Deployment References
+#
+# Helm Charts:
 #   - Intel Device Plugins Operator:
-#         https://github.com/intel/helm-charts/blob/intel-device-plugins-operator-0.32.1/charts/device-plugin-operator/README.md
-# Note:
-#   - Both operator and GPU plugin only support amd64 architecture
+#       https://github.com/intel/helm-charts/blob/intel-device-plugins-operator-0.32.1/charts/device-plugin-operator/README.md
+#   - Intel GPU Device Plugin:
+#       https://github.com/intel/helm-charts/blob/intel-device-plugins-gpu-0.32.1/charts/gpu-device-plugin/README.md
+#
+# Custom Resource Definitions (CRDs):
+#   - GPU Device Plugin CRD:
+#       https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.32.1/deployments/operator/crd/bases/deviceplugin.intel.com_gpudeviceplugins.yaml
+#
+# Notes:
+#   - Both the operator and the GPU device plugin support only the amd64 architecture.
+#   - To verify installation, run:
+#       kubectl get nodes -o=jsonpath="{range .items[*]}{.metadata.name}{'\n'}{' i915: '}{.status.allocatable.gpu\.intel\.com/i915}{'\n'}"
 #
 # Documentation:
-#   - Supported Kubernetes Versions: https://intel.github.io/intel-device-plugins-for-kubernetes/README.html#supported-kubernetes-versions
+#   - Main Repository:
+#       https://github.com/intel/intel-device-plugins-for-kubernetes
+#   - Supported Kubernetes Versions:
+#       https://intel.github.io/intel-device-plugins-for-kubernetes/README.html#supported-kubernetes-versions
+#   - Installation Guide:
+#       https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.32.1/INSTALL.md
+#   - GPU Device Plugin Overview:
+#       https://intel.github.io/intel-device-plugins-for-kubernetes/README.html#gpu-device-plugin
 # ================================================================================================
+
 
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: gpu
 resources:
-  # - https://raw.githubusercontent.com/intel/intel-device-plugins-for-kubernetes/refs/tags/v0.32.0/deployments/nfd/overlays/node-feature-rules/node-feature-rules.yaml
-  # - https://raw.githubusercontent.com/intel/intel-device-plugins-for-kubernetes/refs/tags/v0.32.0/deployments/nfd/overlays/node-feature-rules/platform-labeling-rules.yaml
-  - https://raw.githubusercontent.com/intel/helm-charts/refs/tags/intel-device-plugins-operator-0.32.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
+  # CRDs
+  - https://raw.githubusercontent.com/intel/helm-charts/refs/tags/intel-device-plugins-operator-0.32.1/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
   - exporter/
 helmCharts:
   - name: intel-device-plugins-operator
@@ -42,7 +52,7 @@ helmCharts:
         kubernetes.io/arch: amd64
       resources:
       limits:
-        memory: 100Mi
+        memory: 75Mi
       requests:
         cpu: 5m
         memory: 50Mi
@@ -52,6 +62,9 @@ helmCharts:
     version: 0.32.0
     repo: https://intel.github.io/helm-charts/
     valuesInline:
+      name: i915
+      image:
+        hub: registry.brhd.io/docker.io/intel
       nodeFeatureRule: true
       enableMonitoring: true
       sharedDevNum: 10
