@@ -4,7 +4,6 @@ namespace: gpu
 configMapGenerator:
   - name: intel-gpu-metrics-dashboard
     files:
-      # Based on: https://grafana.com/grafana/dashboards/23251-intel-gpu-metrics/
       - intel-gpu-metrics.json 
 generatorOptions:
   labels:
