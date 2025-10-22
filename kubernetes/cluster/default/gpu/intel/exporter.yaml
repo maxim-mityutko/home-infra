@@ -1,11 +1,13 @@
-# Ref: https://github.com/onedr0p/intel-gpu-exporter
-# Ref: https://grafana.com/grafana/dashboards/23251-intel-gpu-metrics/
-
-# NOTE: [Intel XPU Manager](https://github.com/intel/xpumanager/) can be potentially relelvant 
-# for Arc B-series cards:
-#   - Repo: https://github.com/intel/xpumanager/blob/v1.3.3/deployment/README.md
-#   - Image: https://hub.docker.com/r/intel/xpumanager
----
+# ================================================================================================
+# This setup is based on "Intel GPU Exporter" from onedr0p, however the project is archived and 
+# is no longer maintained: https://github.com/onedr0p/intel-gpu-exporter
+# 
+# TODO: The repo should be cloned and a new custom image should be created.
+# Intel XPU Manager - сan be relelvant for Arc B-series cards, however it does not support iGPUs.
+#   - Project: https://github.com/intel/xpumanager/
+#   - Deployment: https://github.com/intel/xpumanager/blob/v1.3.3/deployment/README.md
+#   - Docker: https://hub.docker.com/r/intel/xpumanager
+# ================================================================================================
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,7 +27,7 @@ spec:
     spec:
       containers:
       - name: exporter
-        image: ghcr.io/onedr0p/intel-gpu-exporter:rolling # TODO: take ownership of the code and deploy personal package
+        image: ghcr.io/onedr0p/intel-gpu-exporter:rolling
         ports:
         - containerPort: 8080
           name: metrics
