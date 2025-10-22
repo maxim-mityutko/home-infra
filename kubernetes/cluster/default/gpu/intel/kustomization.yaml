@@ -20,8 +20,7 @@ resources:
   # - https://raw.githubusercontent.com/intel/intel-device-plugins-for-kubernetes/refs/tags/v0.32.0/deployments/nfd/overlays/node-feature-rules/node-feature-rules.yaml
   # - https://raw.githubusercontent.com/intel/intel-device-plugins-for-kubernetes/refs/tags/v0.32.0/deployments/nfd/overlays/node-feature-rules/platform-labeling-rules.yaml
   - https://raw.githubusercontent.com/intel/helm-charts/refs/tags/intel-device-plugins-operator-0.32.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
-  - exporter.yaml
-  - dashboards/
+  - exporter/
 helmCharts:
   - name: intel-device-plugins-operator
     namespace: gpu
