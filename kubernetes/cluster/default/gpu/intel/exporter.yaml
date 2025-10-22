@@ -43,6 +43,8 @@ spec:
       scrapeTimeout: 120s
       interval: 60s
       relabelConfigs:
+        - target_label: job
+          replacement: intel-gpu
   selector:
     matchLabels:
      app.kubernetes.io/name: intel-gpu-exporter
