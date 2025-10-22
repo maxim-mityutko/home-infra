@@ -5,6 +5,7 @@
 # Ref: https://github.com/intel/helm-charts/blob/intel-device-plugins-gpu-0.32.0/charts/gpu-device-plugin/templates/gpu.yaml
 # Ref: https://intel.github.io/intel-device-plugins-for-kubernetes/cmd/gpu_plugin/README.html#testing-and-demos
 # Ref: https://github.com/intel/intel-device-plugins-for-kubernetes/blob/a8b11406e375c8c41c70eaa73898175e287691b1/demo/intelgpu-job.yaml
+# NOTE: https://intel.github.io/intel-device-plugins-for-kubernetes/cmd/gpu_plugin/README.html#running-gpu-plugin-as-non-root
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization

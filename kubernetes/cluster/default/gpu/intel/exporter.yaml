@@ -1,5 +1,6 @@
 # Ref: https://github.com/onedr0p/intel-gpu-exporter
 # Ref: https://grafana.com/grafana/dashboards/23251-intel-gpu-metrics/
+# Ref: Other option https://hub.docker.com/r/intel/xpumanager (need to assess resource requirements) / https://github.com/intel/xpumanager/tree/master/deployment
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -49,18 +50,3 @@ spec:
   selector:
     matchLabels:
      app.kubernetes.io/name: intel-gpu-exporter
-
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: intel-gpu-exporter
-#   namespace: gpu
-#   labels:
-#     app.kubernetes.io/name: intel-gpu-exporter
-# spec:
-#   selector:
-#     app.kubernetes.io/name: intel-gpu-exporter
-#   ports:
-#   - port: 8080
-#     name: metrics
