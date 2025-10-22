@@ -1,0 +1,28 @@
+# ================================================================================================
+# Intel GPU Exporter Setup
+#
+# This setup is based on the "Intel GPU Exporter" project by onedr0p, which has since been
+# archived and is no longer actively maintained:
+#   → https://github.com/onedr0p/intel-gpu-exporter
+#
+# TODO:
+#   - Clone the archived repo and build a new custom image to maintain compatibility and updates.
+#
+# Intel XPU Manager:
+#   This may be relevant for newer Intel Arc B-series GPUs, but note that it does *not* support iGPUs.
+#   - Project:    https://github.com/intel/xpumanager/
+#   - Deployment: https://github.com/intel/xpumanager/blob/v1.3.3/deployment/README.md
+#   - Docker:     https://hub.docker.com/r/intel/xpumanager
+#
+# References:
+#   - Grafana Dashboard for Intel GPU metrics:
+#     https://grafana.com/grafana/dashboards/23251-intel-gpu-metrics/
+# ================================================================================================
+
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: gpu
+resources:
+  - exporter.yaml
+  - dashboards/
