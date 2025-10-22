@@ -56,8 +56,6 @@ server:
     main:
       containers:
         main:
-          securityContext:
-            privileged: true # Required for iGPU access
           image:
             repository: ghcr.io/immich-app/immich-server
             tag: v2.1.0 # Use <tag>-cuda for NVidia GPUs
@@ -68,6 +66,7 @@ server:
             limits:
               cpu: 2000m
               memory: 2Gi
+              gpu.intel.com/i915: 1
           probes:
             liveness:
               spec:
@@ -78,12 +77,6 @@ server:
                 initialDelaySeconds: 30
                 periodSeconds: 30
                 failureThreshold: 5
-      pod:
-        securityContext:
-          supplementalGroups: 
-            - 993 # Required for iGPU access
-        nodeSelector:
-          kubernetes.io/gpu: intel
   persistence:
     # External Library
     external:
@@ -91,10 +84,6 @@ server:
       globalMounts:
         - path: /media/external
           readOnly: true
-    render-device:
-      type: hostPath
-      hostPath: /dev/dri/renderD128
-      mountPath: /dev/dri/renderD128
   ingress:
     main:
       enabled: true
@@ -115,8 +104,6 @@ machine-learning:
     main:
       containers:
         main:
-          securityContext:
-            privileged: true # Required for iGPU access
           image:
             repository: ghcr.io/immich-app/immich-machine-learning
             tag: v2.1.0-openvino # Use <tag>-cuda for NVidia GPUs
@@ -127,6 +114,7 @@ machine-learning:
             limits:
               cpu: 2000m
               memory: 4Gi
+              gpu.intel.com/i915: 1
           probes:
             liveness:
               spec:
@@ -137,19 +125,9 @@ machine-learning:
                 initialDelaySeconds: 30
                 periodSeconds: 30
                 failureThreshold: 5
-      pod:
-        securityContext:
-          supplementalGroups: 
-            - 993 # Required for iGPU access
-        nodeSelector:
-          kubernetes.io/gpu: intel
   persistence:
     cache:
       size: 10G
       type: persistentVolumeClaim
       accessMode: ReadWriteOnce
       storageClass: openebs-hostpath
-    render-device:
-      type: hostPath
-      hostPath: /dev/dri/renderD128
-      mountPath: /dev/dri/renderD128

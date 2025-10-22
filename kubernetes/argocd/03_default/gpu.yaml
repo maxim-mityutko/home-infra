@@ -1,14 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: calico
+  name: gpu
   namespace: argocd
 spec:
   destination:
-    namespace: default
+    namespace: gpu
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/default/calico
+    path: kubernetes/cluster/default/gpu/intel
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
