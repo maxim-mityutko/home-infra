@@ -1,4 +1,5 @@
 # Ref: https://github.com/onedr0p/intel-gpu-exporter
+# Ref: https://grafana.com/grafana/dashboards/23251-intel-gpu-metrics/
 ---
 apiVersion: apps/v1
 kind: Deployment
