@@ -1,3 +1,27 @@
+# ================================================================================================
+# Node Feature Discovery (NFD) - Kustomize Deployment
+#
+# NFD detects hardware features of Kubernetes nodes—such as CPU, memory, storage type, and more
+# —and labels them accordingly. These labels are used to enable feature-aware scheduling and 
+# orchestration.
+#
+# This deployment is a prerequisite for components that rely on node hardware capabilities, such as:
+#   - Intel GPU Plugin
+#   - OpenEBS
+#
+# This Kustomize configuration deploys NFD into the `kube-system` namespace using the official
+# Helm chart and includes:
+#   - Installation of Custom Resource Definitions (CRDs) for NodeFeature and NodeFeatureGroup APIs
+#   - Configuration of NFD Master, Worker, and Garbage Collector (GC) components
+#
+# NFD Version: v0.18.2
+#
+# References:
+#   - Documentation: https://kubernetes-sigs.github.io/node-feature-discovery/
+#   - Helm Install Guide: https://kubernetes-sigs.github.io/node-feature-discovery/v0.18/deployment/helm.html
+#   - Helm Chart Parameters: https://kubernetes-sigs.github.io/node-feature-discovery/v0.18/deployment/helm.html#chart-parameters
+# ================================================================================================
+
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -11,7 +35,6 @@ helmCharts:
     releaseName: node-feature-discovery
     version: 0.18.2
     repo: https://kubernetes-sigs.github.io/node-feature-discovery/charts
-    # Ref: https://kubernetes-sigs.github.io/node-feature-discovery/v0.18/deployment/helm.html#chart-parameters
     valuesInline:
       featureGates:
         NodeFeatureAPI: true
