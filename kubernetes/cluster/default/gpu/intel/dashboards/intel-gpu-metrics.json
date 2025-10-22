@@ -1024,7 +1024,7 @@
           "text": "Default",
           "value": "default"
         },
-        "label": "datasource",
+        "label": "Datasource",
         "name": "DS_PROMETHEUS",
         "options": [],
         "query": "prometheus",
