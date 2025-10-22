@@ -48,6 +48,7 @@ helmCharts:
     valuesInline:
       nodeFeatureRule: true
       enableMonitoring: true
+      # The amount of pods that can share the GPU
       sharedDevNum: 10
       # nodeSelector:
       #   # intel.feature.node.kubernetes.io/gpu: 'true'
