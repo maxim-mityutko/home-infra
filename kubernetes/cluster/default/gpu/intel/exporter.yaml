@@ -4,9 +4,9 @@
 # 
 # TODO: The repo should be cloned and a new custom image should be created.
 # Intel XPU Manager - сan be relelvant for Arc B-series cards, however it does not support iGPUs.
-#   - Project: https://github.com/intel/xpumanager/
+#   - Project:    https://github.com/intel/xpumanager/
 #   - Deployment: https://github.com/intel/xpumanager/blob/v1.3.3/deployment/README.md
-#   - Docker: https://hub.docker.com/r/intel/xpumanager
+#   - Docker:     https://hub.docker.com/r/intel/xpumanager
 # ================================================================================================
 apiVersion: apps/v1
 kind: Deployment

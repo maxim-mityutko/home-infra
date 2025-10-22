@@ -23,6 +23,7 @@ helmCharts:
     releaseName: node-feature-discovery
     version: 0.16.4
     repo: https://kubernetes-sigs.github.io/node-feature-discovery/charts
+  # Ref: https://intel.github.io/intel-device-plugins-for-kubernetes/README.html#supported-kubernetes-versions
   - name: intel-device-plugins-operator
     namespace: gpu
     releaseName: intel-device-plugins-operator

@@ -1,0 +1,96 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+helmCharts:
+  - name: node-feature-discovery
+    namespace: kube-system
+    releaseName: node-feature-discovery
+    version: 0.18.2
+    repo: oci://registry.brhd.io/k8s.io/nfd/charts/node-feature-discovery
+    valuesInline:
+      featureGates:
+        NodeFeatureAPI: true
+        NodeFeatureGroupAPI: true
+      postDeleteCleanup: true
+
+      master:
+        enable: true
+        hostNetwork: false
+        replicaCount: 1
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ "ALL" ]
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+        serviceAccount:
+          create: true
+        rbac:
+          create: true
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 50m
+            memory: 50Mi
+        tolerations:
+          - key: node.kubernetes.io/microk8s-controlplane
+            operator: Exists
+            effect: NoSchedule
+        startupProbe:
+          failureThreshold: 30
+        livenessProbe: {}
+        readinessProbe:
+          failureThreshold: 10
+      
+      worker:
+        enable: true
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ "ALL" ]
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+        serviceAccount:
+          create: true
+        rbac:
+          create: true
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 5m
+            memory: 50Mi
+        livenessProbe:
+          initialDelaySeconds: 10
+        readinessProbe:
+          initialDelaySeconds: 5
+          failureThreshold: 10
+      
+      topologyUpdater:
+        enable: false
+
+      gc:
+        enable: true
+        hostNetwork: false
+        replicaCount: 1
+        serviceAccount:
+          create: true
+        rbac:
+          create: true
+        interval: 1h
+        podSecurityContext: {}
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 10m
+            memory: 50Mi
+        livenessProbe:
+          initialDelaySeconds: 10
+        readinessProbe:
+          initialDelaySeconds: 5
+
+      prometheus:
+        enable: false
