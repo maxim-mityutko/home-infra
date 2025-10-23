@@ -58,6 +58,12 @@
       "matchPackageNames": [
         "/sonarr/"
       ]
+    },
+    {
+      "description": "Renovate: Only major updates",
+      "matchPackageNames": ["renovate/renovate"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "enabled": false
     }
   ]
 }
