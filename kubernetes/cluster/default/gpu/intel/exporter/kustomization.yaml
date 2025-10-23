@@ -1,12 +1,9 @@
 # ================================================================================================
 # Intel GPU Exporter Setup
 #
-# This setup is based on the "Intel GPU Exporter" project by onedr0p, which has since been
-# archived and is no longer actively maintained:
+# This setup is based on a fork og the "Intel GPU Exporter" project by onedr0p, which has since
+# been archived and is no longer actively maintained:
 #   → https://github.com/onedr0p/intel-gpu-exporter
-#
-# TODO:
-#   - Clone the archived repo and build a new custom image to maintain compatibility and updates.
 #
 # Intel XPU Manager:
 #   This may be relevant for newer Intel Arc B-series GPUs, but note that it does *not* support iGPUs.
