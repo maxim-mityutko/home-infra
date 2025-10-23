@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: exporter
-        image: ghcr.io/onedr0p/intel-gpu-exporter:rolling
+        image: registry.brhd.io/ghcr.io/maxim-mityutko/intel-gpu-exporter:rolling
         ports:
         - containerPort: 8080
           name: metrics
