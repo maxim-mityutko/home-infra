@@ -7,6 +7,8 @@ metadata:
     app.kubernetes.io/name: intel-gpu-exporter
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: intel-gpu-exporter
