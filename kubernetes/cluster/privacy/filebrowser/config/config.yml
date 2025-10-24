@@ -33,7 +33,7 @@ server:
         indexingIntervalMinutes: 0
         disableIndexing: false
         conditionals:
-          hidden: true
+          ignoreHidden: true
           ignoreZeroSizeFolders: false
           rules:
             - fileNames: ".DS_Store"
