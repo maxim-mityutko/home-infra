@@ -70,7 +70,7 @@ data:
 
   DATABASE_TYPE: postgresql
   DATABASE_HOST: cnpg-default-rw.default
-  DATABASE_PORT: 5432
+  DATABASE_PORT: "5432"
 
   ENABLE_OTEL: "False"
 
