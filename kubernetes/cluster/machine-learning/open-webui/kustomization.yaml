@@ -24,8 +24,8 @@ helmCharts:
       extraEnvFrom:
         - configMapRef:
             name: open-webui
-        # - secretRef:
-        #     name: open-webui
+        - secretRef:
+            name: open-webui
       websocket:
         enabled: false
       redis-cluster:
