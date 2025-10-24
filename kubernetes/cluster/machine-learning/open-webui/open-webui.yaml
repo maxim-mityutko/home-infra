@@ -11,7 +11,7 @@ data:
   ENABLE_PERSISTENT_CONFIG: "False"
 
   WEBUI_URL: "https://oi.brhd.io"
-  ENABLE_SIGNUP: "False"
+  ENABLE_SIGNUP: "True"
   ENABLE_LOGIN_FORM: "False"
   DEFAULT_USER_ROLE: "user"
   ENABLE_ADMIN_CHAT_ACCESS: "False"
@@ -27,7 +27,7 @@ data:
   
   WEBUI_AUTH: "True"
   ENABLE_VERSION_UPDATE_CHECK: "False"
-  CORS_ALLOW_ORIGIN: "*"
+  CORS_ALLOW_ORIGIN: "*" # TODO: fixme
 
   # Vector Database
   # PGVecto: https://docs.openwebui.com/getting-started/env-configuration#pgvector
