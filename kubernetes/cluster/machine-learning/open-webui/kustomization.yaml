@@ -39,6 +39,7 @@ helmCharts:
       readinessProbe: {}
       resources: {}
       podSecurityContext: {}
+      revisionHistoryLimit: 3
       sso:
         enabled: false
         oidc:
