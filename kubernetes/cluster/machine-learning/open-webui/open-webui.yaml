@@ -74,4 +74,6 @@ data:
 
   ENABLE_OTEL: "False"
 
-  # S3 Storage: https://docs.openwebui.com/getting-started/env-configuration#cloud-storage
+  # Logging
+  # Ref: https://docs.openwebui.com/getting-started/advanced-topics/logging/#-global-logging-level-global_log_level
+  GLOBAL_LOG_LEVEL: "WARNING"
