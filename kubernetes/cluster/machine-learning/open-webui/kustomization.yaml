@@ -1,7 +1,15 @@
-# Docs: https://docs.openwebui.com
-# Chart: https://github.com/open-webui/helm-charts/blob/open-webui-8.12.2/charts/open-webui/README.md
-# Repo: https://github.com/open-webui/open-webui
-# Description: User-friendly AI Interface (Supports Ollama, OpenAI API, ...)
+# ================================================================================================
+# Open WebUI - User-friendly AI Interface
+#
+# Documentation: https://docs.openwebui.com
+# Helm Chart: https://github.com/open-webui/helm-charts/blob/open-webui-8.12.2/charts/open-webui/README.md
+# Repository: https://github.com/open-webui/open-webui
+#
+# Open WebUI is a user-friendly AI interface that supports multiple backends
+# including Ollama, OpenAI API, and others. This Kustomization deploys
+# the Open WebUI application in the machine-learning namespace using the
+# official Helm chart.
+# ================================================================================================
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: machine-learning
