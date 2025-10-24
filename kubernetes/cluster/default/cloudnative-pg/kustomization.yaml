@@ -9,7 +9,7 @@ helmCharts:
     - name: cloudnative-pg
       namespace: default
       releaseName: cloudnative-pg
-      version: 0.26.0
+      version: 0.26.1
       repo: https://cloudnative-pg.github.io/charts
       valuesInline:
         replicaCount: 3
