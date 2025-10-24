@@ -43,6 +43,7 @@ helmCharts:
       resources: {}
       podSecurityContext: {}
       revisionHistoryLimit: 3
+      strategy: Recreate
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
