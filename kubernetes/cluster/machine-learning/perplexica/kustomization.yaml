@@ -1,17 +1,13 @@
 # ================================================================================================
-# Open WebUI - User-friendly AI Interface
+# Perplexica - AI-powered search engine. It is an Open source alternative to Perplexity AI
 #
-# Documentation: https://docs.openwebui.com
-# Helm Chart: https://github.com/open-webui/helm-charts/blob/open-webui-8.12.2/charts/open-webui/README.md
-# Repository: https://github.com/open-webui/open-webui
+# Documentation: ---
+# Helm Chart: https://hub.docker.com/r/itzcrazykns1337/perplexica
+# Repository: https://github.com/ItzCrazyKns/Perplexica
 #
 # Useful articles:
-#   - Integration with "continue.dev": https://docs.openwebui.com/tutorials/integrations/continue-dev
+#   - ---
 #
-# Open WebUI is a user-friendly AI interface that supports multiple backends
-# including Ollama, OpenAI API, and others. This Kustomization deploys
-# the Open WebUI application in the machine-learning namespace using the
-# official Helm chart.
 # ================================================================================================
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
