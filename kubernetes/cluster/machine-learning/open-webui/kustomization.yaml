@@ -8,6 +8,7 @@ namespace: machine-learning
 resources:
   - dns-endpoint.yaml
   - open-webui.yaml
+  - secret.yaml
 helmCharts:
   - name: open-webui
     namespace: machine-learning
