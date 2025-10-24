@@ -178,6 +178,12 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | **Music Assistant**   | Music Assistant is a free, opensource Media library manager that connects to your streaming services and a wide range of connected speakers |                  [repo](https://github.com/music-assistant/server)<br>[docs](https://www.music-assistant.io/)                   |       [docker](https://github.com/music-assistant/server/pkgs/container/server)        |
 | **iSponsorBlockTV**   | SponsorBlock client for all YouTube TV clients                                                                                              |        [repo](https://github.com/dmunozv04/iSponsorBlockTV)<br>[docs](https://github.com/dmunozv04/iSponsorBlockTV/wiki)        | [docker](https://github.com/dmunozv04/iSponsorBlockTV/pkgs/container/isponsorblocktv)  |
 
+### Machine Learning
+
+| Project        | Description                                                                                                  |                                      Docs / Repo                                       |                                            Docker / Helm                                             |
+|----------------|--------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|
+| **Open WebUI** | Open WebUI is a user-friendly AI interface that supports multiple backends including Ollama, OpenAI API, etc | [repo](https://github.com/open-webui/open-webui)<br>[docs](https://docs.openwebui.com) | [helm](https://github.com/open-webui/helm-charts/blob/open-webui-8.12.2/charts/open-webui/README.md) |
+
 ### Standalone Applications
 
 *This section contains the list of standalone applications or plugins that can be used to accompany the deployed services on the phones, computers or smart devices.*
@@ -190,6 +196,12 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | **Bitwarden Password Manager** / **Bitwarden App** | Password manager that integrates with open-source Bitwarden implementation - **Vaultwarden**.  |
 | **Floccus** | Sync your bookmarks privately across browsers and devices. Uses **Gitea** for bookmarks storage. |[repo](https://github.com/floccusaddon/floccus)<br>[docs](https://floccus.org/guides) |  
 | **Immich-Go** | An alternative to the immich-CLI command that doesn't depend on nodejs installation. It tries its best for importing google photos takeout archives. | [repo](https://github.com/simulot/immich-go)<br>[docs](https://github.com/simulot/immich-go#running-immich-go) |
+
+### External Services
+
+| Project            | Description                                                                                                                                                                      | Link                                                                                                                                          |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| **Ollama Cloud** | Ollama's cloud is a new way to run open models using datacenter-grade hardware. | [link](https://ollama.com/cloud)
 
 ### Decomissioned / Unused
 
