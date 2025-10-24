@@ -18,9 +18,6 @@ helmCharts:
         enabled: false
       tika:
         enabled: false
-      # ollamaUrls:
-      #   - https://ollama.com
-      enableOpenaiApi: false
       extraEnvFrom:
         - configMapRef:
             name: open-webui
@@ -46,9 +43,5 @@ helmCharts:
       resources: {}
       podSecurityContext: {}
       revisionHistoryLimit: 3
-      sso:
-        enabled: false
-        oidc:
-          enabled: false
       nodeSelector:
         kubernetes.io/arch: amd64

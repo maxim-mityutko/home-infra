@@ -8,6 +8,7 @@ metadata:
     app.kubernetes.io/name: open-webui
 data:
   # Environment Variables Reference: https://docs.openwebui.com/getting-started/env-configuration
+  ENV: prod
   ENABLE_PERSISTENT_CONFIG: "False"
 
   WEBUI_URL: "https://oi.brhd.io"
@@ -16,32 +17,31 @@ data:
   DEFAULT_USER_ROLE: "user"
   ENABLE_ADMIN_CHAT_ACCESS: "False"
   BYPASS_ADMIN_ACCESS_CONTROL: "True"
-  ENV: prod
 
   USE_CUDA_DOCKER: "False"
 
   ENABLE_OLLAMA_API: "True"
   OLLAMA_BASE_URL: "https://ollama.com"
-
-  ENABLE_CODE_EXECUTION: "False"
+  ENABLE_OPENAI_API: "False"
   
   WEBUI_AUTH: "True"
   ENABLE_VERSION_UPDATE_CHECK: "False"
   CORS_ALLOW_ORIGIN: "*" # TODO: fixme
 
-  # Vector Database
-  # PGVecto: https://docs.openwebui.com/getting-started/env-configuration#pgvector
+  # Features
+  ENABLE_CODE_EXECUTION: "False"
+  ENABLE_CODE_INTERPRETER: "False"
+  ENABLE_DIRECT_CONNECTIONS: "False" # Enable and configure for MCP
+  ENABLE_EVALUATION_ARENA_MODELS: "True"
+  ENABLE_TAGS_GENERATION: "True"
+  TASK_MODEL: gpt-oss:20b
 
-  # Web Search
-  # Ref: https://docs.openwebui.com/getting-started/env-configuration#web-search
+  # Vector Database: https://docs.openwebui.com/getting-started/env-configuration#pgvector
+  # Web Search: https://docs.openwebui.com/getting-started/env-configuration#web-search
+  # Whisper Speech-To-Text: https://docs.openwebui.com/getting-started/env-configuration#whisper-speech-to-text-local
+  # Image Generation: https://docs.openwebui.com/getting-started/env-configuration#image-generation
 
-  # Audio
-  # Whisper Scpeech-To-Text: https://docs.openwebui.com/getting-started/env-configuration#whisper-speech-to-text-local
-
-  # Image Generation
-  # Ref: https://docs.openwebui.com/getting-started/env-configuration#image-generation
-
-
+  # Permissions
   USER_PERMISSIONS_CHAT_CONTROLS: "True"
 
   USER_PERMISSIONS_FEATURES_DIRECT_TOOL_SERVERS: "True"
@@ -64,12 +64,13 @@ data:
   OAUTH_ALLOWED_ROLES: user,admin
   OAUTH_ADMIN_ROLES: admin
 
+  # Extras
   REDIS_URL: redis://redis-master.default:6379
   REDIS_CLUSTER: "False"
 
-  # DATABASE_TYPE: postgresql
-  # DATABASE_HOST: cnpg-default-rw.default
-  # DATABASE_PORT: 5432
+  DATABASE_TYPE: postgresql
+  DATABASE_HOST: cnpg-default-rw.default
+  DATABASE_PORT: 5432
 
   ENABLE_OTEL: "False"
 
