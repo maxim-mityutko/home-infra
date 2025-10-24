@@ -1,0 +1,87 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: perplexica
+  namespace: machine-learning
+  labels:
+    app.kubernetes.io/name: perplexica
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      name: http
+  selector:
+    app.kubernetes.io/name: perplexica
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: perplexica
+  namespace: machine-learning
+  labels:
+    app.kubernetes.io/name: perplexica
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: perplexica
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: machine-learning
+      labels:
+        app.kubernetes.io/name: perplexica
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: perplexica
+          image: itzcrazykns1337/perplexica:slim-v1.11.1
+          # resources:
+          #   requests:
+          #     cpu: 100m
+          #     memory: 300Mi
+          #   limits:
+          #     cpu: 500m
+          #     memory: 750Mi
+          ports:
+            - containerPort: 3000 
+          envFrom:
+            - configMapRef:
+                name: perplexica
+          # readinessProbe:
+          #   tcpSocket:
+          #     port: 5000
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 10
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: 5000
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 10
+      #     volumeMounts:
+      #       - name: perplexica-data
+      #         mountPath: /home/perplexica/data
+      #       - name: perplexica-uploads
+      #         mountPath: /home/perplexica/uploads
+      # volumes:
+      #   - name: perplexica-data
+      #     persistentVolumeClaim:
+      #       claimName: perplexica-data
+      #   - name: perplexica-uploads
+      #     persistentVolumeClaim:
+      #       claimName: perplexica-uploads
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: perplexica
+  namespace: machine-learning
+  labels:
+    app.kubernetes.io/name: perplexica
+data:
+  SEARXNG_API_URL: http://searxng.privacy:8080
