@@ -1,0 +1,70 @@
+# ================================================================================================
+# Intel GPU Device Plugin and Operator - Helm Deployment References
+#
+# Helm Charts:
+#   - Intel Device Plugins Operator:
+#       https://github.com/intel/helm-charts/blob/intel-device-plugins-operator-0.32.1/charts/device-plugin-operator/README.md
+#   - Intel GPU Device Plugin:
+#       https://github.com/intel/helm-charts/blob/intel-device-plugins-gpu-0.32.1/charts/gpu-device-plugin/README.md
+#
+# Custom Resource Definitions (CRDs):
+#   - GPU Device Plugin CRD:
+#       https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.32.1/deployments/operator/crd/bases/deviceplugin.intel.com_gpudeviceplugins.yaml
+#
+# Notes:
+#   - Both the operator and the GPU device plugin support only the amd64 architecture.
+#   - To verify installation, run:
+#       kubectl get nodes -o=jsonpath="{range .items[*]}{.metadata.name}{'\n'}{' i915: '}{.status.allocatable.gpu\.intel\.com/i915}{'\n'}"
+#
+# Documentation:
+#   - Main Repository:
+#       https://github.com/intel/intel-device-plugins-for-kubernetes
+#   - Supported Kubernetes Versions:
+#       https://intel.github.io/intel-device-plugins-for-kubernetes/README.html#supported-kubernetes-versions
+#   - Installation Guide:
+#       https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.32.1/INSTALL.md
+#   - GPU Device Plugin Overview:
+#       https://intel.github.io/intel-device-plugins-for-kubernetes/README.html#gpu-device-plugin
+# ================================================================================================
+
+
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: gpu
+resources:
+  # CRDs
+  - https://raw.githubusercontent.com/intel/helm-charts/refs/tags/intel-device-plugins-operator-0.32.1/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
+  - exporter/
+helmCharts:
+  - name: intel-device-plugins-operator
+    namespace: gpu
+    releaseName: intel-device-plugins-operator
+    version: 0.32.1
+    repo: https://intel.github.io/helm-charts
+    valuesInline:
+      manager:
+        image:
+          hub: registry.brhd.io/docker.io/intel
+        devices:
+          gpu: true
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      resources:
+      limits:
+        memory: 75Mi
+      requests:
+        cpu: 5m
+        memory: 50Mi
+  - name: intel-device-plugins-gpu
+    namespace: gpu
+    releaseName: intel-device-plugins-gpu
+    version: 0.32.1
+    repo: https://intel.github.io/helm-charts/
+    valuesInline:
+      name: igpu
+      image:
+        hub: registry.brhd.io/docker.io/intel
+      nodeFeatureRule: true
+      enableMonitoring: true
+      sharedDevNum: 10

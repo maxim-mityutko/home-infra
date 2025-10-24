@@ -1,0 +1,131 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - dns-endpoint.yaml
+  - secret.yaml
+helmCharts:
+  - name: zot
+    namespace: default
+    releaseName: zot
+    version: 0.1.87
+    repo: http://zotregistry.dev/helm-charts
+    valuesInline:
+      image:
+        # Override repo path to get access to different image architectures
+        repository: ghcr.io/project-zot/zot
+      serviceAccount:
+        create: true
+      serviceHeadless:
+        enabled: false
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+          nginx.ingress.kubernetes.io/proxy-body-size: '0'
+        className: public
+        hosts:
+          - host: registry.brhd.io
+            paths:
+              - path: /
+        tls: []
+      startupProbe:
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        failureThreshold: 3
+      mountConfig: true
+      configFiles:
+        # Refs:
+        #   Authorization: https://zotregistry.dev/latest/articles/authn-authz/
+        #   OIDC: https://zotregistry.dev/latest/articles/authn-authz/#using-openidoauth2-when-zot-is-behind-a-proxy-or-load-balancer
+        config.json: |-
+          {
+            "storage": { "rootDirectory": "/var/lib/registry" },
+            "http": { 
+              "address": "0.0.0.0", 
+              "port": "5000",
+              "externalUrl": "https://registry.brhd.io",
+              "auth": {
+                "openid": {
+                  "providers": {
+                    "oidc": {
+                      "issuer": "https://auth.brhd.io/application/o/zot/",
+                      "credentialsFile": "secrets/oidc.json",
+                      "scopes": ["openid", "profile", "email"]
+                    }
+                  }
+                }
+              },
+              "accessControl": {
+                "repositories": {
+                  "**": {
+                    "defaultPolicy": ["read", "create", "update", "delete"],
+                    "anonymousPolicy": ["read"]
+                  }
+                }
+              }
+            },
+            "log": { "level": "warn" },
+            "extensions": {
+              "search": {"enable": true},
+              "ui": {"enable": true},
+              "sync": {
+                "enable": true,
+                "registries": [
+                  {
+                    "urls": ["https://index.docker.io"],
+                    "content": [{"prefix": "**", "destination": "/docker.io"}],
+                    "onDemand": true,
+                    "tlsVerify": true
+                  },
+                  {
+                    "urls": ["https://ghcr.io"],
+                    "content": [{"prefix": "**", "destination": "/ghcr.io"}],
+                    "onDemand": true,
+                    "tlsVerify": true
+                  },
+                  {
+                    "urls": ["https://quay.io"],
+                    "content": [{"prefix": "**", "destination": "/quay.io"}],
+                    "onDemand": true,
+                    "tlsVerify": true
+                  },
+                  {
+                    "urls": ["https://gcr.io"],
+                    "content": [{"prefix": "**", "destination": "/gcr.io"}],
+                    "onDemand": true,
+                    "tlsVerify": true
+                  },
+                  {
+                    "urls": ["https://registry.k8s.io"],
+                    "content": [{"prefix": "**", "destination": "/k8s.io"}],
+                    "onDemand": true,
+                    "tlsVerify": true
+                  }
+                ]
+              },
+              "scrub": {
+                "interval": "24h"
+              }
+            }
+          }
+      externalSecrets:
+        - secretName: zot-oidc
+          mountPath: /secrets
+      persistence: true
+      pvc:
+        create: true
+        accessModes: ["ReadWriteOnce"]
+        storage: 5Gi
+        storageClassName: openebs-hostpath
+      env: []
+      strategy:
+        type: RollingUpdate
+      metrics:
+        enabled: false
+        serviceMonitor:
+          enabled: false
+patches:
+  - path: patch.yaml

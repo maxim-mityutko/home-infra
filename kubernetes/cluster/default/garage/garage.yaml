@@ -75,7 +75,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: garage
-        image: dxflrs/garage:v1.2.0
+        image: dxflrs/garage:v2.1.0
         ports:
           - containerPort: 3900
             name: s3-api
@@ -114,8 +114,6 @@ spec:
            port: 3903
           initialDelaySeconds: 5
           periodSeconds: 15
-      nodeSelector:
-        beta.kubernetes.io/arch: amd64
       volumes:
       - name: garage-config
         configMap:

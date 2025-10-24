@@ -10,12 +10,11 @@ metadata:
     app.kubernetes.io/name: recyclarr
 spec:
   schedule: '0 8 * * *'
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      # successfulJobsHistoryLimit: 1
-      # failedJobsHistoryLimit: 2
-      ttlSecondsAfterFinished: 259200 # 3 days
       template:
         spec:
           restartPolicy: Never

@@ -1,6 +1,3 @@
-# IMPORTANT
-# Immich requires 'pgvecto-rs' extension for PostgreSQL, which might require
-# some level of maintenance, check: https://immich.app/docs/administration/postgres-standalone/
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: privacy
@@ -13,11 +10,8 @@ helmCharts:
   - name: immich
     namespace: privacy
     releaseName: immich
-    version: 0.9.3
+    version: 0.10.1
     repo: https://immich-app.github.io/immich-charts
     # Leveraging `renovate` ability to detect updates in Helm values
     # Ref: https://docs.renovatebot.com/modules/manager/helm-values/
     valuesFile: values.yaml
-patches:
-  # Patch is required to enable Intel iGPU within the container for hardware decoding
-  - path: patch.yaml  

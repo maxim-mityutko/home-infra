@@ -25,17 +25,16 @@ metadata:
     app.kubernetes.io/name: renovate
 spec:
   schedule: '0 4 * * *'
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-#      successfulJobsHistoryLimit: 1
-#      failedJobsHistoryLimit: 2
-      ttlSecondsAfterFinished: 86400 # 1 day
       template:
         spec:
           containers:
             - name: renovate
-              image: renovate/renovate:40.62.1
+              image: renovate/renovate:41.132.2
               envFrom:
                 - secretRef:
                     name: renovate

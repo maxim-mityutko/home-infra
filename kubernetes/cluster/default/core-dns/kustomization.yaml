@@ -5,12 +5,12 @@ helmCharts:
   - name: coredns
     namespace: kube-system
     releaseName: coredns
-    version: 1.43.0
+    version: 1.44.3
     repo: https://coredns.github.io/helm
     valuesInline:
       resources:
         limits:
-          cpu: 100m
+          cpu: 500m
           memory: 170Mi
         requests:
           cpu: 100m

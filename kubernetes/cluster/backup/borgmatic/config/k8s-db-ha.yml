@@ -1,0 +1,40 @@
+# Database backup configuration for K8s
+repositories:
+  - path: /mnt/borg-repository/k8s-db-ha
+    label: local-k8s-db-ha
+  - path: ${REPO_REMOTE_K8S_DB_HA}
+    label: remote-k8s-db-ha
+keep_daily: 14
+keep_weekly: 8
+keep_monthly: 6
+checks:
+  - name: repository
+    frequency: 2 weeks
+encryption_passphrase: ${BORG_PASSPHRASE}
+archive_name_format: k8s-db-ha-{now}
+read_special: true
+relocated_repo_access_is_ok: true
+postgresql_databases:
+  - name: all
+    hostname: cnpg-ha-rw.default.svc.cluster.local
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    format: tar
+  - name: all
+    hostname: cnpg-vectorchord-rw.default.svc.cluster.local
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    format: tar
+apprise:
+  services:
+    - url: discord://Borg@${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}/
+      label: discord
+  finish:
+    title: ✅ SUCCESS
+    body: Database backups created successfully!
+  fail:
+    title: ❌ FAILED
+    body: Database backups creation failed! Check container logs for details.
+  states:
+    - finish
+    - fail

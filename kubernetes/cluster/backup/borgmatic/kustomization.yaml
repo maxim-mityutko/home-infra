@@ -14,3 +14,6 @@ configMapGenerator:
   - name: borgmatic-k8s-fs-config-yml
     files:
       - config/k8s-fs.yml
+  - name: borgmatic-k8s-db-ha-config-yml
+    files:
+    - config/k8s-db-ha.yml

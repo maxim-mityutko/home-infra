@@ -13,18 +13,17 @@ server:
       output: stdout
       noColors: false
       utc: true
-  debugMedia: false
   sources:
     - path: /home/filebrowser/data/sources/drive/shared
       name: Shared
       config:
         indexingIntervalMinutes: 0
         disableIndexing: false
-        maxWatchers: 0
-        neverWatchPaths: []
-        exclude:
+        conditionals:
           hidden: true
           ignoreZeroSizeFolders: false
+          rules:
+            - fileNames: ".DS_Store"
         defaultUserScope: /
         defaultEnabled: true
         createUserDir: false
@@ -33,11 +32,11 @@ server:
       config:
         indexingIntervalMinutes: 0
         disableIndexing: false
-        maxWatchers: 0
-        neverWatchPaths: []
-        exclude:
-          hidden: true
+        conditionals:
+          ignoreHidden: true
           ignoreZeroSizeFolders: false
+          rules:
+            - fileNames: ".DS_Store"
         defaultUserScope: /
         defaultEnabled: true
         createUserDir: true
@@ -104,3 +103,5 @@ userDefaults:
 integrations:
   media:
     ffmpegPath: /usr/local/bin
+    debug: false
+    

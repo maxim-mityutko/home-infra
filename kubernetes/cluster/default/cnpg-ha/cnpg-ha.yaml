@@ -6,7 +6,7 @@ metadata:
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.2
   imagePullPolicy: IfNotPresent
-  instances: 2
+  instances: 3
   enablePDB: true
   primaryUpdateStrategy: unsupervised
   logLevel: info
@@ -18,7 +18,7 @@ spec:
       archive_timeout: 30min
 
   managed:
-    # Ref: https://cloudnative-pg.io/documentation/1.25/service_management/
+    # Ref: https://cloudnative-pg.io/documentation/current/service_management/
     services:
       disabledDefaultServices: ["r","ro"]
 
@@ -34,20 +34,17 @@ spec:
       memory: 1Gi
   
   storage:
-    size: 2Gi
-    storageClass: local-storage
-    pvcTemplate:
-      selector:
-        matchLabels: 
-          app.kubernetes.io/name: cnpg-ha
+    size: 5Gi
+    storageClass: openebs-hostpath
   
-  # Ref: https://cloudnative-pg.io/documentation/1.25/backup_barmanobjectstore/
+  # Ref: https://cloudnative-pg.io/documentation/current/backup_barmanobjectstore/
   backup:
     target: primary
     retentionPolicy: 14d
     barmanObjectStore:
       destinationPath: "s3://cnpg-backup/"
       endpointURL: "http://garage.garage.svc.cluster.local:3900"
+      serverName: cnpg-ha-v2
       s3Credentials:
         accessKeyId:
           name: cnpg-backup-secret
@@ -60,8 +57,8 @@ spec:
       wal:
         compression: bzip2
 
-  # Ref: https://cloudnative-pg.io/documentation/1.25/instance_manager/
-  startDelay: 15
+  # Ref: https://cloudnative-pg.io/documentation/current/instance_manager/
+  startDelay: 120
   stopDelay: 30
   smartShutdownTimeout: 15
   probes:
@@ -81,36 +78,24 @@ spec:
           - matchExpressions:
             - key: kubernetes.io/local-storage
               operator: Exists
+
   bootstrap:
-    # Ref: https://cloudnative-pg.io/documentation/1.25/recovery/#recovery-from-a-backup-object
+    # Ref: https://cloudnative-pg.io/documentation/current/recovery/#recovery-from-a-backup-object
     recovery:
-      backup:
-        name: cnpg-ha-backup
+      source: cnpg-ha-backup
       # recoveryTarget:
       #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR
-      
-  # NOTE: keeping `bootstrap` section here for reference, refer to
-  # CloudNativePG documentation for more details.
-  # Ref: https://cloudnative-pg.io/documentation/1.25/bootstrap/
-  # Ref: https://cloudnative-pg.io/documentation/1.25/database_import/
-  # bootstrap:
-  #   initdb:
-  #     import:
-  #       type: monolith
-  #       databases:
-  #         - authentik
-  #         - vaultwarden
-  #       roles:
-  #         - authentik
-  #         - vaultwarden         
-  #       source:
-  #         externalCluster: postgres-cnpg
-  # externalClusters:
-  #   - name: postgres-cnpg
-  #     connectionParameters: 
-  #       host: postgres-cnpg-rw.default.svc
-  #       dbname: postgres
-  #       user: postgres
-  #     password:
-  #       name: cnpg-default-secret
-  #       key: password
+
+  externalClusters:
+    - name: cnpg-ha-backup
+      barmanObjectStore:
+        destinationPath: "s3://cnpg-backup/"
+        serverName: cnpg-ha-v2
+        endpointURL: "http://garage.garage.svc.cluster.local:3900"
+        s3Credentials:
+          accessKeyId:
+            name: cnpg-backup-secret
+            key: username
+          secretAccessKey:
+            name: cnpg-backup-secret
+            key: password

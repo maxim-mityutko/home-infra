@@ -29,7 +29,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: psa-car-controller
   strategy:
-    type: RollingUpdate
+    type: Recreate
   revisionHistoryLimit: 1
   template:
     metadata:
@@ -40,7 +40,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: psa-car-controller
-          image: flobz/psa_car_controller:v3.5.6
+          image: flobz/psa_car_controller:v3.6.0
           resources:
             requests:
               cpu: 100m
@@ -63,8 +63,6 @@ spec:
           volumeMounts:
             - name: psa-car-controller-config
               mountPath: /config
-      nodeSelector:
-        beta.kubernetes.io/arch: amd64
       volumes:
         - name: psa-car-controller-config
           persistentVolumeClaim:

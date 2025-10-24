@@ -3,31 +3,67 @@
   "enabled": true,
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard",
-  "kubernetes": {
-    "fileMatch": ["kubernetes/cluster/.+\\.ya?ml$"]
+  "registryAliases": {
+    "registry.brhd.io/docker.io": "index.docker.io",
+    "registry.brhd.io/ghcr.io": "ghcr.io",
+    "registry.brhd.io/quay.io": "quay.io",
+    "registry.brhd.io/gcr.io": "gcr.io",
+    "registry.brhd.io/k8s.io": "registry.k8s.io"
   },
-  "prHourlyLimit": 15,
+  "kubernetes": {
+    "managerFilePatterns": [
+      "/kubernetes/cluster/.+\\.ya?ml$/"
+    ]
+  },
+  "prHourlyLimit": 25,
   "includePaths": [
     "kubernetes/cluster/**/**"
   ],
   "packageRules": [
     {
       "description": "Loose versioning for non-semver packages",
-      "matchDatasources": ["kubernetes", "docker"],
+      "matchDatasources": [
+        "kubernetes",
+        "docker"
+      ],
       "versioning": "regex:^(release)-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.?(?<build>\\d+)?$",
-      "matchPackagePatterns": ["bazarr", "prowlarr", "qbitmanage", "qbittorrent","radarr", "unpackerr", "lidarr"]
+      "matchPackageNames": [
+        "/bazarr/",
+        "/prowlarr/",
+        "/qbitmanage/",
+        "/qbittorrent/",
+        "/radarr/",
+        "/unpackerr/",
+        "/lidarr/"
+      ]
     },
-	{
+    {
       "description": "Readarr: Only `testing` images are available",
-      "matchDatasources": ["kubernetes", "docker"],
+      "matchDatasources": [
+        "kubernetes",
+        "docker"
+      ],
       "versioning": "regex:^(testing)-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.?(?<build>\\d+)?$",
-      "matchPackagePatterns": ["readarr"]
+      "matchPackageNames": [
+        "/readarr/"
+      ]
     },
-	{
+    {
       "description": "Sonarr: Release or V4",
-      "matchDatasources": ["kubernetes", "docker"],
+      "matchDatasources": [
+        "kubernetes",
+        "docker"
+      ],
       "versioning": "regex:^(release|v4)-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.?(?<build>\\d+)?$",
-      "matchPackagePatterns": ["sonarr"]
+      "matchPackageNames": [
+        "/sonarr/"
+      ]
+    },
+    {
+      "description": "Renovate: Only major updates",
+      "matchPackageNames": ["renovate/renovate"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "enabled": false
     }
   ]
 }

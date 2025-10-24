@@ -42,15 +42,23 @@ spec:
       restartPolicy: Always
       containers:
         - name: filebrowser
-          image: ghcr.io/gtsteffaniak/filebrowser:0.7.18-beta
+          image: ghcr.io/gtsteffaniak/filebrowser:0.8.10-beta
           resources:
             requests:
               memory: 50Mi
               cpu: 50m
             limits:
-              memory: 250Mi
+              memory: 500Mi
           ports:
             - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 3
+            failureThreshold: 5
           envFrom:
             - secretRef:
                 name: filebrowser
@@ -97,4 +105,4 @@ metadata:
 data:
   # Ref: https://github.com/gtsteffaniak/filebrowser/wiki/Environment-Variables
   FILEBROWSER_CONFIG: "data/config.yml"
-
+  FILEBROWSER_DISABLE_AUTOMATIC_BACKUP: "true"

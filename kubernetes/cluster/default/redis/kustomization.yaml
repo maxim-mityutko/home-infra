@@ -5,11 +5,17 @@ helmCharts:
   - name: redis
     namespace: default
     releaseName: redis
-    version: 20.13.4
+    version: 22.0.4
     repo: oci://registry-1.docker.io/bitnamicharts
     valuesInline:
-      # global:
-      #   storageClass: nfs-subdir
+      global:
+        security:
+          # Required for non-Bitnami images
+          allowInsecureImages: true
+      image:
+        registry: public.ecr.aws
+        repository: docker/library/redis
+        tag: 8.2.1
       auth:
         enabled: false
       architecture: standalone
