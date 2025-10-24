@@ -55,9 +55,20 @@ helmCharts:
         enabled: false
       serviceAccount:
         enable: true
-      livenessProbe: {}
-      readinessProbe: {}
-      resources: {}
+      livenessProbe:
+        initialDelaySeconds: 10
+        periodSeconds: 60
+        failureThreshold: 5
+      readinessProbe:
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        failureThreshold: 5
+      resources:
+        requests:
+          cpu: 500m
+          memory: 500Mi
+        limits:
+          memory: 4Gi
       podSecurityContext: {}
       revisionHistoryLimit: 3
       strategy: 
