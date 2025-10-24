@@ -3,11 +3,12 @@ kind: Kustomization
 namespace: machine-learning
 resources:
   - dns-endpoint.yaml
+# Ref: https://github.com/open-webui/helm-charts/blob/open-webui-8.12.2/charts/open-webui/README.md
 helmCharts:
   - name: open-webui
     namespace: machine-learning
     releaseName: open-webui
-    version: 7.0.0
+    version: 8.12.2
     repo: https://helm.openwebui.com/
     valuesInline:
       ollama:
@@ -15,9 +16,10 @@ helmCharts:
       pipelines:
         enabled: false
       tika:
-        enabled: true
+        enabled: false
       ollamaUrls:
         - http://192.168.1.10:11434
+      enableOpenaiApi: false
       websocket:
         enabled: false
       redis-cluster:
@@ -31,3 +33,15 @@ helmCharts:
         host: oi.brhd.io
       persistence:
         enabled: false
+      serviceAccount:
+        enable: true
+      livenessProbe: {}
+      readinessProbe: {}
+      resources: {}
+      podSecurityContext: {}
+      sso:
+        enabled: false
+        oidc:
+          enabled: false
+      nodeSelector:
+        kubernetes.io/arch: amd64
