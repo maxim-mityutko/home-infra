@@ -36,9 +36,15 @@ data:
   ENABLE_TAGS_GENERATION: "True"
   TASK_MODEL: gpt-oss:20b
 
+  RAG_EMBEDDING_ENGINE: ollama
+  RAG_EMBEDDING_MODEL: gpt-oss:20b
+
+  WHISPER_MODEL: base
+  WHISPER_MODEL_AUTO_UPDATE: "False"
+  WHISPER_LANGUAGE: en
+  
   # Vector Database: https://docs.openwebui.com/getting-started/env-configuration#pgvector
   # Web Search: https://docs.openwebui.com/getting-started/env-configuration#web-search
-  # Whisper Speech-To-Text: https://docs.openwebui.com/getting-started/env-configuration#whisper-speech-to-text-local
   # Image Generation: https://docs.openwebui.com/getting-started/env-configuration#image-generation
 
   # Permissions
