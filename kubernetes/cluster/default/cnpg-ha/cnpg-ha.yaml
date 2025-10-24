@@ -76,7 +76,10 @@ spec:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-            - key: kubernetes.io/local-storage
+            - key: feature.node.kubernetes.io/storage-nonrotationaldisk
+              operator: In
+              values: ["true"]
+            - key: node.kubernetes.io/microk8s-controlplane
               operator: Exists
 
   bootstrap:
