@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: machine-learning
 resources:
   - dns-endpoint.yaml
+  - open-webui.yaml
 # Ref: https://github.com/open-webui/helm-charts/blob/open-webui-8.12.2/charts/open-webui/README.md
 helmCharts:
   - name: open-webui
@@ -17,9 +18,14 @@ helmCharts:
         enabled: false
       tika:
         enabled: false
-      ollamaUrls:
-        - http://192.168.1.10:11434
+      # ollamaUrls:
+      #   - https://ollama.com
       enableOpenaiApi: false
+      extraEnvFrom:
+        - configMapRef:
+            name: open-webui
+        # - secretRef:
+        #     name: open-webui
       websocket:
         enabled: false
       redis-cluster:

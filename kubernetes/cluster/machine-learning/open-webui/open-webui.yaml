@@ -1,0 +1,76 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: open-webui
+  namespace: machine-learning
+  labels:
+    app.kubernetes.io/name: open-webui
+data:
+  # Environment Variables Reference: https://docs.openwebui.com/getting-started/env-configuration
+  ENABLE_PERSISTENT_CONFIG: "False"
+
+  WEBUI_URL: "https://oi.brhd.io"
+  ENABLE_SIGNUP: "False"
+  ENABLE_LOGIN_FORM: "False"
+  DEFAULT_USER_ROLE: "user"
+  ENABLE_ADMIN_CHAT_ACCESS: "False"
+  BYPASS_ADMIN_ACCESS_CONTROL: "True"
+  ENV: prod
+
+  USE_CUDA_DOCKER: "False"
+
+  ENABLE_OLLAMA_API: "True"
+  OLLAMA_BASE_URL: "https://ollama.com"
+
+  ENABLE_CODE_EXECUTION: "False"
+  
+  WEBUI_AUTH: "True"
+  ENABLE_VERSION_UPDATE_CHECK: "False"
+  CORS_ALLOW_ORIGIN: "*"
+
+  # Vector Database
+  # PGVecto: https://docs.openwebui.com/getting-started/env-configuration#pgvector
+
+  # Web Search
+  # Ref: https://docs.openwebui.com/getting-started/env-configuration#web-search
+
+  # Audio
+  # Whisper Scpeech-To-Text: https://docs.openwebui.com/getting-started/env-configuration#whisper-speech-to-text-local
+
+  # Image Generation
+  # Ref: https://docs.openwebui.com/getting-started/env-configuration#image-generation
+
+
+  USER_PERMISSIONS_CHAT_CONTROLS: "True"
+
+  USER_PERMISSIONS_FEATURES_DIRECT_TOOL_SERVERS: "True"
+  USER_PERMISSIONS_FEATURES_WEB_SEARCH: "True"
+  USER_PERMISSIONS_FEATURES_IMAGE_GENERATION: "False"
+  USER_PERMISSIONS_FEATURES_CODE_INTERPRETER: "False"
+
+  USER_PERMISSIONS_WORKSPACE_MODELS_ACCESS: "False"
+
+  # OAuth
+  ENABLE_OAUTH_SIGNUP: "True"
+  ENABLE_OAUTH_PERSISTENT_CONFIG: "False"
+  OPENID_PROVIDER_URL: https://auth.brhd.io/application/o/open-webui/.well-known/openid-configuration
+  OPENID_REDIRECT_URI: https://oi.brhd.io/oauth/oidc/callback
+  OAUTH_SCOPES: openid email profile groups
+  OAUTH_PROVIDER_NAME: Authentik
+  OAUTH_USERNAME_CLAIM: name
+  OAUTH_EMAIL_CLAIM: email
+  OAUTH_GROUP_CLAIM: groups
+  OAUTH_ALLOWED_ROLES: user,admin
+  OAUTH_ADMIN_ROLES: admin
+
+  REDIS_URL: redis://redis-master.default:6379
+  REDIS_CLUSTER: "False"
+
+  # DATABASE_TYPE: postgresql
+  # DATABASE_HOST: cnpg-default-rw.default
+  # DATABASE_PORT: 5432
+
+  ENABLE_OTEL: "False"
+
+  # S3 Storage: https://docs.openwebui.com/getting-started/env-configuration#cloud-storage
