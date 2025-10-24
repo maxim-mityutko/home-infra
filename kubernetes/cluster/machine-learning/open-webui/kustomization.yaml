@@ -1,10 +1,13 @@
+# Docs: https://docs.openwebui.com
+# Chart: https://github.com/open-webui/helm-charts/blob/open-webui-8.12.2/charts/open-webui/README.md
+# Repo: https://github.com/open-webui/open-webui
+# Description: User-friendly AI Interface (Supports Ollama, OpenAI API, ...)
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: machine-learning
 resources:
   - dns-endpoint.yaml
   - open-webui.yaml
-# Ref: https://github.com/open-webui/helm-charts/blob/open-webui-8.12.2/charts/open-webui/README.md
 helmCharts:
   - name: open-webui
     namespace: machine-learning
@@ -27,6 +30,8 @@ helmCharts:
         enabled: false
       redis-cluster:
         enabled: false
+      image:
+        repository: ghcr.io/open-webui/open-webui
       ingress:
         enabled: true
         class: public
