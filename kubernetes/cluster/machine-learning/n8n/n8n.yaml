@@ -70,10 +70,10 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: open-webui
+  name: n8n
   namespace: machine-learning
   labels:
-    app.kubernetes.io/name: open-webui
+    app.kubernetes.io/name: n8n
 data:
   DB_TYPE: postgresdb
   DB_POSTGRESDB_HOST: cnpg-default-rw.default
