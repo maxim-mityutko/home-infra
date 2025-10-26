@@ -1,0 +1,19 @@
+# ================================================================================================
+# 
+#
+# Documentation: ---
+# Helm Chart: 
+# Repository: 
+#
+# Useful articles:
+#   - ---
+#
+# ================================================================================================
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: machine-learning
+resources:
+  - n8n.yaml
+  - ingress.yaml
+  - secret.yaml
+  - volumes.yaml
