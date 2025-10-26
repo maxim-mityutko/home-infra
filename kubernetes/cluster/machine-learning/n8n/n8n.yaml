@@ -27,7 +27,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-    app.kubernetes.io/name: n8n
+      app.kubernetes.io/name: n8n
   strategy:
     type: Recreate
   template:
