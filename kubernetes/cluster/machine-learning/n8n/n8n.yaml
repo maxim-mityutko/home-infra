@@ -89,7 +89,7 @@ data:
 
   N8N_METRICS: "false"
   N8N_LOG_LEVEL: "info"
-  N8N_HIDE_USAGE_PAGE: "true"
+  N8N_HIDE_USAGE_PAGE: "false"
 
   N8N_COMMUNITY_PACKAGES_ENABLED: "true"
   N8N_PYTHON_ENABLED: "true"
