@@ -6,7 +6,6 @@ metadata:
   namespace: default
   annotations:
     metallb.io/address-pool: forge-pool
-    metallb.io/loadBalancerIPs: "192.168.12.33"
 spec:
   externalTrafficPolicy: Cluster
   allocateLoadBalancerNodePorts: false
