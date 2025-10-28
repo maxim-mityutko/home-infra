@@ -17,8 +17,6 @@ helmCharts:
           log_level: warning
           postgresql:
             host: cnpg-ha-rw.default.svc.cluster.local
-          redis:
-            host: redis-master.default.svc.cluster.local
         blueprints:
           configMaps: []
         global:
