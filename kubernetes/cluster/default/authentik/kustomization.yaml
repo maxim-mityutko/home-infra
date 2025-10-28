@@ -8,7 +8,7 @@ helmCharts:
     - name: authentik
       namespace: default
       releaseName: authentik
-      version: 2025.8.4
+      version: 2025.10.0
       repo: https://charts.goauthentik.io
       valuesInline:
         authentik:
@@ -17,8 +17,6 @@ helmCharts:
           log_level: warning
           postgresql:
             host: cnpg-ha-rw.default.svc.cluster.local
-          redis:
-            host: redis-master.default.svc.cluster.local
         blueprints:
           configMaps: []
         global:
