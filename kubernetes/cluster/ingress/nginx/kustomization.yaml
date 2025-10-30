@@ -4,5 +4,4 @@ namespace: ingress
 resources:
   - nginx.yaml
   - config-map.yaml
-  - service-loadbalancer.yaml
   - pod-scrape.yaml
