@@ -183,6 +183,9 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | Project        | Description                                                                                                  |                                      Docs / Repo                                       |                                            Docker / Helm                                             |
 |----------------|--------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|
 | **Open WebUI** | Open WebUI is a user-friendly AI interface that supports multiple backends including Ollama, OpenAI API, etc | [repo](https://github.com/open-webui/open-webui)<br>[docs](https://docs.openwebui.com) | [helm](https://github.com/open-webui/helm-charts/blob/open-webui-8.12.2/charts/open-webui/README.md) |
+| | **Ollama Cloud** - New way to run open models using datacenter-grade hardware. | [link](https://ollama.com/cloud) | |
+| | **Linkup** - AI-Powered Search API | [link](https://www.linkup.so) |
+| | **Open WebUI Home** - Access to free tools, models, extensions | [link](https://openwebui.com) | |
 
 ### Standalone Applications
 
@@ -196,12 +199,6 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | **Bitwarden Password Manager** / **Bitwarden App** | Password manager that integrates with open-source Bitwarden implementation - **Vaultwarden**.  |
 | **Floccus** | Sync your bookmarks privately across browsers and devices. Uses **Gitea** for bookmarks storage. |[repo](https://github.com/floccusaddon/floccus)<br>[docs](https://floccus.org/guides) |  
 | **Immich-Go** | An alternative to the immich-CLI command that doesn't depend on nodejs installation. It tries its best for importing google photos takeout archives. | [repo](https://github.com/simulot/immich-go)<br>[docs](https://github.com/simulot/immich-go#running-immich-go) |
-
-### External Services
-
-| Project            | Description                                                                                                                                                                      | Link                                                                                                                                          |
-|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| **Ollama Cloud** | Ollama's cloud is a new way to run open models using datacenter-grade hardware. | [link](https://ollama.com/cloud)
 
 ### Decomissioned / Unused
 
