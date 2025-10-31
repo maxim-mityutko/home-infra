@@ -58,7 +58,7 @@ server:
         main:
           image:
             repository: ghcr.io/immich-app/immich-server
-            tag: v2.1.0 # Use <tag>-cuda for NVidia GPUs
+            tag: v2.2.0 # Use <tag>-cuda for NVidia GPUs
           resources:
             requests:
               cpu: 200m
