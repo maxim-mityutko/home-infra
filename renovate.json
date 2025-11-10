@@ -64,6 +64,12 @@
       "matchPackageNames": ["renovate/renovate"],
       "matchUpdateTypes": ["minor", "patch", "digest"],
       "enabled": false
+    },
+    {
+      "description": "Victoria Metrics: Only major and minor updates",
+      "matchPackageNames": ["victoria-metrics-k8s-stack"],
+      "matchUpdateTypes": ["patch", "digest"],
+      "enabled": false
     }
   ]
 }
