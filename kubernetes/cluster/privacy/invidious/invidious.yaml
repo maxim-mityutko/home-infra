@@ -52,6 +52,7 @@ spec:
           ports:
             - containerPort: 3000
           envFrom:
+            # Ref: https://github.com/iv-org/invidious/blob/master/config/config.example.yml
             - secretRef:
                 name: invidious
             - configMapRef:
@@ -88,8 +89,7 @@ spec:
         beta.kubernetes.io/arch: amd64
       volumes:
         - name: invidious-companion-cache
-          persistentVolumeClaim:
-            claimName: invidious-companion-cache
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: ConfigMap

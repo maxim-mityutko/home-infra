@@ -4,4 +4,3 @@ resources:
   - secret.yaml
   - invidious.yaml
   - ingress.yaml
-  - volumes.yaml
