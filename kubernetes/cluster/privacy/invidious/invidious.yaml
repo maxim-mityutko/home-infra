@@ -73,6 +73,8 @@ spec:
             # Ref: https://github.com/iv-org/invidious-companion/blob/master/config/config.example.toml
             - secretRef:
                 name: invidious
+          ports:
+            - containerPort: 8282
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
