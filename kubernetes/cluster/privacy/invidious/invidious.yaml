@@ -75,6 +75,9 @@ spec:
                 name: invidious
           ports:
             - containerPort: 8282
+          volumeMounts:
+            - name: invidious-companion-cache
+              mountPath: /var/tmp/youtubei.js
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -83,6 +86,10 @@ spec:
                 - ALL
       nodeSelector:
         beta.kubernetes.io/arch: amd64
+      volumes:
+        - name: invidious-companion-cache
+          persistentVolumeClaim:
+            claimName: invidious-companion-cache
 ---
 apiVersion: v1
 kind: ConfigMap
