@@ -73,8 +73,6 @@ spec:
             # Ref: https://github.com/iv-org/invidious-companion/blob/master/config/config.example.toml
             - secretRef:
                 name: invidious
-          ports:
-            - containerPort: 8282
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -111,6 +109,8 @@ data:
   INVIDIOUS_FULL_REFRESH: "false"
 
   INVIDIOUS_CONFIG: |
+    invidious_companion:
+      - private_url: "http://127.0.0.1:8282/companion"
     default_user_preferences: 
       region: NL
       dark_mode: dark
