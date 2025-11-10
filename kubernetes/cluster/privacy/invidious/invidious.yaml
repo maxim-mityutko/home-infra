@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: invidious
-          image: quay.io/invidious/invidious:2.20250517.0
+          image: quay.io/invidious/invidious:2.20250913.0
           resources:
             requests:
               memory: 100Mi
@@ -67,26 +67,17 @@ spec:
           #     port: 3000
           #   initialDelaySeconds: 30
           #   periodSeconds: 120
-        - name: inv-sig-helper
-          image: quay.io/invidious/inv-sig-helper:latest
-          args: ["--tcp", "0.0.0.0:12999"]
-          ports:
-            - name: sighelper
-              containerPort: 12999
-              protocol: TCP
-          env:
-            - name: RUST_LOG
-              value: info
+        - name: companion
+          image: quay.io/invidious/invidious-companion:latest
+          envFrom:
+            - secretRef:
+                name: invidious
           securityContext:
             allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
             capabilities:
               drop:
                 - ALL
-          # livenessProbe:
-          #   tcpSocket:
-          #     port: 12999
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 60
       nodeSelector:
         beta.kubernetes.io/arch: amd64
 ---
@@ -120,7 +111,7 @@ data:
   INVIDIOUS_FULL_REFRESH: "false"
 
   INVIDIOUS_CONFIG: |
-    signature_server: 127.0.0.1:12999
+    check_tables: true
     default_user_preferences: 
       region: NL
       dark_mode: dark
