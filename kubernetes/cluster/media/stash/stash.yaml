@@ -48,6 +48,7 @@ spec:
             limits:
               memory: 2000Mi
               cpu: 3000m
+              gpu.intel.com/i915: 1
           ports:
             - containerPort: 9999
           env:

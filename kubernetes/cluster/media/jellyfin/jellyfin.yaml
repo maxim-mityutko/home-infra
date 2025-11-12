@@ -39,9 +39,6 @@ spec:
       labels:
         app.kubernetes.io/name: jellyfin
     spec:
-      securityContext:
-        supplementalGroups: 
-          - 993 # Required for iGPU: https://jellyfin.org/docs/general/administration/hardware-acceleration/intel#kubernetes
       restartPolicy: Always
       containers:
         - name: jellyfin
@@ -53,6 +50,7 @@ spec:
             limits:
               memory: 4000Mi
               cpu: 3000m
+              gpu.intel.com/i915: 1
           ports:
             - containerPort: 8096
           readinessProbe:
@@ -67,8 +65,6 @@ spec:
               port: 8096
             initialDelaySeconds: 30
             periodSeconds: 120
-          securityContext:
-            privileged: true # Required for iGPU, refer to above
           volumeMounts:
             - name: jellyfin-config-iscsi
               mountPath: /config
@@ -76,8 +72,6 @@ spec:
               mountPath: /cache
             - name: downloads
               mountPath: /downloads
-            - name: render-device # Required for iGPU, refer to above
-              mountPath: /dev/dri/renderD128
       volumes:
         - name: jellyfin-config-iscsi
           persistentVolumeClaim:
@@ -87,8 +81,3 @@ spec:
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads
-        - name: render-device # Required for iGPU, refer to above
-          hostPath:
-            path: /dev/dri/renderD128
-      nodeSelector:
-        kubernetes.io/gpu: intel
