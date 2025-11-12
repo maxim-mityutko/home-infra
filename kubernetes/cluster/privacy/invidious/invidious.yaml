@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: invidious
-          image: quay.io/invidious/invidious:2.20250517.0
+          image: quay.io/invidious/invidious:2.20250913.0
           resources:
             requests:
               memory: 100Mi
@@ -52,6 +52,7 @@ spec:
           ports:
             - containerPort: 3000
           envFrom:
+            # Ref: https://github.com/iv-org/invidious/blob/master/config/config.example.yml
             - secretRef:
                 name: invidious
             - configMapRef:
@@ -67,28 +68,28 @@ spec:
           #     port: 3000
           #   initialDelaySeconds: 30
           #   periodSeconds: 120
-        - name: inv-sig-helper
-          image: quay.io/invidious/inv-sig-helper:latest
-          args: ["--tcp", "0.0.0.0:12999"]
+        - name: companion
+          image: quay.io/invidious/invidious-companion:latest
+          envFrom:
+            # Ref: https://github.com/iv-org/invidious-companion/blob/master/config/config.example.toml
+            - secretRef:
+                name: invidious
           ports:
-            - name: sighelper
-              containerPort: 12999
-              protocol: TCP
-          env:
-            - name: RUST_LOG
-              value: info
+            - containerPort: 8282
+          volumeMounts:
+            - name: invidious-companion-cache
+              mountPath: /var/tmp/youtubei.js
           securityContext:
             allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
             capabilities:
               drop:
                 - ALL
-          # livenessProbe:
-          #   tcpSocket:
-          #     port: 12999
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 60
       nodeSelector:
         beta.kubernetes.io/arch: amd64
+      volumes:
+        - name: invidious-companion-cache
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -98,9 +99,6 @@ metadata:
   labels:
     app.kubernetes.io/name: invidious
 data:
-  # Ref: https://github.com/iv-org/invidious/blob/master/config/config.example.yml
-  # NOTE: Run "microk8s kubectl run yt-trusted-session-generator --image=quay.io/invidious/youtube-trusted-session-generator"
-  # to generate PO_TOKEN and VISITOR_DATA
   INVIDIOUS_CHECK_TABLES: "true"
   INVIDIOUS_DOMAIN: "yt.brhd.io"
   INVIDIOUS_PORT: "3000"
@@ -120,7 +118,8 @@ data:
   INVIDIOUS_FULL_REFRESH: "false"
 
   INVIDIOUS_CONFIG: |
-    signature_server: 127.0.0.1:12999
+    invidious_companion:
+      - private_url: "http://127.0.0.1:8282/companion"
     default_user_preferences: 
       region: NL
       dark_mode: dark
