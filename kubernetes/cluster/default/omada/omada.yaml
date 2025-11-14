@@ -39,7 +39,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: mbentley/omada-controller:6.0.0.24
+        - image: registry.brhd.io/docker.io/mbentley/omada-controller:6.0.0.24
           name: omada
           resources:
             requests:
@@ -82,6 +82,6 @@ metadata:
     app.kubernetes.io/name: omada
 data:
   TZ: "Europe/Amsterdam"
-  SHOW_SERVER_LOGS: "false"
+  SHOW_SERVER_LOGS: "true"
   SHOW_MONGODB_LOGS: "false"
   MANAGE_HTTPS_PORT: "8043"
