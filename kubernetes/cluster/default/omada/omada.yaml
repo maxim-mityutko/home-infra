@@ -38,7 +38,6 @@ spec:
         app.kubernetes.io/name: omada
     spec:
       restartPolicy: Always
-      hostNetwork: true
       containers:
         - image: mbentley/omada-controller:6.0.0.24
           name: omada
@@ -59,8 +58,10 @@ spec:
               mountPath: /opt/tplink/EAPController/logs
             - name: omada-autobackup
               mountPath: /opt/tplink/EAPController/data/autobackup
+      # TODO: Temporary enforcing specific set of nodes till network interface names can be aligned across all nodes of the cluster
       nodeSelector:
-        kubernetes.io/node-size: large
+        beta.kubernetes.io/arch: amd64
+        node.kubernetes.io/microk8s-worker: microk8s-worker
       volumes:
         - name: omada-data
           persistentVolumeClaim:
