@@ -41,7 +41,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: ghcr.io/music-assistant/server:2.6.2
+        - image: ghcr.io/music-assistant/server:2.6.3
           name: music-assistant
           resources:
             requests:
