@@ -20,7 +20,7 @@ spec:
               service:
                 name: bento-pdf
                 port:
-                  number: 3000
+                  number: 8080
 ---
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint

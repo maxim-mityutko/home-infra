@@ -48,7 +48,7 @@ spec:
           #   limits:
           #     memory: 100Mi
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
           # envFrom:
           #   - configMapRef:
           #       name: pairdrop
