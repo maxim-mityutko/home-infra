@@ -1,0 +1,70 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bento-pdf
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: bento-pdf
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+  selector:
+    app.kubernetes.io/name: bento-pdf
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bento-pdf
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: bento-pdf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bento-pdf
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: extras
+      labels:
+        app.kubernetes.io/name: bento-pdf
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: bento-pdf
+          image: ghcr.io/alam00000/bentopdf:v1.7.1
+          # resources:
+          #   requests:
+          #     memory: 50Mi
+          #     cpu: 50m
+          #   limits:
+          #     memory: 100Mi
+          ports:
+            - containerPort: 3000
+          # envFrom:
+          #   - configMapRef:
+          #       name: pairdrop
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: pairdrop
+#   namespace: extras
+#   labels:
+#     app.kubernetes.io/name: jellpairdropyseerr
+# data:
+#   TZ: Europe/Amsterdam
+#   DEBUG_MODE: "false"
+#   RTC_CONFIG: "false"
+#   RATE_LIMIT: "false"
+#   WS_FALLBACK: "false"
+#   PUID: "1000"
+#   PGID: "1000"
