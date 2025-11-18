@@ -62,7 +62,7 @@ metadata:
   name: pairdrop
   namespace: extras
   labels:
-    app.kubernetes.io/name: jellpairdropyseerr
+    app.kubernetes.io/name: pairdrop
 data:
   TZ: Europe/Amsterdam
   DEBUG_MODE: "false"
