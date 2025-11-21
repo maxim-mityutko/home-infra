@@ -57,7 +57,7 @@ spec:
               memory: 250Mi
               cpu: 100m
             limits:
-              memory: 500Mi
+              memory: 2Gi
           volumeMounts:
             - mountPath: /home/node/.n8n
               name: n8n-data
