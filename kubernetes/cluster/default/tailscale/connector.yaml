@@ -1,16 +1,17 @@
 ---
-# Ref: https://tailscale.com/kb/1236/kubernetes-operator#deploying-exit-nodes-and-subnet-routers-on-kubernetes-using-connector-custom-resource
+# Ref: https://tailscale.com/kb/1441/kubernetes-operator-connector#deploy-an-exit-node-or-subnet-router
 apiVersion: tailscale.com/v1alpha1
 kind: Connector
 metadata:
-  name: tailscale-router
+  name: tailscale-ha-router
   namespace: tailscale
   labels:
-    app: operator
+    app.kubernetes.io/name: tailscale
 spec:
+  replicas: 2
   tags:
     - "tag:k8s"
-  hostname: tailscale-router
+  hostnamePrefix: tailscale-ha-router
   subnetRouter:
     advertiseRoutes:
     - "192.168.1.0/24"
