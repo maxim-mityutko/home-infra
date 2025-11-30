@@ -3,8 +3,8 @@ kind: Kustomization
 namespace: default
 resources:
   - blocky.yaml
-  - service.yaml
-  - service-loadbalancer.yaml
+  - service-api.yaml
+  - service-dns.yaml
   - secret.yaml
   - ingress.yaml
   - service-scrape.yaml
