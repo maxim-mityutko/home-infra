@@ -58,7 +58,7 @@ server:
         main:
           image:
             repository: ghcr.io/immich-app/immich-server
-            tag: v2.2.3 # Use <tag>-cuda for NVidia GPUs
+            tag: v2.3.1 # Use <tag>-cuda for NVidia GPUs
           resources:
             requests:
               cpu: 200m
@@ -106,7 +106,7 @@ machine-learning:
         main:
           image:
             repository: ghcr.io/immich-app/immich-machine-learning
-            tag: v2.2.3-openvino # Use <tag>-cuda for NVidia GPUs
+            tag: v2.3.1-openvino # Use <tag>-cuda for NVidia GPUs
           resources:
             requests:
               cpu: 100m

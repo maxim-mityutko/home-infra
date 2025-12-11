@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bento-pdf
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: bento-pdf
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: bento-pdf
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bento-pdf
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: bento-pdf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bento-pdf
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: extras
+      labels:
+        app.kubernetes.io/name: bento-pdf
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: bento-pdf
+          image: ghcr.io/alam00000/bentopdf-simple:v1.10.5
+          resources:
+            requests:
+              memory: 10Mi
+              cpu: 25m
+            limits:
+              memory: 25Mi
+          ports:
+            - containerPort: 8080
