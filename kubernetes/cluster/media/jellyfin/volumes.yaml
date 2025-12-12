@@ -12,7 +12,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 20Gi
   selector:
     matchLabels:
       storage.target: jellyfin-config-iscsi
@@ -31,7 +31,7 @@ spec:
     - ReadOnlyMany
   persistentVolumeReclaimPolicy: Retain
   capacity:
-    storage: 10Gi
+    storage: 20Gi
   # Ref: https://github.com/kubernetes/examples/blob/master/volumes/iscsi/README.md
   iscsi:
     targetPortal: 192.168.1.222
