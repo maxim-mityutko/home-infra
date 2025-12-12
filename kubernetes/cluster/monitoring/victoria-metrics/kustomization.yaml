@@ -44,13 +44,7 @@ helmCharts:
             datasources:
               enabled: true
             dashboards:
-              # provider:
-              #   name: default
-              #   orgid: 1
-              # folder: /var/lib/grafana/dashboards
-              # defaultFolderName: default
               enabled: true
-              # multicluster: false
               searchNamespace: ALL
               label: grafana-dashboard
               labelValue: "true"
