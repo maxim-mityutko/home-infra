@@ -125,7 +125,7 @@ spec:
       serviceAccountName: multus
       containers:
         - name: kube-multus
-          image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.2.2
+          image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.2.3
           command: ["/thin_entrypoint"]
           args:
             - "--multus-conf-file=auto"
@@ -148,7 +148,7 @@ spec:
               mountPath: /host/opt/cni/bin
       initContainers:
         - name: install-multus-binary
-          image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.2.2
+          image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.2.3
           command: ["/install_multus"]
           args:
             - "--type"

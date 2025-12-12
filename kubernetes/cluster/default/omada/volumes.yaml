@@ -3,7 +3,6 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  # name: omada-data-v2
   name: omada-data
   labels:
     app.kubernetes.io/name: omada

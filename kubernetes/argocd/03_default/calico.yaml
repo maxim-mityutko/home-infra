@@ -10,5 +10,5 @@ spec:
   source:
     path: kubernetes/cluster/default/calico
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
-    targetRevision: feature/calico
+    targetRevision: main
   project: default

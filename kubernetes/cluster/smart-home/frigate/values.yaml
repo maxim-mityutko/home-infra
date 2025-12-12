@@ -1,11 +1,11 @@
 # Container and Environment
 strategyType: Recreate
-nodeSelector:
-  kubernetes.io/gpu: intel
+nodeSelector: {}
+  # kubernetes.io/gpu: intel
   # kubernetes.io/tpu: coral
 image:
   repository: ghcr.io/blakeblackshear/frigate
-  tag: 0.16.2
+  tag: 0.16.3
   # GPU: If Coral TPU is used `tensorrt` image is unnecessary
   # tag: 0.14.1-tensorrt
 env:
@@ -14,10 +14,13 @@ env:
   USE_FP16: "false"
 envFromSecrets: 
   - frigate
+
 resources:
   requests:
     cpu: 100m
     memory: 100Mi
+  limits:
+    gpu.intel.com/i915: 1
 shmSize: 1Gi
 
 # Hardware

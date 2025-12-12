@@ -21,13 +21,11 @@ kind: ConfigMap
 metadata:
   name: nginx-ingress-tcp-microk8s-conf
   namespace: ingress
-data:
-  "53": default/blocky-dns:53
+data: {}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-ingress-udp-microk8s-conf
   namespace: ingress
-data:
-  "53": default/blocky-dns:53
+data: {}

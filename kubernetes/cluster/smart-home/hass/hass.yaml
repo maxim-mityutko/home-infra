@@ -41,7 +41,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: ghcr.io/home-assistant/home-assistant:2025.10.2
+        - image: ghcr.io/home-assistant/home-assistant:2025.12.0
           name: home-assistant
           resources:
             requests:
@@ -67,9 +67,7 @@ spec:
               mountPath: /config/secrets.yaml
               subPath: secrets.yaml
               readOnly: true
-      # Enforcing specific set of nodes till network interface names 
-      # can be aligned across all nodes of the cluster
-      # TODO: to be removed
+      # TODO: Temporary enforcing specific set of nodes till network interface names can be aligned across all nodes of the cluster
       nodeSelector:
         beta.kubernetes.io/arch: amd64
         node.kubernetes.io/microk8s-worker: microk8s-worker

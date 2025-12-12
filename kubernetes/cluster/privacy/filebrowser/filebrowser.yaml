@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: filebrowser
-          image: ghcr.io/gtsteffaniak/filebrowser:0.8.9-beta
+          image: ghcr.io/gtsteffaniak/filebrowser:1.1.3-beta
           resources:
             requests:
               memory: 50Mi
@@ -105,4 +105,4 @@ metadata:
 data:
   # Ref: https://github.com/gtsteffaniak/filebrowser/wiki/Environment-Variables
   FILEBROWSER_CONFIG: "data/config.yml"
-
+  FILEBROWSER_DISABLE_AUTOMATIC_BACKUP: "true"

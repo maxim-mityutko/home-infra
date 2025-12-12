@@ -3,12 +3,19 @@
   "enabled": true,
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard",
+  "registryAliases": {
+    "registry.brhd.io/docker.io": "index.docker.io",
+    "registry.brhd.io/ghcr.io": "ghcr.io",
+    "registry.brhd.io/quay.io": "quay.io",
+    "registry.brhd.io/gcr.io": "gcr.io",
+    "registry.brhd.io/k8s.io": "registry.k8s.io"
+  },
   "kubernetes": {
     "managerFilePatterns": [
       "/kubernetes/cluster/.+\\.ya?ml$/"
     ]
   },
-  "prHourlyLimit": 15,
+  "prHourlyLimit": 25,
   "includePaths": [
     "kubernetes/cluster/**/**"
   ],
@@ -51,6 +58,18 @@
       "matchPackageNames": [
         "/sonarr/"
       ]
+    },
+    {
+      "description": "Renovate: Only major updates",
+      "matchPackageNames": ["renovate/renovate"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "enabled": false
+    },
+    {
+      "description": "Victoria Metrics: Only major and minor updates",
+      "matchPackageNames": ["victoria-metrics-k8s-stack"],
+      "matchUpdateTypes": ["patch", "digest"],
+      "enabled": false
     }
   ]
 }

@@ -1,0 +1,123 @@
+# ================================================================================================
+# Node Feature Discovery (NFD) - Kustomize Deployment
+#
+# NFD detects hardware features of Kubernetes nodes—such as CPU, memory, storage type, and more
+# —and labels them accordingly. These labels are used to enable feature-aware scheduling and 
+# orchestration.
+#
+# This deployment is a prerequisite for components that rely on node hardware capabilities, such as:
+#   - Intel GPU Plugin
+#   - OpenEBS
+#
+# This Kustomize configuration deploys NFD into the `kube-system` namespace using the official
+# Helm chart and includes:
+#   - Installation of Custom Resource Definitions (CRDs) for NodeFeature and NodeFeatureGroup APIs
+#   - Configuration of NFD Master, Worker, and Garbage Collector (GC) components
+#
+# NFD Version: v0.18.2
+#
+# References:
+#   - Documentation: https://kubernetes-sigs.github.io/node-feature-discovery/
+#   - Helm Install Guide: https://kubernetes-sigs.github.io/node-feature-discovery/v0.18/deployment/helm.html
+#   - Helm Chart Parameters: https://kubernetes-sigs.github.io/node-feature-discovery/v0.18/deployment/helm.html#chart-parameters
+# ================================================================================================
+
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+resources:
+  # CRDs
+  - https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/refs/tags/v0.18.2/deployment/helm/node-feature-discovery/crds/nfd-api-crds.yaml
+helmCharts:
+  - name: node-feature-discovery
+    namespace: kube-system
+    releaseName: node-feature-discovery
+    version: 0.18.3
+    repo: https://kubernetes-sigs.github.io/node-feature-discovery/charts
+    valuesInline:
+      featureGates:
+        NodeFeatureAPI: true
+        NodeFeatureGroupAPI: true
+      postDeleteCleanup: true
+
+      master:
+        enable: true
+        hostNetwork: false
+        replicaCount: 1
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ "ALL" ]
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+        serviceAccount:
+          create: true
+        rbac:
+          create: true
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 50m
+            memory: 50Mi
+        tolerations:
+          - key: node.kubernetes.io/microk8s-controlplane
+            operator: Exists
+            effect: NoSchedule
+        startupProbe:
+          failureThreshold: 30
+        livenessProbe: {}
+        readinessProbe:
+          failureThreshold: 10
+      
+      worker:
+        enable: true
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ "ALL" ]
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+        serviceAccount:
+          create: true
+        rbac:
+          create: true
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 5m
+            memory: 50Mi
+        livenessProbe:
+          initialDelaySeconds: 10
+        readinessProbe:
+          initialDelaySeconds: 5
+          failureThreshold: 10
+      
+      topologyUpdater:
+        enable: false
+
+      gc:
+        enable: true
+        hostNetwork: false
+        replicaCount: 1
+        serviceAccount:
+          create: true
+        rbac:
+          create: true
+        interval: 1h
+        podSecurityContext: {}
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 10m
+            memory: 50Mi
+        livenessProbe:
+          initialDelaySeconds: 10
+        readinessProbe:
+          initialDelaySeconds: 5
+
+      prometheus:
+        enable: false

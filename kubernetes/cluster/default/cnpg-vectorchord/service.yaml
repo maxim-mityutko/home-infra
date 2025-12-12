@@ -4,7 +4,7 @@ metadata:
   name: cnpg-vectorchord-lb
   namespace: default
   annotations:
-    metallb.io/address-pool: service-pool
+    metallb.io/address-pool: forge-pool
 spec:
   externalTrafficPolicy: Cluster
   ports:

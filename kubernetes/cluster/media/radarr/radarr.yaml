@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: radarr
-          image: ghcr.io/hotio/radarr:release-5.28.0.10274
+          image: ghcr.io/hotio/radarr:release-6.0.4.10291
           resources:
             requests:
               memory: 500Mi
@@ -50,6 +50,11 @@ spec:
             limits:
               memory: 1000Mi
               cpu: 1000m
+          envFrom:
+            - secretRef:
+                name: radarr
+            - configMapRef:
+                name: radarr
           ports:
             - containerPort: 7878
           volumeMounts:
@@ -64,3 +69,32 @@ spec:
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: radarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: radarr
+data:
+  RADARR__APP__INSTANCENAME: Radarr
+  RADARR__APP__THEME: dark
+  RADARR__APP__LAUNCHBROWSER: "False"
+
+  RADARR__SERVER__BINDADDRESS: "*"
+  RADARR__SERVER__PORT: "7878"
+  RADARR__SERVER__SSLPORT: "9898"
+  RADARR__SERVER__ENABLESSL: "False"
+  RADARR__SERVER__URLBASE: ""
+
+  RADARR__AUTH__METHOD: External
+  RADARR__AUTH__REQUIRED: Enabled
+
+  RADARR__UPDATE__MECHANISM: Docker
+
+  RADARR__LOG__LEVEL: info
+  RADARR__LOG__ANALYTICSENABLED: "False"
+
+  RADARR__POSTGRES__HOST: cnpg-default-rw.default.svc.cluster.local
+  RADARR__POSTGRES__PORT: "5432"
