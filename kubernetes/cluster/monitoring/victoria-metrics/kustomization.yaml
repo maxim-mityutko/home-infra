@@ -11,7 +11,7 @@ helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring
       releaseName: victoria-metrics
-      version: 0.63.4
+      version: 0.65.1
       repo: https://victoriametrics.github.io/helm-charts/
       valuesInline:
         defaultDashboards:
@@ -47,6 +47,7 @@ helmCharts:
               enabled: true
               searchNamespace: ALL
               label: grafana-dashboard
+              labelValue: "true"
           extraSecretMounts:
             - name: auth-generic-oauth-secret-mount
               secretName: grafana
