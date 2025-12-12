@@ -31,29 +31,6 @@ spec:
                 port:
                   number: 3909
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: garage-cdn
-  namespace: garage
-  labels:
-    app.kubernetes.io/name: garage-cdn
-  annotations:
-    kubernetes.io/ingress.class: public
-    cert-manager.io/cluster-issuer: lets-encrypt
-spec:
-  rules:
-    - host: "cdn.brhd.io"
-      http:
-        paths:
-          - pathType: Prefix
-            path: /
-            backend:
-              service:
-                name: garage
-                port:
-                  number: 3902
----
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
@@ -62,19 +39,6 @@ metadata:
 spec:
   endpoints:
     - dnsName: s3.brhd.io
-      recordTTL: 86400
-      recordType: CNAME
-      targets:
-        - casa.brhd.io
----
-apiVersion: externaldns.k8s.io/v1alpha1
-kind: DNSEndpoint
-metadata:
-  name: cdn.brhd.io
-  namespace: garage
-spec:
-  endpoints:
-    - dnsName: cdn.brhd.io
       recordTTL: 86400
       recordType: CNAME
       targets:
