@@ -3,13 +3,13 @@
 #
 # Helm Charts:
 #   - Intel Device Plugins Operator:
-#       https://github.com/intel/helm-charts/blob/intel-device-plugins-operator-0.32.1/charts/device-plugin-operator/README.md
+#       https://github.com/intel/helm-charts/blob/intel-device-plugins-operator-0.34.1/charts/device-plugin-operator/README.md
 #   - Intel GPU Device Plugin:
-#       https://github.com/intel/helm-charts/blob/intel-device-plugins-gpu-0.32.1/charts/gpu-device-plugin/README.md
+#       https://github.com/intel/helm-charts/blob/intel-device-plugins-gpu-0.34.1/charts/gpu-device-plugin/README.md
 #
 # Custom Resource Definitions (CRDs):
 #   - GPU Device Plugin CRD:
-#       https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.32.1/deployments/operator/crd/bases/deviceplugin.intel.com_gpudeviceplugins.yaml
+#       https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.34.1/deployments/operator/crd/bases/deviceplugin.intel.com_gpudeviceplugins.yaml
 #
 # Notes:
 #   - Both the operator and the GPU device plugin support only the amd64 architecture.
@@ -22,7 +22,7 @@
 #   - Supported Kubernetes Versions:
 #       https://intel.github.io/intel-device-plugins-for-kubernetes/README.html#supported-kubernetes-versions
 #   - Installation Guide:
-#       https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.32.1/INSTALL.md
+#       https://github.com/intel/intel-device-plugins-for-kubernetes/blob/v0.34.1/INSTALL.md
 #   - GPU Device Plugin Overview:
 #       https://intel.github.io/intel-device-plugins-for-kubernetes/README.html#gpu-device-plugin
 # ================================================================================================
@@ -34,7 +34,7 @@ kind: Kustomization
 namespace: gpu
 resources:
   # CRDs
-  - https://raw.githubusercontent.com/intel/helm-charts/refs/tags/intel-device-plugins-operator-0.32.1/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/refs/tags/intel-device-plugins-operator-0.34.1/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
   - exporter/
 helmCharts:
   - name: intel-device-plugins-operator
