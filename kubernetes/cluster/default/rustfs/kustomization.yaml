@@ -1,0 +1,109 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: rustfs
+resources:
+  - dns-endpoint.yaml
+helmCharts:
+  - name: rustfs
+    namespace: rustfs
+    releaseName: rustfs
+    version: 1.0.3
+    repo: https://charts.rustfs.com/
+    valuesInline:
+      replicaCount: 1
+      image:
+        repository: rustfs/rustfs
+      mode:
+        standalone:
+          enabled: true
+        distributed:
+          enabled: false
+      secret:
+        # existingSecret: ""
+        rustfs:
+          access_key: rustfsadmin
+          secret_key: rustfsadmin
+
+      config:
+        rustfs:
+          # Examples
+          # volumes: "/data/rustfs0,/data/rustfs1,/data/rustfs2,/data/rustfs3"
+          # volumes: "http://rustfs-{0...3}.rustfs-headless:9000/data/rustfs{0...3}"
+          volumes: ""
+          address: ":9000"
+          console_enable: "true"
+          console_address: ":9001"
+          log_level: "info"
+          rust_log: "info"
+          region: "us-east-1"
+          obs_log_directory: "/logs"
+          obs_environment: "develop"
+
+      serviceAccount:
+        create: true
+        automount: true
+
+      podSecurityContext:
+        fsGroup: 10001
+        runAsUser: 10001
+        runAsGroup: 10001
+
+      containerSecurityContext:
+        capabilities:
+          drop:
+            - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+
+      service:
+        type: NodePort
+        ep_port: 9000
+        console_port: 9001
+
+      ingress:
+        enabled: true
+        className: "nginx"
+        nginxAnnotations:
+          nginx.ingress.kubernetes.io/affinity: cookie
+          nginx.ingress.kubernetes.io/session-cookie-expires: "3600"
+          nginx.ingress.kubernetes.io/session-cookie-hash: sha1
+          nginx.ingress.kubernetes.io/session-cookie-max-age: "3600"
+          nginx.ingress.kubernetes.io/session-cookie-name: rustfs
+        hosts:
+          - host: rustfs.brhd.io
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
+
+      resources:
+        limits:
+          cpu: 200m
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: endpoint
+        initialDelaySeconds: 10
+        periodSeconds: 5
+        timeoutSeconds: 3
+        successThreshold: 1
+        failureThreshold: 3
+
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: endpoint
+        initialDelaySeconds: 30
+        periodSeconds: 5
+        timeoutSeconds: 3
+        successThreshold: 1
+        failureThreshold: 3
+
+      storageclass:
+        name: nfs-subdir
+        dataStorageSize: 256Mi
+        logStorageSize: 256Mi
