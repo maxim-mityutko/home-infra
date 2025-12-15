@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: rustfs
 resources:
   - dns-endpoint.yaml
+  - secret.yaml
 helmCharts:
   - name: rustfs
     namespace: rustfs
@@ -19,10 +20,7 @@ helmCharts:
         distributed:
           enabled: false
       secret:
-        # existingSecret: ""
-        rustfs:
-          access_key: rustfsadmin
-          secret_key: rustfsadmin
+        existingSecret: rustfs
 
       config:
         rustfs:
@@ -35,7 +33,7 @@ helmCharts:
           console_address: ":9001"
           log_level: "info"
           rust_log: "info"
-          region: "us-east-1"
+          region: "eu-west-1"
           obs_log_directory: "/logs"
           obs_environment: "develop"
 
@@ -105,5 +103,5 @@ helmCharts:
 
       storageclass:
         name: nfs-subdir
-        dataStorageSize: 256Mi
-        logStorageSize: 256Mi
+        dataStorageSize: 20Gi
+        logStorageSize: 100Mi
