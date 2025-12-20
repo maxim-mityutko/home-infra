@@ -15,7 +15,7 @@ spec:
         cpu: 2
   configuration:
     destinationPath: s3://cnpg-backup/
-    endpointURL: http://minio.minio.svc.cluster.local
+    endpointURL: http://rustfs-svc.rustfs.svc.cluster.local:9001
     s3Credentials:
       accessKeyId:
         name: cnpg-default-secret
