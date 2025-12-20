@@ -54,7 +54,7 @@ helmCharts:
         runAsNonRoot: true
 
       service:
-        type: NodePort
+        type: ClusterIP
         ep_port: 9000
         console_port: 9001
 
@@ -67,6 +67,7 @@ helmCharts:
           nginx.ingress.kubernetes.io/session-cookie-hash: sha1
           nginx.ingress.kubernetes.io/session-cookie-max-age: "3600"
           nginx.ingress.kubernetes.io/session-cookie-name: rustfs
+          nginx.ingress.kubernetes.io/proxy-body-size: '0'
         hosts:
           - host: rustfs.brhd.io
             paths:
