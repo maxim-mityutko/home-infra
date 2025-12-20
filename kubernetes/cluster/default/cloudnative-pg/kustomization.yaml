@@ -41,7 +41,7 @@ helmCharts:
     - name: plugin-barman-cloud
       namespace: default
       releaseName: plugin-barman-cloud
-      version: 0.2.0
+      version: 0.3.1
       repo: https://cloudnative-pg.github.io/charts
       valuesInline:
         crds:
