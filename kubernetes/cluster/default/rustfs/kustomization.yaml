@@ -74,6 +74,10 @@ helmCharts:
             paths:
               - path: /
                 pathType: ImplementationSpecific
+          - host: s3.brhd.io
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
 
       resources:
         limits:
