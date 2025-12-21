@@ -4,6 +4,7 @@ namespace: rustfs
 resources:
   - dns-endpoint.yaml
   - secret.yaml
+  - ingress-cdn.yaml
 helmCharts:
   - name: rustfs
     namespace: rustfs
