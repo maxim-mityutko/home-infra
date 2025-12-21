@@ -43,14 +43,14 @@ spec:
     retentionPolicy: 14d
     barmanObjectStore:
       destinationPath: "s3://cnpg-backup/"
-      endpointURL: "http://garage.garage.svc.cluster.local:3900"
-      serverName: cnpg-ha-v2
+      endpointURL: http://rustfs-svc.rustfs.svc.cluster.local:9000
+      serverName: cnpg-ha
       s3Credentials:
         accessKeyId:
-          name: cnpg-backup-secret
+          name: cnpg-default-secret
           key: username
         secretAccessKey:
-          name: cnpg-backup-secret
+          name: cnpg-default-secret
           key: password
       data:
         compression: bzip2
@@ -93,12 +93,12 @@ spec:
     - name: cnpg-ha-backup
       barmanObjectStore:
         destinationPath: "s3://cnpg-backup/"
-        serverName: cnpg-ha-v2
-        endpointURL: "http://garage.garage.svc.cluster.local:3900"
+        serverName: cnpg-ha
+        endpointURL: http://rustfs-svc.rustfs.svc.cluster.local:9000
         s3Credentials:
           accessKeyId:
-            name: cnpg-backup-secret
+            name: cnpg-default-secret
             key: username
           secretAccessKey:
-            name: cnpg-backup-secret
+            name: cnpg-default-secret
             key: password
