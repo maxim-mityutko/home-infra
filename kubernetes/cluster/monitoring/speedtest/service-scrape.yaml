@@ -1,0 +1,18 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  labels:
+    app.kubernetes.io/instance: victoria-metrics
+  name: speedtest-metrics
+  namespace: monitoring
+spec:
+  endpoints:
+    - port: http
+      path: /prometheus
+      interval: 600s
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: speedtest
