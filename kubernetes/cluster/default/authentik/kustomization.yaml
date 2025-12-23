@@ -14,6 +14,7 @@ helmCharts:
         authentik:
           error_reporting:
             enabled: false
+            send_pii: false
           log_level: warning
           postgresql:
             host: cnpg-ha-rw.default.svc.cluster.local
@@ -28,6 +29,8 @@ helmCharts:
                 name: authentik-postgres
         server:
           replicas: 1
+          metrics:
+            enabled: false
           ingress:
             enabled: true
             annotations:
