@@ -50,6 +50,11 @@ spec:
             limits:
               memory: 1000Mi
               cpu: 1000m
+          envFrom:
+            - secretRef:
+                name: lidarr
+            - configMapRef:
+                name: lidarr
           ports:
             - containerPort: 8686
           volumeMounts:
@@ -64,3 +69,32 @@ spec:
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lidarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: lidarr
+data:
+  LIDARR__APP__INSTANCENAME: Lidarr
+  LIDARR__APP__THEME: dark
+  LIDARR__APP__LAUNCHBROWSER: "False"
+
+  LIDARR__SERVER__BINDADDRESS: "*"
+  LIDARR__SERVER__PORT: "8686"
+  LIDARR__SERVER__SSLPORT: "6868"
+  LIDARR__SERVER__ENABLESSL: "False"
+  LIDARR__SERVER__URLBASE: ""
+
+  LIDARR__AUTH__METHOD: External
+  LIDARR__AUTH__REQUIRED: Enabled
+
+  LIDARR__UPDATE__MECHANISM: Docker
+
+  LIDARR__LOG__LEVEL: info
+  LIDARR__LOG__ANALYTICSENABLED: "False"
+
+  LIDARR__POSTGRES__HOST: cnpg-default-rw.default.svc.cluster.local
+  LIDARR__POSTGRES__PORT: "5432"
