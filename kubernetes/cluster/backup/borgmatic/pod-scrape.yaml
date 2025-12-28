@@ -12,8 +12,8 @@ spec:
     - port: health
       scheme: http
       path: /metrics
-      scrapeTimeout: 120s
-      interval: 600s
+      scrapeTimeout: 180s
+      interval: 30s
       relabelConfigs:
         - target_label: job
           replacement: borgmatic
