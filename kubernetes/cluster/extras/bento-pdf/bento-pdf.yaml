@@ -40,7 +40,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: bento-pdf
-          image: ghcr.io/alam00000/bentopdf-simple:v1.15.3
+          image: ghcr.io/alam00000/bentopdf-simple:v1.15.4
           resources:
             requests:
               memory: 10Mi
