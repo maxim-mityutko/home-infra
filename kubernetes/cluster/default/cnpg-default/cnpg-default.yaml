@@ -67,13 +67,14 @@ spec:
       timeoutSeconds: 5
       periodSeconds: 30
 
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/local-storage
-              operator: Exists
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #         - matchExpressions:
+  #           - key: feature.node.kubernetes.io/storage-nonrotationaldisk
+  #             operator: In
+  #             values: ["true"]
 
   # Ref: https://cloudnative-pg.io/plugin-barman-cloud/docs/concepts/#recovery-of-a-postgres-cluster
   bootstrap:
