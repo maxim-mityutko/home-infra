@@ -48,6 +48,8 @@ helmCharts:
           create: true
         serviceAccount:
           create: true
+        additionalArgs:
+          - --metrics-bind-address=:8080
         resources:
           requests:
             memory: 25Mi
