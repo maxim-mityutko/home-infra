@@ -5,6 +5,7 @@ resources:
   - pod-scrape.yaml
   - secret.yaml
   - storage-class.yaml
+  - service.yaml
 helmCharts:
     - name: cloudnative-pg
       namespace: default
