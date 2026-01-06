@@ -5,7 +5,7 @@ metadata:
 spec:
   retentionPolicy: 7d
   instanceSidecarConfiguration:
-    logLevel: debug
+    logLevel: trace
     retentionPolicyIntervalSeconds: 21600 # 6 hours
     resources:
       requests:
