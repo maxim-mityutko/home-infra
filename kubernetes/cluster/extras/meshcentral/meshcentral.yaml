@@ -24,6 +24,8 @@ kind: Deployment
 metadata:
   name: meshcentral
   namespace: extras
+  annotations:
+    k8s.v1.cni.cncf.io/networks: macvlan-meshcentral
   labels:
     app.kubernetes.io/name: meshcentral
 spec:
@@ -57,6 +59,10 @@ spec:
           volumeMounts:
             - name: meshcentral-data
               mountPath: /opt/meshcentral/meshcentral-data
+      # TODO: Temporary enforcing specific set of nodes till network interface names can be aligned across all nodes of the cluster
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        node.kubernetes.io/microk8s-worker: microk8s-worker
       volumes:
         - name: meshcentral-data
           persistentVolumeClaim:
