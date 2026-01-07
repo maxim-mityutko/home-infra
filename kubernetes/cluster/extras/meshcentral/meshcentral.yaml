@@ -24,8 +24,6 @@ kind: Deployment
 metadata:
   name: meshcentral
   namespace: extras
-  annotations:
-    k8s.v1.cni.cncf.io/networks: macvlan-meshcentral
   labels:
     app.kubernetes.io/name: meshcentral
 spec:
@@ -39,6 +37,8 @@ spec:
   template:
     metadata:
       namespace: extras
+      annotations:
+        k8s.v1.cni.cncf.io/networks: macvlan-meshcentral
       labels:
         app.kubernetes.io/name: meshcentral
     spec:
