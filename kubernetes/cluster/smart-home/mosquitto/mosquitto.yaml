@@ -57,6 +57,8 @@ spec:
   template:
     metadata:
       namespace: smart-home
+      annotations:
+        k8s.v1.cni.cncf.io/networks: macvlan-mosquitto
       labels:
         app.kubernetes.io/name: mosquitto
     spec:
