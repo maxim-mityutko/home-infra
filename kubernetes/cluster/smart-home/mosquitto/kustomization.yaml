@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: smart-home
 resources:
   - mosquitto.yaml
+  - network-attachment.yaml
 configMapGenerator:
   - name: mosquitto
     files:

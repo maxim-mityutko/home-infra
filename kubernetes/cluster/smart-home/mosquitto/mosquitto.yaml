@@ -91,6 +91,9 @@ spec:
               mountPath: /mosquitto/config/mosquitto.conf
               subPath: mosquitto.conf
               readOnly: true
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        node.kubernetes.io/microk8s-worker: microk8s-worker
       volumes:
         - name: mosquitto-config
           configMap:
