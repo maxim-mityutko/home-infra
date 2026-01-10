@@ -30,7 +30,8 @@ spec:
       "cniVersion": "0.3.1",
       "type": "macvlan",
       "master": "enp6s18",
-      "vlan": 4,
+      "mode": "bridge",
+      "vlanId": 4,
       "ipam": {
         "type": "static",
         "addresses": [
