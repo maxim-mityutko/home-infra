@@ -28,9 +28,9 @@ metadata:
 spec:
   config: '{
       "cniVersion": "0.3.1",
-      "type": "vlan",
+      "type": "macvlan",
       "master": "enp6s18",
-      "vlanId": 3,
+      "vlan": 4,
       "ipam": {
         "type": "dhcp"
       }
