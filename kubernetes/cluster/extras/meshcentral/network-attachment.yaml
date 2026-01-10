@@ -30,14 +30,14 @@ spec:
       "cniVersion": "0.3.1",
       "type": "vlan",
       "master": "net1",
-      "vlanId": 4,
+      "vlanId": 2,
       "linkInContainer": true,
       "ipam": {
         "type": "static",
         "addresses": [
           {
-            "address": "192.168.12.99/25",
-            "gateway": "192.168.12.1"
+            "address": "192.168.10.121/25",
+            "gateway": "192.168.10.1"
           }
         ]
       }
