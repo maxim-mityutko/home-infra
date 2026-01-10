@@ -14,7 +14,7 @@ spec:
         "type": "static",
         "addresses": [
           {
-            "address": "192.168.12.70/25",
+            "address": "192.168.12.34/25",
             "gateway": "192.168.12.1"
           }
         ]
