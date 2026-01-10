@@ -30,7 +30,7 @@ spec:
       "cniVersion": "0.3.1",
       "type": "vlan",
       "master": "enp6s18",
-      "vlanId": 4,
+      "vlanId": 3,
       "ipam": {
         "type": "dhcp"
       }
