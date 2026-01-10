@@ -5,7 +5,6 @@ metadata:
   # Ref: https://cloudnative-pg.io/documentation/current/labels_annotations/
   annotations:
     cnpg.io/skipWalArchiving: enabled
-    cnpg.io/skipEmptyWalArchiveCheck: false
 # Ref: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-ClusterSpec
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.4
@@ -37,33 +36,22 @@ spec:
   resources:
     requests:
       memory: 400Mi
-      cpu: 100m
+      cpu: 200m
     limits:
       memory: 1Gi
   
   storage:
     size: 25Gi
-    # resizeInUseVolumes: true
     storageClass: nfs-subdir
 
-  # Ref: https://cloudnative-pg.io/documentation/current/backup_barmanobjectstore/
-  backup:
-    target: primary
-    retentionPolicy: 7d
-    barmanObjectStore:
-      destinationPath: "s3://cnpg-backup/"
-      endpointURL: "http://garage.garage.svc.cluster.local:3900"
-      s3Credentials:
-        accessKeyId:
-          name: cnpg-backup-secret
-          key: username
-        secretAccessKey:
-          name: cnpg-backup-secret
-          key: password
-      data:
-        compression: bzip2
-      wal:
-        compression: bzip2
+  # Ref: https://cloudnative-pg.io/documentation/current/wal_archiving/#plugin-based-architecture
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      enabled: true
+      isWALArchiver: false
+      parameters:
+        serverName: cnpg-default
+        barmanObjectName: cnpg-default-barman
 
   # Ref: https://cloudnative-pg.io/documentation/current/instance_manager/
   startDelay: 120
@@ -79,20 +67,26 @@ spec:
       timeoutSeconds: 5
       periodSeconds: 30
 
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/local-storage
-              operator: Exists
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #         - matchExpressions:
+  #           - key: feature.node.kubernetes.io/storage-nonrotationaldisk
+  #             operator: In
+  #             values: ["true"]
+
+  # Ref: https://cloudnative-pg.io/plugin-barman-cloud/docs/concepts/#recovery-of-a-postgres-cluster
   bootstrap:
-    # Ref: https://cloudnative-pg.io/documentation/current/recovery/#recovery-from-a-backup-object
     recovery:
-      backup:
-        name: cnpg-default-backup
-      # recoveryTarget:
-      #   targetTime: "2025-01-01 00:00:00.00000+00"  # PITR    
+      source: cnpg-default-backup
+  externalClusters:
+    - name: cnpg-default-backup
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: cnpg-default-barman
+          serverName: cnpg-default
 
   # NOTE: keeping `bootstrap` section here for reference, refer to
   # CloudNativePG documentation for more details.
@@ -103,32 +97,11 @@ spec:
   #     import:
   #       type: monolith
   #       databases:
-  #         - bazarr_main
-  #         - gitea
-  #         - hass
-  #         - invidious
-  #         - jellyseerr
-  #         - lidarr_log
-  #         - lidarr_main
-  #         - miniflux
-  #         - prowlarr_log
-  #         - prowlarr_main
-  #         - radarr_log
-  #         - radarr_main
-  #         - readarr_cache
-  #         - readarr_main
-  #         - readarr_log
-  #         - sonarr_log
-  #         - sonarr_main
-  #         - speedtest_tracker
+  #         - db_1
+  #         - db_2
   #       roles:
-  #         - arr
-  #         - gitea
-  #         - hass
-  #         - invidious
-  #         - jellyseerr
-  #         - miniflux
-  #         - speedtest
+  #         - role_1
+  #         - role_2
   #       source:
   #         externalCluster: postgres-default-cluster
   # externalClusters:
