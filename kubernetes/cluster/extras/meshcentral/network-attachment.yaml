@@ -20,3 +20,18 @@ spec:
         ]
       }
     }'
+---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: vlan-forge-network
+spec:
+  config: '{
+      "cniVersion": "0.3.1",
+      "type": "vlan",
+      "master": "enp6s18",
+      "vlanId": 4,
+      "ipam": {
+        "type": "dhcp"
+      }
+    }'

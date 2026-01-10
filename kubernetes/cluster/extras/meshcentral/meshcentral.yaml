@@ -38,7 +38,11 @@ spec:
     metadata:
       namespace: extras
       annotations:
-        k8s.v1.cni.cncf.io/networks: macvlan-meshcentral
+        k8s.v1.cni.cncf.io/networks: |
+          [
+            {"name": "macvlan-meshcentral"},
+            {"name": "vlan-forge-network"}
+          ]
       labels:
         app.kubernetes.io/name: meshcentral
     spec:
