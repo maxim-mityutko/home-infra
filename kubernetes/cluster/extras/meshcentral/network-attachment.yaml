@@ -30,7 +30,7 @@ spec:
       "cniVersion": "0.3.1",
       "type": "vlan",
       "master": "net1",
-      "vlanId": 2,
+      "vlanId": 1,
       "linkInContainer": true,
       "ipam": {
         "type": "static",
