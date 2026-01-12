@@ -15,7 +15,7 @@ spec:
   podManagementPolicy: Parallel
   minReadySeconds: 60
   revisionHistoryLimit: 2
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:
