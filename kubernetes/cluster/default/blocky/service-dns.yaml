@@ -69,7 +69,7 @@ metadata:
   annotations:
     metallb.io/address-pool: forge-pool
     metallb.io/allow-shared-ip: "true"
-    metallb.io/loadBalancerIPs: "192.168.12.99"
+    metallb.io/loadBalancerIPs: "192.168.12.98"
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
@@ -98,7 +98,7 @@ metadata:
   annotations:
     metallb.io/address-pool: forge-pool
     metallb.io/allow-shared-ip: "true"
-    metallb.io/loadBalancerIPs: "192.168.12.98"
+    metallb.io/loadBalancerIPs: "192.168.12.99"
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
