@@ -15,9 +15,11 @@ spec:
     - protocol: TCP
       port: 3000
       targetPort: 3000
+      name: invidious
     - protocol: TCP
       port: 8282
       targetPort: 8282
+      name: companion
   selector:
     app.kubernetes.io/name: invidious
 ---
