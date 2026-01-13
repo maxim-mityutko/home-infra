@@ -20,7 +20,14 @@ spec:
               service:
                 name: invidious
                 port:
-                  number: 80
+                  number: 3000
+          - pathType: Prefix
+            path: /companion
+            backend:
+              service:
+                name: invidious
+                port:
+                  number: 8282
   tls:
     - hosts:
         - yt.brhd.io
