@@ -13,8 +13,11 @@ spec:
   type: ClusterIP
   ports:
     - protocol: TCP
-      port: 80
+      port: 3000
       targetPort: 3000
+    - protocol: TCP
+      port: 8282
+      targetPort: 8282
   selector:
     app.kubernetes.io/name: invidious
 ---
@@ -120,6 +123,7 @@ data:
   INVIDIOUS_CONFIG: |
     invidious_companion:
       - private_url: "http://127.0.0.1:8282/companion"
+        public_url: "https://yt.brhd.io/companion"
     default_user_preferences: 
       region: NL
       dark_mode: dark
