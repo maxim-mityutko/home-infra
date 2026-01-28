@@ -1,0 +1,112 @@
+---
+# Ref: https://gitlab.com/purelb/bird_router/-/blob/main/bird.yml-SAMPLE?ref_type=heads
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bird
+  namespace: purelb-system
+  labels:
+    app.kubernetes.io/name: bird
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bird
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: purelb-system
+      labels:
+        app.kubernetes.io/name: bird
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: bird
+          # Ref: https://gitlab.com/purelb/bird_router/container_registry/1323381
+          image: registry.gitlab.com/purelb/bird_router:v2.16.1-purelb0
+          env:
+            - name: BIRD_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: BIRD_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: BIRD_ML_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          resources:
+            requests:
+              memory: 20Mi
+              cpu: 20m
+            limits:
+              memory: 25Mi
+              cpu: 20m
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+            privileged: false
+          volumeMounts:
+          - name: bird
+            mountPath: /usr/local/etc
+      volumes:
+      - name: bird
+        configMap:
+          name: bird
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+      hostNetwork: true
+      dnsPolicy: ClusterFirst
+      enableServiceLinks: true
+---
+# Ref: https://gitlab.com/purelb/bird_router/-/blob/main/bird-cm.yml?ref_type=heads
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bird
+  namespace: purelb-system
+data:
+  bird.conf: |
+    log stderr all;
+    include "/usr/local/include/birdvars.conf";
+    router id k8sipaddr;
+    watchdog warning 5 s;
+    watchdog timeout 30 s;
+    protocol device { 
+      scan time 10; 
+    }
+    protocol direct {
+      ipv4;
+      ipv6;
+      interface "kube-lb0";
+    }
+    protocol kernel {
+      ipv4;
+      scan time 10;			
+      learn;		
+    }
+    protocol kernel {
+      ipv6;
+      scan time 10;
+      learn;
+    }
+    protocol ospf v2  {
+      ipv4 {
+        import none;
+        export where source ~ [ RTS_STATIC, RTS_DEVICE ];
+      };
+      area 0.0.0.0 {
+        interface "ens18.1" {
+          type broadcast;         # Detected by default
+            cost 10;                # Interface metric
+        };
+      };
+    }
+
+
+
