@@ -30,8 +30,7 @@ exclude_patterns:
   - '*/omada-data/db'
   - '*/omada-logs'
   - '*/postgres-data'
-  # Cloudnative-PG (CNPG) cluster data and MinIO bucket 'cngp-backup'
-  - '*/cnpg-*'
+  - '*/cnpg-*' # Cloudnative-PG (CNPG) backup buckets
   - '*/shinobi-plugins'
   - '*/vmsingle-stack'
   - '*/code-server-data'
