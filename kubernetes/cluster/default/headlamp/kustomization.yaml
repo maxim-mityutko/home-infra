@@ -15,13 +15,13 @@ helmCharts:
       config:
         inCluster: false
         inClusterContextName: "main"
-        oidc:
-          secret:
-            create: false
-            # name: headlamp
-          externalSecret:
-            enabled: true
-            name: headlamp
+        # oidc:
+        #   secret:
+        #     create: false
+        #     # name: headlamp
+        #   externalSecret:
+        #     enabled: true
+        #     name: headlamp
         pluginsDir: "/headlamp/plugins"
         enableHelm: false
         watchPlugins: false
