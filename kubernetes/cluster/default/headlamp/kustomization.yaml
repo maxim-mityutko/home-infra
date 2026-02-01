@@ -3,11 +3,12 @@ kind: Kustomization
 namespace: kube-dashboard
 resources:
   - secret.yaml
+  - dns-endpoint.yaml
 helmCharts:
   - name: headlamp
     namespace: headlamp
     releaseName: headlamp
-    version: 6.0.8
+    version: 0.39.0
     repo: https://kubernetes-sigs.github.io/headlamp/
     valuesInline:
       replicaCount: 1
