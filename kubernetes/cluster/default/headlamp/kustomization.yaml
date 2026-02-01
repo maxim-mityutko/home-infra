@@ -41,6 +41,8 @@ helmCharts:
             large_client_header_buffers 4 64k;
         hosts:
           - host: k8s-test.brhd.io
+            paths:
+              - path: /
       # Refer to https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io/v1.HTTPRoute
       httpRoute:
         enabled: false
