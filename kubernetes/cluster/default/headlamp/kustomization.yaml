@@ -15,7 +15,6 @@ helmCharts:
       config:
         inCluster: true
         inClusterContextName: "main"
-        baseURL: k8s-test.brhd.io
         oidc:
           secret:
             create: false
