@@ -13,7 +13,7 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       config:
-        inCluster: false
+        inCluster: true
         inClusterContextName: "main"
         # oidc:
         #   secret:
