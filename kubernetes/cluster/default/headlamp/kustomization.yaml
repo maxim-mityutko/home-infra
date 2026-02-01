@@ -18,6 +18,9 @@ helmCharts:
         oidc:
           secret:
             create: false
+            # name: headlamp
+          externalSecret:
+            enabled: true
             name: headlamp
         pluginsDir: "/headlamp/plugins"
         enableHelm: false
