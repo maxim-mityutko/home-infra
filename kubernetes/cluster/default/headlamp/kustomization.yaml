@@ -1,0 +1,55 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-dashboard
+resources:
+  - secret.yaml
+helmCharts:
+  - name: headlamp
+    namespace: headlamp
+    releaseName: headlamp
+    version: 6.0.8
+    repo: https://kubernetes-sigs.github.io/headlamp/
+    valuesInline:
+      replicaCount: 1
+      config:
+        inCluster: true
+        inClusterContextName: "main"
+        baseURL: k8s-test.brhd.io
+        oidc:
+          secret:
+            create: false
+            name: headlamp
+        pluginsDir: "/headlamp/plugins"
+        enableHelm: false
+        watchPlugins: false
+      serviceAccount:
+        create: true
+      clusterRoleBinding:
+        create: true
+      securityContext:
+        runAsNonRoot: true
+        privileged: false
+        runAsUser: 100
+        runAsGroup: 101
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+          nginx.ingress.kubernetes.io/server-snippet: |-
+            large_client_header_buffers 4 64k;
+        hosts:
+          - host: k8s-test.brhd.io
+      # Refer to https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io/v1.HTTPRoute
+      httpRoute:
+        enabled: false
+      resources: {}
+      pluginsManager:
+        enabled: false
+      podDisruptionBudget:
+        enabled: false
+      nodeSelector:
+        node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
+      tolerations:
+        - key: "node.kubernetes.io/unschedulable"
+          operator: Exists
