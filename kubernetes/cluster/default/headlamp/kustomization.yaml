@@ -18,12 +18,12 @@ helmCharts:
         extraArgs:
           - "-kubeconfig=/mnt/config/kubeconfig"
         inClusterContextName: "main"
-        # oidc:
-        #   secret:
-        #     create: false
-        #   externalSecret:
-        #     enabled: true
-        #     name: headlamp
+        oidc:
+          secret:
+            create: false
+          # externalSecret:
+          #   enabled: true
+          #   name: headlamp
         pluginsDir: "/headlamp/plugins"
         enableHelm: false
         watchPlugins: false
