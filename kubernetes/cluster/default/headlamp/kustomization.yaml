@@ -15,16 +15,19 @@ helmCharts:
       config:
         inCluster: true
         inClusterContextName: "main"
-        # oidc:
-        #   secret:
-        #     create: false
-        #     # name: headlamp
-        #   externalSecret:
-        #     enabled: true
-        #     name: headlamp
+        oidc:
+          secret:
+            create: false
+            # name: headlamp
+          externalSecret:
+            enabled: true
+            name: headlamp
         pluginsDir: "/headlamp/plugins"
         enableHelm: false
         watchPlugins: false
+      env:
+        - name: HEADLAMP_CONFIG_OIDC_USE_ACCESS_TOKEN
+          value: "true"
       serviceAccount:
         create: true
       clusterRoleBinding:
@@ -41,6 +44,7 @@ helmCharts:
           cert-manager.io/cluster-issuer: lets-encrypt
           nginx.ingress.kubernetes.io/server-snippet: |-
             large_client_header_buffers 4 64k;
+            proxy_set_header X-Forwarded-Proto $scheme;
         hosts:
           - host: k8s-test.brhd.io
             paths:
