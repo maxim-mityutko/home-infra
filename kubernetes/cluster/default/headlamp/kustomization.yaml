@@ -11,7 +11,7 @@ helmCharts:
     version: 0.39.0
     repo: https://kubernetes-sigs.github.io/headlamp/
     valuesInline:
-      replicaCount: 1
+      replicaCount: 2
       config:
         # Note: Use "inCluster = true" and remove "extraArgs" for "-kubeconfig" if token / OIDC authentication required
         # See note below for "initContainers" section.
