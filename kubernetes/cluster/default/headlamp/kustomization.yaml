@@ -13,12 +13,14 @@ helmCharts:
     valuesInline:
       replicaCount: 1
       config:
-        inCluster: true
+        inCluster: false
+        # Mount kubeconfig to bypass authentication
+        extraArgs:
+          - "-kubeconfig=/mnt/config/kubeconfig"
         inClusterContextName: "main"
         oidc:
           secret:
             create: false
-            # name: headlamp
           externalSecret:
             enabled: true
             name: headlamp
@@ -63,3 +65,44 @@ helmCharts:
       tolerations:
         - key: "node.kubernetes.io/unschedulable"
           operator: Exists
+      # Fully bypass authentication, ref: https://github.com/kubernetes-sigs/headlamp/issues/1801#issuecomment-3753050855
+      initContainers:
+        - name: init-kubeconfig
+          image: busybox:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              KUBE_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+              KUBE_CA=$(cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt | base64 | tr -d '\n')
+              NAMESPACE=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
+              
+              cat <<EOF > /mnt/config/kubeconfig
+              apiVersion: v1
+              kind: Config
+              clusters:
+              - name: default-cluster
+                cluster:
+                  certificate-authority-data: ${KUBE_CA}
+                  server: https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}
+              contexts:
+              - name: default-context
+                context:
+                  cluster: default-cluster
+                  user: headlamp
+                  namespace: ${NAMESPACE}
+              current-context: default-context
+              users:
+              - name: headlamp
+                user:
+                  token: ${KUBE_TOKEN}
+              EOF
+          volumeMounts:
+            - name: shared-config
+              mountPath: /mnt/config
+      volumeMounts:
+        - name: shared-config
+          mountPath: /mnt/config
+      volumes:
+        - name: shared-config
+          emptyDir: {}
