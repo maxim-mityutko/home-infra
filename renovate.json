@@ -67,7 +67,7 @@
     },
     {
       "description": "Victoria Metrics: Only major and minor updates",
-      "matchPackageNames": ["victoria-metrics-k8s-stack"],
+      "matchPackageNames": ["victoria-metrics-k8s-stack", "code-server"],
       "matchUpdateTypes": ["patch", "digest"],
       "enabled": false
     }
