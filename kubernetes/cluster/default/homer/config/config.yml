@@ -54,10 +54,10 @@ services:
   - name: "Infrastructure"
     icon: "fas fa-server"
     items:
-      - name: "Kubernetes Dashboard"
-        logo: "https://cdn.brhd.io/cdn/icons/kubernetes.svg"
+      - name: "Headlamp"
+        logo: "https://cdn.brhd.io/cdn/icons/headlamp.svg"
         tag: "k8s"
-        url: "https://k8s.brhd.io/"
+        url: "https://hl.brhd.io/"
         target: "_blank"
       - name: "ArgoCD"
         logo: "https://cdn.brhd.io/cdn/icons/argo-cd.svg"
