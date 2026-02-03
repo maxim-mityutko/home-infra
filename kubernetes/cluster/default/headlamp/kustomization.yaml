@@ -6,7 +6,7 @@ resources:
   - dns-endpoint.yaml
 helmCharts:
   - name: headlamp
-    namespace: headlamp
+    namespace: kube-dashboard
     releaseName: headlamp
     version: 0.39.0
     repo: https://kubernetes-sigs.github.io/headlamp/
