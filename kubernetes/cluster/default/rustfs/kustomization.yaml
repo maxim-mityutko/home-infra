@@ -116,4 +116,4 @@ patches:
       kind: ConfigMap
       name: rustfs-config
     path: patch-configmap.yaml
-  - path: delete-rustfs-sticky-svc.yaml
+  - path: patch-delete-rustfs-sticky-svc.yaml
