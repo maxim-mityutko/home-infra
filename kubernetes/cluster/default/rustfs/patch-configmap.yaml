@@ -1,0 +1,10 @@
+---
+# Ref: https://github.com/rustfs/rustfs/issues/1590#issuecomment-3817623027
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rustfs-config
+  namespace: rustfs
+data:
+  RUSTFS_ENABLE_HEAL: 'false'
+  RUSTFS_ENABLE_SCANNER: 'false'
