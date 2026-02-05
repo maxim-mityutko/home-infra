@@ -111,3 +111,13 @@ helmCharts:
         name: nfs-subdir
         dataStorageSize: 20Gi
         logStorageSize: 100Mi
+patches:
+  # Temporary fix for high CPU and memory utilization
+  # Ref: # Ref: https://github.com/rustfs/rustfs/issues/1590#issuecomment-3817623027
+  - target:
+      kind: ConfigMap
+      name: rustfs-config
+    path: patch-configmap.yaml
+  # Temporary cleanup of Traefik-related manifest due to error in the chart
+  # Ref: https://github.com/rustfs/rustfs/issues/1678
+  - path: patch-delete-rustfs-sticky-svc.yaml
