@@ -147,7 +147,7 @@ config: |
   record:
     enabled: true
     retain:
-      days: 0   # No continuous recordings
+      days: 1   # 1 day - continuous recordings
       mode: all
     alerts:
       pre_capture: 5
