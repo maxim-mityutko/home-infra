@@ -1,45 +1,34 @@
----
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: invidious
-  namespace: privacy
+  name: rustfs-cdn
+  namespace: rustfs
   labels:
-    app.kubernetes.io/name: invidious
+    app.kubernetes.io/name: rustfs-cdn
   annotations:
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
 spec:
   rules:
-    - host: yt.brhd.io
+    - host: cdn.brhd.io
       http:
         paths:
           - pathType: Prefix
             path: /
             backend:
               service:
-                name: invidious
+                name: rustfs-svc
                 port:
-                  number: 3000
-          - pathType: Prefix
-            path: /companion
-            backend:
-              service:
-                name: invidious
-                port:
-                  number: 8282
-  tls:
-    - hosts:
-        - yt.brhd.io
+                  name: console
 ---
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: yt.brhd.io
-  namespace: privacy
+  name: cdn.brhd.io
+  namespace: rustfs
 spec:
   endpoints:
-    - dnsName: yt.brhd.io
+    - dnsName: cdn.brhd.io
       recordTTL: 86400
       recordType: CNAME
       targets:

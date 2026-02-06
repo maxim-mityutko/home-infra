@@ -8,12 +8,13 @@ helmCharts:
     - name: authentik
       namespace: default
       releaseName: authentik
-      version: 2025.10.2
+      version: 2025.12.3
       repo: https://charts.goauthentik.io
       valuesInline:
         authentik:
           error_reporting:
             enabled: false
+            send_pii: false
           log_level: warning
           postgresql:
             host: cnpg-ha-rw.default.svc.cluster.local
@@ -28,6 +29,8 @@ helmCharts:
                 name: authentik-postgres
         server:
           replicas: 1
+          metrics:
+            enabled: false
           ingress:
             enabled: true
             annotations:

@@ -9,7 +9,7 @@ metadata:
   namespace: backup
   annotations:
     metallb.io/address-pool: forge-pool
-    metallb.io/loadBalancerIPs: "192.168.12.30"
+    metallb.io/loadBalancerIPs: "192.168.12.72"
 spec:
   externalTrafficPolicy: Cluster
   allocateLoadBalancerNodePorts: false
@@ -71,14 +71,14 @@ spec:
       restartPolicy: Always
       containers:
         - name: syncthing
-          image: lscr.io/linuxserver/syncthing:2.0.12
+          image: lscr.io/linuxserver/syncthing:2.0.14
           resources:
             requests:
               memory: 300Mi
               cpu: 300m
             limits:
               memory: 1000Mi
-              cpu: 600m
+              cpu: 2
           env:
             - name: TZ
               value: Europe/Amsterdam

@@ -4,3 +4,4 @@ resources:
   - speedtest.yaml
   - ingress.yaml
   - secret.yaml
+  - service-scrape.yaml

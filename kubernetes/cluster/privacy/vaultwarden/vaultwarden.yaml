@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: vaultwarden
-          image: vaultwarden/server:1.34.3
+          image: vaultwarden/server:1.35.2
           resources:
             requests:
               memory: 200M
@@ -86,3 +86,12 @@ data:
   DISABLE_ICON_DOWNLOAD: "true"
   ICON_CACHE_TTL: "0"
   ICON_SERVICE: duckduckgo # internal / bitwarden / duckduckgo / google
+
+  SSO_ENABLED: "true"
+  SSO_ONLY: "false"
+  SSO_SIGNUPS_MATCH_EMAIL: "true"
+  SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION: "false"
+  # SSO_MASTER_PASSWORD_POLICY:
+  SSO_AUTH_ONLY_NOT_SESSION: "false"
+  SSO_AUTHORITY: https://auth.brhd.io/application/o/vaultwarden/
+  SSO_SCOPES: email profile offline_access

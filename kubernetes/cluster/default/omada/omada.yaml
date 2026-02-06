@@ -41,15 +41,15 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: registry.brhd.io/docker.io/mbentley/omada-controller:6.0.0.25
+        - image: registry.brhd.io/docker.io/mbentley/omada-controller:6.1.0.19
           name: omada
           resources:
             requests:
               cpu: 100m
-              memory: 1Gi
+              memory: 2Gi
             limits:
               cpu: 1
-              memory: 2Gi
+              memory: 2.5Gi
           envFrom:
             - configMapRef:
                 name: omada
