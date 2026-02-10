@@ -34,7 +34,7 @@ spec:
     storage: 20Gi
   # Ref: https://github.com/kubernetes/examples/blob/master/volumes/iscsi/README.md
   iscsi:
-    targetPortal: 192.168.1.222
+    targetPortal: 192.168.12.10
     iqn: iqn.2005-10.org.freenas.ctl:k8s.jellyfin
     lun: 0
     fsType: ext4
