@@ -39,10 +39,12 @@ spec:
           [
             {
               "name": "macvlan-interface-only",
+              "namespace": "kube-system",
               "interface": "net1"
             },
             {
               "name": "vlan-pub-network",
+              "namespace": "kube-system",
               "ips": ["192.168.1.120/24"],
             }
           ]

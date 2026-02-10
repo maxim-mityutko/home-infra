@@ -3,7 +3,7 @@ apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
   name: macvlan-interface-only
-  namespace: default
+  namespace: kube-system
 spec: 
   # TODO: alias eth0
   config: '{
@@ -18,7 +18,7 @@ apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
   name: vlan-pub-network
-  namespace: default
+  namespace: kube-system
 spec:
   config: '{
       "cniVersion": "0.3.1",
