@@ -4,5 +4,4 @@ namespace: default
 resources:
   - omada.yaml
   - ingress.yaml
-  - network-attachment.yaml
   - volumes.yaml
