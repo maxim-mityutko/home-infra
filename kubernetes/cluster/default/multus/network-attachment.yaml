@@ -1,3 +1,20 @@
+# ===========================================================================
+# All nodes have only one network interface pointing to the dedicated server 
+# / service VLAN (native), however some services, e.g. Home Assistant, need 
+# to be exposed on generic VLAN (tagged).
+#
+# Networrk Attachment Definitions:
+#   - "macvlan-interface-only" will be used to create network interface 
+#     within the pod connected to native VLAN (wo assigned IP address)
+#   - "vlan-pub-network" creates interface pointed to the tagged VLAN
+#
+# Documentation:
+#   - CNI Plugin Documentation: https://www.cni.dev/plugins/current/
+# 
+# Prerequisites:
+#   - configure aliases for network interfaces on all nodes with
+#       `sudo ip link property add dev <interface> altname nic0``
+# =========================================================================
 ---
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
@@ -5,11 +22,10 @@ metadata:
   name: macvlan-interface-only
   namespace: kube-system
 spec: 
-  # TODO: alias eth0
   config: '{
       "cniVersion": "0.3.1",
       "type": "macvlan",
-      "master": "enp6s19",
+      "master": "nic0",
       "mode": "bridge",
       "ipam": {}
     }'
