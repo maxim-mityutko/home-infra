@@ -4,3 +4,4 @@ resources:
   - meshcentral.yaml
   - ingress.yaml
   - volumes.yaml
+  - network-attachment.yaml
