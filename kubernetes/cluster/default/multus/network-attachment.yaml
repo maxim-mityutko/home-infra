@@ -83,6 +83,10 @@ spec:
       "master": "enp6s19",
       "mode": "bridge",
       "ipam": {
-        "type": "dhcp"
+        "type": "host-local",
+        "subnet": "192.168.12.0/25",
+        "rangeStart": "192.168.12.70",
+        "rangeEnd":   "192.168.12.99",
+        "gateway": "192.168.12.2"
       }
     }'
