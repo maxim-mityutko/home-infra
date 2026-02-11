@@ -59,7 +59,7 @@ spec:
   config: '{
       "cniVersion": "0.3.1",
       "type": "vlan",
-      "master": "enp6s19",
+      "master": "net1",
       "vlanId": 1,
       "linkInContainer": true,
       "ipam": {
