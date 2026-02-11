@@ -59,7 +59,7 @@ spec:
   config: '{
       "cniVersion": "0.3.1",
       "type": "vlan",
-      "master": "net1",
+      "master": "net1"
       "vlanId": 1,
       "linkInContainer": true,
       "ipam": {
@@ -91,5 +91,25 @@ spec:
             "gateway": "192.168.1.1"
           }
         ]
+      }
+    }'
+---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: macvlan-forge-network
+  namespace: kube-system
+spec: 
+  config: '{
+      "cniVersion": "0.3.1",
+      "type": "macvlan",
+      "master": "enp6s18",
+      "mode": "bridge",
+      "ipam": {
+        "type": "host-local",
+        "subnet": "192.168.1.0/24",
+        "rangeStart": "192.168.1.120",
+        "rangeEnd":   "192.168.1.140",
+        "gateway": "192.168.1.2"
       }
     }'
