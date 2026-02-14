@@ -1,5 +1,4 @@
 # Service: Jellyseerr
-# Ingress: media.brhd.io/r
 # Label: app.kubernetes.io/name: jellyseerr
 ---
 apiVersion: v1
@@ -41,8 +40,8 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - name: jellyseerr
-          image: fallenbagel/jellyseerr:2.7.3
+        - name: seerr
+          image: seerr-team/seerr:v3.0.1
           resources:
             requests:
               memory: 50Mi
@@ -59,6 +58,21 @@ spec:
           volumeMounts:
             - name: jellyseerr-config
               mountPath: /app/config
+          podSecurityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            privileged: false
+            runAsUser: 1000
+            runAsGroup: 1000
+            seccompProfile:
+              type: RuntimeDefault
       volumes:
         - name: jellyseerr-config
           persistentVolumeClaim:
