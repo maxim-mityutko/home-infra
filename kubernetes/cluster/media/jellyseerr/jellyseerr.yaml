@@ -41,7 +41,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: seerr
-          image: seerr-team/seerr:v3.0.1
+          image: ghcr.io/seerr-team/seerr:v3.0.1
           resources:
             requests:
               memory: 50Mi
@@ -58,9 +58,6 @@ spec:
           volumeMounts:
             - name: jellyseerr-config
               mountPath: /app/config
-          podSecurityContext:
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -73,6 +70,9 @@ spec:
             runAsGroup: 1000
             seccompProfile:
               type: RuntimeDefault
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
       volumes:
         - name: jellyseerr-config
           persistentVolumeClaim:
