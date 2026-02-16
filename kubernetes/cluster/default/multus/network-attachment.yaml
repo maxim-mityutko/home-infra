@@ -1,0 +1,59 @@
+# ==================================================================================
+# Prerequisites:
+#   All nodes should have an extra network interface configured for PUB VLAN.
+#   This interface does not require any IP address on the host, hence it can be
+#   configured as follows in `netplan` configuration file.
+#
+#   For VM:
+#     ethernets:
+#       nic0:
+#	        dhcp4: false
+#	        optional: true
+#
+#   For PM:
+#	    vlans:
+#	      nic0.1:
+#	        id: <vlan-id>
+#	        link: nic0
+#	        dhcp4: false
+#	        optional: true
+#
+#   In both cases, it is also recommended to set an alternative name for the
+#   interface, to make sure that MACVLAN configuration is applicable to all the
+#   nodes of the cluster: 
+#   `sudo ip link property add dev nic0 altname pub`
+#
+# Networrk Attachment Definitions:
+#   - "macvlan-pub-network" creates interface inside the pod pointed to the 
+#     PUB VLAN
+#
+# Documentation:
+#   - CNI Plugin Documentation: https://www.cni.dev/plugins/current/
+# 
+# ==================================================================================
+---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: macvlan-pub-network
+  namespace: kube-system
+spec: 
+  config: '{
+      "cniVersion": "0.3.1",
+      "type": "macvlan",
+      "master": "pub",
+      "mode": "bridge",
+      "ipam": {
+        "type": "host-local",
+        "ranges": [
+          [
+          	{
+              "subnet": "192.168.1.0/24",
+              "rangeStart": "192.168.1.10",
+              "rangeEnd": "192.168.1.19",
+              "gateway": "192.168.1.2"
+            }
+          ]
+        ]
+      }
+    }'
