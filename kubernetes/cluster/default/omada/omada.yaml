@@ -40,7 +40,7 @@ spec:
             {
               "name": "macvlan-pub-network",
               "namespace": "kube-system",
-              "ips": ["192.168.1.120/24"]
+              "ips": ["192.168.1.19/24"]
             }
           ]
       labels:
@@ -71,7 +71,6 @@ spec:
         # Latest images are incompatible with Raspberry Pi nodes, due to absence of
         # processor instructions required to run MongoDB.
         beta.kubernetes.io/arch: amd64
-        node.kubernetes.io/microk8s-worker: microk8s-worker
       volumes:
         - name: omada-data
           persistentVolumeClaim:
