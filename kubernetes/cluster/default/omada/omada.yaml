@@ -35,7 +35,14 @@ spec:
   template:
     metadata:
       annotations:
-        k8s.v1.cni.cncf.io/networks: macvlan-omada
+        k8s.v1.cni.cncf.io/networks: |
+          [
+            {
+              "name": "macvlan-pub-network",
+              "namespace": "kube-system",
+              "ips": ["192.168.1.19/24"]
+            }
+          ]
       labels:
         app.kubernetes.io/name: omada
     spec:
@@ -60,10 +67,10 @@ spec:
               mountPath: /opt/tplink/EAPController/logs
             - name: omada-autobackup
               mountPath: /opt/tplink/EAPController/data/autobackup
-      # TODO: Temporary enforcing specific set of nodes till network interface names can be aligned across all nodes of the cluster
       nodeSelector:
+        # Latest images are incompatible with Raspberry Pi nodes, due to absence of
+        # processor instructions required to run MongoDB.
         beta.kubernetes.io/arch: amd64
-        node.kubernetes.io/microk8s-worker: microk8s-worker
       volumes:
         - name: omada-data
           persistentVolumeClaim:
