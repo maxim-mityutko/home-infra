@@ -16,6 +16,7 @@
 #       `sudo ip link property add dev <interface> altname nic0``
 # =========================================================================
 ---
+# TOBEDELETED
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
@@ -50,6 +51,7 @@ spec:
       }
     }'
 ---
+# TOBEDELETED
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
@@ -71,6 +73,7 @@ spec:
       }
     }'
 ---
+# TOBEDELETED
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
