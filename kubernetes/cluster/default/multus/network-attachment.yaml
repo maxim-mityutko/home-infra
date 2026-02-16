@@ -45,9 +45,23 @@ spec:
       "mode": "bridge",
       "ipam": {
         "type": "host-local",
-        "subnet": "192.168.1.0/24",
-        "rangeStart": "192.168.1.120",
-        "rangeEnd":   "192.168.1.140",
-        "gateway": "192.168.1.2"
+        "ranges": [
+          [
+          	{
+              "subnet": "192.168.1.0/24",
+              "rangeStart": "192.168.1.100",
+              "rangeEnd": "192.168.1.254",
+              "gateway": "192.168.1.2"
+            }
+          ],
+          [
+            {
+              "subnet": "192.168.1.0/25",
+              "rangeStart": "192.168.1.19",
+              "rangeEnd": "192.168.1.19",
+              "gateway": "192.168.1.2"
+            }
+          ]
+        ]
       }
     }'
