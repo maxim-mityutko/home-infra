@@ -1,0 +1,30 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: cnpg-default-barman
+spec:
+  retentionPolicy: 7d
+  instanceSidecarConfiguration:
+    logLevel: trace
+    retentionPolicyIntervalSeconds: 21600 # 6 hours
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 100m
+      limits:
+        memory: 500Mi
+        cpu: 2
+  configuration:
+    destinationPath: s3://cnpg-backup/
+    endpointURL: http://rustfs-svc.rustfs.svc.cluster.local:9000
+    s3Credentials:
+      accessKeyId:
+        name: cnpg-default-secret
+        key: username
+      secretAccessKey:
+        name: cnpg-default-secret
+        key: password
+    data:
+      compression: bzip2
+    wal:
+      compression: bzip2

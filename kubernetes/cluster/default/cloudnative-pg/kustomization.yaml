@@ -5,6 +5,7 @@ resources:
   - pod-scrape.yaml
   - secret.yaml
   - storage-class.yaml
+  - service.yaml  # TODO: can be removed as it exposes GO process metrics, not the Barman-related metrics
 helmCharts:
     - name: cloudnative-pg
       namespace: default
@@ -32,11 +33,27 @@ helmCharts:
             create: true
             sidecarLabel: "grafana-dashboard"
             sidecarLabelValue: "true"
-        # Control plane nodes are cordonned due to resource (memory) constraints, which ensures that only
-        # daemon sets are running on that nodes. Forcing the pod to be deployed on the cordoned
-        # node due to criticality and low resource consumption.
         nodeSelector:
           node.kubernetes.io/microk8s-controlplane: microk8s-controlplane
         tolerations:
           - key: "node.kubernetes.io/unschedulable"
             operator: Exists
+    # Barman Cloud CNPG-I plugin
+    - name: plugin-barman-cloud
+      namespace: default
+      releaseName: plugin-barman-cloud
+      version: 0.5.0
+      repo: https://cloudnative-pg.github.io/charts
+      valuesInline:
+        crds:
+          create: true
+        serviceAccount:
+          create: true
+        additionalArgs:
+          - --metrics-bind-address=:8080  # TODO: remove
+        resources:
+          requests:
+            memory: 25Mi
+            cpu: 50m
+          limits:
+            memory: 50Mi
