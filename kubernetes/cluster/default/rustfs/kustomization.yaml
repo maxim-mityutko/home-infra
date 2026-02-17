@@ -120,4 +120,4 @@ patches:
     path: patch-configmap.yaml
   # Temporary cleanup of Traefik-related manifest due to error in the chart
   # Ref: https://github.com/rustfs/rustfs/issues/1678
-  - path: patch-delete-rustfs-sticky-svc.yaml
+  # - path: patch-delete-rustfs-sticky-svc.yaml
