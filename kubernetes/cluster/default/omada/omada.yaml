@@ -40,6 +40,7 @@ spec:
             {
               "name": "macvlan-pub-network",
               "namespace": "kube-system",
+              "mac": "ae:46:c0:d1:f4:e3",
               "ips": ["192.168.1.19/24"]
             }
           ]
