@@ -4,6 +4,5 @@ namespace: smart-home
 resources:
   - hass.yaml
   - ingress.yaml
-  - network-attachment.yaml
   - secret.yaml
   - volumes.yaml
