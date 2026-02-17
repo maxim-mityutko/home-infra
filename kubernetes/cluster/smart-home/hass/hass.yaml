@@ -35,13 +35,21 @@ spec:
   template:
     metadata:
       annotations:
-        k8s.v1.cni.cncf.io/networks: macvlan-home-assistant
+        k8s.v1.cni.cncf.io/networks: |
+          [
+            {
+              "name": "macvlan-pub-network",
+              "namespace": "kube-system",
+              "mac": "ae:46:c0:d1:f4:e4",
+              "ips": ["192.168.1.18/24"]
+            }
+          ]
       labels:
         app.kubernetes.io/name: home-assistant
     spec:
       restartPolicy: Always
       containers:
-        - image: ghcr.io/home-assistant/home-assistant:2026.2.1
+        - image: ghcr.io/home-assistant/home-assistant:2026.2.2
           name: home-assistant
           resources:
             requests:
@@ -67,10 +75,8 @@ spec:
               mountPath: /config/secrets.yaml
               subPath: secrets.yaml
               readOnly: true
-      # TODO: Temporary enforcing specific set of nodes till network interface names can be aligned across all nodes of the cluster
       nodeSelector:
         beta.kubernetes.io/arch: amd64
-        node.kubernetes.io/microk8s-worker: microk8s-worker
       volumes:
         - name: home-assistant-config
           persistentVolumeClaim:
