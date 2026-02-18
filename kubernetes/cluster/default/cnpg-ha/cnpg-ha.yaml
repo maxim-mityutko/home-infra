@@ -81,6 +81,15 @@ spec:
               values: ["true"]
             - key: node.kubernetes.io/microk8s-controlplane
               operator: Exists
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: cnpg.io/cluster
+                operator: In
+                values:
+                  - cnpg-ha
+          topologyKey: kubernetes.io/hostname
 
   bootstrap:
     # Ref: https://cloudnative-pg.io/documentation/current/recovery/#recovery-from-a-backup-object
