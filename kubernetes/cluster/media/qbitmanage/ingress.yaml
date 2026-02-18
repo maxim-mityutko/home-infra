@@ -44,4 +44,4 @@ spec:
       recordTTL: 86400
       recordType: CNAME
       targets:
-        - forge.brhd.io
+        - casa.brhd.io
