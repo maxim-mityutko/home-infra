@@ -35,7 +35,15 @@ spec:
   template:
     metadata:
       annotations:
-        k8s.v1.cni.cncf.io/networks: macvlan-music-assistant
+        k8s.v1.cni.cncf.io/networks: |
+          [
+            {
+              "name": "macvlan-pub-network",
+              "namespace": "kube-system",
+              "mac": "ae:46:c0:d1:f4:e5",
+              "ips": ["192.168.1.17/24"]
+            }
+          ]
       labels:
         app.kubernetes.io/name: music-assistant
     spec:
