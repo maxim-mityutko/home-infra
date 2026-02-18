@@ -79,8 +79,9 @@ spec:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-            - key: kubernetes.io/local-storage
-              operator: Exists
+            - key: feature.node.kubernetes.io/storage-nonrotationaldisk
+              operator: In
+              values: ["true"]
   bootstrap:
     # Ref: https://cloudnative-pg.io/documentation/current/recovery/#recovery-from-a-backup-object
     recovery:
