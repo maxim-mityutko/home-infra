@@ -81,7 +81,7 @@ spec:
               values: ["true"]
             - key: node.kubernetes.io/microk8s-controlplane
               operator: Exists
-    podAntiAffinity:
+    additionalPodAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
             matchExpressions:
