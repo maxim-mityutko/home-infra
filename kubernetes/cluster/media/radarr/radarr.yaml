@@ -96,5 +96,5 @@ data:
   RADARR__LOG__LEVEL: info
   RADARR__LOG__ANALYTICSENABLED: "False"
 
-  RADARR__POSTGRES__HOST: cnpg-default-rw.default.svc.cluster.local
+  RADARR__POSTGRES__HOST: cnpg-default-rw.default.svc.cluster.local.
   RADARR__POSTGRES__PORT: "5432"

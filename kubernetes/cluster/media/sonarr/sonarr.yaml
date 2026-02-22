@@ -96,5 +96,5 @@ data:
   SONARR__LOG__LEVEL: info
   SONARR__LOG__ANALYTICSENABLED: "False"
 
-  SONARR__POSTGRES__HOST: cnpg-default-rw.default.svc.cluster.local
+  SONARR__POSTGRES__HOST: cnpg-default-rw.default.svc.cluster.local.
   SONARR__POSTGRES__PORT: "5432"

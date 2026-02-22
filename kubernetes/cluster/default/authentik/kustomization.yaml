@@ -17,7 +17,7 @@ helmCharts:
             send_pii: false
           log_level: warning
           postgresql:
-            host: cnpg-ha-rw.default.svc.cluster.local
+            host: cnpg-ha-rw.default.svc.cluster.local.
         blueprints:
           configMaps: []
         global:

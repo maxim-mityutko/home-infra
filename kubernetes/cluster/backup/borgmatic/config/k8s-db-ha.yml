@@ -16,12 +16,12 @@ read_special: true
 relocated_repo_access_is_ok: true
 postgresql_databases:
   - name: all
-    hostname: cnpg-ha-rw.default.svc.cluster.local
+    hostname: cnpg-ha-rw.default.svc.cluster.local.
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     format: tar
   - name: all
-    hostname: cnpg-vectorchord-rw.default.svc.cluster.local
+    hostname: cnpg-vectorchord-rw.default.svc.cluster.local.
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     format: tar
