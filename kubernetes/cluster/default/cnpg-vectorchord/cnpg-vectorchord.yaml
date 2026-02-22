@@ -47,7 +47,7 @@ spec:
     retentionPolicy: 7d
     barmanObjectStore:
       destinationPath: "s3://cnpg-backup/"
-      endpointURL: http://rustfs-svc.rustfs.svc.cluster.local.:9000
+      endpointURL: http://rustfs-svc.rustfs.svc.cluster.local:9000
       s3Credentials:
         accessKeyId:
           name: cnpg-default-secret
