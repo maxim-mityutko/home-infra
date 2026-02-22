@@ -30,9 +30,12 @@ spec:
                   cpu: 500m
                   memory: 100Mi
               command:
-                - /app/recyclarr/recyclarr
+                - /bin/sh
               args:
-                - sync
+                - '-c'
+                - |
+                  /app/recyclarr/recyclarr state repair --adopt;
+                  /app/recyclarr/recyclarr sync;
               envFrom:
                 - secretRef:
                     name: recyclarr

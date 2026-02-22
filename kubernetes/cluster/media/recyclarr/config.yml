@@ -57,13 +57,12 @@ radarr:
           - 403816d65392c79236dcb6dd591aeda4 # WEB Tier 02
           - af94e0fe497124d1f9ce732069ec8c3b # WEB Tier 03
           # Movie Versions
-          - eca37840c13c6ef2dd0262b141a5482f # 4k Remaster
+          - eca37840c13c6ef2dd0262b141a5482f # 4K Remaster
           - eecf3a857724171f968a66cb5719e152 # IMAX
           - 9f6cbff8cfe4ebbc1bde14c7b7bec0de # IMAX Enhanced
-          # HDR
-          - b974a6cd08c1066250f1f177d7aa1225 # HDR10Plus
-          - dfb86d5941bc9075d6af23b09c2aeecd # HDR10
-          - e61e28db95d22bedcadf030b8f156d96 # HDR
+          # HDR (Updated)
+          - 493b6d1dbec3c3364c59d7607f7e3405 # HDR
+          - caa37d0df9c348912df1fb1d88f9273a # HDR10Plus Boost
           # unwanted
           - ed38b889b31be83fda192888e2286d83 # BR-DISK
           - 90a6f9a284dff5103f6346090e6280c8 # LQ
@@ -71,6 +70,7 @@ radarr:
           - b8cd450cbfa689c0259a01d9e29ba3d6 # 3D
           - bfd8eb01832d646a0a89c4deb46f8564 # Upscaled
           - 9c38ebb7384dada637be8899efa68e6f # SDR
+          - e6886871085226c3da1830830146846c # Generated Dynamic HDR
         assign_scores_to:
           - name: 4K
       - trash_ids:
@@ -117,16 +117,8 @@ radarr:
       # Force Excludes
       - trash_ids:
           # HDR
-          - e23edd2482476e595fb990b12e7c609c # DV HDR10
-          - 58d6a88f13e2db7f5059c41047876f00 # DV
-          - 55d53828b9d81cbe20b02efd00aa0efd # DV HLG
-          - a3e19f8f627608af0211acd02bf89735 # DV SDR
-          - b974a6cd08c1066250f1f177d7aa1225 # HDR10Plus
-          - dfb86d5941bc9075d6af23b09c2aeecd # HDR10
-          - e61e28db95d22bedcadf030b8f156d96 # HDR
-          - 2a4d9069cc1fe3242ff9bdaebed239bb # HDR (Undefined)
-          - 08d6d8834ad9ec87b1dc7ec8148e7a1f # PQ
-          - 9364dd386c9b4a1100dde8264690add7 # HLG
+          - 493b6d1dbec3c3364c59d7607f7e3405 # HDR
+          - caa37d0df9c348912df1fb1d88f9273a # HDR10Plus Boost
           # Optional
           - 923b6abef9b17f937fab56cfcf89e1f1 # DV (WEBDL)
           - cae4ca30163749b891686f95532519bd # AV1
@@ -137,6 +129,7 @@ radarr:
           - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
           # - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
           - bfd8eb01832d646a0a89c4deb46f8564 # Upscaled
+          - e6886871085226c3da1830830146846c # Generated Dynamic HDR
           # Unwanted (Optional)
           - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
@@ -185,11 +178,8 @@ sonarr:
     custom_formats:
       - trash_ids:
           # HDR
-          - a3d82cbef5039f8d295478d28a887159 # HDR10+
-          - 3497799d29a085e2ac2df9d468413c94 # HDR10
-          - 3e2c4e748b64a1a1118e0ea3f4cf6875 # HDR
-          - 0dad0a507451acddd754fe6dc3a7f5e7 # HDR10+ Boost
-          - 385e9e8581d33133c3961bdcdeffb7b4 # DV HDR10+ Boost
+          - 505d871304820ba7106b693be6fe4a9e # HDR
+          - 0c4b99df9206d2cfac3c05ab897dd62a # HDR10Plus Boost
           # Misc
           - ec8fa7296b64e8cd390a1600981f3923 # Repack / Proper
           - eb3d5cc0a2be0db205fb823640db6a3c # Repack V2
