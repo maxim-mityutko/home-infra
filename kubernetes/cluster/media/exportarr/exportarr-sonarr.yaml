@@ -55,7 +55,7 @@ spec:
             - name: PORT
               value: "9707"
             - name: URL
-              value: "http://sonarr.media.svc.cluster.local:80"
+              value: "http://sonarr.media.svc.cluster.local.:80"
             - name: ENABLE_ADDITIONAL_METRICS
               value: "true"
             - name: API_KEY

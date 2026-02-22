@@ -13,7 +13,7 @@ commands:
   skip_cleanup: false
 
 qbt:
-  host: qbittorrent-ui.media.svc.cluster.local:80
+  host: qbittorrent-ui.media.svc.cluster.local.:80
   user: null
   pass: null
 

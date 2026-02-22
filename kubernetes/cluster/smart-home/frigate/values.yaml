@@ -39,7 +39,7 @@ gpu:
 config: |
   mqtt:
     enabled: true
-    host: mqtt.smart-home.svc.cluster.local
+    host: mqtt.smart-home.svc.cluster.local.
     port: 1883
     topic_prefix: frigate
     stats_interval: 60

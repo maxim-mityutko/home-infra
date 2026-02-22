@@ -1,6 +1,6 @@
 radarr:
   radarr-all:
-    base_url: http://radarr.media.svc.cluster.local
+    base_url: http://radarr.media.svc.cluster.local.
     api_key: !env_var RADARR_API_KEY
     delete_old_custom_formats: true
     quality_definition:
@@ -144,7 +144,7 @@ radarr:
 
 sonarr:
   sonarr-all:
-    base_url: http://sonarr.media.svc.cluster.local
+    base_url: http://sonarr.media.svc.cluster.local.
     api_key: !env_var SONARR_API_KEY
     delete_old_custom_formats: true
     quality_definition:
