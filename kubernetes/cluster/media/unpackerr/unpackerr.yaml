@@ -65,7 +65,7 @@ data:
   # Prometheus Metrics
   UN_WEBSERVER_METRICS: "false"
   # Sonar
-  UN_SONARR_0_URL: "http://sonarr.media.svc.cluster.local"
+  UN_SONARR_0_URL: "http://sonarr.media.svc.cluster.local."
   UN_SONARR_0_PATHS_0: "/downloads"
   UN_SONARR_0_PROTOCOLS: "torrent"
   UN_SONARR_0_TIMEOUT: "15s"
@@ -73,7 +73,7 @@ data:
   UN_SONARR_0_DELETE_DELAY: "10m"
   UN_SONARR_0_SYNCTHING: "false"
   # Radarr
-  UN_RADARR_0_URL: "http://radarr.media.svc.cluster.local"
+  UN_RADARR_0_URL: "http://radarr.media.svc.cluster.local."
   UN_RADARR_0_PATHS_0: "/downloads"
   UN_RADARR_0_PROTOCOLS: "torrent"
   UN_RADARR_0_TIMEOUT: "15s"
