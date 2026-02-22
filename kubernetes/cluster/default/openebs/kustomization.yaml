@@ -43,6 +43,90 @@ helmCharts:
           basePath: ""
         analytics:
           enabled: false
+      mayastor:
+        crds:
+          enabled: false
+          csi: { volumeSnapshots: { enabled: false }}
+        nodeSelector: {}
+        base: 
+          metrics: { enabled: false }
+          jaeger: { enabled: false }
+        operators:
+          pool:
+            logLevel: info
+            resources:
+              limits: { cpu: 100m, memory: 32Mi }
+              requests: { cpu: 50m, memory: 16Mi }
+        agents:
+          core:
+            logLevel: info
+            resources:
+              limits: { cpu: 1000m, memory: 128Mi }
+              requests: { cpu: 500m, memory: 32Mi }
+            capacity:
+              thin: 
+                poolCommitment: 250%
+                volumeCommitment: 40%
+                volumeCommitmentInitial: 40%
+                snapshotCommitment: 40%
+              rebuild:
+                maxConcurrent: 2
+                partial: { enabled: false }
+              maxCreateVolume: 2
+          ha: { enabled: false }
+        apis:
+          rest:
+            logLevel: info
+            healthProbes:
+              readiness: { enabled: false }
+              liveness: { enabled: false }
+            replicaCount: 1
+            resources:
+              limits: { cpu: 100m, memory: 64Mi }
+              requests: { cpu: 50m, memory: 32Mi }
+        csi:
+          controller:
+            logLevel: info
+            maxCreateVolume: 3
+            resources:
+              limits: { cpu: 32m, memory: 128Mi }
+              requests: { cpu: 16m, memory: 64Mi }
+          node:
+            logLevel: info
+            kubeletDir: /var/snap/microk8s/common/var/lib/kubelet
+            resources:
+              limits: { cpu: 100m, memory: 128Mi }
+              requests: { cpu: 100m, memory: 64Mi }
+            initContainers:
+              enabled: true              
+        etcd:
+          enabled: true
+          localpvScConfig:
+            enabled: true
+            name: "mayastor-etcd-localpv"
+            basePath: "/var/local/{{ .Release.Name }}/localpv-hostpath/etcd"
+            reclaimPolicy: Delete
+            volumeBindingMode: WaitForFirstConsumer
+          replicaCount: 3
+          clusterDomain: cluster.local
+          persistence:
+            enabled: true
+            storageClass: "mayastor-etcd-localpv"
+            size: 2Gi
+            reclaimPolicy: Delete
+          autoCompactionMode: revision
+
+
+        loki-stack: { enabled: false }
+        eventing: { enabled: false }
+        obs: { callhome: { enabled: false }}
+        storageClass: { enabled: false }
+        localpv-provisioner: { enabled: false }
+
+        # loki:
+        #   enabled: false
+        # alloy:
+        #   enabled: false
       engines:
         local:
           lvm:
@@ -51,7 +135,7 @@ helmCharts:
             enabled: false
         replicated:
           mayastor:
-            enabled: false
+            enabled: true
       loki:
         enabled: false
       alloy:

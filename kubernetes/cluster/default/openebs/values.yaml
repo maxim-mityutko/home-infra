@@ -1,0 +1,448 @@
+crds:
+  # -- Disables the installation of all CRDs if set to false
+  enabled: true
+  csi:
+    volumeSnapshots:
+      # -- Install Volume Snapshot CRDs
+      enabled: true
+
+image:
+  # -- Image registry to pull our product images
+  registry: docker.io
+  # -- Image registry's namespace
+  repo: openebs
+  # -- Release tag for our images
+  tag: release-2.8
+  repoTags:
+    # Note: Below image tag configuration is optional and typically should never be
+    #       used. Setting specific image tags for the different repositories proves useful
+    #       for some integration testing scenarios. Use the 'tag' option above to set
+    #       release/pre-release container image tags.
+    #       The below tag values will be picked for images by default.
+    #       If not specified, 'tag' option provided above will be picked.
+    controlPlane: ""
+    dataPlane: ""
+    extensions: ""
+  # -- ImagePullPolicy for our images
+  pullPolicy: Always
+
+  # -- docker-secrets required to pull images if the container registry from image.registry is protected
+  pullSecrets: []
+
+# -- Node labels for pod assignment
+# ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+# Note that if multi-arch images support 'kubernetes.io/arch: amd64'
+# should be removed and set 'nodeSelector' to empty '{}' as default value.
+nodeSelector:
+  kubernetes.io/arch: amd64
+
+# -- Pod scheduling priority.
+# Setting this value will apply to all components except the external Chart dependencies.
+# If any component has `priorityClassName` set, then this value would be overridden for that component.
+# For external components like etcd, jaeger or loki-stack, PriorityClass can only be set at component level.
+priorityClassName: ""
+
+earlyEvictionTolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 5
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 5
+
+# -- Tolerations to be applied to all components except external Chart dependencies.
+# If any component has tolerations set, then it would override this value.
+# For external components like etcd, jaeger and loki-stack, tolerations can only be set at component level.
+tolerations: []
+
+base:
+  # -- Request timeout for rest & core agents
+  default_req_timeout: 5s
+  # -- Cache timeout for core agent & diskpool deployment
+  cache_poll_period: 30s
+  logging:
+    # -- Valid values for format are pretty, json and compact
+    format: pretty
+    # -- Enable ansi color code for Pod StdOut/StdErr
+    color: true
+    # -- Silence specific module components
+    silenceLevel:
+  initContainers:
+    enabled: true
+    image:
+      name: alpine-sh
+      tag: 4.1.0
+      pullPolicy: IfNotPresent
+    containers:
+      - name: agent-core-grpc-probe
+        command: ['sh', '-c', 'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-agent-core 50051; do date; echo "Waiting for agent-core-grpc services..."; sleep 1; done;']
+      - name: etcd-probe
+        command: ['sh', '-c', 'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-etcd {{.Values.etcd.service.port}}; do date; echo "Waiting for etcd..."; sleep 1; done;']
+  initHaNodeContainers:
+    enabled: true
+    containers:
+      - name: agent-cluster-grpc-probe
+        command: ['sh', '-c', 'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-agent-core 50052; do date; echo "Waiting for agent-cluster-grpc services..."; sleep 1; done;']
+  initCoreContainers:
+    enabled: true
+    containers:
+      - name: etcd-probe
+        command: ['sh', '-c', 'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-etcd {{.Values.etcd.service.port}}; do date; echo "Waiting for etcd..."; sleep 1; done;']
+
+  metrics:
+    # -- Enable the metrics exporter
+    enabled: true
+
+  jaeger:
+    enabled: false
+
+operators:
+  pool:
+    # -- Log level for diskpool operator service
+    logLevel: info
+    resources:
+      limits:
+        # -- Cpu limits for diskpool operator
+        cpu: "100m"
+        # -- Memory limits for diskpool operator
+        memory: "32Mi"
+      requests:
+        # -- Cpu requests for diskpool operator
+        cpu: "50m"
+        # -- Memory requests for diskpool operator
+        memory: "16Mi"
+    # -- Set tolerations, overrides global
+    tolerations: []
+    # -- Set PriorityClass, overrides global
+    priorityClassName: ""
+
+
+agents:
+  core:
+    # -- Request timeout for core agents
+    # Default value is defined in .base.default_req_timeout
+    requestTimeout:
+    # -- Enable minimal timeouts
+    minTimeouts: true
+    # -- Log level for the core service
+    logLevel: info
+    capacity:
+      thin:
+        # -- The allowed pool commitment limit when dealing with thin provisioned volumes.
+        # Example: If the commitment is 250 and the pool is 10GiB we can overcommit the pool
+        # up to 25GiB (create 2 10GiB and 1 5GiB volume) but no further.
+        poolCommitment: "250%"
+        # -- When creating replicas for an existing volume, each replica pool must have at least
+        # this much free space percentage of the volume size.
+        # Example: if this value is 40, the pool has 40GiB free, then the max volume size allowed
+        # to be created on the pool is 100GiB.
+        volumeCommitment: "40%"
+        # -- Same as the `volumeCommitment` argument, but applicable only when creating replicas
+        # for a new volume.
+        volumeCommitmentInitial: "40%"
+        # -- When creating snapshots for an existing volume, each replica pool must have at least
+        # this much free space percentage of the volume size.
+        # Example: if this value is 40, the pool has 40GiB free, then the max volume size allowed
+        # to be snapped on the pool is 100GiB.
+        snapshotCommitment: "40%"
+    rebuild:
+      # -- The maximum number of system-wide rebuilds permitted at any given time.
+      # If set to an empty string, there are no limits.
+      maxConcurrent: ""
+      partial:
+        # -- Partial rebuild uses a log of missed IO to rebuild replicas which have become temporarily faulted,
+        # hence a bit faster, depending on the log size.
+        enabled: true
+        # -- If a faulted replica comes back online within this time period then it will be
+        # rebuilt using the partial rebuild capability. Otherwise, the replica will be fully rebuilt.
+        # A blank value "" means internally derived value will be used.
+        waitPeriod: ""
+    # The maximum number of concurrent create volume requests.
+    maxCreateVolume: 10
+
+    resources:
+      limits:
+        # -- Cpu limits for core agents
+        cpu: "1000m"
+        # -- Memory limits for core agents
+        memory: "128Mi"
+      requests:
+        # -- Cpu requests for core agents
+        cpu: "500m"
+        # -- Memory requests for core agents
+        memory: "32Mi"
+    # -- Set tolerations, overrides global
+    tolerations: []
+    # -- Set PriorityClass, overrides global.
+    # If both local and global are not set, the final deployment manifest has a mayastor custom critical priority class assigned to the pod by default.
+    # Refer the `templates/_helpers.tpl` and `templates/mayastor/agents/core/agent-core-deployment.yaml` for more details.
+    priorityClassName: ""
+  ha:
+    enabled: false
+
+apis:
+  rest:
+    # -- Log level for the rest service
+    logLevel: info
+    healthProbes:
+      readiness:
+        # -- Toggle readiness probe.
+        enabled: true
+        # -- Frequency for the agent-core liveness probe.
+        agentCoreProbeFreq: "20s"
+        # -- No. of failures the readiness probe will tolerate.
+        failureThreshold: 2
+        # -- No. of seconds of delay before checking the readiness status.
+        initialDelaySeconds: 0
+        # -- No. of seconds between readiness probe checks.
+        periodSeconds: 20
+        # -- No. of seconds of timeout tolerance.
+        timeoutSeconds: 5
+      liveness:
+        # -- Toggle liveness probe.
+        enabled: true
+        # -- No. of failures the liveness probe will tolerate.
+        failureThreshold: 1
+        # -- No. of seconds of delay before checking the liveness status.
+        initialDelaySeconds: 0
+        # -- No. of seconds between liveness probe checks.
+        periodSeconds: 30
+        # -- No. of seconds of timeout tolerance.
+        timeoutSeconds: 5
+    # -- Number of replicas of rest
+    replicaCount: 1
+    resources:
+      limits:
+        # -- Cpu limits for rest
+        cpu: "100m"
+        # -- Memory limits for rest
+        memory: "64Mi"
+      requests:
+        # -- Cpu requests for rest
+        cpu: "50m"
+        # -- Memory requests for rest
+        memory: "32Mi"
+    # Rest service parameters define how the rest service is exposed
+    service:
+      # -- Rest K8s service type
+      type: ClusterIP
+      # Ports from where rest endpoints are accessible from outside the cluster, only valid if type is NodePort
+      nodePorts:
+        # NodePort associated with http port
+        http: 30011
+        # NodePort associated with https port
+        https: 30010
+    # -- Set tolerations, overrides global
+    tolerations: []
+    # -- Set PriorityClass, overrides global.
+    # If both local and global are not set, the final deployment manifest has a mayastor custom critical priority class assigned to the pod by default.
+    # Refer the `templates/_helpers.tpl` and `templates/mayastor/apis/rest/api-rest-deployment.yaml` for more details.
+    priorityClassName: ""
+
+csi:
+  image:
+    # -- Image registry to pull all CSI Sidecar images
+    registry: registry.k8s.io
+    # -- Image registry's namespace
+    repo: sig-storage
+    # -- imagePullPolicy for all CSI Sidecar images
+    pullPolicy: IfNotPresent
+    # -- csi-provisioner image release tag
+    provisionerTag: v3.5.0
+    # -- csi-attacher image release tag
+    attacherTag: v4.3.0
+    # -- csi-snapshotter image release tag
+    snapshotterTag: v6.3.3
+    # -- csi-snapshot-controller image release tag
+    snapshotControllerTag: v6.3.3
+    # -- csi-node-driver-registrar image release tag
+    registrarTag: v2.10.0
+    # -- csi-resizer image release tag
+    resizerTag: v1.9.3
+
+  controller:
+    # -- Log level for the csi controller
+    logLevel: info
+    # The maximum number of concurrent create volume requests.
+    maxCreateVolume: 10
+    resources:
+      limits:
+        # -- Cpu limits for csi controller
+        cpu: "32m"
+        # -- Memory limits for csi controller
+        memory: "128Mi"
+      requests:
+        # -- Cpu requests for csi controller
+        cpu: "16m"
+        # -- Memory requests for csi controller
+        memory: "64Mi"
+    # -- Set tolerations, overrides global
+    tolerations: []
+    # -- Set PriorityClass, overrides global
+    priorityClassName: ""
+    # -- Prevent modifying the volume mode when creating a PVC from an existing VolumeSnapshot
+    preventVolumeModeConversion: true
+  node:
+    logLevel: info
+    topology:
+      segments:
+        openebs.io/csi-node: mayastor
+      # -- Add topology segments to the csi-node and agent-ha-node daemonset node selector
+      nodeSelector: false
+    resources:
+      limits:
+        # -- Cpu limits for csi node plugin
+        cpu: "100m"
+        # -- Memory limits for csi node plugin
+        memory: "128Mi"
+      requests:
+        # -- Cpu requests for csi node plugin
+        cpu: "100m"
+        # -- Memory requests for csi node plugin
+        memory: "64Mi"
+    nvme:
+      # The nvme_core module and nvme block io timeout in humantime
+      # By default it uses the "io_engine.nvme.ioTimeout" + 10s
+      # Do not modify this unless you're really sure about its effects
+      io_timeout: ""
+      # -- The ctrl_loss_tmo (controller loss timeout) in seconds
+      ctrl_loss_tmo: "1980"
+      # Kato (keep alive timeout) in seconds
+      keep_alive_tmo: ""
+      # -- Fallback to nvme-tcp if nvme-rdma is enabled for Mayastor but rdma is not available on a particular csi-node
+      tcpFallback: true
+    # -- The kubeletDir directory for the csi-node plugin
+    kubeletDir: /var/lib/kubelet
+    pluginMountPath: /csi
+    socketPath: csi.sock
+    # Additional arguments when creating filesystems
+    mkfs_args:
+      xfs: ""
+    restClient:
+      enabled: true
+    # -- Set tolerations, overrides global
+    tolerations: []
+    # -- Set PriorityClass, overrides global
+    priorityClassName: ""
+    initContainers:
+      enabled: false
+      containers:
+        - name: nvme-tcp-probe
+          command: ['sh', '-c', 'trap "exit 1" TERM; until [ -d /sys/module/nvme_tcp ]; do [ -z "$WARNED" ] && echo "nvme_tcp module not loaded..."; WARNED=1; sleep 60; done;']
+
+io_engine:
+  # -- Log level for the io-engine service
+  logLevel: info
+  api: "v1"
+  target:
+    nvmf:
+      rdma:
+        enabled: false
+  nvme:
+    # -- Timeout for IOs
+    # The default here is exaggerated for local disks, but we've observed that in
+    # shared virtual environments having a higher timeout value is beneficial.
+    # Please adjust this according to your hardware and needs.
+    ioTimeout: "110s"
+    # Timeout for admin commands
+    adminTimeout: "30s"
+    # Timeout for keep alives
+    keepAliveTimeout: "10s"
+    tcp:
+      # -- Max size setting (both initiator and target) for an NVMe queue
+      # -- You may need to increase this for a higher outstanding IOs per volume
+      maxQueueDepth: "32"
+      # Max qpairs per controller.
+      maxQpairsPerCtrl: "32"
+
+  # -- Pass additional arguments to the Environment Abstraction Layer.
+  # Example: --set {product}.envcontext=iova-mode=pa
+  envcontext: ""
+  reactorFreezeDetection:
+    enabled: false
+  # -- The number of cores that each io-engine instance will bind to.
+  cpuCount: "2"
+  # -- If not empty, overrides the cpuCount and explicitly sets the list of cores.
+  # Example: --set='io_engine.coreList={30,31}'
+  coreList: []
+  # -- Node selectors to designate storage nodes for diskpool creation
+  # Note that if multi-arch images support 'kubernetes.io/arch: amd64'
+  # should be removed.
+  nodeSelector: {}
+  resources:
+    limits:
+      # -- Cpu limits for the io-engine
+      cpu: ""
+      # -- Memory limits for the io-engine
+      memory: "1Gi"
+      # -- Hugepage size available on the nodes
+      hugepages2Mi: "2Gi"
+    requests:
+      # -- Cpu requests for the io-engine
+      cpu: ""
+      # -- Memory requests for the io-engine
+      memory: "1Gi"
+      # -- Hugepage size available on the nodes
+      hugepages2Mi: "2Gi"
+  # -- Set tolerations, overrides global
+  tolerations: []
+  # -- Set PriorityClass, overrides global
+  priorityClassName: ""
+  # -- Runtime class to use. Defaults to cluster standard
+  runtimeClassName: ""
+  # -- Number of retries for pstor persistence before the volume target self shutdowns
+  pstorRetries: 300
+
+etcd:
+  # -- Disable when using an external etcd cluster.
+  enabled: true
+  # -- (string) Url of the external etcd cluster. Note, etcd.enable must be set to false.
+  externalUrl: ""
+  # Configuration for etcd's localpv hostpath storage class.
+  localpvScConfig:
+    enabled: false
+  replicaCount: 3
+  clusterDomain: cluster.local
+  # TLS authentication for client-to-server communications
+  # ref: https://etcd.io/docs/current/op-guide/security/
+  client:
+    secureTransport: false
+  # TLS authentication for server-to-server communications
+  # ref: https://etcd.io/docs/current/op-guide/security/
+  peer:
+    secureTransport: false
+  persistence:
+    enabled: false
+  autoCompactionMode: revision
+  # -- Auto compaction retention length. 0 means disable auto compaction.
+  autoCompactionRetention: 100
+
+  volumePermissions:
+    # chown the mounted volume; this is required if a statically provisioned hostpath volume is used
+    enabled: false
+  debug: false
+
+
+loki-stack:
+  enabled: false
+
+eventing:
+  enabled: false
+
+obs:
+  callhome:
+    enabled: false
+
+# TODO: create own storage class
+storageClass:
+  enabled: false
+
+localpv-provisioner:
+  enabled: false 
+  # TODO: remove below
+  hostpathClass:
+    enabled: false
+  analytics:
+    enabled: false

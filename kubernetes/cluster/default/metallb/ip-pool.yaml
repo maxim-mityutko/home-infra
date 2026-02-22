@@ -1,3 +1,4 @@
+# TODO: remove DNS pool
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
@@ -7,6 +8,7 @@ metadata:
 spec:
   addresses:
     - 192.168.1.220-192.168.1.221
+
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
@@ -16,6 +18,9 @@ metadata:
 spec:
   ipAddressPools:
     - dns-pool
+  interfaces:
+  # Ref: https://metallb.io/configuration/_advanced_l2_configuration/
+  - pub
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
