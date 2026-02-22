@@ -52,7 +52,7 @@ spec:
     retentionPolicy: 7d
     barmanObjectStore:
       destinationPath: "s3://cnpg-backup/"
-      endpointURL: "http://garage.garage.svc.cluster.local.:3900"
+      endpointURL: "http://garage.garage.svc.cluster.local:3900"
       s3Credentials:
         accessKeyId:
           name: cnpg-backup-secret
