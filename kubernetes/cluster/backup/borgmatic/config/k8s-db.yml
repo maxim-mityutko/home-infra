@@ -16,13 +16,13 @@ read_special: true
 relocated_repo_access_is_ok: true
 postgresql_databases:
   - name: all
-    hostname: cnpg-default-rw.default.svc.cluster.local
+    hostname: cnpg-default-rw.default.svc.cluster.local.
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     format: tar
 # mariadb_databases:
 #   - name: all
-#     hostname: mariadb.default.svc.cluster.local
+#     hostname: mariadb.default.svc.cluster.local.
 #     username: ${MARIADB_USER}
 #     password: ${MARIADB_PASSWORD}
 #     format: sql

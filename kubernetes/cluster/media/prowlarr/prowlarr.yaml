@@ -91,5 +91,5 @@ data:
   PROWLARR__LOG__LEVEL: info
   PROWLARR__LOG__ANALYTICSENABLED: "False"
 
-  PROWLARR__POSTGRES__HOST: cnpg-default-rw.default.svc.cluster.local
+  PROWLARR__POSTGRES__HOST: cnpg-default-rw.default.svc.cluster.local.
   PROWLARR__POSTGRES__PORT: "5432"

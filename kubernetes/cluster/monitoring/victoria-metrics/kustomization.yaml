@@ -99,7 +99,7 @@ helmCharts:
               nginx.ingress.kubernetes.io/auth-snippet: |
                 proxy_set_header X-Forwarded-Host $http_host;
               nginx.ingress.kubernetes.io/auth-url: >-
-                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+                http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - alert-manager.brhd.io
           spec:
@@ -129,7 +129,7 @@ helmCharts:
               nginx.ingress.kubernetes.io/auth-snippet: |
                 proxy_set_header X-Forwarded-Host $http_host;
               nginx.ingress.kubernetes.io/auth-url: >-
-                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+                http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - vmsingle.brhd.io
         vmalert:
@@ -154,7 +154,7 @@ helmCharts:
               nginx.ingress.kubernetes.io/auth-snippet: |
                 proxy_set_header X-Forwarded-Host $http_host;
               nginx.ingress.kubernetes.io/auth-url: >-
-                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+                http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - vmalert.brhd.io
         vmagent:
@@ -186,7 +186,7 @@ helmCharts:
               nginx.ingress.kubernetes.io/auth-snippet: |
                 proxy_set_header X-Forwarded-Host $http_host;
               nginx.ingress.kubernetes.io/auth-url: >-
-                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+                http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - vmagent.brhd.io
 
