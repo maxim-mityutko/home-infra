@@ -34,7 +34,8 @@ spec:
               args:
                 - '-c'
                 - |
-                  /app/recyclarr/recyclarr state repair --adopt;
+                  /app/recyclarr/recyclarr delete custom-formats radarr-all --all --force;
+                  /app/recyclarr/recyclarr delete custom-formats sonarr-all --all --force;
                   /app/recyclarr/recyclarr sync;
               envFrom:
                 - secretRef:
