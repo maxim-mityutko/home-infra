@@ -20,7 +20,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: recyclarr
-              image: ghcr.io/recyclarr/recyclarr:8.2.0
+              image: ghcr.io/recyclarr/recyclarr:8.2.1
               imagePullPolicy: IfNotPresent
               resources:
                 requests:
