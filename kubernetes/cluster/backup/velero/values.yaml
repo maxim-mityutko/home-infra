@@ -1,5 +1,6 @@
 # Documentation:
 #   - File System Backup: https://velero.io/docs/latest/file-system-backup/
+#   - Providers: https://velero.io/docs/latest/supported-providers/
 #
 # Plugins:
 #   - AWS: https://github.com/vmware-tanzu/velero-plugin-for-aws
@@ -99,116 +100,29 @@ configuration:
 
  
 
-  # These are server-level settings passed as CLI flags to the `velero server` command. Velero
-  # uses default values if they're not passed in, so they only need to be explicitly specified
-  # here if using a non-default value. The `velero server` default values are shown in the
-  # comments below.
-  # --------------------
-  # `velero server` default: kopia
-  uploaderType:
-  # `velero server` default: 1m
-  backupSyncPeriod:
-  # `velero server` default: 4h
-  fsBackupTimeout:
-  # `velero server` default: 30
-  clientBurst:
-  # `velero server` default: 500
-  clientPageSize:
-  # `velero server` default: 20.0
-  clientQPS:
+  # These are server-level settings passed as CLI flags to the `velero server` command.
+  # ------------------------------------------------------------------------------------
   # Name of the default backup storage location. Default: default
   defaultBackupStorageLocation:
-  # The default duration any single item operation can take before timing out, especially important for large volume schedules. Default 4h
-  defaultItemOperationTimeout:
-  # How long to wait by default before backups can be garbage collected. Default: 72h
-  defaultBackupTTL:
-  # Name of the default volume snapshot location.
-  defaultVolumeSnapshotLocations:
-  # `velero server` default: empty
+  defaultItemOperationTimeout: 1h
+  defaultBackupTTL: 72h
   disableControllers:
-  # `velero server` default: false
-  disableInformerCache: false
-  # `velero server` default: 1h
-  garbageCollectionFrequency:
-  # `velero server` default: 1
-  itemBlockWorkerCount:
-  # Set log-format for Velero pod. Default: text. Other option: json.
-  logFormat:
-  # Set log-level for Velero pod. Default: info. Other options: debug, warning, error, fatal, panic.
-  logLevel:
-  # The address to expose prometheus metrics. Default: :8085
-  metricsAddress:
-  # Directory containing Velero plugins. Default: /plugins
-  pluginDir:
-  # The address to expose the pprof profiler. Default: localhost:6060
-  profilerAddress:
-  # `velero server` default: false
-  restoreOnlyMode:
-  # `velero server` default: customresourcedefinitions,namespaces,storageclasses,volumesnapshotclass.snapshot.storage.k8s.io,volumesnapshotcontents.snapshot.storage.k8s.io,volumesnapshots.snapshot.storage.k8s.io,persistentvolumes,persistentvolumeclaims,secrets,configmaps,serviceaccounts,limitranges,pods,replicasets.apps,clusterclasses.cluster.x-k8s.io,clusters.cluster.x-k8s.io,clusterresourcesets.addons.cluster.x-k8s.io
-  restoreResourcePriorities:
-  # `velero server` default: 1m
-  storeValidationFrequency:
-  # How long to wait on persistent volumes and namespaces to terminate during a restore before timing out. Default: 10m
-  terminatingResourceTimeout:
-  # Bool flag to configure Velero server to move data by default for all snapshots supporting data movement. Default: false
-  defaultSnapshotMoveData:
-  # Comma separated list of velero feature flags. default: empty
-  # features: EnableCSI
-  features:
-  # Configures the timeout for provisioning the volume created from the CSI snapshot. Default: 30m
-  dataMoverPrepareTimeout:
-  # Resource requests/limits to specify for the repository-maintenance job. Optional.
-  # https://velero.io/docs/v1.14/repository-maintenance/#resource-limitation
   repositoryMaintenanceJob:
-    # Per-repository resource settings ConfigMap
-    # This ConfigMap allows specifying different settings for different repositories
-    # See: https://velero.io/docs/main/repository-maintenance/
+    # Ref: https://velero.io/docs/main/repository-maintenance/
     repositoryConfigData:
-      # Name of the ConfigMap to create. If not provided, will use "velero-repo-maintenance"
       name: "velero-repo-maintenance"
-      # Global configuration applied to all repositories
-      # This configuration is used when no specific repository configuration is found
-      # global:
-      #   podResources:
-      #     cpuRequest: "100m"
-      #     cpuLimit: "200m"
-      #     memoryRequest: "100Mi"
-      #     memoryLimit: "200Mi"
-      #   keepLatestMaintenanceJobs: 1
-      #   loadAffinity:
-      #     - nodeSelector:
-      #         matchExpressions:
-      #           - key: "cloud.google.com/machine-family"
-      #             operator: "In"
-      #             values: ["e2"]
-      #     - nodeSelector:
-      #         matchExpressions:
-      #           - key: "topology.kubernetes.io/zone"
-      #             operator: "In"
-      #             values: ["us-central1-a", "us-central1-b", "us-central1-c"]
-      #   priorityClassName: "low-priority"  # Note: priorityClassName is only supported in global configuration
       global:
-        keepLatestMaintenanceJobs: 3
-      # Repository-specific configurations
-      # Repository keys are formed as: "{namespace}-{storageLocation}-{repositoryType}"
-      # For example: "default-default-kopia" or "prod-s3-backup-kopia"
-      # Note: priorityClassName is NOT supported in repository-specific configurations
-      # repositories:
-      #   "kibishii-default-kopia":
-      #     podResources:
-      #       cpuRequest: "200m"
-      #       cpuLimit: "400m"
-      #       memoryRequest: "200Mi"
-      #       memoryLimit: "400Mi"
-      #     keepLatestMaintenanceJobs: 2
+        keepLatestMaintenanceJobs: 1
+        podResources: {}
+          # cpuRequest: "100m"
+          # cpuLimit: "200m"
+          # memoryRequest: "100Mi"
+          # memoryLimit: "200Mi"
       repositories: {}
   namespace: backup
-  defaultVolumesToFsBackup: false
-  defaultRepoMaintainFrequency: 1d
-
-##
-## End of backup/snapshot location settings.
-##
+  defaultVolumesToFsBackup: false   # annotate volumes to backup, do not backup all (!)
+  defaultRepoMaintainFrequency: 24  # hours
+  # ------------------------------------------------------------------------------------
 
 
 ##
