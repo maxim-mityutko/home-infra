@@ -121,7 +121,7 @@ configuration:
       repositories: {}
   namespace: backup
   defaultVolumesToFsBackup: false   # annotate volumes to backup, do not backup all (!)
-  defaultRepoMaintainFrequency: 24  # hours
+  defaultRepoMaintainFrequency: 24h
   # ------------------------------------------------------------------------------------
 
 
