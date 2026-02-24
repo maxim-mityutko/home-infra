@@ -68,6 +68,7 @@ snapshotsEnabled: false
 
 configuration:
   # Ref: https://velero.io/docs/v1.17/api-types/backupstoragelocation/
+  # Ref: https://github.com/vmware-tanzu/velero-plugin-for-aws/blob/main/backupstoragelocation.md
   backupStorageLocation:
   - name: storage-s3
     provider: velero.io/aws
@@ -76,6 +77,14 @@ configuration:
     validationFrequency: 0s # disabled
     accessMode: ReadWrite
     credential:
+      # TODO: create proper secret with minimal privileges
+      # --------------------------------------------------
+      # key: my-key
+      # value: |
+      # [default]
+      # aws_access_key_id=<AWS_ACCESS_KEY_ID>
+      # aws_secret_access_key=<AWS_SECRET_ACCESS_KEY>
+      # --------------------------------------------------
       name: velero-s3-secret
       key: rustfs
     config:
