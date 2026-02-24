@@ -6,7 +6,7 @@
 
 
 image:
-  repository: registry.brhd.io/docker.io/velero/velero
+  repository: docker.io/velero/velero
 revisionHistoryLimit: 3
 
 # TODO: Need to confirm that upgrade job is not required, if CRDs are handled by ArgoCD
@@ -19,7 +19,7 @@ resources: {}
 
 initContainers:
   - name: velero-plugin-for-aws
-    image: registry.brhd.io/docker.io/velero/velero-plugin-for-aws:v1.13.2
+    image: docker.io/velero/velero-plugin-for-aws:v1.13.2
     volumeMounts:
       - mountPath: /target
         name: plugins
