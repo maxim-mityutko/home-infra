@@ -74,7 +74,7 @@ metrics:
   prometheusRule:
     enabled: false
 
-
+installCRDs: true
 upgradeCRDs: true
 cleanUpCRDs: false
 
@@ -87,21 +87,20 @@ cleanUpCRDs: false
 ## Parameters for the `default` BackupStorageLocation and VolumeSnapshotLocation,
 ## and additional server settings.
 ##
-velero:
-  configuration:
-    # Ref: https://velero.io/docs/v1.17/api-types/backupstoragelocation/
-    backupStorageLocation:
-    - name: s3
-      provider: aws
-      bucket: velero-backup
-      default: true
-      validationFrequency: 0s
-      accessMode: ReadWrite
-      credential:
-        name: velero-default-secret
-        key: 
-      config: {}
-      annotations: {}
+configuration:
+  # Ref: https://velero.io/docs/v1.17/api-types/backupstoragelocation/
+  backupStorageLocation:
+  - name: s3
+    provider: aws
+    bucket: velero-backup
+    default: true
+    validationFrequency: 0s
+    accessMode: ReadWrite
+    credential:
+      name: velero-default-secret
+      key: 
+    config: {}
+    annotations: {}
 
  
 
