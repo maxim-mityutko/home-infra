@@ -1,3 +1,6 @@
+# Documentation:
+#   - File System Backup: https://velero.io/docs/v1.17/file-system-backup/
+
 ##
 ## Configuration settings that directly affect the Velero deployment YAML.
 ##
@@ -218,169 +221,25 @@ configuration:
 ##
 
 rbac:
-  # Whether to create the Velero role and role binding to give all permissions to the namespace to Velero.
   create: true
-  # Whether to create the cluster role binding to give administrator permissions to Velero
-  clusterAdministrator: true
-  # Name of the ClusterRole.
-  clusterAdministratorName: cluster-admin
-
-# Information about the Kubernetes service account Velero uses.
 serviceAccount:
   server:
     create: true
-    name:
-    annotations:
-    labels:
-    imagePullSecrets: []
-    # - registrySecretName
-    # Configure if API credential for Service Account is automounted.
-    automountServiceAccountToken: true
 
-# Info about the secret to be used by the Velero deployment, which
-# should contain credentials for the cloud provider IAM account you've
-# set up for Velero.
-credentials:
-  # Whether a secret should be used. Set to false if, for examples:
-  # - using kube2iam or kiam to provide AWS IAM credentials instead of providing the key file. (AWS only)
-  # - using workload identity instead of providing the key file. (Azure/GCP only)
-  useSecret: true
-  # Name of the secret to create if `useSecret` is true and `existingSecret` is empty
-  name:
-  # Name of a pre-existing secret (if any) in the Velero namespace
-  # that should be used to get IAM account credentials. Optional.
-  existingSecret:
-  # Data to be stored in the Velero secret, if `useSecret` is true and `existingSecret` is empty.
-  # As of the current Velero release, Velero only uses one secret key/value at a time.
-  # The key must be named `cloud`, and the value corresponds to the entire content of your IAM credentials file.
-  # Note that the format will be different for different providers, please check their documentation.
-  # Here is a list of documentation for plugins maintained by the Velero team:
-  # [AWS] https://github.com/vmware-tanzu/velero-plugin-for-aws/blob/main/README.md
-  # [GCP] https://github.com/vmware-tanzu/velero-plugin-for-gcp/blob/main/README.md
-  # [Azure] https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/main/README.md
-  secretContents: {}
-  #  cloud: |
-  #    [default]
-  #    aws_access_key_id=<REDACTED>
-  #    aws_secret_access_key=<REDACTED>
-  # additional key/value pairs to be used as environment variables such as "DIGITALOCEAN_TOKEN: <your-key>". Values will be stored in the secret.
-  extraEnvVars: {}
-  # Name of a pre-existing secret (if any) in the Velero namespace
-  # that will be used to load environment variables into velero and node-agent.
-  # Secret should be in format - https://kubernetes.io/docs/concepts/configuration/secret/#use-case-as-container-environment-variables
-  extraSecretRef: ""
-
-# Whether to create backupstoragelocation crd, if false => do not create a default backup location
 backupsEnabled: true
-# Whether to create volumesnapshotlocation crd, if false => disable snapshot feature
-snapshotsEnabled: true
+snapshotsEnabled: false
 
-# Whether to deploy the node-agent daemonset.
-deployNodeAgent: false
-
+deployNodeAgent: true
 nodeAgent:
-  # Disables Host Path volumes for node-agent.
-  disableHostPath: false
+  disableHostPath: true
   podVolumePath: /var/lib/kubelet/pods
   pluginVolumePath: /var/lib/kubelet/plugins
-  # Pod priority class name to use for the node-agent daemonset. Optional.
-  priorityClassName: ""
-  # Pod runtime class name to use for the node-agent daemonset. Optional.
-  runtimeClassName: ""
-  # Resource requests/limits to specify for the node-agent daemonset deployment. Optional.
-  # https://velero.io/docs/v1.6/customize-installation/#customize-resource-requests-and-limits
-  resources: {}
-    # requests:
-    #   cpu: 500m
-    #   memory: 512Mi
-    # limits:
-    #   cpu: 1000m
-    #   memory: 1024Mi
-  # Container resize policy for the node-agent daemonset.
-  # See: https://kubernetes.io/docs/tasks/configure-pod-container/resize-container-resources/
-  resizePolicy: []
-    # - resourceName: cpu
-    #   restartPolicy: NotRequired
-    # - resourceName: memory
-    #   restartPolicy: RestartContainer
-
-  # Tolerations to use for the node-agent daemonset. Optional.
-  tolerations: []
-
-  # Annotations to set for the node-agent daemonset. Optional.
-  annotations: {}
-
-  # labels to set for the node-agent daemonset. Optional.
-  labels: {}
-
-  # Additional pod labels for the node-agent daemonset. Optional
-  # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-  podLabels: {}
-
-  # will map /scratch to emptyDir. Set to false and specify your own volume
-  # via extraVolumes and extraVolumeMounts that maps to /scratch
-  # if you don't want to use emptyDir.
   useScratchEmptyDir: true
-
-  # Extra volumes for the node-agent daemonset. Optional.
-  extraVolumes: []
-
-  # Extra volumeMounts for the node-agent daemonset. Optional.
-  extraVolumeMounts: []
-
-  # Additional values to be used as environment variables for node-agent daemonset. Optional.
-  extraEnvVars: []
-    # Simple key/value
-    # - name: SIMPLE_VAR
-    #   value: "simple-value"
-
-    # FieldRef example
-    # - name: MY_POD_LABEL
-    #   valueFrom:
-    #     fieldRef:
-    #       fieldPath: metadata.labels['my_label']
-
-  # Additional command-line arguments that will be passed to the node-agent. Optional.
-  # e.g.: extraArgs: ["--foo=bar"]
   extraArgs: []
-
-  # Configure the dnsPolicy of the node-agent daemonset
-  # See: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
-  dnsPolicy: ClusterFirst
-
-  # Configure hostAliases for node-agent daemonset. Optional
-  # For more information, check: https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
-  hostAliases: []
-    # - ip: "127.0.0.1"
-    #   hostnames:
-    #   - "foo.local"
-    #   - "bar.local"
-
-  # SecurityContext to use for the Velero deployment. Optional.
-  # Set fsGroup for `AWS IAM Roles for Service Accounts`
-  # see more informations at: https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html
   podSecurityContext:
     runAsUser: 0
     # fsGroup: 1337
 
-  # Container Level Security Context for the 'node-agent' container of the node-agent daemonset. Optional.
-  # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-  containerSecurityContext: {}
-
-  # Container Lifecycle Hooks to use for the node-agent daemonset. Optional.
-  lifecycle: {}
-
-  # Node selector to use for the node-agent daemonset. Optional.
-  nodeSelector: {}
-
-  # Affinity to use with node-agent daemonset. Optional.
-  affinity: {}
-
-  # DNS configuration to use for the node-agent daemonset. Optional.
-  dnsConfig: {}
-
-  # Update strategy to use for the node-agent daemonset. Optional.
-  updateStrategy: {}
 
 # Backup schedules to create.
 # Eg:
