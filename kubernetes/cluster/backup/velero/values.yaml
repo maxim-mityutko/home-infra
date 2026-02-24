@@ -49,7 +49,6 @@ metrics:
   enabled: true
   scrapeInterval: 30s
   scrapeTimeout: 10s
-
   podAnnotations: {}
   serviceMonitor:
     enabled: false

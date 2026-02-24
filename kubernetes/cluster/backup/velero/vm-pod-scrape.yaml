@@ -8,7 +8,7 @@ metadata:
   namespace: backup
 spec:
   podMetricsEndpoints:
-    - port: 8085
+    - port: http-monitoring
       scheme: http
       path: /metrics
       scrapeTimeout: 180s
