@@ -13,9 +13,9 @@ spec:
       path: /metrics
       scrapeTimeout: 180s
       interval: 30s
-      # relabelConfigs:
-      #   - target_label: job
-      #     replacement: borgmatic
+      relabelConfigs:
+        - target_label: job
+          replacement: velero
   selector:
     matchLabels:
      app.kubernetes.io/name: velero
