@@ -89,7 +89,7 @@ cleanUpCRDs: false
 configuration:
   # Ref: https://velero.io/docs/v1.17/api-types/backupstoragelocation/
   backupStorageLocation:
-  - name: s3
+  - name: rust-fs
     provider: aws
     bucket: velero-backup
     default: true
