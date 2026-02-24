@@ -1,31 +1,28 @@
 # Documentation:
-#   - File System Backup: https://velero.io/docs/v1.17/file-system-backup/
+#   - File System Backup: https://velero.io/docs/latest/file-system-backup/
+#
+# Plugins:
+#   - AWS: https://github.com/vmware-tanzu/velero-plugin-for-aws
 
-##
-## Configuration settings that directly affect the Velero deployment YAML.
-##
+
 image:
-  repository: docker.io/velero/velero
-  tag: v1.17.1
+  repository: registry.brhd.io/docker.io/velero/velero
 revisionHistoryLimit: 3
+
+# TODO: Need to confirm that upgrade job is not required, if CRDs are handled by ArgoCD
+upgradeCRDs: false
+upgradeJobResources: {}
+cleanUpCRDs: false
 
 # https://velero.io/docs/latest/customize-installation/#customize-resource-requests-and-limits
 resources: {}
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/resize-container-resources/
-resizePolicy: []
-# Resource requests/limits to specify for the upgradeCRDs job pod. Need to be adjusted by user accordingly.
-upgradeJobResources: {}
-
-dnsPolicy: ClusterFirst
 
 initContainers:
-  # Ref: https://github.com/vmware-tanzu/velero-plugin-for-aws
   - name: velero-plugin-for-aws
     image: velero/velero-plugin-for-aws:v1.13.2
-    # imagePullPolicy: IfNotPresent
-    # volumeMounts:
-    #   - mountPath: /target
-    #     name: plugins
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
 
 podSecurityContext: {}
 
@@ -74,8 +71,7 @@ metrics:
   prometheusRule:
     enabled: false
 
-upgradeCRDs: true
-cleanUpCRDs: false
+
 
 ##
 ## End of deployment-related settings.
@@ -228,6 +224,7 @@ serviceAccount:
 backupsEnabled: true
 snapshotsEnabled: false
 
+# Required for "File System Backups"
 deployNodeAgent: true
 nodeAgent:
   disableHostPath: true
@@ -235,6 +232,7 @@ nodeAgent:
   pluginVolumePath: /var/lib/kubelet/plugins
   useScratchEmptyDir: true
   extraArgs: []
+  # TODO: tweak security context
   podSecurityContext:
     runAsUser: 0
     # fsGroup: 1337
