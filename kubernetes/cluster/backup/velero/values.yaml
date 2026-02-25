@@ -63,7 +63,7 @@ serviceAccount:
   server:
     create: true
 
-# Required for "File System Backups"
+# Required for "File System Backups" (not required for OpenEBS storage classes)
 deployNodeAgent: true
 nodeAgent:
   disableHostPath: false
