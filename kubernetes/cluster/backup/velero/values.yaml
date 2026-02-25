@@ -2,6 +2,7 @@
 #   - File System Backup: https://velero.io/docs/latest/file-system-backup/
 #   - Providers: https://velero.io/docs/latest/supported-providers/
 #   - Backup Storage Location: https://velero.io/docs/latest/api-types/backupstoragelocation/
+#   - Resource Filtering: https://velero.io/docs/latest/resource-filtering/
 #
 # Plugins:
 #   - AWS: https://github.com/vmware-tanzu/velero-plugin-for-aws
@@ -120,6 +121,7 @@ configuration:
   defaultBackupTTL: 72h
   disableControllers:
   backupSyncPeriod: 1m # TODO: increase interval
+  # Ref: https://velero.io/docs/main/csi/
   features: EnableCSI # Required: OpenEBS backed storage (incl. local hostpath)
   repositoryMaintenanceJob:
     # Ref: https://velero.io/docs/main/repository-maintenance/
