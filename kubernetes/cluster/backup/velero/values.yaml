@@ -1,0 +1,199 @@
+# Documentation:
+#   - File System Backup: https://velero.io/docs/latest/file-system-backup/
+#   - Providers: https://velero.io/docs/latest/supported-providers/
+#   - Backup Storage Location: https://velero.io/docs/latest/api-types/backupstoragelocation/
+#   - Resource Filtering: https://velero.io/docs/latest/resource-filtering/
+#
+# Plugins:
+#   - AWS: https://github.com/vmware-tanzu/velero-plugin-for-aws
+#
+# Helm: https://github.com/vmware-tanzu/helm-charts/blob/velero-11.4.0/charts/velero/README.md
+# Repo: https://github.com/vmware-tanzu/velero
+
+# ----------------------------------------------------------------------------------------
+image:
+  repository: docker.io/velero/velero
+revisionHistoryLimit: 3
+
+# TODO: Need to confirm that upgrade job is not required, if CRDs are handled by ArgoCD
+upgradeCRDs: false
+upgradeJobResources: {}
+cleanUpCRDs: false
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 100Mi
+  limits:
+    memory: 250Mi
+
+initContainers:
+  - name: velero-plugin-for-aws
+    image: docker.io/velero/velero-plugin-for-aws:v1.13.2
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+
+podSecurityContext: {}
+containerSecurityContext: {}
+
+livenessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 30
+
+readinessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 30
+
+metrics:
+  enabled: true
+  scrapeInterval: 30s
+  scrapeTimeout: 10s
+  podAnnotations: {}
+  serviceMonitor:
+    enabled: false
+  nodeAgentPodMonitor:
+    enabled: false
+  prometheusRule:
+    enabled: false
+
+rbac:
+  create: true
+serviceAccount:
+  server:
+    create: true
+
+# Required for "File System Backups" (not required for OpenEBS storage classes)
+deployNodeAgent: true
+nodeAgent:
+  disableHostPath: false
+  podVolumePath: /var/snap/microk8s/common/var/lib/kubelet/pods
+  pluginVolumePath: /var/snap/microk8s/common/var/lib/kubelet/plugins
+  useScratchEmptyDir: true
+  extraArgs: []
+  resources:
+    requests:
+      cpu: 25m
+      memory: 40Mi
+    limits:
+      cpu: 50m
+      memory: 80Mi
+  podSecurityContext:
+    runAsUser: 0
+
+# ----------------------------------------------------------------------------------------
+
+backupsEnabled: true
+snapshotsEnabled: false
+
+configuration:
+  # Ref: https://velero.io/docs/v1.17/api-types/backupstoragelocation/
+  # Ref: https://github.com/vmware-tanzu/velero-plugin-for-aws/blob/main/backupstoragelocation.md
+  backupStorageLocation:
+  - name: storage-local-s3
+    provider: velero.io/aws
+    bucket: velero-backup
+    default: true
+    validationFrequency: 0s # disabled
+    accessMode: ReadWrite
+    credential:
+      # TODO: create proper secret with minimal privileges
+      # --------------------------------------------------
+      # key: my-key
+      # value: |
+      # [default]
+      # aws_access_key_id=<AWS_ACCESS_KEY_ID>
+      # aws_secret_access_key=<AWS_SECRET_ACCESS_KEY>
+      # --------------------------------------------------
+      name: velero-s3-secret
+      key: rustfs
+    config:
+      s3ForcePathStyle: true
+      s3Url: http://rustfs-svc.rustfs.svc.cluster.local:9000
+      publicUrl: https://s3.brhd.io
+      insecureSkipTLSVerify: false
+    annotations: {}
+
+  # These are server-level settings passed as CLI flags to the `velero server` command.
+  # ------------------------------------------------------------------------------------
+  defaultBackupStorageLocation: storage-local-s3
+  defaultItemOperationTimeout: 1h
+  defaultBackupTTL: 72h
+  disableControllers:
+  backupSyncPeriod: 1m # TODO: increase interval
+  # Ref: https://velero.io/docs/main/csi/
+  features: EnableCSI # Required: OpenEBS backed storage (incl. local hostpath)
+  repositoryMaintenanceJob:
+    # Ref: https://velero.io/docs/main/repository-maintenance/
+    repositoryConfigData:
+      name: velero-repo-maintenance
+      global:
+        keepLatestMaintenanceJobs: 1
+        podResources: {}
+          # cpuRequest: "100m"
+          # cpuLimit: "200m"
+          # memoryRequest: "100Mi"
+          # memoryLimit: "200Mi"
+      repositories: {}
+  namespace: backup
+  defaultVolumesToFsBackup: false   # annotate volumes to backup, do not backup all (!)
+  defaultRepoMaintainFrequency: 24h
+  # ------------------------------------------------------------------------------------
+
+
+
+
+
+# Backup schedules to create.
+# Eg:
+# schedules:
+#   mybackup:
+#     disabled: false
+#     labels:
+#       myenv: foo
+#     annotations:
+#       myenv: foo
+#     schedule: "0 0 * * *"
+#     useOwnerReferencesInBackup: false
+#     paused: false
+#     skipImmediately: false
+#     template:
+#       ttl: "240h"
+#       storageLocation: default
+#       includedNamespaces:
+#       - foo
+#       # See: https://velero.io/docs/v1.14/resource-filtering/#excludes
+#       excludedNamespaceScopedResources:
+#       - persistentVolumeClaims
+#       excludedClusterScopedResources:
+#       - persistentVolumes
+schedules: {}
+
+# Velero ConfigMaps.
+# Eg:
+# configMaps:
+    # See: https://velero.io/docs/v1.11/file-system-backup/
+#   fs-restore-action-config:
+#     labels:
+#       velero.io/plugin-config: ""
+#       velero.io/pod-volume-restore: RestoreItemAction
+#     data:
+#       image: velero/velero:v1.17.1
+#       cpuRequest: 200m
+#       memRequest: 128Mi
+#       cpuLimit: 200m
+#       memLimit: 128Mi
+#       secCtx: |
+#         capabilities:
+#           drop:
+#           - ALL
+#           add: []
+#         allowPrivilegeEscalation: false
+#         readOnlyRootFilesystem: true
+#         runAsUser: 1001
+#         runAsGroup: 999
+configMaps: {}
+
+##
+## End of additional Velero resource settings.
+##
