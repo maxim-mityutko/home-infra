@@ -9,6 +9,7 @@
 # Helm: https://github.com/vmware-tanzu/helm-charts/blob/velero-11.4.0/charts/velero/README.md
 # Repo: https://github.com/vmware-tanzu/velero
 
+# ----------------------------------------------------------------------------------------
 image:
   repository: docker.io/velero/velero
 revisionHistoryLimit: 3
@@ -18,8 +19,12 @@ upgradeCRDs: false
 upgradeJobResources: {}
 cleanUpCRDs: false
 
-# https://velero.io/docs/latest/customize-installation/#customize-resource-requests-and-limits
-resources: {}
+resources:
+  requests:
+    cpu: 100m
+    memory: 100Mi
+  limits:
+    memory: 250Mi
 
 initContainers:
   - name: velero-plugin-for-aws
@@ -29,16 +34,12 @@ initContainers:
         name: plugins
 
 podSecurityContext: {}
-
-
-# Container Level Security Context for the 'velero' container of the Velero deployment. Optional.
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-containerSecurityContext: {}
-  # allowPrivilegeEscalation: false
-  # capabilities:
-  #   drop: ["ALL"]
-  #   add: []
-  # readOnlyRootFilesystem: true
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+    add: []
+  readOnlyRootFilesystem: true
 
 livenessProbe:
   initialDelaySeconds: 10
@@ -60,11 +61,32 @@ metrics:
   prometheusRule:
     enabled: false
 
+rbac:
+  create: true
+serviceAccount:
+  server:
+    create: true
 
+# Required for "File System Backups"
+deployNodeAgent: true
+nodeAgent:
+  disableHostPath: false
+  podVolumePath: /var/snap/microk8s/common/var/lib/kubelet/pods
+  pluginVolumePath: /var/snap/microk8s/common/var/lib/kubelet/plugins
+  useScratchEmptyDir: true
+  extraArgs: []
+  resources:
+    requests:
+      cpu: 25m
+      memory: 40Mi
+    limits:
+      cpu: 50m
+      memory: 80Mi
+  podSecurityContext:
+    runAsUser: 0
 
-##
-## End of deployment-related settings.
-##
+# ----------------------------------------------------------------------------------------
+
 backupsEnabled: true
 snapshotsEnabled: false
 
@@ -72,7 +94,7 @@ configuration:
   # Ref: https://velero.io/docs/v1.17/api-types/backupstoragelocation/
   # Ref: https://github.com/vmware-tanzu/velero-plugin-for-aws/blob/main/backupstoragelocation.md
   backupStorageLocation:
-  - name: storage-s3
+  - name: storage-local-s3
     provider: velero.io/aws
     bucket: velero-backup
     default: true
@@ -90,16 +112,15 @@ configuration:
       name: velero-s3-secret
       key: rustfs
     config:
-      # region: default (?)
       s3ForcePathStyle: true
       s3Url: http://rustfs-svc.rustfs.svc.cluster.local:9000
+      publicUrl: https://s3.brhd.io
       insecureSkipTLSVerify: false
     annotations: {}
 
   # These are server-level settings passed as CLI flags to the `velero server` command.
   # ------------------------------------------------------------------------------------
-  # Name of the default backup storage location. Default: default
-  defaultBackupStorageLocation:
+  defaultBackupStorageLocation: storage-local-s3
   defaultItemOperationTimeout: 1h
   defaultBackupTTL: 72h
   disableControllers:
@@ -107,7 +128,7 @@ configuration:
   repositoryMaintenanceJob:
     # Ref: https://velero.io/docs/main/repository-maintenance/
     repositoryConfigData:
-      name: "velero-repo-maintenance"
+      name: velero-repo-maintenance
       global:
         keepLatestMaintenanceJobs: 1
         podResources: {}
@@ -122,30 +143,7 @@ configuration:
   # ------------------------------------------------------------------------------------
 
 
-##
-## Settings for additional Velero resources.
-##
 
-rbac:
-  create: true
-serviceAccount:
-  server:
-    create: true
-
-
-
-# Required for "File System Backups"
-deployNodeAgent: true
-nodeAgent:
-  disableHostPath: false
-  podVolumePath: /var/snap/microk8s/common/var/lib/kubelet/pods
-  pluginVolumePath: /var/snap/microk8s/common/var/lib/kubelet/plugins
-  useScratchEmptyDir: true
-  extraArgs: []
-  # TODO: tweak security context
-  podSecurityContext:
-    runAsUser: 0
-    # fsGroup: 1337
 
 
 # Backup schedules to create.
