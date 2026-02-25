@@ -1,10 +1,13 @@
 # Documentation:
 #   - File System Backup: https://velero.io/docs/latest/file-system-backup/
 #   - Providers: https://velero.io/docs/latest/supported-providers/
+#   - Backup Storage Location: https://velero.io/docs/latest/api-types/backupstoragelocation/
 #
 # Plugins:
 #   - AWS: https://github.com/vmware-tanzu/velero-plugin-for-aws
-
+#
+# Helm: https://github.com/vmware-tanzu/helm-charts/blob/velero-11.4.0/charts/velero/README.md
+# Repo: https://github.com/vmware-tanzu/velero
 
 image:
   repository: docker.io/velero/velero
@@ -135,8 +138,8 @@ serviceAccount:
 deployNodeAgent: true
 nodeAgent:
   disableHostPath: true
-  podVolumePath: /var/lib/kubelet/pods
-  pluginVolumePath: /var/lib/kubelet/plugins
+  podVolumePath: /var/snap/microk8s/common/var/lib/kubelet/pods
+  pluginVolumePath: /var/snap/microk8s/common/var/lib/kubelet/plugins
   useScratchEmptyDir: true
   extraArgs: []
   # TODO: tweak security context
