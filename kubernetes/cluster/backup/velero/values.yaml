@@ -120,7 +120,7 @@ configuration:
   defaultBackupTTL: 72h
   disableControllers:
   backupSyncPeriod: 1m # TODO: increase interval
-  features: EnableCSI
+  features: EnableCSI # Required: OpenEBS backed storage (incl. local hostpath)
   repositoryMaintenanceJob:
     # Ref: https://velero.io/docs/main/repository-maintenance/
     repositoryConfigData:
