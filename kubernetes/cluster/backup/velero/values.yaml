@@ -34,12 +34,7 @@ initContainers:
         name: plugins
 
 podSecurityContext: {}
-containerSecurityContext:
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop: ["ALL"]
-    add: []
-  readOnlyRootFilesystem: true
+containerSecurityContext: {}
 
 livenessProbe:
   initialDelaySeconds: 10
