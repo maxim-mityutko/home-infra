@@ -120,6 +120,7 @@ configuration:
   defaultBackupTTL: 72h
   disableControllers:
   backupSyncPeriod: 1m # TODO: increase interval
+  features: EnableCSI
   repositoryMaintenanceJob:
     # Ref: https://velero.io/docs/main/repository-maintenance/
     repositoryConfigData:
