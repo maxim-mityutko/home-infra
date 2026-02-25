@@ -137,7 +137,7 @@ serviceAccount:
 # Required for "File System Backups"
 deployNodeAgent: true
 nodeAgent:
-  disableHostPath: true
+  disableHostPath: false
   podVolumePath: /var/snap/microk8s/common/var/lib/kubelet/pods
   pluginVolumePath: /var/snap/microk8s/common/var/lib/kubelet/plugins
   useScratchEmptyDir: true
