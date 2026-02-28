@@ -5,7 +5,7 @@ configMapGenerator:
   # Ref: https://github.com/CrazyWolf13/Speedtest-Tracker-Prometheus
   - name: dashboard-speedtest
     files:
-      - https://raw.githubusercontent.com/CrazyWolf13/Speedtest-Tracker-Prometheus/refs/heads/main/speedtest-tracker-prometheus.json
+      - speedtest-tracker.json
 generatorOptions:
   labels:
     grafana-dashboard: "true"
