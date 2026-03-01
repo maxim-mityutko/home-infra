@@ -5,7 +5,7 @@ nodeSelector: {}
   # kubernetes.io/tpu: coral
 image:
   repository: ghcr.io/blakeblackshear/frigate
-  tag: 0.16.4
+  tag: 0.17.0
   # GPU: If Coral TPU is used `tensorrt` image is unnecessary
   # tag: 0.14.1-tensorrt
 env:
@@ -146,9 +146,10 @@ config: |
 
   record:
     enabled: true
-    retain:
-      days: 1   # 1 day - continuous recordings
-      mode: all
+    continuous:
+      days: 1
+    motion:
+      days: 3
     alerts:
       pre_capture: 5
       post_capture: 10
