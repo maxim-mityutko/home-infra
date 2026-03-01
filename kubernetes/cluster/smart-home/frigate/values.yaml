@@ -146,9 +146,10 @@ config: |
 
   record:
     enabled: true
-    retain:
-      days: 1   # 1 day - continuous recordings
-      mode: all
+    continuous:
+      days: 1
+    motion:
+      days: 3
     alerts:
       pre_capture: 5
       post_capture: 10
