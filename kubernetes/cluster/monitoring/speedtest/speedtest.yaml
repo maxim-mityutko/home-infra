@@ -62,6 +62,8 @@ spec:
           ports:
             - containerPort: 80
             - containerPort: 443
+      nodeSelector:
+        feature.node.kubernetes.io/cpu-cpuid.HYPERVISOR: "true"
 ---
 apiVersion: v1
 kind: ConfigMap
