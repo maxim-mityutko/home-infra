@@ -5,7 +5,7 @@ namespace: kube-system
 resources:
   # Sourced from (either):
   #   - Use the version that matches the cluster: 
-  #     https://github.com/canonical/microk8s/blob/v1.32/upgrade-scripts/000-switch-to-calico/resources/calico.yaml
+  #     https://github.com/canonical/microk8s/blob/v1.35/upgrade-scripts/000-switch-to-calico/resources/calico.yaml
   #   - /snap/microk8s/current/upgrade-scripts/000-switch-to-calico/resources/calico.yaml
   - calico.yaml
   - cron-job.yaml
