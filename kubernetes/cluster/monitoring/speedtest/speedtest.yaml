@@ -53,7 +53,7 @@ spec:
               cpu: 50m
               memory: 50Mi
             limits:
-              memory: 250Mi
+              memory: 350Mi
           envFrom:
             - configMapRef:
                 name: speedtest
@@ -75,7 +75,7 @@ metadata:
 data:
   APP_TIMEZONE: "Europe/Amsterdam"
   DISPLAY_TIMEZONE: "Europe/Amsterdam"
-  SPEEDTEST_SCHEDULE: "0 */6 * * *"
+  SPEEDTEST_SCHEDULE: "30 4/6 * * *"
   SPEEDTEST_SERVERS: "52365"
   PRUNE_RESULTS_OLDER_THAN: "0"
   PGID: "1000"
