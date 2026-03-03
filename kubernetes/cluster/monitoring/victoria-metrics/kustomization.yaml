@@ -173,7 +173,7 @@ helmCharts:
             extraArgs:
               # Do not store original labels in vmagent's memory by default. This reduces the amount of memory used by vmagent
               # but makes vmagent debugging UI less informative. See: https://docs.victoriametrics.com/vmagent/#relabel-debug
-              promscrape.dropOriginalLabels: "true"
+              promscrape.dropOriginalLabels: "false"
           ingress:
             enabled: true
             annotations:
