@@ -75,7 +75,7 @@ metadata:
 data:
   APP_TIMEZONE: "Europe/Amsterdam"
   DISPLAY_TIMEZONE: "Europe/Amsterdam"
-  SPEEDTEST_SCHEDULE: "30 4/6 * * *"
+  SPEEDTEST_SCHEDULE: "30 4,10,16,22 * * *"
   SPEEDTEST_SERVERS: "52365"
   PRUNE_RESULTS_OLDER_THAN: "0"
   PGID: "1000"
