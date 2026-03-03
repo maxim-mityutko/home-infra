@@ -205,6 +205,8 @@ helmCharts:
                   replacement: kubelet
                 - action: labeldrop # Drop labels created after roll out of GPU operator
                   regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
+                - target_label: cluster
+                  replacement: brhd.io
               metricRelabelConfigs:
                 - sourceLabels: ["__name__"]
                   target_label: cluster
