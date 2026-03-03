@@ -207,10 +207,6 @@ helmCharts:
                   regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
                 - target_label: cluster
                   replacement: brhd.io
-              metricRelabelConfigs:
-                - sourceLabels: ["__name__"]
-                  target_label: cluster
-                  replacement:  brhd.io
         kube-state-metrics:
           enabled: true
           vmScrape:
@@ -219,12 +215,12 @@ helmCharts:
                 - port: http
                   interval: 60s
                   honorLabels: true
+                  relabelConfigs:
+                    - target_label: cluster
+                      replacement: brhd.io
                   metricRelabelConfigs:
                     - action: labeldrop
                       regex: (uid|container_id|image_id)
-                    - sourceLabels: ["__name__"]
-                      target_label: cluster
-                      replacement:  brhd.io
         prometheus-node-exporter:
           enabled: true
           vmScrape:
@@ -232,13 +228,13 @@ helmCharts:
               endpoints:
                 - port: metrics
                   interval: 60s
+                  relabelConfigs:
+                    - target_label: cluster
+                      replacement: brhd.io
                   metricRelabelConfigs:
                     - action: drop
                       source_labels: [mountpoint]
                       regex: "/var/lib/kubelet/pods.+"
-                    - sourceLabels: ["__name__"]
-                      target_label: cluster
-                      replacement:  brhd.io
         # Service Scrape (disabled)
         kubeApiServer:
           enabled: false
@@ -252,6 +248,9 @@ helmCharts:
                   tlsConfig:
                     caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
                     serverName: kubernetes
+                  relabelConfigs:
+                    - target_label: cluster
+                      replacement: brhd.io
                   # Drop high cardinality metrics
                   metricRelabelConfigs:
                     - sourceLabels: ["__name__"]
@@ -300,6 +299,8 @@ helmCharts:
                       replacement: coredns
                     - target_label: job
                       replacement: coredns
+                    - target_label: cluster
+                      replacement: brhd.io
         kubeScheduler:
           enabled: false
         kubeControllerManager:
