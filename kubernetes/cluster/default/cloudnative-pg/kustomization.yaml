@@ -54,7 +54,7 @@ helmCharts:
           limits:
             memory: 50Mi
     # CloudNativePG Grafana Cluster Dashboard
-    - name: cloudnative-pg-grafana-dashboard
+    - name: cluster
       namespace: default
       releaseName: cluster
       version: 0.0.5
