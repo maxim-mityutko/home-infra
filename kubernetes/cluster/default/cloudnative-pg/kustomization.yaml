@@ -5,7 +5,6 @@ resources:
   - pod-scrape.yaml
   - secret.yaml
   - storage-class.yaml
-  - service.yaml  # TODO: can be removed as it exposes GO process metrics, not the Barman-related metrics
 helmCharts:
     - name: cloudnative-pg
       namespace: default
@@ -49,8 +48,7 @@ helmCharts:
           create: true
         serviceAccount:
           create: true
-        additionalArgs:
-          - --metrics-bind-address=:8080  # TODO: remove
+        additionalArgs: []
         resources:
           requests:
             memory: 25Mi

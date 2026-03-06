@@ -48,7 +48,8 @@ spec:
   plugins:
     - name: barman-cloud.cloudnative-pg.io
       enabled: true
-      isWALArchiver: true # temp: rollback
+      # Ref: https://github.com/cloudnative-pg/plugin-barman-cloud/issues/682
+      isWALArchiver: true
       parameters:
         serverName: cnpg-default
         barmanObjectName: cnpg-default-barman
