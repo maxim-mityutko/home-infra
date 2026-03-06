@@ -57,7 +57,7 @@ helmCharts:
     - name: cloudnative-pg-grafana-dashboard
       namespace: default
       releaseName: cluster
-      version: 0.0.5
+      version: v0.0.5
       repo: https://cloudnative-pg.github.io/grafana-dashboards
       valuesInline:
         grafanaDashboard:
