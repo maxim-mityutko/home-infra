@@ -122,7 +122,7 @@ spec:
     rules:
     - alert: CloudNativePGMissedBackup
       expr: |
-        (time() - max by(job) (cnpg_collector_last_available_backup_timestamp{job!="cnpg-default-metrics"}) > 25*3600*1)
+        (time() - max by(job) (cnpg_collector_last_available_backup_timestamp unless barman_cloud_cloudnative_pg_io_last_available_backup_timestamp) > 25*3600*1)
       for: 1m
       labels:
         severity: warning
