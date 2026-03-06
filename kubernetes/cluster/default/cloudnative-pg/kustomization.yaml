@@ -39,7 +39,7 @@ helmCharts:
     - name: plugin-barman-cloud
       namespace: default
       releaseName: plugin-barman-cloud
-      version: 1.16.0
+      version: 0.5.0
       repo: https://cloudnative-pg.github.io/charts
       valuesInline:
         crds:
@@ -57,7 +57,7 @@ helmCharts:
     - name: cloudnative-pg-grafana-dashboard
       namespace: default
       releaseName: cluster
-      version: v0.0.5
+      version: 0.0.5
       repo: https://cloudnative-pg.github.io/grafana-dashboards
       valuesInline:
         grafanaDashboard:
