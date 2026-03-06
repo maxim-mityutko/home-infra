@@ -5,6 +5,7 @@ resources:
   - pod-scrape.yaml
   - secret.yaml
   - storage-class.yaml
+  - dashboards/
 helmCharts:
     - name: cloudnative-pg
       namespace: default
@@ -53,14 +54,3 @@ helmCharts:
             cpu: 50m
           limits:
             memory: 50Mi
-    # CloudNativePG Grafana Cluster Dashboard
-    - name: cluster
-      namespace: default
-      releaseName: cluster
-      version: 0.0.5
-      repo: https://cloudnative-pg.github.io/grafana-dashboards
-      valuesInline:
-        grafanaDashboard:
-          configMapName: "cnpg-grafana-dashboard"
-          labels:
-            grafana-dashboard: "true"
