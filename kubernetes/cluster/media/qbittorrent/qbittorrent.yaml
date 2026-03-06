@@ -96,3 +96,5 @@ spec:
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads
+      nodeSelector:
+        feature.node.kubernetes.io/cpu-cpuid.HYPERVISOR: "true"

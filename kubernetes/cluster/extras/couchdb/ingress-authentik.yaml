@@ -20,7 +20,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-snippet: |
       proxy_set_header X-Forwarded-Host $http_host;
     nginx.ingress.kubernetes.io/auth-url: >-
-      http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+      http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
 spec:
   rules:
     - host: couch-db.brhd.io

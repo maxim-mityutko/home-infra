@@ -11,7 +11,7 @@ helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring
       releaseName: victoria-metrics
-      version: 0.70.0
+      version: 0.72.2
       repo: https://victoriametrics.github.io/helm-charts/
       valuesInline:
         defaultDashboards:
@@ -99,7 +99,7 @@ helmCharts:
               nginx.ingress.kubernetes.io/auth-snippet: |
                 proxy_set_header X-Forwarded-Host $http_host;
               nginx.ingress.kubernetes.io/auth-url: >-
-                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+                http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - alert-manager.brhd.io
           spec:
@@ -129,7 +129,7 @@ helmCharts:
               nginx.ingress.kubernetes.io/auth-snippet: |
                 proxy_set_header X-Forwarded-Host $http_host;
               nginx.ingress.kubernetes.io/auth-url: >-
-                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+                http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - vmsingle.brhd.io
         vmalert:
@@ -154,7 +154,7 @@ helmCharts:
               nginx.ingress.kubernetes.io/auth-snippet: |
                 proxy_set_header X-Forwarded-Host $http_host;
               nginx.ingress.kubernetes.io/auth-url: >-
-                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+                http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - vmalert.brhd.io
         vmagent:
@@ -186,7 +186,7 @@ helmCharts:
               nginx.ingress.kubernetes.io/auth-snippet: |
                 proxy_set_header X-Forwarded-Host $http_host;
               nginx.ingress.kubernetes.io/auth-url: >-
-                http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+                http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
             hosts:
               - vmagent.brhd.io
 
@@ -205,10 +205,8 @@ helmCharts:
                   replacement: kubelet
                 - action: labeldrop # Drop labels created after roll out of GPU operator
                   regex: (feature_node_kubernetes_io(.+)|nvidia(.+)|beta_kubernetes_io(.+))
-              metricRelabelConfigs:
-                - sourceLabels: ["__name__"]
-                  target_label: cluster
-                  replacement:  brhd.io
+                - target_label: cluster
+                  replacement: brhd.io
         kube-state-metrics:
           enabled: true
           vmScrape:
@@ -217,12 +215,12 @@ helmCharts:
                 - port: http
                   interval: 60s
                   honorLabels: true
+                  relabelConfigs:
+                    - target_label: cluster
+                      replacement: brhd.io
                   metricRelabelConfigs:
                     - action: labeldrop
                       regex: (uid|container_id|image_id)
-                    - sourceLabels: ["__name__"]
-                      target_label: cluster
-                      replacement:  brhd.io
         prometheus-node-exporter:
           enabled: true
           vmScrape:
@@ -230,13 +228,13 @@ helmCharts:
               endpoints:
                 - port: metrics
                   interval: 60s
+                  relabelConfigs:
+                    - target_label: cluster
+                      replacement: brhd.io
                   metricRelabelConfigs:
                     - action: drop
                       source_labels: [mountpoint]
                       regex: "/var/lib/kubelet/pods.+"
-                    - sourceLabels: ["__name__"]
-                      target_label: cluster
-                      replacement:  brhd.io
         # Service Scrape (disabled)
         kubeApiServer:
           enabled: false
@@ -250,6 +248,9 @@ helmCharts:
                   tlsConfig:
                     caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
                     serverName: kubernetes
+                  relabelConfigs:
+                    - target_label: cluster
+                      replacement: brhd.io
                   # Drop high cardinality metrics
                   metricRelabelConfigs:
                     - sourceLabels: ["__name__"]
@@ -298,6 +299,8 @@ helmCharts:
                       replacement: coredns
                     - target_label: job
                       replacement: coredns
+                    - target_label: cluster
+                      replacement: brhd.io
         kubeScheduler:
           enabled: false
         kubeControllerManager:

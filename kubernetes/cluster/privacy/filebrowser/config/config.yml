@@ -44,6 +44,7 @@ server:
   internalUrl: ""
   cacheDir: tmp
   maxArchiveSize: 1 # in GB
+  disableWebDAV: false
 auth:
   tokenExpirationHours: 2
   methods:

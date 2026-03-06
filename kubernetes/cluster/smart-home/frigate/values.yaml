@@ -5,7 +5,7 @@ nodeSelector: {}
   # kubernetes.io/tpu: coral
 image:
   repository: ghcr.io/blakeblackshear/frigate
-  tag: 0.16.4
+  tag: 0.17.0
   # GPU: If Coral TPU is used `tensorrt` image is unnecessary
   # tag: 0.14.1-tensorrt
 env:
@@ -39,7 +39,7 @@ gpu:
 config: |
   mqtt:
     enabled: true
-    host: mqtt.smart-home.svc.cluster.local
+    host: mqtt.smart-home.svc.cluster.local.
     port: 1883
     topic_prefix: frigate
     stats_interval: 60
@@ -146,9 +146,10 @@ config: |
 
   record:
     enabled: true
-    retain:
-      days: 0   # No continuous recordings
-      mode: all
+    continuous:
+      days: 1
+    motion:
+      days: 3
     alerts:
       pre_capture: 5
       post_capture: 10
@@ -229,7 +230,7 @@ ingress:
     nginx.ingress.kubernetes.io/auth-snippet: |
       proxy_set_header X-Forwarded-Host $http_host;
     nginx.ingress.kubernetes.io/auth-url: >-
-      http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+      http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
   hosts:
     - host: nvr.brhd.io
       paths:

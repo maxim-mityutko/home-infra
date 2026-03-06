@@ -1,6 +1,6 @@
 # Home Infrastructure
 
-[![k8s](https://img.shields.io/badge/MicroK8s-v1.32.9-black?style=flat-square)](https://k8s.io/)
+[![k8s](https://img.shields.io/badge/MicroK8s-v1.35.0-black?style=flat-square)](https://k8s.io/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/maxim-mityutko/home-infra/main?style=flat-square)](https://github.com/maxim-mityutko/home-infra/commits/main)
 
 ## Notes
@@ -16,6 +16,7 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
 ### Network
 
 * Router: [TP-Link ER7406](https://www.omadanetworks.com/nl/business-networking/omada-router-wired-router/er7406/)
+* Switch: [TP-Link SX3008F](https://www.omadanetworks.com/nl/business-networking/omada-switch-aggregation/sx3008f/)
 * Switch: [TP-Link TL-SG2428P](https://www.omadanetworks.com/nl/business-networking/omada-switch-smart/tl-sg2428p/)
 * Access Points:
   * [TP-Link EAP245](https://www.omadanetworks.com/nl/business-networking/omada-wifi-ceiling-mount/eap245/v3%20(1-pack)/)
@@ -26,34 +27,39 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
 * ProxMox VE Host:
   * MOBO: [ASRock IMB-X1231](https://www.asrockind.com/en-gb/IMB-X1231)
   * CPU: Intel Core i5-13500
-  * RAM: Kingston Server Premier DDR4-ECC-3200 32 GB x2
+  * RAM: Kingston Server Premier DDR4-ECC-3200 32GB x2
   * Extension Cards:
     1. SATA Controller - 2 Port: JMB58x - M.2 M+B Key
     2. SATA Controller - 6 port: ASM1166 - M.2 M Key
   * Storage:
-    1. (ProxMox System) SSD Samsung 840 Pro 256 GB x2
-    2. (Master Nodes) SSD Samsung 860 Evo 1 TB
+    1. (ProxMox System) SSD Samsung 840 Pro 256GB x2
+    2. (Master Nodes) SSD Samsung 860 Evo 1TB
     3. (Worker Nodes) SSD Crucial BX500 1TB
     4. (NAS) SSD Crucial BX500 1TB x2
-    5. (NAS) HDD Seagate IronWolf Pro NAS 12 TB x3
+    5. (NAS) HDD Seagate IronWolf Pro NAS 12TB x3
   * Virtual Machines:
-    * TrueNAS Scale with 4 CPUs, 8GB RAM and extension cards (1) and (2) as direct passthrough and SSD (4) and HDD (5) in ZFS pulls for storage
+    * (NAS) TrueNAS Scale with 4 CPUs, 8GB RAM and extension cards (1) and (2) as direct passthrough and SSD (4) and HDD (5) in ZFS pulls for storage
+    * (Master) Ubuntu Server with 2 CPUs and 8GB RAM x2
     * (Worker) Ubuntu Server with 4 CPUs and 8GB RAM
     * (Worker) Ubuntu Server with 6 CPUs and 16GB RAM
-    * (Master) Ubuntu Server with 2 CPUs and 4 GB RAM x3
+
   * KVM: [SiPeed NanoKVM-PCIe-PoE](https://sipeed.com/nanokvm/pcie)
-* (Disabled) ProxMox VE Host (Spare):  
-  * CPU Intel i7-6700
-  * RAM 16 GB
-  * Storage:
-    1. SSD SanDisk SD7TB3Q-256G-1006 256GB
-    2. NVME WD Blue NVME 500 GB
-  * Virtual Machines:
-    * (x3) Ubuntu Server with 2 CPUs and and 4GB RAM
-* (Worker) Raspberry Pi 4B 8GB
+
 * [Compute Blade](https://computeblade.com):
-  * Raspberry Pi CM4 8GB + Crucial P3 Plus 500GB x 2
-  * Raspberry Pi CM-TBD x 2
+  * Raspberry Pi CM4 8GB + WD Blue SN550 500GB
+  * Raspberry Pi CM4 8GB + WD Red SN700 500GB
+  * Raspberry Pi CM-TBD x 2 (in reserve)
+
+* ProxMox VE Host (Sandbox):  
+  * HP 800G2 Mini
+    * CPU Intel i7-6700
+    * RAM 16GB
+  * Storage:
+    1. Intel Optane 16GB M.2
+    2. SSD SanDisk SD7TB3Q-256G-1006 256GB
+  * Virtual Machines:
+    * (Backup) ProxMox Backup Server Server with 2 CPUs and and 4GB RAM
+  * KVM: Intel AMT
 
 ## Services
 
@@ -129,6 +135,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Renovate**     | Universal dependency update tool                                                                                                                                           |                          [repo](https://github.com/renovatebot/renovate)                          |            [docker](https://hub.docker.com/r/renovate/renovate)            |
 | **IT Tools**     | Useful tools for developer and people working in IT                                                                                                                        |                          [repo](https://github.com/CorentinTh/it-tools)                           |           [docker](https://hub.docker.com/r/corentinth/it-tools)           |
 | **CloudBeaver**  | Cloud Database Manager                                                                                                                                                     |                          [repo](https://github.com/dbeaver/cloudbeaver)                           |           [docker](https://hub.docker.com/r/dbeaver/cloudbeaver)           |
+| **Meshcentral** | Web-based remote monitoring and management web site with Intel AMT support                          | [repo](https://github.com/Ylianst/MeshCentral)<br>[docs](https://meshcentral.com/downloads.html) | [docker](https://github.com/Ylianst/MeshCentral/tree/master/docker) |
 | **Miniflux**     | Minimalist and opinionated feed reader                                                                                                                                     |              [repo](https://github.com/miniflux/v2)<br>[docs](https://miniflux.app)               |            [docker](https://hub.docker.com/r/miniflux/miniflux)            |
 | **CouchDB**      | Open-source document-oriented NoSQL database. Usecase is to enable [Self-hosted LiveSync](https://github.com/vrtmrz/obsidian-livesync) for [Obsidian](https://obsidian.md) |          [docs](https://docs.couchdb.org/)<br>[repo](https://github.com/apache/couchdb)           | [helm](https://github.com/apache/couchdb-helm/blob/main/couchdb/README.md) |
 | **Gitea**        | Lightweight and easy to use version control system                                                                                                                         |            [repo](https://github.com/go-gitea/gitea)<br>[docs](https://docs.gitea.com)            |                 [helm](https://gitea.com/gitea/helm-chart)                 |
@@ -163,7 +170,7 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | Project               | Description                                                                                                                                 |                                                           Docs / Repo                                                           |                                     Docker / Helm                                      |
 |-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------:|
 | **Jellyfin**          | Jellyfin puts you in control of managing and streaming your media                                                                           |                                          [repo](https://github.com/jellyfin/jellyfin)                                           |                  [docker](https://hub.docker.com/r/jellyfin/jellyfin)                  |
-| **Jellyseerr**        | Fork of Overseerr for managing requests for the media library with Jellyfin integration                                                     |                                        [repo](https://github.com/Fallenbagel/jellyseerr)                                        |               [docker](https://hub.docker.com/r/fallenbagel/jellyseerr)                |
+| **Seerr**        | Open-source media request and discovery manager for Jellyfin, Plex, and Emby                                                     |                                        [repo](https://github.com/seerr-team/seerr)<br>[docs](https://docs.seerr.dev)                                        |               [docker](https://hub.docker.com/r/seerr/seerr)                |
 | **Radarr**            | Radarr is a movie collection manager for Usenet and BitTorrent users                                                                        |                                            [repo](https://github.com/Radarr/Radarr)                                             |                     [docker](https://hotio.dev/containers/radarr/)                     |
 | **Sonarr**            | Sonarr is a PVR for Usenet and BitTorrent users                                                                                             |                                            [repo](https://github.com/Sonarr/Sonarr)                                             |                     [docker](https://hotio.dev/containers/sonarr/)                     |
 | **Prowlarr**          | Prowlarr is an indexer manager/proxy                                                                                                        |                                          [repo](https://github.com/prowlarr/prowlarr)                                           |                    [docker](https://hotio.dev/containers/prowlarr/)                    |
@@ -184,7 +191,7 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 
 | Project            | Description                                                                                                                                                                      | Link                                                                                                                                          |
 |--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| **Jellyfin Tizen** | Builds for the Jellyfin Tizen application for the Samsung smart TVs. Use [@georift/install-jellyfin-tizen](https://github.com/Georift/install-jellyfin-tizen) for quick deploys. | [docker-builds](https://github.com/babagreensheep/jellyfin-tizen-docker)<br>[repo-jellyfin-tizen](https://github.com/jellyfin/jellyfin-tizen) |
+| **Jellyfin Tizen** | **Available in the official Tizen store!!! Installation via development mode is no longer required.**<br>Builds for the Jellyfin Tizen application for the Samsung smart TVs. Use [@georift/install-jellyfin-tizen](https://github.com/Georift/install-jellyfin-tizen) for quick deploys. | [docker-builds](https://github.com/babagreensheep/jellyfin-tizen-docker)<br>[repo-jellyfin-tizen](https://github.com/jellyfin/jellyfin-tizen) |
 | **Obsidian** | Obsidian is a note-taking app that lets you store, link, and publish your thoughts on your device. You can customize Obsidian with plugins, themes, and graphs, and sync your notes securely across devices. | [obsidian.md](https://obsidian.md)
 | **Obsidian Plugins - Self-hosted LiveSync** | Synchronization plugin, available on every obsidian-compatible platform and using CouchDB or Object Storage (e.g., MinIO, S3, R2, etc.) as the server. | [repo](https://github.com/vrtmrz/obsidian-livesync)
 | **Bitwarden Password Manager** / **Bitwarden App** | Password manager that integrates with open-source Bitwarden implementation - **Vaultwarden**.  |
@@ -196,4 +203,3 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | Project         | Description                                                                                         | Docs / Repo                                                                                      | Docker / Helm                                                       |
 |-----------------|-----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
 | **Longhorn**    | Longhorn is a lightweight, reliable and easy-to-use distributed block storage system for Kubernetes | [docs](https://longhorn.io)                                                                      | [helm](https://github.com/longhorn/charts/tree/master)              |
-| **Meshcentral** | Web-based remote monitoring and management web site with Intel AMT support                          | [repo](https://github.com/Ylianst/MeshCentral)<br>[docs](https://meshcentral.com/downloads.html) | [docker](https://github.com/Ylianst/MeshCentral/tree/master/docker) |

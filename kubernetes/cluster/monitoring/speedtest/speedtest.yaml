@@ -47,13 +47,13 @@ spec:
       restartPolicy: Always
       containers:
         - name: speedtest
-          image: lscr.io/linuxserver/speedtest-tracker:1.13.8
+          image: lscr.io/linuxserver/speedtest-tracker:1.13.10
           resources:
             requests:
               cpu: 50m
               memory: 50Mi
             limits:
-              memory: 250Mi
+              memory: 350Mi
           envFrom:
             - configMapRef:
                 name: speedtest
@@ -62,6 +62,8 @@ spec:
           ports:
             - containerPort: 80
             - containerPort: 443
+      nodeSelector:
+        feature.node.kubernetes.io/cpu-cpuid.HYPERVISOR: "true"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -73,7 +75,7 @@ metadata:
 data:
   APP_TIMEZONE: "Europe/Amsterdam"
   DISPLAY_TIMEZONE: "Europe/Amsterdam"
-  SPEEDTEST_SCHEDULE: "0 */6 * * *"
+  SPEEDTEST_SCHEDULE: "30 4,10,16,22 * * *"
   SPEEDTEST_SERVERS: "52365"
   PRUNE_RESULTS_OLDER_THAN: "0"
   PGID: "1000"

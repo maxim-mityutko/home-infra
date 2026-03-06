@@ -30,6 +30,7 @@ helmCharts:
       env:
         - name: HEADLAMP_CONFIG_OIDC_USE_ACCESS_TOKEN
           value: "true"
+      hostUsers: true
       serviceAccount:
         create: true
       clusterRoleBinding:
