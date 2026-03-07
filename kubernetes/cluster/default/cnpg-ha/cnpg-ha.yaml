@@ -37,25 +37,15 @@ spec:
     size: 5Gi
     storageClass: openebs-hostpath
   
-  # Ref: https://cloudnative-pg.io/documentation/current/backup_barmanobjectstore/
-  backup:
-    target: primary
-    retentionPolicy: 14d
-    barmanObjectStore:
-      destinationPath: "s3://cnpg-backup/"
-      endpointURL: http://rustfs-svc.rustfs.svc.cluster.local:9000
-      serverName: cnpg-ha
-      s3Credentials:
-        accessKeyId:
-          name: cnpg-default-secret
-          key: username
-        secretAccessKey:
-          name: cnpg-default-secret
-          key: password
-      data:
-        compression: bzip2
-      wal:
-        compression: bzip2
+  # Ref: https://cloudnative-pg.io/documentation/current/wal_archiving/#plugin-based-architecture
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      enabled: true
+      # Ref: https://github.com/cloudnative-pg/plugin-barman-cloud/issues/682
+      isWALArchiver: true
+      parameters:
+        serverName: cnpg-ha
+        barmanObjectName: cnpg-ha-barman
 
   # Ref: https://cloudnative-pg.io/documentation/current/instance_manager/
   startDelay: 120
@@ -100,14 +90,8 @@ spec:
 
   externalClusters:
     - name: cnpg-ha-backup
-      barmanObjectStore:
-        destinationPath: "s3://cnpg-backup/"
-        serverName: cnpg-ha
-        endpointURL: http://rustfs-svc.rustfs.svc.cluster.local:9000
-        s3Credentials:
-          accessKeyId:
-            name: cnpg-default-secret
-            key: username
-          secretAccessKey:
-            name: cnpg-default-secret
-            key: password
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: cnpg-ha-barman
+          serverName: cnpg-ha

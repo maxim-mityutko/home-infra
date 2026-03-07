@@ -5,6 +5,7 @@ namespace: default
 resources:
   - cnpg-ha.yaml
   - pod-scrape.yaml
+  - object-store.yaml
   - backup.yaml
   # Enable the `service` manifest if LoadBalancer is required
   # - service.yaml
