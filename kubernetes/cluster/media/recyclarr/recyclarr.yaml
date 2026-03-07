@@ -20,7 +20,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: recyclarr
-              image: ghcr.io/recyclarr/recyclarr:8.3.2
+              image: ghcr.io/recyclarr/recyclarr:8.4.0
               imagePullPolicy: IfNotPresent
               resources:
                 requests:
@@ -34,8 +34,6 @@ spec:
               args:
                 - '-c'
                 - |
-                  /app/recyclarr/recyclarr delete custom-formats radarr-all --all --force;
-                  /app/recyclarr/recyclarr delete custom-formats sonarr-all --all --force;
                   /app/recyclarr/recyclarr sync;
               envFrom:
                 - secretRef:
