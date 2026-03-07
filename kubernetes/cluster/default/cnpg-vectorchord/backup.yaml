@@ -8,3 +8,6 @@ spec:
   backupOwnerReference: self
   cluster:
     name: cnpg-vectorchord
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
