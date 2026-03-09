@@ -76,7 +76,7 @@ data:
   # Ref: https://github.com/johanmeijer/grott/wiki/Grott-Configuration#settings-explained-in-detail
   gmode: "proxy"
   gnomqtt: "False"
-  gmqttip: "mqtt-tcp-listener.smart-home.svc.cluster.local"
+  gmqttip: "192.168.12.70"
   gmqttport: "1883"
   gmqtttopic: "energy/growatt"
   gmqttauth: "False"
