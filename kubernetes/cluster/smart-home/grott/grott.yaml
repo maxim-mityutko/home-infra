@@ -1,5 +1,3 @@
-# Service: Grott
-# Label: app.kubernetes.io/name: grott
 ---
 apiVersion: v1
 kind: Service
@@ -9,12 +7,11 @@ metadata:
   labels:
     app.kubernetes.io/name: grott
 spec:
-  type: NodePort # 30000-32767
+  type: ClusterIP
   ports:
     - name: grott
-      port: 31279
+      port: 5279
       targetPort: 5279
-      nodePort: 31279
       protocol: TCP
   selector:
     app.kubernetes.io/name: grott
@@ -41,7 +38,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: ledidobe/grott:2.8.2
+        - image: ledidobe/grott:2.8.3
           name: grott
           resources:
             requests:

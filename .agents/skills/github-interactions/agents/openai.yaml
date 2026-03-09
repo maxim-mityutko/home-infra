@@ -1,5 +1,0 @@
-interface:
-  display_name: "GitHub Interactions"
-  short_description: "Use GitHub CLI for all GitHub operations"
-  default_prompt: "Use $github-interactions to perform this GitHub task with gh and request elevated network permissions first."
-
