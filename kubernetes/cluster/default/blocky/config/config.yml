@@ -73,9 +73,9 @@ conditional:
     # DNS configured via secret useless. However the advantage is that Blocky is 
     # used as a DNS server only inside the client (default) VLAN, however router
     # DNS is rolled out for all extra VLANs (eg IoT, cameras) and servers.
-    internal.brhd.io: 192.168.1.1
+    internal.brhd.io: 192.168.12.1
 clientLookup:
-  upstream: 192.168.1.1
+  upstream: 192.168.12.1
 caching:
   maxItemsCount: 10000
   prefetching: true

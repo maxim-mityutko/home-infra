@@ -69,7 +69,7 @@ helmCharts:
         # - name: prometheus
         #   parameters: 0.0.0.0:9153
         - name: forward
-          parameters: . 192.168.1.1
+          parameters: . 192.168.12.1
           configBlock: |-
             max_concurrent 1000
         - name: cache
