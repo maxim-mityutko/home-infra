@@ -27,6 +27,9 @@ helmCharts:
         pluginsDir: "/headlamp/plugins"
         enableHelm: false
         watchPlugins: false
+        # TODO: Cleanup - bypasses: https://github.com/kubernetes-sigs/headlamp/issues/4883
+        # sessionTTL: 86400
+        sessionTTL: null
       env:
         - name: HEADLAMP_CONFIG_OIDC_USE_ACCESS_TOKEN
           value: "true"
