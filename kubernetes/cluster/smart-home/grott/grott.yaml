@@ -81,4 +81,5 @@ data:
   gmqtttopic: "energy/growatt"
   gmqttauth: "False"
   gpvoutput: "False"
-  verbose: "True"
+  gverbose: "True"
+  ggrowattip: "47.254.130.145"
