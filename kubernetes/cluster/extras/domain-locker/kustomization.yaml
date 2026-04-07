@@ -3,10 +3,39 @@ kind: Kustomization
 namespace: extras
 resources:
   - secret.yaml
+  - dns-endpoint.yaml
 helmCharts:
   - name: domain-locker
     namespace: privacy
     releaseName: domain-locker
     version: 0.1.4
     repo: https://lissy93.github.io/domain-locker/helm
-    valuesFile: values.yaml
+    valuesInline:
+      app:
+        port: 3000
+        env:
+          DL_ENV_TYPE: selfHosted
+          DL_PG_HOST: cnpg-default-rw.default.svc.cluster.local.
+          DL_PG_PORT: 5432
+          TZ: Europe/Amsterdam
+        secretEnv:
+          DL_PG_USER:
+            name: domain-locker
+            key: dl_pg_user  
+          DL_PG_PASSWORD:
+            name: domain-locker
+            key: dl_pg_password
+          DL_PG_NAME:
+            name: domain-locker
+            key: dl_pg_name
+        ingress:
+          enabled: true
+          # ingressClassName: "nginx"
+          annotations: # nginx.ingress.kubernetes.io/rewrite-target: /
+          hosts:
+          - host: domain-locker.brhd.io
+      postgres:
+        enabled: false
+      updater:
+        enabled: true
+
