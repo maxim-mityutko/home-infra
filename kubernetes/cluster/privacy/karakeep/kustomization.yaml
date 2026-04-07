@@ -28,7 +28,7 @@ helmCharts:
                 OAUTH_WELLKNOWN_URL: https://auth.brhd.io/application/o/karakeep/.well-known/openid-configuration
                 OAUTH_CLIENT_ID:
                   valueFrom:
-                    configMapKeyRef:
+                    secretKeyRef:
                       name: karakeep-oauth
                       key: OAUTH_CLIENT_ID
                 OAUTH_CLIENT_SECRET:
