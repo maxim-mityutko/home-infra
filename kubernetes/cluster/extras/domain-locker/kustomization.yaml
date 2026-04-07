@@ -8,5 +8,5 @@ helmCharts:
     namespace: privacy
     releaseName: domain-locker
     version: 0.0.8
-    repo: domain-locker/domain-locker
+    repo: https://lissy93.github.io/domain-locker/helm
     valuesFile: values.yaml
