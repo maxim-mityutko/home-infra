@@ -50,6 +50,7 @@ helmCharts:
             volumeClaimTemplates:
               - name: data
                 accessMode: ReadWriteOnce
+                storageClass: nfs-subdir
                 size: 2Gi
                 globalMounts:
                   - path: /data
