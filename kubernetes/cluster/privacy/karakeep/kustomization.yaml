@@ -45,12 +45,11 @@ helmCharts:
                   enabled: true
                   spec:
                     initialDelaySeconds: 10
-          # TODO: update
           statefulset:
             volumeClaimTemplates:
               - name: data
                 accessMode: ReadWriteOnce
-                storageClassName: nfs-subdir
+                storageClass: nfs-subdir
                 size: 2Gi
                 globalMounts:
                   - path: /data
