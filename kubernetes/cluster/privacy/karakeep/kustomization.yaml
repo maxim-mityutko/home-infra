@@ -29,12 +29,12 @@ helmCharts:
                 OAUTH_CLIENT_ID:
                   valueFrom:
                     configMapKeyRef:
-                      name: karakeep
+                      name: karakeep-oauth
                       key: OAUTH_CLIENT_ID
                 OAUTH_CLIENT_SECRET:
                   valueFrom:
                     secretKeyRef:
-                      name: karakeep
+                      name: karakeep-oauth
                       key: OAUTH_CLIENT_SECRET
               probes:
                 liveness:
