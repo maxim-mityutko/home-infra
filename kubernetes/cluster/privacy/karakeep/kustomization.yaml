@@ -8,7 +8,7 @@ helmCharts:
   - name: karakeep
     namespace: privacy
     releaseName: karakeep
-    version: 0.1.4
+    version: 0.31.0
     repo: https://karakeep-app.github.io/helm-charts
     valuesInline:
       # This chart inherits from the bjw-s library chart. You can check the default values/options here:
