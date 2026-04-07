@@ -34,6 +34,11 @@ helmCharts:
           annotations: # nginx.ingress.kubernetes.io/rewrite-target: /
           hosts:
           - host: domain-locker.brhd.io
+            paths:
+            - path: /
+              service:
+                name: domain-locker-app
+                port: 80
       postgres:
         enabled: false
       updater:
