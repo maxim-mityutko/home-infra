@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: extras
+resources:
+  - secret.yaml
+helmCharts:
+  - name: domain-locker
+    namespace: privacy
+    releaseName: domain-locker
+    version: 0.0.8
+    repo: domain-locker/domain-locker
+    valuesFile: values.yaml
