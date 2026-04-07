@@ -1,0 +1,88 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: privacy
+resources:
+  - secret.yaml
+  - dns-endpoint.yaml
+helmCharts:
+  - name: karakeep
+    namespace: privacy
+    releaseName: karakeep
+    version: 0.1.4
+    repo: https://karakeep-app.github.io/helm-charts
+    valuesInline:
+      # This chart inherits from the bjw-s library chart. You can check the default values/options here:
+      # https://github.com/bjw-s/helm-charts/tree/main/charts/library/common
+      applicationHost: bookmarks.brhd.io
+
+      controllers:
+        karakeep:
+          containers:
+            karakeep:
+              env:
+                # TODO: postgres
+                DISABLE_PASSWORD_AUTH: "true"
+                OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
+                OAUTH_PROVIDER_NAME: OIDC
+                OAUTH_SCOPE: openid email profile
+                OAUTH_WELLKNOWN_URL: https://auth.brhd.io/application/o/karakeep/.well-known/openid-configuration
+                OAUTH_CLIENT_ID:
+                  valueFrom:
+                    configMapKeyRef:
+                      name: karakeep
+                      key: OAUTH_CLIENT_ID
+                OAUTH_CLIENT_SECRET:
+                  valueFrom:
+                    secretKeyRef:
+                      name: karakeep
+                      key: OAUTH_CLIENT_SECRET
+              probes:
+                liveness:
+                  enabled: true
+                  spec:
+                    initialDelaySeconds: 10
+                readiness:
+                  enabled: true
+                  spec:
+                    initialDelaySeconds: 10
+          # TODO: update
+          statefulset:
+            volumeClaimTemplates:
+              - name: data
+                accessMode: ReadWriteOnce
+                size: 2Gi
+                globalMounts:
+                  - path: /data
+
+        chrome:
+          containers:
+            chrome:
+              resources:
+                requests:
+                  memory: 100Mi
+                  cpu: 500m
+                limits:
+                  memory: 1Gi
+                  cpu: 1000m
+
+      ingress:
+        karakeep:
+          annotations:
+            kubernetes.io/ingress.class: public
+            cert-manager.io/cluster-issuer: lets-encrypt
+
+      persistence:
+        chrome-tmp:
+          type: emptyDir
+          advancedMounts:
+            chrome:
+              chrome:
+                - path: /tmp
+                  readonly: false
+
+      meilisearch:
+        environment:
+          MEILI_ENV: production
+        persistence:
+          enabled: false
+          size: 1Gi
