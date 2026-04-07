@@ -141,6 +141,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Gitea**        | Lightweight and easy to use version control system                                                                                                                         |            [repo](https://github.com/go-gitea/gitea)<br>[docs](https://docs.gitea.com)            |                 [helm](https://gitea.com/gitea/helm-chart)                 |
 | **PairDrop**     | Transfer files cross-platform. No setup, no signup                                                                                                                         |                        [repo](https://github.com/schlagmichdoch/PairDrop)                         |          [docker](https://github.com/linuxserver/docker-pairdrop)          |
 | **BentoPDF** | Privacy first PDF toolkit                                                                                  |  [repo](https://github.com/alam00000/bentopdf)   |        [docker](https://github.com/alam00000/bentopdf/pkgs/container/bentopdf-simple)        |
+| **Domain Locker** | The all-in-one tool, for keeping track of your domain name portfolio. Got domain names? Get Domain Locker! | [repo](https://github.com/Lissy93/domain-locker)<br>[docs](https://domain-locker.com/about) | [helm](https://github.com/Lissy93/domain-locker/tree/main/helm) |
 
 ### Smart Home
 
