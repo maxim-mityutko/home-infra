@@ -70,8 +70,8 @@ helmCharts:
               envFrom:
                 - secretRef:
                     name: karakeep
-                - secretRef:
-                    name: "{{ .Release.Name }}-meilesearch"
+                # - secretRef:
+                #     name: "{{ .Release.Name }}-meilesearch"
               probes:
                 liveness:
                   enabled: true
@@ -109,6 +109,8 @@ helmCharts:
       secrets:
         karakeep:
           enabled: false
+        meilisearch:
+          enabled: false
 
       persistence:
         chrome-tmp:
@@ -125,6 +127,12 @@ helmCharts:
           MEILI_ENV: production
           MEILI_NO_ANALYTICS: "true"
           MEILI_LOG_LEVEL: WARN
+          MEILI_MASTER_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: karakeep
+                key: MEILI_MASTER_KEY
+
         persistence:
           enabled: true
           size: 1Gi
