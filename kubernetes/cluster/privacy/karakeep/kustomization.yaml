@@ -128,3 +128,5 @@ helmCharts:
         persistence:
           enabled: false
           size: 1Gi
+          accessMode: ReadWriteOnce
+          storageClass: nfs-subdir
