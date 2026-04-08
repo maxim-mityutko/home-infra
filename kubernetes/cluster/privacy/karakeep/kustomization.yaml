@@ -43,7 +43,7 @@ helmCharts:
                 OAUTH_SCOPE: openid email profile
                 OAUTH_WELLKNOWN_URL: https://auth.brhd.io/application/o/karakeep/.well-known/openid-configuration
 
-                OPENAI_BASE_URL: http://ollama.com/v1
+                OPENAI_BASE_URL: https://ollama.com/v1
                 INFERENCE_TEXT_MODEL: gemma3:4b-cloud
                 INFERENCE_IMAGE_MODEL: gemma3:12b-cloud
                 # EMBEDDING_TEXT_MODEL: 
