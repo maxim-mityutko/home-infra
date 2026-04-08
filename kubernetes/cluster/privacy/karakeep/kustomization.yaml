@@ -126,7 +126,7 @@ helmCharts:
           MEILI_NO_ANALYTICS: "true"
           MEILI_LOG_LEVEL: WARN
         persistence:
-          enabled: false
+          enabled: true
           size: 1Gi
           accessMode: ReadWriteOnce
           storageClass: nfs-subdir
