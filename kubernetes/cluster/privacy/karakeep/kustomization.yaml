@@ -25,6 +25,8 @@ helmCharts:
                 DISABLE_NEW_RELEASE_CHECK: "true"
                 DB_WAL_MODE: "false"
 
+                MEILI_MASTER_KEY:
+
                 WORKERS_ENABLED_WORKERS: crawler,inference,search,adminMaintenance,assetPreprocessing
                 WORKERS_DISABLED_WORKERS: video,feed,ruleEngine,webhook
                 SEARCH_NUM_WORKERS: "1"
@@ -49,7 +51,7 @@ helmCharts:
                 # EMBEDDING_TEXT_MODEL: 
                 INFERENCE_NUM_WORKERS: "1"
                 INFERENCE_ENABLE_AUTO_TAGGING: "true"
-                INFERENCE_ENABLE_AUTO_SUMMARIZATION: "false"
+                INFERENCE_ENABLE_AUTO_SUMMARIZATION: "true"
                 INFERENCE_OUTPUT_SCHEMA: structured
                 INFERENCE_LANG: english
 
@@ -68,6 +70,8 @@ helmCharts:
               envFrom:
                 - secretRef:
                     name: karakeep
+                - secretRef:
+                    name: "{{ .Release.Name }}-meilesearch"
               probes:
                 liveness:
                   enabled: true
