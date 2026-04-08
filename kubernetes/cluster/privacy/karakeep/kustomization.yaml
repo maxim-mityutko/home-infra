@@ -70,8 +70,6 @@ helmCharts:
               envFrom:
                 - secretRef:
                     name: karakeep
-                # - secretRef:
-                #     name: "{{ .Release.Name }}-meilesearch"
               probes:
                 liveness:
                   enabled: true
@@ -83,7 +81,7 @@ helmCharts:
                     initialDelaySeconds: 10
           statefulset:
             volumeClaimTemplates:
-              - name: data
+              - name: karakeep
                 accessMode: ReadWriteOnce
                 storageClass: nfs-subdir
                 size: 2Gi
