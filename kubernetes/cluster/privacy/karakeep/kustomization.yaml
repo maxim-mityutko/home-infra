@@ -34,6 +34,7 @@ helmCharts:
                 ASSET_PREPROCESSING_NUM_WORKERS: "1"
                 RULE_ENGINE_NUM_WORKERS: "1"
 
+                # TODO:
                 # ASSET_STORE_S3_ENDPOINT: 
                 # ASSET_STORE_S3_BUCKET:
                 # ASSET_STORE_S3_ACCESS_KEY_ID:
@@ -79,6 +80,7 @@ helmCharts:
                   enabled: true
                   spec:
                     initialDelaySeconds: 10
+              # resources: {}
           statefulset:
             volumeClaimTemplates:
               - name: karakeep
@@ -110,15 +112,7 @@ helmCharts:
         meilesearch:
           enabled: false
 
-      persistence:
-        chrome-tmp:
-          type: emptyDir
-          advancedMounts:
-            chrome:
-              chrome:
-                - path: /tmp
-                  readonly: false
-
+      # Ref: https://github.com/meilisearch/meilisearch-kubernetes
       meilisearch:
         environment:
           # Ref: https://www.meilisearch.com/docs/resources/self_hosting/configuration/reference
@@ -132,3 +126,10 @@ helmCharts:
           size: 1Gi
           accessMode: ReadWriteOnce
           storageClass: nfs-subdir
+        resources:
+          limits:
+           cpu: 100m
+           memory: 100Mi
+          requests:
+           cpu: 50m
+           memory: 50Mi
