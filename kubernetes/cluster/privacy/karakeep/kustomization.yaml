@@ -19,23 +19,52 @@ helmCharts:
         karakeep:
           containers:
             karakeep:
+              # Ref: https://docs.karakeep.app/configuration/environment-variables
               env:
+                LOG_LEVEL: warning
+                DISABLE_NEW_RELEASE_CHECK: "true"
+                DB_WAL_MODE: "false"
+
+                WORKERS_ENABLED_WORKERS: crawler,inference,search,adminMaintenance,assetPreprocessing,webhook
+                WORKERS_DISABLED_WORKERS: video,feed,ruleEngine
+                SEARCH_NUM_WORKERS: "1"
+                WEBHOOK_NUM_WORKERS: "1"
+                ASSET_PREPROCESSING_NUM_WORKERS: "1"
+                RULE_ENGINE_NUM_WORKERS: "1"
+
+                # ASSET_STORE_S3_ENDPOINT: 
+                # ASSET_STORE_S3_BUCKET:
+                # ASSET_STORE_S3_ACCESS_KEY_ID:
+                # ASSET_STORE_S3_SECRET_ACCESS_KEY: 
+
                 DISABLE_PASSWORD_AUTH: "true"
                 OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
-                OAUTH_PROVIDER_NAME: OIDC
+                OAUTH_PROVIDER_NAME: Authentik
                 OAUTH_SCOPE: openid email profile
                 OAUTH_WELLKNOWN_URL: https://auth.brhd.io/application/o/karakeep/.well-known/openid-configuration
+
                 OPENAI_BASE_URL: http://ollama.com/v1
-                # OAUTH_CLIENT_ID:
-                #   valueFrom:
-                #     secretKeyRef:
-                #       name: karakeep-oauth
-                #       key: OAUTH_CLIENT_ID
-                # OAUTH_CLIENT_SECRET:
-                #   valueFrom:
-                #     secretKeyRef:
-                #       name: karakeep-oauth
-                #       key: OAUTH_CLIENT_SECRET
+                INFERENCE_TEXT_MODEL: gemma3:4b-cloud
+                INFERENCE_IMAGE_MODEL: gemma3:12b-cloud
+                # EMBEDDING_TEXT_MODEL: 
+                INFERENCE_NUM_WORKERS: "1"
+                INFERENCE_ENABLE_AUTO_TAGGING: "true"
+                INFERENCE_ENABLE_AUTO_SUMMARIZATION: "false"
+                INFERENCE_OUTPUT_SCHEMA: structured
+                INFERENCE_LANG: english
+
+                CRAWLER_NUM_WORKERS: "1"
+                CRAWLER_DOWNLOAD_BANNER_IMAGE: "true"
+                CRAWLER_STORE_SCREENSHOT: "false"
+                CRAWLER_FULL_PAGE_SCREENSHOT: "false"
+                CRAWLER_STORE_PDF: "false"
+                CRAWLER_FULL_PAGE_ARCHIVE: "false"
+                CRAWLER_VIDEO_DOWNLOAD: "false"
+                CRAWLER_ENABLE_ADBLOCKER: "true"
+
+                OCR_USE_LLM: "true"
+
+                OTEL_TRACING_ENABLED: "false"
               envFrom:
                 - secretRef:
                     name: karakeep
