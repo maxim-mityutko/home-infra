@@ -20,22 +20,25 @@ helmCharts:
           containers:
             karakeep:
               env:
-                # TODO: postgres
                 DISABLE_PASSWORD_AUTH: "true"
                 OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
                 OAUTH_PROVIDER_NAME: OIDC
                 OAUTH_SCOPE: openid email profile
                 OAUTH_WELLKNOWN_URL: https://auth.brhd.io/application/o/karakeep/.well-known/openid-configuration
-                OAUTH_CLIENT_ID:
-                  valueFrom:
-                    secretKeyRef:
-                      name: karakeep-oauth
-                      key: OAUTH_CLIENT_ID
-                OAUTH_CLIENT_SECRET:
-                  valueFrom:
-                    secretKeyRef:
-                      name: karakeep-oauth
-                      key: OAUTH_CLIENT_SECRET
+                OPENAI_BASE_URL: http://ollama.com/v1
+                # OAUTH_CLIENT_ID:
+                #   valueFrom:
+                #     secretKeyRef:
+                #       name: karakeep-oauth
+                #       key: OAUTH_CLIENT_ID
+                # OAUTH_CLIENT_SECRET:
+                #   valueFrom:
+                #     secretKeyRef:
+                #       name: karakeep-oauth
+                #       key: OAUTH_CLIENT_SECRET
+              envFrom:
+                - secretRef:
+                    name: karakeep
               probes:
                 liveness:
                   enabled: true
@@ -70,6 +73,9 @@ helmCharts:
           annotations:
             kubernetes.io/ingress.class: public
             cert-manager.io/cluster-issuer: lets-encrypt
+      secrets:
+        karakeep:
+          enabled: false
 
       persistence:
         chrome-tmp:
