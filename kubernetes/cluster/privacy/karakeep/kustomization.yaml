@@ -121,7 +121,9 @@ helmCharts:
 
       meilisearch:
         environment:
+          # Ref: https://www.meilisearch.com/docs/resources/self_hosting/configuration/reference
           MEILI_ENV: production
+          MEILI_LOG_LEVEL: WARN
         persistence:
           enabled: false
           size: 1Gi
