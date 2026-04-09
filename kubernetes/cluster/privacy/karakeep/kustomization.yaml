@@ -96,9 +96,9 @@ helmCharts:
           containers:
             chrome:
               resources:
-                requests:
-                  memory: 100Mi
-                  cpu: 200m
+                # requests:
+                #   memory: 100Mi
+                #   cpu: 200m
                 limits:
                   memory: 1Gi
                   cpu: 1000m
