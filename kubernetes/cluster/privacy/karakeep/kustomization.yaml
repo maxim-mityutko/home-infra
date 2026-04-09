@@ -81,6 +81,8 @@ helmCharts:
                   spec:
                     initialDelaySeconds: 10
               resources:
+                requests:
+                  memory: 500Mi
                 limits:
                   memory: 1.5Gi
           statefulset:
