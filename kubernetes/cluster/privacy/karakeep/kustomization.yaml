@@ -1,0 +1,139 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: privacy
+resources:
+  - secret.yaml
+  - dns-endpoint.yaml
+helmCharts:
+  - name: karakeep
+    namespace: privacy
+    releaseName: karakeep
+    version: 0.31.0
+    repo: https://karakeep-app.github.io/helm-charts
+    valuesInline:
+      # This chart inherits from the bjw-s library chart. You can check the default values/options here:
+      # https://github.com/bjw-s/helm-charts/tree/main/charts/library/common
+      applicationHost: bookmarks.brhd.io
+
+      controllers:
+        karakeep:
+          containers:
+            karakeep:
+              # Ref: https://docs.karakeep.app/configuration/environment-variables
+              env:
+                LOG_LEVEL: warning
+                DISABLE_NEW_RELEASE_CHECK: "true"
+                DB_WAL_MODE: "false"
+
+                MEILI_MASTER_KEY:
+
+                WORKERS_ENABLED_WORKERS: crawler,inference,search,adminMaintenance,assetPreprocessing
+                WORKERS_DISABLED_WORKERS: video,feed,ruleEngine,webhook
+                SEARCH_NUM_WORKERS: "1"
+                WEBHOOK_NUM_WORKERS: "1"
+                ASSET_PREPROCESSING_NUM_WORKERS: "1"
+                RULE_ENGINE_NUM_WORKERS: "1"
+
+                # TODO: Create S3 on SPIN in RustFS, point asset storage to the bucket on SPIN
+                # ASSET_STORE_S3_ENDPOINT: 
+                # ASSET_STORE_S3_BUCKET:
+                # ASSET_STORE_S3_ACCESS_KEY_ID:
+                # ASSET_STORE_S3_SECRET_ACCESS_KEY: 
+
+                DISABLE_PASSWORD_AUTH: "true"
+                OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
+                OAUTH_PROVIDER_NAME: Authentik
+                OAUTH_SCOPE: openid email profile
+                OAUTH_WELLKNOWN_URL: https://auth.brhd.io/application/o/karakeep/.well-known/openid-configuration
+
+                OPENAI_BASE_URL: https://ollama.com/v1
+                INFERENCE_TEXT_MODEL: gemma3:4b-cloud
+                INFERENCE_IMAGE_MODEL: gemma3:12b-cloud
+                # EMBEDDING_TEXT_MODEL: 
+                INFERENCE_NUM_WORKERS: "1"
+                INFERENCE_ENABLE_AUTO_TAGGING: "true"
+                INFERENCE_ENABLE_AUTO_SUMMARIZATION: "true"
+                INFERENCE_OUTPUT_SCHEMA: structured
+                INFERENCE_LANG: english
+
+                CRAWLER_NUM_WORKERS: "1"
+                CRAWLER_DOWNLOAD_BANNER_IMAGE: "true"
+                CRAWLER_STORE_SCREENSHOT: "false"
+                CRAWLER_FULL_PAGE_SCREENSHOT: "false"
+                CRAWLER_STORE_PDF: "false"
+                CRAWLER_FULL_PAGE_ARCHIVE: "false"
+                CRAWLER_VIDEO_DOWNLOAD: "false"
+                CRAWLER_ENABLE_ADBLOCKER: "true"
+
+                OCR_USE_LLM: "true"
+
+                OTEL_TRACING_ENABLED: "false"
+              envFrom:
+                - secretRef:
+                    name: karakeep
+              probes:
+                liveness:
+                  enabled: true
+                  spec:
+                    initialDelaySeconds: 10
+                readiness:
+                  enabled: true
+                  spec:
+                    initialDelaySeconds: 10
+              resources:
+                requests:
+                  memory: 500Mi
+                limits:
+                  memory: 1.5Gi
+          statefulset:
+            volumeClaimTemplates:
+              - name: karakeep
+                accessMode: ReadWriteOnce
+                storageClass: nfs-subdir
+                size: 2Gi
+                globalMounts:
+                  - path: /data
+
+        chrome:
+          containers:
+            chrome:
+              resources:
+                requests:
+                  memory: 100Mi
+                  cpu: 200m
+                limits:
+                  memory: 1Gi
+                  cpu: 1000m
+
+      ingress:
+        karakeep:
+          annotations:
+            kubernetes.io/ingress.class: public
+            cert-manager.io/cluster-issuer: lets-encrypt
+      secrets:
+        karakeep:
+          enabled: false
+        meilesearch:
+          enabled: false
+
+      # Ref: https://github.com/meilisearch/meilisearch-kubernetes
+      meilisearch:
+        environment:
+          # Ref: https://www.meilisearch.com/docs/resources/self_hosting/configuration/reference
+          MEILI_ENV: production
+          MEILI_NO_ANALYTICS: "true"
+          MEILI_LOG_LEVEL: WARN
+        auth:
+          existingMasterKeySecret: karakeep
+        persistence:
+          enabled: true
+          size: 1Gi
+          accessMode: ReadWriteOnce
+          storageClass: nfs-subdir
+        resources:
+          limits:
+           cpu: 50m
+           memory: 1Gi
+          requests:
+           cpu: 25m
+           memory: 100Mi
