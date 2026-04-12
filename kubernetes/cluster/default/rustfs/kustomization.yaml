@@ -9,7 +9,7 @@ helmCharts:
   - name: rustfs
     namespace: rustfs
     releaseName: rustfs
-    version: 0.0.89
+    version: 0.0.93
     repo: https://charts.rustfs.com/
     valuesInline:
       replicaCount: 1
