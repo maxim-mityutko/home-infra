@@ -32,7 +32,6 @@ helmCharts:
                 ASSET_PREPROCESSING_NUM_WORKERS: "1"
                 RULE_ENGINE_NUM_WORKERS: "1"
 
-                # TODO: Create S3 on SPIN in RustFS, point asset storage to the bucket on SPIN
                 # ASSET_STORE_S3_ENDPOINT: 
                 # ASSET_STORE_S3_BUCKET:
                 # ASSET_STORE_S3_ACCESS_KEY_ID:
@@ -122,13 +121,6 @@ helmCharts:
             karakeep:
               karakeep:
                 - path: /data/assets
-        # chrome-tmp:
-        #   type: emptyDir
-        #   advancedMounts:
-        #     chrome:
-        #       chrome:
-        #         - path: /tmp
-        #           readonly: false
 
       # Ref: https://github.com/meilisearch/meilisearch-kubernetes
       meilisearch:
