@@ -113,6 +113,22 @@ helmCharts:
           enabled: false
         meilesearch:
           enabled: false
+      
+      persistence:
+        assets:
+          type: persistentVolumeClaim
+          existingClaim: bookmarks
+          advancedMounts:
+            karakeep:
+              karakeep:
+                - path: /data/assets
+        # chrome-tmp:
+        #   type: emptyDir
+        #   advancedMounts:
+        #     chrome:
+        #       chrome:
+        #         - path: /tmp
+        #           readonly: false
 
       # Ref: https://github.com/meilisearch/meilisearch-kubernetes
       meilisearch:

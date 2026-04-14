@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - pv-pvc-photos.yaml
   - pv-pvc-drive.yaml
+  - pv-pvc-bookmarks.yaml
