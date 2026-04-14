@@ -21,7 +21,7 @@ helmCharts:
             karakeep:
               # Ref: https://docs.karakeep.app/configuration/environment-variables
               env:
-                LOG_LEVEL: info # warning
+                LOG_LEVEL: warning
                 DISABLE_NEW_RELEASE_CHECK: "true"
                 DB_WAL_MODE: "false"
 
