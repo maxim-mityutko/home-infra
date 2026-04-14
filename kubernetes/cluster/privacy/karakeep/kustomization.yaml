@@ -23,7 +23,7 @@ helmCharts:
               env:
                 LOG_LEVEL: warning
                 DISABLE_NEW_RELEASE_CHECK: "true"
-                DB_WAL_MODE: "false"
+                DB_WAL_MODE: "true"
 
                 MEILI_MASTER_KEY:
 
