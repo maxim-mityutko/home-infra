@@ -23,9 +23,7 @@ helmCharts:
               env:
                 LOG_LEVEL: warning
                 DISABLE_NEW_RELEASE_CHECK: "true"
-                DB_WAL_MODE: "true"
-
-                MEILI_MASTER_KEY:
+                DB_WAL_MODE: "false"
 
                 WORKERS_ENABLED_WORKERS: crawler,inference,search,adminMaintenance,assetPreprocessing,webhook
                 WORKERS_DISABLED_WORKERS: video,feed,ruleEngine
