@@ -25,7 +25,7 @@ helmCharts:
                 DISABLE_NEW_RELEASE_CHECK: "true"
                 DB_WAL_MODE: "false"
 
-                WORKERS_ENABLED_WORKERS: crawler,inference,search,adminMaintenance,assetPreprocessing,webhook
+                # WORKERS_ENABLED_WORKERS: crawler,inference,search,adminMaintenance,assetPreprocessing,webhook
                 WORKERS_DISABLED_WORKERS: video,feed,ruleEngine
                 SEARCH_NUM_WORKERS: "1"
                 WEBHOOK_NUM_WORKERS: "1"
