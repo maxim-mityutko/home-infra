@@ -6,3 +6,7 @@ metadata:
 data:
   RUSTFS_ENABLE_HEAL: 'false'
   RUSTFS_ENABLE_SCANNER: 'false'
+  RUSTFS_IDENTITY_OPENID_CONFIG_URL_AUTHENTIK: https://auth.brhd.io/application/o/rust-fs/.well-known/openid-configuration
+  RUSTFS_IDENTITY_OPENID_SCOPES_AUTHENTIK: openid,profile,email
+  RUSTFS_IDENTITY_OPENID_DISPLAY_NAME_AUTHENTIK: Authentik
+  RUSTFS_IDENTITY_OPENID_ROLE_POLICY_AUTHENTIK: consoleAdmin
