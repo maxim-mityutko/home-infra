@@ -19,4 +19,4 @@ spec:
     requestRate:
       granularity: 1s
       targetValue: 1
-      window: 1m
+      window: 1m0s
