@@ -12,8 +12,9 @@
 # Repo: https://github.com/kedacore/keda
 # Helm: https://github.com/kedacore/charts
 # Docs: https://keda.sh/docs/latest/
-# Add-On Repo: 
+# Add-On Repo: https://github.com/kedacore/http-add-on
 # Add-On Helm: https://github.com/kedacore/charts/blob/main/http-add-on/README.md
+# HTTPScaledObject: https://github.com/kedacore/http-add-on/blob/main/docs/ref/v0.13.0/http_scaled_object.md
 
 
 apiVersion: kustomize.config.k8s.io/v1beta1
