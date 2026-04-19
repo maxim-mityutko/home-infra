@@ -37,7 +37,7 @@ helmCharts:
       replicaCount: 1
       image:
         repository: ghcr.io/vineethvijay/kube-snorlax
-        tag: v0.4.0
+        tag: 0.4.0
       resources:
         requests:
           cpu: 25m
