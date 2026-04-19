@@ -71,7 +71,7 @@ helmCharts:
   - name: keda
     namespace: keda
     releaseName: keda
-    version: 1.0.3
+    version: 2.19.0
     repo: https://kedacore.github.io/charts
     valuesInline:
       crds:
