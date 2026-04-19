@@ -5,6 +5,8 @@ metadata:
 spec:
   hosts:
     - pdf.brhd.io
+  pathPrefixes:
+    - "/"
   scaleTargetRef:
     name: bento-pdf
     kind: Deployment
