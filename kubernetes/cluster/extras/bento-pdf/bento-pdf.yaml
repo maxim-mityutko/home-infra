@@ -23,6 +23,8 @@ metadata:
   namespace: extras
   labels:
     app.kubernetes.io/name: bento-pdf
+    sablier.enable: "true"
+    sablier.group: test
 spec:
   replicas: 1
   selector:
