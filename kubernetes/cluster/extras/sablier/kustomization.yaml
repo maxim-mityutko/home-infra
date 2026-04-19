@@ -7,6 +7,14 @@
 # SNORLAX
 # Repo: https://github.com/vineethvijay/kube-snorlax
 # Helm: https://github.com/vineethvijay/kube-snorlax/tree/main/helm/kube-snorlax
+#
+# KEDA
+# Repo: https://github.com/kedacore/keda
+# Helm: https://github.com/kedacore/charts
+# Docs: https://keda.sh/docs/latest/
+# Add-On Repo: 
+# Add-On Helm: https://github.com/kedacore/charts/blob/main/http-add-on/README.md
+
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -60,3 +68,134 @@ helmCharts:
         enabled: false
         size: 64Mi
         # storageClass: ""
+  - name: keda
+    namespace: keda
+    releaseName: keda
+    version: 1.0.3
+    repo: https://kedacore.github.io/charts
+    valuesInline:
+      crds:
+        install: true
+      watchNamespace: ""
+      networkPolicy:
+        enabled: false
+      operator:
+        name: keda-operator
+        revisionHistoryLimit: 2
+        replicaCount: 1
+        useHostNetwork: false
+        livenessProbe:
+          initialDelaySeconds: 25
+          periodSeconds: 15
+        readinessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 15
+      metricsServer:
+        enabled: false
+        revisionHistoryLimit: 2
+        replicaCount: 1
+        useHostNetwork: false
+        livenessProbe:
+          initialDelaySeconds: 25
+          periodSeconds: 15
+        readinessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 15
+      webhooks:
+        enabled: false
+      rbac:
+        create: true
+      serviceAccount:
+        operator:
+          create: true
+        metricsServer:
+          create: false
+        webhooks:
+          create: false
+      logging:
+        operator:
+          level: info
+        metricsServer:
+          level: 0
+        webhooks:
+          level: info
+      resources:
+        operator:
+          limits:
+            cpu: 1
+            memory: 1000Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        metricServer:
+          limits:
+            cpu: 1
+            memory: 1000Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        webhooks:
+          limits:
+            cpu: 1
+            memory: 1000Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+      env: []
+      prometheus:
+        operator:
+          enabled: false
+        metricServer:
+          enabled: false
+        webhooks:
+          enabled: false
+  - name: keda-add-ons-http
+    namespace: keda
+    releaseName: keda-add-ons-http
+    version: 0.13.0
+    repo: https://kedacore.github.io/charts
+    valuesInline:
+      crds:
+        install: true
+      logging:
+        operator:
+          level: info
+        scaler:
+          level: info
+        interceptor:
+          level: info
+      # operator-specific configuration values
+      operator:
+        replicas: 1
+        resources:
+          limits:
+            cpu: 0.5
+            memory: 64Mi
+          requests:
+            cpu: 250m
+            memory: 20Mi
+      scaler:
+        replicas: 1
+        resources:
+          limits:
+            cpu: 0.5
+            memory: 64Mi
+          requests:
+            cpu: 250m
+            memory: 20Mi
+      interceptor:
+        replicas:
+          min: 1
+          max: 1
+          waitTimeout: 20s
+        resources:
+          limits:
+            cpu: 0.5
+            memory: 64Mi
+          requests:
+            cpu: 250m
+            memory: 20Mi
+        tls:
+          enabled: false
+        pdb:
+          enabled: false
