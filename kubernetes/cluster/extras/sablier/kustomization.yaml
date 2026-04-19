@@ -91,7 +91,7 @@ helmCharts:
           initialDelaySeconds: 20
           periodSeconds: 15
       metricsServer:
-        enabled: false
+        enabled: true
         revisionHistoryLimit: 2
         replicaCount: 1
         useHostNetwork: false
