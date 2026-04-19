@@ -35,39 +35,39 @@ helmCharts:
   #       initialDelaySeconds: 5
   #       periodSeconds: 15
   #     resources: {}
-  - name: kube-snorlax
-    namespace: extras
-    releaseName: kube-snorlax
-    version: 0.4.0
-    repo: https://vineethvijay.github.io/kube-snorlax
-    valuesInline:
-      targetNamespace: extras
-      replicaCount: 1
-      image:
-        repository: ghcr.io/vineethvijay/kube-snorlax
-        tag: 0.4.0
-      resources:
-        requests:
-          cpu: 25m
-          memory: 64Mi
-        limits:
-          memory: 256Mi
-      livenessProbe:
-        httpGet:
-          path: /healthz
-          port: 8080
-        initialDelaySeconds: 5
-        periodSeconds: 30
-      readinessProbe:
-        httpGet:
-          path: /healthz
-          port: 8080
-        initialDelaySeconds: 3
-        periodSeconds: 15
-      persistence:
-        enabled: false
-        size: 64Mi
-        # storageClass: ""
+  # - name: kube-snorlax
+  #   namespace: extras
+  #   releaseName: kube-snorlax
+  #   version: 0.4.0
+  #   repo: https://vineethvijay.github.io/kube-snorlax
+  #   valuesInline:
+  #     targetNamespace: extras
+  #     replicaCount: 1
+  #     image:
+  #       repository: ghcr.io/vineethvijay/kube-snorlax
+  #       tag: 0.4.0
+  #     resources:
+  #       requests:
+  #         cpu: 25m
+  #         memory: 64Mi
+  #       limits:
+  #         memory: 256Mi
+  #     livenessProbe:
+  #       httpGet:
+  #         path: /healthz
+  #         port: 8080
+  #       initialDelaySeconds: 5
+  #       periodSeconds: 30
+  #     readinessProbe:
+  #       httpGet:
+  #         path: /healthz
+  #         port: 8080
+  #       initialDelaySeconds: 3
+  #       periodSeconds: 15
+  #     persistence:
+  #       enabled: false
+  #       size: 64Mi
+  #       # storageClass: ""
   - name: keda
     namespace: keda
     releaseName: keda
