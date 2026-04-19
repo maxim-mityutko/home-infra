@@ -2,22 +2,61 @@
 # Helm: https://github.com/sablierapp/helm-charts
 # Docs: https://sablierapp.dev/
 # Repo: https://github.com/sablierapp/sablier
+# Plugin: https://github.com/sablierapp/sablier-traefik-plugin#nginx
+#
+# SNORLAX
+# Repo: https://github.com/vineethvijay/kube-snorlax
+# Helm: https://github.com/vineethvijay/kube-snorlax/tree/main/helm/kube-snorlax
+
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: extras
-resources:
-  - config-map.yaml
+resources: []
+  # - config-map.yaml
 helmCharts:
-  - name: sablier
+  # - name: sablier
+  #   namespace: extras
+  #   releaseName: sablier
+  #   version: 1.0.3
+  #   repo: https://sablierapp.github.io/helm-charts
+  #   valuesInline:
+  #     readinessProbe:
+  #       initialDelaySeconds: 5
+  #       periodSeconds: 15
+  #     livenessProbe:
+  #       initialDelaySeconds: 5
+  #       periodSeconds: 15
+  #     resources: {}
+  - name: kube-snorlax
     namespace: extras
-    releaseName: sablier
-    version: 1.0.3
-    repo: https://sablierapp.github.io/helm-charts
+    releaseName: kube-snorlax
+    version: 0.4.0
+    repo: https://vineethvijay.github.io/kube-snorlax
     valuesInline:
-      readinessProbe:
-        initialDelaySeconds: 5
-        periodSeconds: 15
+      targetNamespace: extras
+      replicaCount: 1
+      image:
+        repository: ghcr.io/vineethvijay/kube-snorlax
+        tag: v0.4.0
+      resources:
+        requests:
+          cpu: 25m
+          memory: 64Mi
+        limits:
+          memory: 256Mi
       livenessProbe:
+        httpGet:
+          path: /healthz
+          port: 8080
         initialDelaySeconds: 5
+        periodSeconds: 30
+      readinessProbe:
+        httpGet:
+          path: /healthz
+          port: 8080
+        initialDelaySeconds: 3
         periodSeconds: 15
-      resources: {}
+      persistence:
+        enabled: false
+        size: 64Mi
+        # storageClass: ""
