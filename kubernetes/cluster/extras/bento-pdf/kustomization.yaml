@@ -4,3 +4,4 @@ namespace: extras
 resources:
   - bento-pdf.yaml
   - ingress.yaml
+  - http-scaled-object.yaml
