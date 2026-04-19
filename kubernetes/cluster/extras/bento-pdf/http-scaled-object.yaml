@@ -16,7 +16,5 @@ spec:
     max: 1
   scaledownPeriod: 300
   scalingMetric:
-    requestRate:
-      granularity: 1s
+    concurrency:
       targetValue: 1
-      window: 1m0s
