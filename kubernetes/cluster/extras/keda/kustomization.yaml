@@ -21,54 +21,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: extras
 resources: []
-  # - config-map.yaml
 helmCharts:
-  # - name: sablier
-  #   namespace: extras
-  #   releaseName: sablier
-  #   version: 1.0.3
-  #   repo: https://sablierapp.github.io/helm-charts
-  #   valuesInline:
-  #     readinessProbe:
-  #       initialDelaySeconds: 5
-  #       periodSeconds: 15
-  #     livenessProbe:
-  #       initialDelaySeconds: 5
-  #       periodSeconds: 15
-  #     resources: {}
-  # - name: kube-snorlax
-  #   namespace: extras
-  #   releaseName: kube-snorlax
-  #   version: 0.4.0
-  #   repo: https://vineethvijay.github.io/kube-snorlax
-  #   valuesInline:
-  #     targetNamespace: extras
-  #     replicaCount: 1
-  #     image:
-  #       repository: ghcr.io/vineethvijay/kube-snorlax
-  #       tag: 0.4.0
-  #     resources:
-  #       requests:
-  #         cpu: 25m
-  #         memory: 64Mi
-  #       limits:
-  #         memory: 256Mi
-  #     livenessProbe:
-  #       httpGet:
-  #         path: /healthz
-  #         port: 8080
-  #       initialDelaySeconds: 5
-  #       periodSeconds: 30
-  #     readinessProbe:
-  #       httpGet:
-  #         path: /healthz
-  #         port: 8080
-  #       initialDelaySeconds: 3
-  #       periodSeconds: 15
-  #     persistence:
-  #       enabled: false
-  #       size: 64Mi
-  #       # storageClass: ""
   - name: keda
     namespace: keda
     releaseName: keda
@@ -92,7 +45,7 @@ helmCharts:
           initialDelaySeconds: 20
           periodSeconds: 15
       metricsServer:
-        enabled: true
+        enabled: false
         revisionHistoryLimit: 2
         replicaCount: 1
         useHostNetwork: false
@@ -142,7 +95,6 @@ helmCharts:
           requests:
             cpu: 100m
             memory: 100Mi
-      env: []
       prometheus:
         operator:
           enabled: false

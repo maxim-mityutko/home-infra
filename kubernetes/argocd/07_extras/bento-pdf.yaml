@@ -16,12 +16,13 @@ spec:
   ignoreDifferences:
     - group: apps
       kind: Deployment
+      # On-demand scaling
       jsonPointers:
         - /spec/replicas
   syncPolicy:
     automated:
       prune: true
-      selfHeal: false
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
       - RespectIgnoreDifferences=true

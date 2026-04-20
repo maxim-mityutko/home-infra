@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sablier
+  name: keda
   namespace: argocd
 spec:
   destination:
     name: ''
-    namespace: extras
+    namespace: keda
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/extras/sablier
+    path: kubernetes/cluster/extras/keda
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
