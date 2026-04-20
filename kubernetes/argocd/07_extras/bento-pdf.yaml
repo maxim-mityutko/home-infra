@@ -16,9 +16,8 @@ spec:
   ignoreDifferences:
     - group: apps
       kind: Deployment
-      # On-demand scaling
       jsonPointers:
-        - /spec/replicas
+        - /spec/replicas  # On-demand scaling
   syncPolicy:
     automated:
       prune: true

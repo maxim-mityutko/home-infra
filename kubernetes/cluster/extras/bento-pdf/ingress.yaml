@@ -9,8 +9,6 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
-    nginx.ingress.kubernetes.io/custom-http-errors: "503"
-    nginx.ingress.kubernetes.io/default-backend: kube-snorlax
 spec:
   rules:
     - host: pdf.brhd.io
@@ -20,8 +18,7 @@ spec:
             path: /
             backend:
               service:
-                # name: bento-pdf
-                name: keda-http-interceptor
+                name: bento-pdf-keda-http-interceptor
                 port:
                   number: 8080
   tls:
