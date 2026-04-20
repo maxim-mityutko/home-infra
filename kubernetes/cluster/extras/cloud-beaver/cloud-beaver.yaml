@@ -52,7 +52,7 @@ spec:
               memory: 500M
               cpu: 1000m
           ports:
-            - containerPort: 8080
+            - containerPort: 8978
               name: http
           volumeMounts:
             - name: cloud-beaver-data

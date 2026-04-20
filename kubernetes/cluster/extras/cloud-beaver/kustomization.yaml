@@ -5,3 +5,4 @@ resources:
   - cloud-beaver.yaml
   - ingress.yaml
   - volumes.yaml
+  - scaler.yaml

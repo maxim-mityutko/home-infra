@@ -2,16 +2,16 @@
 kind: HTTPScaledObject
 apiVersion: http.keda.sh/v1alpha1
 metadata:
-  name: bento-pdf-scaler
+  name: cloud-beaver-scaler
 spec:
   hosts:
-    - pdf.brhd.io
+    - cb.brhd.io
   scaleTargetRef:
-    name: bento-pdf
+    name: cloud-beaver
     kind: Deployment
     apiVersion: apps/v1
-    service: bento-pdf
-    port: 8080
+    service: cloud-beaver
+    port: 8978
   replicas:
     min: 0
     max: 1

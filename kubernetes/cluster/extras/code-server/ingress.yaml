@@ -26,9 +26,9 @@ spec:
             path: /
             backend:
               service:
-                name: code-server
+                name: keda-http-interceptor
                 port:
-                  name: http
+                  number: 8080
   tls:
     - hosts:
         - vs.brhd.io
