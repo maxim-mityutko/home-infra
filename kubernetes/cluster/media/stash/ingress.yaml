@@ -27,9 +27,9 @@ spec:
             path: /
             backend:
               service:
-                name: stash
+                name: keda-http-interceptor
                 port:
-                  number: 80
+                  number: 8080
   tls:
     - hosts:
         - stash.brhd.io
