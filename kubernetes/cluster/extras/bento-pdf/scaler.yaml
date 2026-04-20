@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bento-pdf-keda-http-interceptor
+  namespace: extras
+spec:
+  type: ExternalName
+  externalName: keda-add-ons-http-interceptor-proxy.keda.svc.cluster.local.
+  ports:
+    - name: http
+      port: 8080
+---
+kind: HTTPScaledObject
+apiVersion: http.keda.sh/v1alpha1
+metadata:
+  name: bento-pdf-scaling
+spec:
+  hosts:
+    - pdf.brhd.io
+  scaleTargetRef:
+    name: bento-pdf
+    kind: Deployment
+    apiVersion: apps/v1
+    service: bento-pdf
+    port: 8080
+  replicas:
+    min: 0
+    max: 1
+  scaledownPeriod: 1800 # 30 minutes
+  scalingMetric:
+    concurrency:
+      targetValue: 1
