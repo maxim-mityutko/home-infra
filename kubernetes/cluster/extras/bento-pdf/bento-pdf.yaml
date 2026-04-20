@@ -1,7 +1,3 @@
-# NOTE:
-# Deprecated due to the introduction of KEDA HTTP Scaler, which
-# requires for all traffic to be routed through the HTTP interceptor
-# to enable pod scaling.
 ---
 apiVersion: v1
 kind: Service
