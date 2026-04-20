@@ -11,7 +11,7 @@ spec:
     kind: Deployment
     apiVersion: apps/v1
     service: victoria-metrics-grafana
-    port: 3000
+    port: 80
   replicas:
     min: 0
     max: 1
