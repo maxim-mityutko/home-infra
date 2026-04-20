@@ -11,7 +11,7 @@ spec:
     kind: Deployment
     apiVersion: apps/v1
     service: meshcentral
-    port: 443
+    port: 8443
   replicas:
     min: 0
     max: 1
