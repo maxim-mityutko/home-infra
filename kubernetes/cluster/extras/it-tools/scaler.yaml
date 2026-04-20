@@ -2,28 +2,28 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: bento-pdf-keda-http-interceptor
+  name: it-tools-keda-http-interceptor
   namespace: extras
 spec:
   type: ExternalName
   externalName: keda-add-ons-http-interceptor-proxy.keda.svc.cluster.local.
   ports:
     - name: http
-      port: 8080
+      port: 80
 ---
 kind: HTTPScaledObject
 apiVersion: http.keda.sh/v1alpha1
 metadata:
-  name: bento-pdf-scaler
+  name: it-tools-scaler
 spec:
   hosts:
-    - pdf.brhd.io
+    - it-tools.brhd.io
   scaleTargetRef:
-    name: bento-pdf
+    name: it-tools
     kind: Deployment
     apiVersion: apps/v1
-    service: bento-pdf
-    port: 8080
+    service: it-tools
+    port: 80
   replicas:
     min: 0
     max: 1

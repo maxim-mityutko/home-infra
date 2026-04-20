@@ -18,7 +18,7 @@ spec:
             path: /
             backend:
               service:
-                name: pairdrop
+                name: pairdrop-keda-http-interceptor
                 port:
                   number: 3000
 ---

@@ -20,7 +20,7 @@ spec:
             path: /
             backend:
               service:
-                name: meshcentral
+                name: meshcentral-keda-http-interceptor
                 port:
                   number: 8443
   tls:

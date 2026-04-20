@@ -26,7 +26,7 @@ spec:
             path: /
             backend:
               service:
-                name: cloud-beaver
+                name: cloud-beaver-keda-http-interceptor
                 port:
                   name: http
   tls:

@@ -4,3 +4,4 @@ resources:
   - meshcentral.yaml
   - ingress.yaml
   - volumes.yaml
+  - scaler.yaml
