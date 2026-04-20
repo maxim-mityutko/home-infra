@@ -18,7 +18,7 @@ spec:
             path: /
             backend:
               service:
-                name: bento-pdf
+                name: bento-pdf-keda-http-interceptor
                 port:
                   number: 8080
   tls:

@@ -1,0 +1,122 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: extras
+resources: []
+helmCharts:
+  - name: keda
+    namespace: keda
+    releaseName: keda
+    version: 2.19.0
+    repo: https://kedacore.github.io/charts
+    valuesInline:
+      crds:
+        install: true
+      networkPolicy:
+        enabled: false
+      operator:
+        name: keda-operator
+        revisionHistoryLimit: 2
+        replicaCount: 1
+        livenessProbe:
+          initialDelaySeconds: 25
+          periodSeconds: 15
+        readinessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 15
+      metricsServer:
+        enabled: false  # TODO: not yet released, exists on MAIN only
+        revisionHistoryLimit: 2
+        replicaCount: 1
+        livenessProbe:
+          initialDelaySeconds: 25
+          periodSeconds: 15
+        readinessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 15
+      webhooks:
+        enabled: false
+      rbac:
+        create: true
+      serviceAccount:
+        operator:
+          create: true
+        metricsServer:
+          create: false
+        webhooks:
+          create: false
+      logging:
+        operator:
+          level: info
+        metricsServer:
+          level: 0
+      resources:
+        operator:
+          limits:
+            cpu: 75m
+            memory: 75Mi
+          requests:
+            cpu: 50m
+            memory: 50Mi
+        metricServer:
+          limits:
+            cpu: 75m
+            memory: 75Mi
+          requests:
+            cpu: 50m
+            memory: 50Mi
+      prometheus:
+        operator:
+          enabled: false
+        metricServer:
+          enabled: false
+        webhooks:
+          enabled: false
+  - name: keda-add-ons-http
+    namespace: keda
+    releaseName: keda-add-ons-http
+    version: 0.13.0
+    repo: https://kedacore.github.io/charts
+    valuesInline:
+      crds:
+        install: true
+      logging:
+        operator:
+          level: info
+        scaler:
+          level: info
+        interceptor:
+          level: info
+      operator:
+        replicas: 1
+        resources:
+          limits:
+            cpu: 50m
+            memory: 50Mi
+          requests:
+            cpu: 25m
+            memory: 25Mi
+      scaler:
+        replicas: 1
+        resources:
+          limits:
+            cpu: 50m
+            memory: 50Mi
+          requests:
+            cpu: 25m
+            memory: 25Mi
+      interceptor:
+        replicas:
+          min: 1
+          max: 3
+          waitTimeout: 60s
+        resources:
+          limits:
+            cpu: 50m
+            memory: 50Mi
+          requests:
+            cpu: 25m
+            memory: 25Mi
+        tls:
+          enabled: false
+        pdb:
+          enabled: false
