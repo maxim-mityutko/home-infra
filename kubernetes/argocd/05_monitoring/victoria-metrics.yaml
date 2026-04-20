@@ -33,3 +33,8 @@ spec:
       name: victoria-metrics-victoria-metrics-operator-admission
       jqPathExpressions:
       - '.webhooks[]?.clientConfig.caBundle'
+    - group: apps
+      kind: Deployment
+      name: victoria-metrics-grafana
+      jsonPointers:
+        - /spec/replicas  # On-demand scaling
