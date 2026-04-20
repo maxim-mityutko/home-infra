@@ -34,3 +34,10 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+          - RespectIgnoreDifferences=true
+      ignoreDifferences:
+        - group: apps
+          kind: Deployment
+          name: stash
+          jsonPointers:
+            - /spec/replicas  # On-demand scaling

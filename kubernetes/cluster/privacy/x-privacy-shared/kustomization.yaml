@@ -4,3 +4,4 @@ resources:
   - pv-pvc-photos.yaml
   - pv-pvc-drive.yaml
   - pv-pvc-bookmarks.yaml
+  - keda-http-interceptor.yaml
