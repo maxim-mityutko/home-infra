@@ -312,6 +312,15 @@ helmCharts:
           enabled: false
 patches:
   - target:
+      group: networking.k8s.io
+      version: v1
       kind: Ingress
       name: victoria-metrics-grafana
-    path: patch-ingress-grafana.yaml
+      namespace: monitoring
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/http/paths/0/backend/service/name
+        value: keda-http-interceptor
+      - op: replace
+        path: /spec/rules/0/http/paths/0/backend/service/port/number
+        value: 8080
