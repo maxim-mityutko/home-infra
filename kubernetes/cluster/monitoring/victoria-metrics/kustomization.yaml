@@ -309,3 +309,8 @@ helmCharts:
           enabled: false
         kubeProxy:
           enabled: false
+patches:
+  - target:
+      kind: Ingress
+      name: victoria-metrics-grafana
+    path: patch-ingress-grafana.yaml
