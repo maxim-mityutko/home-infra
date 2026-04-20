@@ -13,8 +13,8 @@ spec:
   type: ClusterIP
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 8978
+      targetPort: 8978
       name: http
   selector:
     app.kubernetes.io/name: cloud-beaver
@@ -52,7 +52,7 @@ spec:
               memory: 500M
               cpu: 1000m
           ports:
-            - containerPort: 8080
+            - containerPort: 8978
               name: http
           volumeMounts:
             - name: cloud-beaver-data

@@ -23,7 +23,7 @@ spec:
     kind: Deployment
     apiVersion: apps/v1
     service: cloud-beaver
-    port: 8080
+    port: 8978
   replicas:
     min: 0
     max: 1
