@@ -199,6 +199,8 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | **Bitwarden Password Manager** / **Bitwarden App** | Password manager that integrates with open-source Bitwarden implementation - **Vaultwarden**.  |
 | **Floccus** | Sync your bookmarks privately across browsers and devices. Uses **Gitea** for bookmarks storage. |[repo](https://github.com/floccusaddon/floccus)<br>[docs](https://floccus.org/guides) |  
 | **Immich-Go** | An alternative to the immich-CLI command that doesn't depend on nodejs installation. It tries its best for importing google photos takeout archives. | [repo](https://github.com/simulot/immich-go)<br>[docs](https://github.com/simulot/immich-go#running-immich-go) |
+| **Jellifin Plugin SSO** | This plugin allows users to sign in through an SSO provider (such as Google, Microsoft, or your own provider). This enables one-click signin. | [repo](https://github.com/9p4/jellyfin-plugin-sso) |
+| **Jellyfin Intro Skipper** | Automatically detect and skip intro/credit sequences in Jellyfin | [repo](https://github.com/intro-skipper/intro-skipper) |
 
 ### Decomissioned / Unused
 
