@@ -52,14 +52,14 @@ helmCharts:
       resources:
         operator:
           limits:
-            cpu: 75m
+            cpu: 250m
             memory: 75Mi
           requests:
             cpu: 50m
             memory: 50Mi
         metricServer:
           limits:
-            cpu: 75m
+            cpu: 250m
             memory: 75Mi
           requests:
             cpu: 50m
