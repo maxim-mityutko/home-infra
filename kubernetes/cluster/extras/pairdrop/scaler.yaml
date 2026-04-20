@@ -2,16 +2,16 @@
 kind: HTTPScaledObject
 apiVersion: http.keda.sh/v1alpha1
 metadata:
-  name: bento-pdf-scaler
+  name: pairdrop-scaler
 spec:
   hosts:
-    - pdf.brhd.io
+    - pd.brhd.io
   scaleTargetRef:
-    name: bento-pdf
+    name: pairdrop
     kind: Deployment
     apiVersion: apps/v1
-    service: bento-pdf
-    port: 8080
+    service: pairdrop
+    port: 3000
   replicas:
     min: 0
     max: 1

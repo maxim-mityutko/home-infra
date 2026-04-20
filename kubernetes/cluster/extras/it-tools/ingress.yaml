@@ -18,9 +18,9 @@ spec:
             path: /
             backend:
               service:
-                name: it-tools
+                name: keda-http-interceptor
                 port:
-                  number: 80
+                  number: 8080
   tls:
     - hosts:
         - it-tools.brhd.io
