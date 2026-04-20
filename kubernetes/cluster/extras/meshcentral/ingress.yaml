@@ -9,7 +9,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: lets-encrypt
-    # nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     nginx.ingress.kubernetes.io/proxy-ssl-verify: 'off'
 spec:
   rules:
@@ -20,9 +20,10 @@ spec:
             path: /
             backend:
               service:
-                name: keda-http-interceptor
+                # name: keda-http-interceptor
+                name: meshcentral
                 port:
-                  number: 8080
+                  number: 8443
   tls:
     - hosts:
         - mesh.brhd.io
