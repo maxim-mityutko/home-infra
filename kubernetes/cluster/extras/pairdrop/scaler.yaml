@@ -9,7 +9,7 @@ spec:
   externalName: keda-add-ons-http-interceptor-proxy.keda.svc.cluster.local.
   ports:
     - name: http
-      port: 3000
+      port: 8080
 ---
 kind: HTTPScaledObject
 apiVersion: http.keda.sh/v1alpha1
