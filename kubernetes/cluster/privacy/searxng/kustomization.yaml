@@ -5,6 +5,7 @@ resources:
   - searxng.yaml
   - ingress.yaml
   - secret.yaml
+  - scaler.yaml
 configMapGenerator:
   - name: searxng-config-settings
     files:

@@ -18,9 +18,9 @@ spec:
             path: /
             backend:
               service:
-                name: searxng
+                name: keda-http-interceptor
                 port:
-                  name: http
+                  number: 8080
   tls:
     - hosts:
         - search.brhd.io

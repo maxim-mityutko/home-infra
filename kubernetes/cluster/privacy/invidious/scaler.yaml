@@ -1,0 +1,21 @@
+---
+kind: HTTPScaledObject
+apiVersion: http.keda.sh/v1alpha1
+metadata:
+  name: invidious-scaler
+spec:
+  hosts:
+    - yt.brhd.io
+  scaleTargetRef:
+    name: invidious
+    kind: Deployment
+    apiVersion: apps/v1
+    service: invidious
+    port: 3000
+  replicas:
+    min: 0
+    max: 1
+  scaledownPeriod: 1800 # 30 minutes
+  scalingMetric:
+    concurrency:
+      targetValue: 1
