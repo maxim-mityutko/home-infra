@@ -224,15 +224,15 @@ engines:
     categories: [it, packages]
 
 
-  - name: wikidata
-    engine: wikidata
-    shortcut: wd
-    timeout: 3.0
-    weight: 2
-    # add "list" to the array to get results in the results list
-    display_type: ["infobox"]
-    tests: *tests_infobox
-    categories: [general]
+  # - name: wikidata
+  #   engine: wikidata
+  #   shortcut: wd
+  #   timeout: 3.0
+  #   weight: 2
+  #   # add "list" to the array to get results in the results list
+  #   display_type: ["infobox"]
+  #   tests: *tests_infobox
+  #   categories: [general]
 
   - name: duckduckgo
     engine: duckduckgo
