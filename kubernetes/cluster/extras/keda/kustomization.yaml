@@ -105,25 +105,24 @@ helmCharts:
           level: info
         interceptor:
           level: info
-      # operator-specific configuration values
       operator:
         replicas: 1
         resources:
           limits:
-            cpu: 0.5
-            memory: 64Mi
+            cpu: 50m
+            memory: 50Mi
           requests:
-            cpu: 250m
-            memory: 20Mi
+            cpu: 25m
+            memory: 25Mi
       scaler:
         replicas: 1
         resources:
           limits:
-            cpu: 0.5
-            memory: 64Mi
+            cpu: 50m
+            memory: 50Mi
           requests:
-            cpu: 250m
-            memory: 20Mi
+            cpu: 25m
+            memory: 25Mi
       interceptor:
         replicas:
           min: 1
@@ -131,11 +130,11 @@ helmCharts:
           waitTimeout: 20s
         resources:
           limits:
-            cpu: 0.5
-            memory: 64Mi
+            cpu: 50m
+            memory: 50Mi
           requests:
-            cpu: 250m
-            memory: 20Mi
+            cpu: 25m
+            memory: 25Mi
         tls:
           enabled: false
         pdb:
