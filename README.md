@@ -142,7 +142,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **PairDrop**     | Transfer files cross-platform. No setup, no signup                                                                                                                         |                        [repo](https://github.com/schlagmichdoch/PairDrop)                         |          [docker](https://github.com/linuxserver/docker-pairdrop)          |
 | **BentoPDF** | Privacy first PDF toolkit                                                                                  |  [repo](https://github.com/alam00000/bentopdf)   |        [docker](https://github.com/alam00000/bentopdf/pkgs/container/bentopdf-simple)        |
 | **KEDA** | KEDA is a Kubernetes-based Event Driven Autoscaling component | [repo](https://github.com/kedacore/keda)<br>[docs](https://keda.sh/docs/latest/) | [helm](https://github.com/kedacore/charts) |
-| | **http-add-on** - Add-on for KEDA to scale HTTP workloads | [repo](https://github.com/kedacore/http-add-on)<br>[docs](https://github.com/kedacore/http-add-on/blob/main/docs/ref/v0.13.0/http_scaled_object.md) | [helm](https://github.com/kedacore/charts/blob/main/http-add-on/README.md) |
+| | **http-add-on** - Add-on for KEDA to scale HTTP workloads | [repo](https://github.com/kedacore/http-add-on)<br>[docs](https://kedacore.github.io/http-add-on/) | [helm](https://github.com/kedacore/charts/blob/main/http-add-on/README.md) |
 
 ### Smart Home
 
