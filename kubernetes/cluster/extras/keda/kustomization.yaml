@@ -1,22 +1,3 @@
-# =========
-# Helm: https://github.com/sablierapp/helm-charts
-# Docs: https://sablierapp.dev/
-# Repo: https://github.com/sablierapp/sablier
-# Plugin: https://github.com/sablierapp/sablier-traefik-plugin#nginx
-#
-# SNORLAX
-# Repo: https://github.com/vineethvijay/kube-snorlax
-# Helm: https://github.com/vineethvijay/kube-snorlax/tree/main/helm/kube-snorlax
-#
-# KEDA
-# Repo: https://github.com/kedacore/keda
-# Helm: https://github.com/kedacore/charts
-# Docs: https://keda.sh/docs/latest/
-# Add-On Repo: https://github.com/kedacore/http-add-on
-# Add-On Helm: https://github.com/kedacore/charts/blob/main/http-add-on/README.md
-# HTTPScaledObject: https://github.com/kedacore/http-add-on/blob/main/docs/ref/v0.13.0/http_scaled_object.md
-
-
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: extras
