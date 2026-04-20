@@ -30,14 +30,12 @@ helmCharts:
     valuesInline:
       crds:
         install: true
-      watchNamespace: ""
       networkPolicy:
         enabled: false
       operator:
         name: keda-operator
         revisionHistoryLimit: 2
         replicaCount: 1
-        useHostNetwork: false
         livenessProbe:
           initialDelaySeconds: 25
           periodSeconds: 15
@@ -45,10 +43,9 @@ helmCharts:
           initialDelaySeconds: 20
           periodSeconds: 15
       metricsServer:
-        enabled: true
+        enabled: false  # TODO: not yet released, exists on MAIN only
         revisionHistoryLimit: 2
         replicaCount: 1
-        useHostNetwork: false
         livenessProbe:
           initialDelaySeconds: 25
           periodSeconds: 15
@@ -71,30 +68,21 @@ helmCharts:
           level: info
         metricsServer:
           level: 0
-        webhooks:
-          level: info
       resources:
         operator:
           limits:
-            cpu: 1
-            memory: 1000Mi
+            cpu: 75m
+            memory: 75Mi
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 50m
+            memory: 50Mi
         metricServer:
           limits:
-            cpu: 1
-            memory: 1000Mi
+            cpu: 75m
+            memory: 75Mi
           requests:
-            cpu: 100m
-            memory: 100Mi
-        webhooks:
-          limits:
-            cpu: 1
-            memory: 1000Mi
-          requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 50m
+            memory: 50Mi
       prometheus:
         operator:
           enabled: false
