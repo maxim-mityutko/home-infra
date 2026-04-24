@@ -42,14 +42,11 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
     * (Master) Ubuntu Server with 2 CPUs and 8GB RAM x2
     * (Worker) Ubuntu Server with 4 CPUs and 8GB RAM
     * (Worker) Ubuntu Server with 6 CPUs and 16GB RAM
-
   * KVM: [SiPeed NanoKVM-PCIe-PoE](https://sipeed.com/nanokvm/pcie)
-
 * [Compute Blade](https://computeblade.com):
   * Raspberry Pi CM4 8GB + WD Blue SN550 500GB
   * Raspberry Pi CM4 8GB + WD Red SN700 500GB
   * Raspberry Pi CM-TBD x 2 (in reserve)
-
 * ProxMox VE Host (Sandbox):  
   * HP 800G2 Mini
     * CPU Intel i7-6700
