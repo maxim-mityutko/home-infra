@@ -23,6 +23,7 @@ helmCharts:
             vmalert:
               create: false
           rules:
+            # Quick hack to exclude "false positive" cases, when scaling is done from 0 to 1 replicas via KEDA HTTP Add-on
             KubeHpaMaxedOut:
               create: true
               spec:
