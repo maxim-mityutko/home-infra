@@ -86,6 +86,8 @@ helmCharts:
               cert-manager.io/cluster-issuer: lets-encrypt
             hosts:
               - grafana.brhd.io
+          vmScrape:
+            enabled: false
         alertmanager:
           enabled: true
           ingress:
