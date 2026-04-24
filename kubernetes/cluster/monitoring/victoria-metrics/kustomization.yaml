@@ -18,9 +18,19 @@ helmCharts:
         defaultDashboards:
           enabled: false
         defaultRules:
+          create: true
           groups:
             vmalert:
               create: false
+          rules:
+            # Quick hack to exclude "false positive" cases, when scaling is done from 0 to 1 replicas via KEDA HTTP Add-on
+            KubeHpaMaxedOut:
+              create: true
+              spec:
+                expr: >-
+                  kube_horizontalpodautoscaler_status_current_replicas{namespace=~".*",job="kube-state-metrics"} == kube_horizontalpodautoscaler_spec_max_replicas{namespace=~".*",job="kube-state-metrics"}
+                  and
+                  kube_horizontalpodautoscaler_spec_max_replicas{namespace=~".*",job="kube-state-metrics"} > 1
         fullnameOverride: stack
         victoria-metrics-operator:
           enabled: true
