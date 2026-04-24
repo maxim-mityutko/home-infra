@@ -26,23 +26,10 @@ helmCharts:
             KubeHpaMaxedOut:
               create: true
               spec:
-                expr: |
-                  (
-                    kube_horizontalpodautoscaler_status_current_replicas{namespace=~".*",job="kube-state-metrics"}
-                    ==
-                    kube_horizontalpodautoscaler_spec_max_replicas{namespace=~".*",job="kube-state-metrics"}
-                  )
-                  and on(namespace,horizontalpodautoscaler,cluster)
-                  (
-                    kube_horizontalpodautoscaler_spec_max_replicas{namespace=~".*",job="kube-state-metrics"}
-                    !=
-                    kube_horizontalpodautoscaler_spec_min_replicas{namespace=~".*",job="kube-state-metrics"}
-                  )
-                  and on(namespace,horizontalpodautoscaler,cluster)
-                  (
-                    kube_horizontalpodautoscaler_spec_max_replicas{namespace=~".*",job="kube-state-metrics"}
-                    > 1
-                  )
+                expr: >-
+                  kube_horizontalpodautoscaler_status_current_replicas{namespace=~".*",job="kube-state-metrics"} == kube_horizontalpodautoscaler_spec_max_replicas{namespace=~".*",job="kube-state-metrics"}
+                  and
+                  kube_horizontalpodautoscaler_spec_max_replicas{namespace=~".*",job="kube-state-metrics"} > 1
         fullnameOverride: stack
         victoria-metrics-operator:
           enabled: true
