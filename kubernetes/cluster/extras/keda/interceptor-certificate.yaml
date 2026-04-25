@@ -9,6 +9,6 @@ spec:
   issuerRef:
     name: lets-encrypt
     kind: ClusterIssuer
-  commonName: mesh.brhd.io
+  commonName: keda.brhd.io
   dnsNames:
-    - mesh.brhd.io
+    - keda.brhd.io
