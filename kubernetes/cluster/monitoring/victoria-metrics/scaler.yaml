@@ -1,21 +1,35 @@
 ---
-kind: HTTPScaledObject
-apiVersion: http.keda.sh/v1alpha1
+apiVersion: http.keda.sh/v1beta1
+kind: InterceptorRoute
 metadata:
   name: grafana-scaler
 spec:
-  hosts:
-    - grafana.brhd.io
-  scaleTargetRef:
-    name: victoria-metrics-grafana
-    kind: Deployment
-    apiVersion: apps/v1
+  target:
     service: victoria-metrics-grafana
     port: 80
-  replicas:
-    min: 0
-    max: 1
-  scaledownPeriod: 1800 # 30 minutes
+  rules:
+    - hosts:
+        - grafana.brhd.io
   scalingMetric:
     concurrency:
-      targetValue: 1
+      targetValue: 25
+  # timeouts:
+  #   readiness: 30s
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: grafana-scaler
+spec:
+  scaleTargetRef:
+    name: victoria-metrics-grafana
+  minReplicaCount: 0
+  maxReplicaCount: 1
+  pollingInterval: 60
+  initialCooldownPeriod: 600
+  cooldownPeriod: 1800
+  triggers:
+    - type: external-push
+      metadata:
+        scalerAddress: keda-add-ons-http-external-scaler.keda:9090
+        interceptorRoute: grafana-scaler
