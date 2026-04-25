@@ -13,8 +13,8 @@ spec:
   scalingMetric:
     concurrency:
       targetValue: 50
-  timeouts:
-    readiness: 30s
+  # timeouts:
+  #   readiness: 30s
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
