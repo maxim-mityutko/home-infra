@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - meshcentral.yaml
   - ingress.yaml
+  - scaler.yaml
   - volumes.yaml
