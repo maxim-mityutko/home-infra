@@ -1,21 +1,35 @@
 ---
-kind: HTTPScaledObject
-apiVersion: http.keda.sh/v1alpha1
+apiVersion: http.keda.sh/v1beta1
+kind: InterceptorRoute
 metadata:
   name: bento-pdf-scaler
 spec:
-  hosts:
-    - pdf.brhd.io
-  scaleTargetRef:
-    name: bento-pdf
-    kind: Deployment
-    apiVersion: apps/v1
+  target:
     service: bento-pdf
     port: 8080
-  replicas:
-    min: 0
-    max: 1
-  scaledownPeriod: 1800 # 30 minutes
+  rules:
+    - hosts:
+        - pdf.brhd.io
   scalingMetric:
     concurrency:
-      targetValue: 1
+      targetValue: 50
+  # timeouts:
+  #   readiness: 30s
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: bento-pdf-scaler
+spec:
+  scaleTargetRef:
+    name: bento-pdf
+  minReplicaCount: 0
+  maxReplicaCount: 1
+  pollingInterval: 60
+  initialCooldownPeriod: 600 
+  cooldownPeriod: 1800
+  triggers:
+    - type: external-push
+      metadata:
+        scalerAddress: keda-add-ons-http-external-scaler.keda:9090
+        interceptorRoute: bento-pdf-scaler

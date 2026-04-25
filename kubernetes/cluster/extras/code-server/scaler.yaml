@@ -1,21 +1,35 @@
 ---
-kind: HTTPScaledObject
-apiVersion: http.keda.sh/v1alpha1
+apiVersion: http.keda.sh/v1beta1
+kind: InterceptorRoute
 metadata:
   name: code-server-scaler
 spec:
-  hosts:
-    - vs.brhd.io
-  scaleTargetRef:
-    name: code-server
-    kind: Deployment
-    apiVersion: apps/v1
+  target:
     service: code-server
     port: 8080
-  replicas:
-    min: 0
-    max: 1
-  scaledownPeriod: 1800 # 30 minutes
+  rules:
+    - hosts:
+        - vs.brhd.io
   scalingMetric:
     concurrency:
-      targetValue: 1
+      targetValue: 25
+  # timeouts:
+  #   readiness: 30s
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: code-server-scaler
+spec:
+  scaleTargetRef:
+    name: code-server
+  minReplicaCount: 0
+  maxReplicaCount: 1
+  pollingInterval: 60
+  initialCooldownPeriod: 600
+  cooldownPeriod: 1800
+  triggers:
+    - type: external-push
+      metadata:
+        scalerAddress: keda-add-ons-http-external-scaler.keda:9090
+        interceptorRoute: code-server-scaler
