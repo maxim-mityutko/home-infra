@@ -1,0 +1,14 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: keda-http-interceptor
+  namespace: keda
+spec:
+  secretName: keda-http-interceptor-tls
+  issuerRef:
+    name: lets-encrypt
+    kind: ClusterIssuer
+  commonName: mesh.brhd.io
+  dnsNames:
+    - mesh.brhd.io

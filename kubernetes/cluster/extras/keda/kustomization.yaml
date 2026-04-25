@@ -1,7 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: extras
-resources: []
+namespace: keda
+resources:
+  - interceptor-certificate.yaml
 helmCharts:
   - name: keda
     namespace: keda
@@ -108,6 +109,8 @@ helmCharts:
         replicas:
           min: 1
           max: 3
+        extraEnvs:
+          KEDA_HTTP_PROXY_TLS_SKIP_VERIFY: "true"
         resources:
           limits:
             cpu: 50m
@@ -116,6 +119,7 @@ helmCharts:
             cpu: 25m
             memory: 25Mi
         tls:
-          enabled: false
+          enabled: true
+          cert_secret: keda-http-interceptor-tls
         pdb:
           enabled: false
