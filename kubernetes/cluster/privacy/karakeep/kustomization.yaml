@@ -57,7 +57,7 @@ helmCharts:
                 CRAWLER_DOWNLOAD_BANNER_IMAGE: "true"
                 CRAWLER_STORE_SCREENSHOT: "false"
                 CRAWLER_FULL_PAGE_SCREENSHOT: "false"
-                CRAWLER_STORE_PDF: "false"
+                CRAWLER_STORE_PDF: "true"
                 CRAWLER_FULL_PAGE_ARCHIVE: "false"
                 CRAWLER_VIDEO_DOWNLOAD: "false"
                 CRAWLER_ENABLE_ADBLOCKER: "true"
