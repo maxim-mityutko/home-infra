@@ -75,7 +75,7 @@ vikunja:
             enabled: false
           log:
             enabled: true
-            level: INFO
+            level: WARNING
             format: text
             database: off
           ratelimit:
