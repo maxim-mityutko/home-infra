@@ -44,7 +44,7 @@ vikunja:
             enablelinksharing: true
             enableregistration: true
             enabletaskattachments: true
-            timezone: "CET"
+            timezone: CET
             enabletaskcomments: true
             enabletotp: false
             testingtoken: ""
@@ -83,7 +83,7 @@ vikunja:
           backgrounds:
             enabled: false
           keyvalue:
-            type: "memory" # or "redis"
+            type: memory # or "redis"
           auth:
             local:
               enabled: false
