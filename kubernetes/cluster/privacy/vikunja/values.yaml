@@ -117,4 +117,5 @@ vikunja:
             enabled: false
   env: {}
   envFrom:
-    - secretRef: vikunja
+    - secretRef: 
+        name: vikunja
