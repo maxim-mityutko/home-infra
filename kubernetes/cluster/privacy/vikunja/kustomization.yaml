@@ -7,6 +7,6 @@ helmCharts:
   - name: vikunja
     namespace: privacy
     releaseName: vikunja
-    version: 2.0.2
+    version: v2.0.2
     repo: oci://ghcr.io/go-vikunja/helm-chart
     valuesFile: values.yaml

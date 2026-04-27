@@ -32,7 +32,7 @@ metadata:
   name: vikunja-helm-oci
   namespace: argocd
 stringData:
-  url: ghcr.io/go-vikunja/helm-chart/vikunja
+  url: ghcr.io/go-vikunja/helm-chart
   name: vikunja
   type: helm
   enableOCI: "true"
