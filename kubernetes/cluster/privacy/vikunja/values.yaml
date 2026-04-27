@@ -90,11 +90,11 @@ vikunja:
             openid:
               enabled: true
               providers:
-                - authentik
-                  name: Authentik
-                  authurl: https://auth.brhd.io/application/o/authorize/
-                  scope: openid email profile
-                  requireavailability: false
+                - authentik:
+                    name: Authentik
+                    authurl: https://auth.brhd.io/application/o/authorize/
+                    scope: openid email profile
+                    requireavailability: false
             ldap:
               enabled: false
           metrics:
