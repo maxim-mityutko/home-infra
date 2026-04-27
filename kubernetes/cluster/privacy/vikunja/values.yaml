@@ -20,6 +20,17 @@ vikunja:
     limits:
       memory: 150M
       cpu: 100m
+  probes:
+    liveness:
+      enabled: true
+      spec:
+        initialDelaySeconds: 10
+        periodSeconds: 30
+    readiness:
+      enabled: true
+      spec:
+        initialDelaySeconds: 10
+        periodSeconds: 30
   ingress:
     main:
       enabled: true
@@ -115,7 +126,8 @@ vikunja:
             enabled: false
           plugins:
             enabled: false
-  env: {}
+  env:
+    VIKUNJA_DATABASE_TYPE: postgres
   envFrom:
     - secretRef: 
         name: vikunja
