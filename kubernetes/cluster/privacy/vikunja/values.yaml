@@ -1,0 +1,120 @@
+vikunja:
+  image:
+    repository: ghcr.io/go-vikunja/vikunja
+    tag: v2.3.0
+    pullPolicy: IfNotPresent
+  persistence:
+    data:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 1G
+      mountPath: /app/vikunja/files
+      storageClass: nfs-subdir
+    # Persistence for SQLite database
+    database:
+      enabled: false
+  resources:
+    requests:
+      memory: 75M
+      cpu: 50m
+    limits:
+      memory: 150M
+      cpu: 100m
+  ingress:
+    main:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: public
+        cert-manager.io/cluster-issuer: lets-encrypt
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      hosts:
+        - host: todo.brhd.io
+          paths:
+            - path: /
+  configMaps:
+    # Ref: https://vikunja.io/docs/config-options/
+    config:
+      enabled: true
+      data:
+        config.yml: |
+          service:
+            publicurl: https://todo.brhd.io
+            maxitemsperpage: 50
+            enablecaldav: true
+            enablelinksharing: true
+            enableregistration: true
+            enabletaskattachments: true
+            timezone: "CET"
+            enabletaskcomments: true
+            enabletotp: false
+            testingtoken: ""
+            enableemailreminders: false
+            enableuserdeletion: true
+            demomode: false
+            allowiconchanges: false
+          sentry:
+            enabled: false
+          database:
+            type: postgres
+          redis:
+            enabled: false
+          cors:
+            enable: false
+          mailer:
+            enabled: false
+          log:
+            enabled: true
+            level: INFO
+            format: text
+            database: off
+          ratelimit:
+            enabled: false
+          files:
+            basepath: ./files
+            maxsize: 20MB
+            type: local # or "s3"
+          migration:
+            todoist:
+              enable: false
+            trello:
+              enable: false
+            microsofttodo:
+              enable: false
+          backgrounds:
+            enabled: false
+          keyvalue:
+            type: "memory" # or "redis"
+          auth:
+            local:
+              enabled: false
+            openid:
+              enabled: true
+              providers:
+                - authentik
+                  name: Authentik
+                  authurl: https://auth.brhd.io/application/o/authorize/
+                  scope: openid email profile
+                  requireavailability: false
+            ldap:
+              enabled: false
+          metrics:
+            enabled: false
+          defaultsettings:
+            avatar_provider: initials
+            email_reminders_enabled: false
+            discoverable_by_name: true
+            discoverable_by_email: true
+            overdue_tasks_reminders_enabled: false
+            week_start: 1
+            language: en
+          webhooks:
+            enabled: true
+          outgoingrequests:
+            allownonroutableips: false
+          autotls:
+            enabled: false
+          plugins:
+            enabled: false
+  env: {}
+  envFrom:
+    - secretRef: vikunja
