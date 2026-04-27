@@ -23,4 +23,16 @@ stringData:
   url: https://github.com/maxim-mityutko/home-infra.git
   name: home-infra
   type: git
-
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    argocd.argoproj.io/secret-type: repository
+  name: vikunja-helm-oci
+  namespace: argocd
+stringData:
+  url: ghcr.io/go-vikunja/helm-chart/vikunja
+  name: vikunja
+  type: helm
+  enableOCI: "true"
