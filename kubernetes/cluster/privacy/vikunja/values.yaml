@@ -103,7 +103,7 @@ vikunja:
               providers:
                 authentik:
                   name: Authentik
-                  authurl: https://auth.brhd.io/application/o/authorize/
+                  authurl: https://auth.brhd.io/application/o/vikunja/
                   scope: openid email profile
                   requireavailability: false
             ldap:

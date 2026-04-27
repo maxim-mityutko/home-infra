@@ -161,6 +161,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **Immich**              | High-performance self-hosted solution for backing up, viewing, managing, and sharing photos from your phone or existing galleries | [repo](https://github.com/immich-app/immich)<br>[docs](https://immich.app/docs)                        | [helm](https://github.com/immich-app/immich-charts)                              |
 | **Vaultwarden**          | Password management (alternative Bitwarden server)                                                                                                                         |                        [repo](https://github.com/dani-garcia/vaultwarden)                         |                                     [docker](https://hub.docker.com/r/vaultwarden/server) |
 | **Karakeep** | A self-hostable bookmark-everything app (links, notes and images) with AI-based automatic tagging and full text search | [repo](https://github.com/karakeep-app/karakeep)<br>[docs](https://docs.karakeep.app) | [helm](https://github.com/karakeep-app/helm-charts) |
+| **Vikunja** | The to-do app to organize your life | [repo](https://github.com/go-vikunja/vikunja)<br>[docs](https://vikunja.io/docs/) | [helm](https://github.com/go-vikunja/helm-chart) |
 
 ### Media
 
