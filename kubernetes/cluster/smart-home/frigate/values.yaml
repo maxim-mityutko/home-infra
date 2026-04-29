@@ -144,7 +144,7 @@ config: |
   genai:
     provider: openai
     base_url: https://ollama.com/v1
-    api_key: {FRIGATE_OPENAI_API_KEY}
+    api_key: "{FRIGATE_OPENAI_API_KEY}"
     model: gemma3:12b-cloud
 
   record:
