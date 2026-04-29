@@ -209,10 +209,9 @@ config: |
           - path: rtsp://127.0.0.1:8554/garden
             roles:
               - record
+          - path: rtsp://127.0.0.1:8554/garden_substream
+            roles:
               - detect
-          # - path: rtsp://127.0.0.1:8554/garden_substream
-          #   roles:
-          #     - detect
   review:
     genai:
       enabled: true
