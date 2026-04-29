@@ -142,10 +142,16 @@ config: |
 
   # Ref: https://docs.frigate.video/configuration/genai
   genai:
+    enabled: true
     provider: openai
     base_url: https://ollama.com/v1
     api_key: "{FRIGATE_OPENAI_API_KEY}"
     model: gemma3:12b-cloud
+
+  # Ref: https://docs.frigate.video/configuration/face_recognition/
+  face_recognition:
+    enabled: true
+    model_size: small
 
   record:
     enabled: true
@@ -203,6 +209,9 @@ config: |
             roles:
               - detect
   review:
+    genai:
+      enabled: true
+      image_source: preview
     alerts:
       required_zones:
         - entire_garden
@@ -219,7 +228,7 @@ config: |
   tls:
     enabled: false
 
-  version: 0.16-0
+  version: 0.17-0
 
 ingress:
   enabled: true
