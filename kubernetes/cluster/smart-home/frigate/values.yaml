@@ -123,6 +123,7 @@ config: |
   objects:
     track:
       - person
+      - face
       - cat
     filters:
       person:
