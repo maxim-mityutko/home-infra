@@ -142,7 +142,10 @@ config: |
 
   # Ref: https://docs.frigate.video/configuration/genai
   genai:
-    enabled: false
+    provider: openai
+    base_url: https://ollama.com/v1
+    api_key: {FRIGATE_OPENAI_API_KEY}
+    model: gemma3:12b-cloud
 
   record:
     enabled: true
