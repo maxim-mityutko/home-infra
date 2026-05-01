@@ -6231,7 +6231,7 @@ spec:
         # container programs network policy and routes on each
         # host.
         - name: calico-node
-          image: docker.io/calico/node:v3.29.3
+          image: docker.io/calico/node:v3.32.0
           imagePullPolicy: IfNotPresent
           envFrom:
           - configMapRef:
