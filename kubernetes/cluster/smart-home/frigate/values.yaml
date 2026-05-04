@@ -10,8 +10,9 @@ image:
   # tag: 0.14.1-tensorrt
 env:
   TZ: Europe/Amsterdam
-  YOLO_MODELS: yolov7-320
+  # YOLO_MODELS: yolov7-320
   USE_FP16: "false"
+  OPENAI_BASE_URL: https://ollama.com/v1
 envFromSecrets: 
   - frigate
 
@@ -142,14 +143,26 @@ config: |
 
   # Ref: https://docs.frigate.video/configuration/genai
   genai:
-    enabled: false
+    provider: openai
+    base_url: https://ollama.com/v1
+    api_key: "{FRIGATE_OPENAI_API_KEY}"
+    model: gemma3:12b-cloud
+
+  # Ref: https://docs.frigate.video/configuration/face_recognition/
+  face_recognition:
+    enabled: true
+    model_size: small
+    detection_threshold: 0.65
+    min_area: 500
+    recognition_threshold: 0.9
+    min_faces: 1
 
   record:
     enabled: true
     continuous:
       days: 0
     motion:
-      days: 3
+      days: 0
     alerts:
       pre_capture: 5
       post_capture: 10
@@ -183,11 +196,13 @@ config: |
     garden:
       motion:
         mask:
-          - 640,480,557,480,486,287,491,0,640,0
-          - 0,324,88,130,213,75,217,0,0,0
+          - 1,1,0.988,0.674,0.952,0.59,0.879,0.515,0.814,0.509,0.753,0.454,0.72,0.377,0.762,0.122,0.852,0,1,0
+          - 0,0.739,0.119,0.344,0.158,0.282,0.227,0.203,0.263,0.298,0.32,0.301,0.338,0.236,0.335,0.166,0.409,0.119,0.383,0,0,0
+          - 0.793,0.935,0.795,1,1,1,1,0.936
       zones:
         entire_garden:
-          coordinates: 126,282,318,247,419,99,479,98,640,346,640,480,133,480
+          coordinates: 
+            0.205,0.594,0.499,0.507,0.627,0.121,0.753,0.113,1,0.721,1,1,0.208,1
       mqtt:
         required_zones:
           - entire_garden
@@ -200,7 +215,17 @@ config: |
             roles:
               - detect
   review:
+    genai:
+      enabled: true
+      image_source: preview
     alerts:
+      labels:
+        - person
+      required_zones:
+        - entire_garden
+    detections:
+      labels:
+        - cat
       required_zones:
         - entire_garden
 
@@ -216,7 +241,7 @@ config: |
   tls:
     enabled: false
 
-  version: 0.16-0
+  version: 0.17-0
 
 ingress:
   enabled: true
