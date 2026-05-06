@@ -66,8 +66,6 @@
     "enabled": false
   },
   "commands": {
-    "plugins": {
-      "enabled": true
-    }
+    "plugins": true
   }
 }
