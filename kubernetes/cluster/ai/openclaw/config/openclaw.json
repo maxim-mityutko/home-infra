@@ -48,7 +48,10 @@
     "defaults": {
       "workspace": "~/.openclaw/workspace",
       "model": {
-        "primary": "ollama/gemma4:31b-cloud"
+        "primary": "ollama/gemma4:31b-cloud",
+        "fallbacks": [
+          "kimi-k2.6:cloud"
+        ]
       }
     },
     "list": [
