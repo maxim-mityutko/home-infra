@@ -66,6 +66,8 @@
     "enabled": false
   },
   "commands": {
+    "config": true,
+    "mcp": true,
     "plugins": true
   },
   "plugins": {
@@ -75,8 +77,8 @@
       "memory-core",
       "active-memory",
 
-      "@openclaw/discord",
-      "@openclaw/whatsapp",
+      "clawhub:@openclaw/discord",
+      "clawhub:@openclaw/whatsapp",
       "telegram"
     ]
   },
