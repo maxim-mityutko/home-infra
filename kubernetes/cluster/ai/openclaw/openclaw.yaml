@@ -49,8 +49,10 @@ spec:
             - -c
             - |
               cp /config/openclaw.json /home/node/.openclaw/openclaw.json
+              echo "Copied /config/openclaw.json to /home/node/.openclaw/openclaw.json"
               mkdir -p /home/node/.openclaw/workspace
               cp /config/AGENTS.md /home/node/.openclaw/workspace/AGENTS.md
+              echo "Copied /config/AGENTS.md to /home/node/.openclaw/workspace/AGENTS.md"
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
