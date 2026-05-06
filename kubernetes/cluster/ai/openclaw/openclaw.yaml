@@ -75,7 +75,8 @@ spec:
               subPath: AGENTS.md
       containers:
         - name: gateway
-          image: ghcr.io/openclaw/openclaw:2026.5.6
+          # image: ghcr.io/openclaw/openclaw:2026.5.6
+          image: ghcr.io/maxim-mityutko/openclaw-docker:dev
           imagePullPolicy: IfNotPresent
           command:
             - node
