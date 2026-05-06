@@ -79,5 +79,22 @@
       "@openclaw/whatsapp",
       "telegram"
     ]
+  },
+  "channels": {
+    "discord": {
+      "enabled": true
+    },
+    "whatsapp": {
+      "enabled": true
+    },
+    "telegram": {
+      "enabled": true
+    },
+    "slack": {
+      "enabled": false
+    },
+    "signal": {
+      "enabled": false
+    }
   }
 }
