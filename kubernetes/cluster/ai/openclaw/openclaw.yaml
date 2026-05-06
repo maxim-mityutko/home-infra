@@ -30,6 +30,7 @@ spec:
       app.kubernetes.io/name: openclaw
   strategy:
     type: Recreate
+  revisionHistoryLimit: 2
   template:
     metadata:
       labels:
