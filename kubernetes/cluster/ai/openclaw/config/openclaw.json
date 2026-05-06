@@ -77,17 +77,15 @@
       "memory-core",
       "active-memory",
 
-      "clawhub:@openclaw/discord",
-      "clawhub:@openclaw/whatsapp",
       "telegram"
     ]
   },
   "channels": {
     "discord": {
-      "enabled": true
+      "enabled": false
     },
     "whatsapp": {
-      "enabled": true
+      "enabled": false
     },
     "telegram": {
       "enabled": true,
