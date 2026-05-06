@@ -129,6 +129,8 @@ spec:
             capabilities:
               drop:
                 - ALL
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
       volumes:
         - name: openclaw-data
           persistentVolumeClaim:
