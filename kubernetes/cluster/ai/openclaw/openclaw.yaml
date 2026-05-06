@@ -81,9 +81,9 @@ spec:
               protocol: TCP
           envFrom:
             - configMapRef:
-              name: openclaw
+                name: openclaw
             - secretRef:
-              name: openclaw
+                name: openclaw
           resources:
             requests:
               memory: 512Mi
