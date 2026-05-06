@@ -9,4 +9,5 @@ resources:
 configMapGenerator:
   - name: openclaw-config
     files:
-    - config/config.yml
+      - openclaw.json=config/openclaw.json
+      - AGENTS.md=config/AGENTS.md
