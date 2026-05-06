@@ -19,7 +19,8 @@
       "enabled": true,
       "allowedOrigins": [
         "https://openclaw.brhd.io"
-      ]
+      ],
+      "dangerouslyDisableDeviceAuth": true
     }
   },
   "models": {
