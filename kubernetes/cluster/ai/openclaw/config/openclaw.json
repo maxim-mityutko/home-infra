@@ -64,5 +64,8 @@
   },
   "cron": {
     "enabled": false
+  },
+  "commands": {
+    "enabled": true
   }
 }
