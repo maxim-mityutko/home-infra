@@ -7,6 +7,11 @@
       "192.168.1.0/24",
       "10.1.0.0/16"
     ],
+    "nodes": {
+      "pairing": {
+        "autoApproveCidrs": ["192.168.1.0/24"]
+      }
+    },
     "auth": {
       "mode": "token"
     },
