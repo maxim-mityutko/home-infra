@@ -90,7 +90,9 @@
       "enabled": true
     },
     "telegram": {
-      "enabled": true
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "groups": { "*": { "requireMention": true } }
     },
     "slack": {
       "enabled": false
