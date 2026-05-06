@@ -65,7 +65,11 @@ spec:
             - name: openclaw-data
               mountPath: /home/node/.openclaw
             - name: openclaw-config
-              mountPath: /config
+              mountPath: /config/openclaw.json
+              subPath: openclaw.json
+            - name: openclaw-config
+              mountPath: /config/AGENTS.md
+              subPath: AGENTS.md
       containers:
         - name: gateway
           image: ghcr.io/openclaw/openclaw:2026.5.5-slim
