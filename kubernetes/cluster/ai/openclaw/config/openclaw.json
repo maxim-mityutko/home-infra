@@ -70,13 +70,14 @@
   },
   "plugins": {
     "allow": [
-      "@openclaw/ollama-provider",
+      "ollama",
 
-      "@openclaw/memory-core",
+      "memory-core",
+      "active-memory",
 
-      "@openclaw/discord",
-      "@openclaw/whatsapp",
-      "@openclaw/telegram"
+      "discord",
+      "whatsapp",
+      "telegram"
     ]
   }
 }
