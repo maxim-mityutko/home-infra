@@ -67,5 +67,16 @@
   },
   "commands": {
     "plugins": true
+  },
+  "plugins": {
+    "allow": [
+      "@openclaw/ollama-provider",
+
+      "@openclaw/memory-core",
+
+      "@openclaw/discord",
+      "@openclaw/whatsapp",
+      "@openclaw/telegram"
+    ]
   }
 }
