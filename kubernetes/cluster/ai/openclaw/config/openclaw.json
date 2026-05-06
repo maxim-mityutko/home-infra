@@ -12,7 +12,13 @@
       }
     },
     "auth": {
-      "mode": "token"
+      "mode": "trusted-proxy",
+      "trustedProxy": {
+        "userHeader": "x-authentik-email",
+        "requiredHeaders": [
+          "x-authentik-uid"
+        ]
+      }
     },
     "controlUi": {
       "enabled": true,
