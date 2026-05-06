@@ -4,7 +4,6 @@
     "bind": "lan",
     "port": 18789,
     "trustedProxies": [
-      "192.168.1.0/24",
       "10.1.0.0/16"
     ],
     "nodes": {
@@ -22,9 +21,33 @@
       ]
     }
   },
+  "models": {
+    "providers": {
+      "ollama": {
+        "baseUrl": "https://ollama.com",
+        "apiKey": "OLLAMA_API_KEY",
+        "api": "ollama",
+        "timeoutSeconds": 300,
+        "models": [
+          {
+            "id": "gemma4:31b-cloud",
+            "name": "gemma4:31b-cloud",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ]
+          }
+        ]
+      }
+    }
+  },
   "agents": {
     "defaults": {
-      "workspace": "~/.openclaw/workspace"
+      "workspace": "~/.openclaw/workspace",
+      "model": {
+        "primary": "ollama/gemma4:31b-cloud"
+      }
     },
     "list": [
       {
