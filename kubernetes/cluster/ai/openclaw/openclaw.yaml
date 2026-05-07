@@ -154,4 +154,3 @@ data:
   HOME: /home/node
   OPENCLAW_CONFIG_DIR: /home/node/.openclaw
   NODE_ENV: production
-  OPENCLAW_DOCKER_APT_PACKAGES: git curl jq
