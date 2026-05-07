@@ -11,3 +11,6 @@ configMapGenerator:
     files:
       - openclaw.json=config/openclaw.json
       - AGENTS.md=config/AGENTS.md
+  - name: rbw-config
+    files:
+      - rbw-config.json=config/rbw-config.json

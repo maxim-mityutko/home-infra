@@ -51,9 +51,20 @@ spec:
             - |
               cp /config/openclaw.json /home/node/.openclaw/openclaw.json
               echo "Copied /config/openclaw.json to /home/node/.openclaw/openclaw.json"
+
               mkdir -p /home/node/.openclaw/workspace
               cp /config/AGENTS.md /home/node/.openclaw/workspace/AGENTS.md
               echo "Copied /config/AGENTS.md to /home/node/.openclaw/workspace/AGENTS.md"
+
+              mkdir -p /home/node/.config/rbw
+              sed \
+                -e "s|\${BITWARDEN_USER_EMAIL}|${BITWARDEN_USER_EMAIL}|g" \
+                -e "s|\${BITWARDEN_BASE_URL}|${BITWARDEN_BASE_URL}|g" \
+                /config/rbw-config.json > /home/node/.config/rbw/config.json
+              echo "Rendered /home/node/.config/rbw/config.json"
+          envFrom:
+            - secretRef:
+                name: openclaw
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
@@ -73,10 +84,15 @@ spec:
             - name: openclaw-config
               mountPath: /config/AGENTS.md
               subPath: AGENTS.md
+            - name: rbw-config
+              mountPath: /home/node/.config/rbw
+            - name: rbw-config-template
+              mountPath: /config/rbw-config.json
+              subPath: rbw-config.json
       containers:
         - name: gateway
           # Using custom image with baked in dependencies
-          image: ghcr.io/maxim-mityutko/openclaw-docker:v2026.5.6
+          image: ghcr.io/maxim-mityutko/openclaw-docker@sha256:1755077113df099a98596e379eb6b39b793ee6a07a7898b5f60b04dbcd7177d9
           imagePullPolicy: IfNotPresent
           command:
             - node
@@ -122,6 +138,8 @@ spec:
               mountPath: /home/node/.openclaw
             - name: openclaw-temp
               mountPath: /tmp
+            - name: rbw-config
+              mountPath: /home/node/.config/rbw
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -142,6 +160,11 @@ spec:
             name: openclaw-config
         - name: openclaw-temp
           emptyDir: {}
+        - name: rbw-config
+          emptyDir: {}
+        - name: rbw-config-template
+          configMap:
+            name: rbw-config
 ---
 apiVersion: v1
 kind: ConfigMap
