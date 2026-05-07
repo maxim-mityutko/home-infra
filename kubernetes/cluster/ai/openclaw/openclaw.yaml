@@ -145,6 +145,8 @@ spec:
               mountPath: /home/node/.config
             - name: home-cache
               mountPath: /home/node/.cache
+            - name: home-local
+              mountPath: /home/node/.local
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -171,6 +173,8 @@ spec:
         - name: home-config
           emptyDir: {}
         - name: home-cache
+          emptyDir: {}
+        - name: home-local
           emptyDir: {}
 
 ---
