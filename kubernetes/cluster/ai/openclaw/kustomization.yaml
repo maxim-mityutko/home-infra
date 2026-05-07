@@ -13,4 +13,4 @@ configMapGenerator:
       - AGENTS.md=config/AGENTS.md
   - name: rbw-config
     files:
-      - rbw-config.json=config/rbw-config.json
+      - rbw.json=config/rbw.json

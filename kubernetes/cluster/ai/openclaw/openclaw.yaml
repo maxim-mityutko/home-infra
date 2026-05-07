@@ -60,7 +60,7 @@ spec:
               sed \
                 -e "s|\${BITWARDEN_USER_EMAIL}|${BITWARDEN_USER_EMAIL}|g" \
                 -e "s|\${BITWARDEN_BASE_URL}|${BITWARDEN_BASE_URL}|g" \
-                /config/rbw-config.json > /home/node/.config/rbw/config.json
+                /config/rbw.json > /home/node/.config/rbw/config.json
               echo "Rendered /home/node/.config/rbw/config.json"
           envFrom:
             - secretRef:
@@ -87,8 +87,8 @@ spec:
             - name: rbw-config
               mountPath: /home/node/.config/rbw
             - name: rbw-config-template
-              mountPath: /config/rbw-config.json
-              subPath: rbw-config.json
+              mountPath: /config/rbw.json
+              subPath: rbw.json
       containers:
         - name: gateway
           # Using custom image with baked in dependencies
