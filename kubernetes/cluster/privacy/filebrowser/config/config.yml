@@ -18,7 +18,6 @@ server:
       name: Shared
       config:
         indexingIntervalMinutes: 0
-        disableIndexing: false
         conditionals:
           hidden: true
           ignoreZeroSizeFolders: false
@@ -31,7 +30,6 @@ server:
       name: DeGoogle
       config:
         indexingIntervalMinutes: 0
-        disableIndexing: false
         conditionals:
           ignoreHidden: true
           ignoreZeroSizeFolders: false
