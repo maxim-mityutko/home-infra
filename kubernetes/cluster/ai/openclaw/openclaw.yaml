@@ -85,9 +85,6 @@ spec:
             - name: openclaw-config
               mountPath: /config/AGENTS.md
               subPath: AGENTS.md
-            # Required for `rbw` which needs to store its config on a writable file system.
-            # - name: home-config
-            #   mountPath: /home/node/.config
             - name: rbw-config-template
               mountPath: /config/rbw.json
               subPath: rbw.json
@@ -140,14 +137,6 @@ spec:
               mountPath: /home/node/.openclaw
             - name: openclaw-temp
               mountPath: /tmp
-            # Required for `rbw` which needs to store its config and cache on a
-            # writable file system.
-            # - name: home-config
-            #   mountPath: /home/node/.config
-            # - name: home-cache
-            #   mountPath: /home/node/.cache
-            # - name: home-local
-            #   mountPath: /home/node/.local
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -171,13 +160,6 @@ spec:
         - name: rbw-config-template
           configMap:
             name: rbw-config
-        # - name: home-config
-        #   emptyDir: {}
-        # - name: home-cache
-        #   emptyDir: {}
-        # - name: home-local
-        #   emptyDir: {}
-
 ---
 apiVersion: v1
 kind: ConfigMap
