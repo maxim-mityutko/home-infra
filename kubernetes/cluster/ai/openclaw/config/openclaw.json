@@ -34,11 +34,17 @@
           {
             "id": "gemma4:31b-cloud",
             "name": "gemma4:31b-cloud",
-            "reasoning": true,
-            "input": [
-              "text",
-              "image"
-            ]
+            "reasoning": true
+          },
+          {
+            "id": "minimax-m2.7:cloud",
+            "name": "minimax-m2.7:cloud",
+            "reasoning": true
+          },
+          {
+            "id": "kimi-k2.6:cloud",
+            "name": "kimi-k2.6:cloud",
+            "reasoning": true
           }
         ]
       }
@@ -63,7 +69,13 @@
     ]
   },
   "cron": {
-    "enabled": false
+    "enabled": true,
+    "maxConcurrentRuns": 1,
+    "sessionRetention": "24h",
+    "runLog": {
+      "maxBytes": "5mb",
+      "keepLines": 10000
+    }
   },
   "commands": {
     "config": true,
