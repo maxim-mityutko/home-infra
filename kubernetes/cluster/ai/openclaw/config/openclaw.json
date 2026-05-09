@@ -10,10 +10,9 @@
       "mode": "trusted-proxy",
       "trustedProxy": {
         "userHeader": "x-authentik-email",
-        "requiredHeaders": [
-          "x-authentik-uid"
-        ]
-      }
+        "requiredHeaders": ["x-authentik-uid"]
+      },
+      "password": "${OPENCLAW_GATEWAY_PASSWORD}"
     },
     "controlUi": {
       "enabled": true,
