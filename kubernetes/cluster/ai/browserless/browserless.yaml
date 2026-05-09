@@ -87,5 +87,5 @@ data:
   PORT: "3000"
   CONCURRENT: "2"
   QUEUED: "10"
-  TIMEOUT: "3000"
+  TIMEOUT: "300000"
   LOG_LEVEL: info
