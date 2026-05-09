@@ -89,9 +89,7 @@
       "telegram",
       "browser"
     ],
-    "deny": [
-      "canvas"
-    ]
+    "deny": []
   },
   "tools": {
     "deny": [
