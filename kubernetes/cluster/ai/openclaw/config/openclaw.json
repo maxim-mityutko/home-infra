@@ -117,10 +117,10 @@
   },
   "browser": {
     "enabled": true,
-    "defaultProfile": "replace-me",
+    "defaultProfile": "browserless",
     "profiles": {
       "replace-me": {
-        "cdpUrl": "http://10.152.183.142:9222",
+        "cdpUrl": "ws://browserless.ai.svc.cluster.local.:3000?token=${BROWSERLESS_TOKEN}",
         "color": "#4285F4"
       }
     }
