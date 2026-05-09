@@ -120,7 +120,7 @@
     "defaultProfile": "replace-me",
     "profiles": {
       "replace-me": {
-        "cdpUrl": "http://karakeep-chrome.privacy.svc.cluster.local:9222",
+        "cdpUrl": "http://10.152.183.142:9222",
         "color": "#4285F4"
       }
     }
