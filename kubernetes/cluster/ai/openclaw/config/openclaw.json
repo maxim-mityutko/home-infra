@@ -119,8 +119,8 @@
     "enabled": true,
     "defaultProfile": "browserless",
     "profiles": {
-      "replace-me": {
-        "cdpUrl": "ws://browserless.ai.svc.cluster.local.:3000?token=${BROWSERLESS_TOKEN}",
+      "browserless": {
+        "cdpUrl": "ws://browserless.ai.svc.cluster.local.:3000?token=${BROWSERLESS_API_KEY}",
         "color": "#4285F4"
       }
     }
