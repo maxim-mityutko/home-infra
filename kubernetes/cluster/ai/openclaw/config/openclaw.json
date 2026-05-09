@@ -84,11 +84,18 @@
   "plugins": {
     "allow": [
       "ollama",
-
       "memory-core",
       "active-memory",
-
-      "telegram"
+      "telegram",
+      "browser"
+    ],
+    "deny": [
+      "canvas"
+    ]
+  },
+  "tools": {
+    "deny": [
+      "canvas"
     ]
   },
   "channels": {
@@ -108,6 +115,17 @@
     },
     "signal": {
       "enabled": false
+    }
+  },
+  "browser": {
+    "enabled": true,
+    "defaultProfile": "replace-me",
+    "profiles": {
+      "replace-me": {
+        "cdpUrl": "http://karakeep-chrome.privacy.svc.cluster.local:9222"
+      },
+      "browserless": {},
+      "alpine-chrome": {}
     }
   }
 }
