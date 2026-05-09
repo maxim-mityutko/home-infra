@@ -187,9 +187,10 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 
 ### AI / ML
 
-| Project      | Description                                                           |                                   Docs / Repo                                    |                                                                        Docker / Helm                                                                        |
-|--------------|-----------------------------------------------------------------------|:--------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| **OpenClaw** | Your own personal AI assistant. Any OS. Any Platform. The lobster way | [repo](https://github.com/openclaw/openclaw)<br>[docs](https://docs.openclaw.ai) | [docker](https://github.com/openclaw/openclaw/pkgs/container/openclaw)<br>[manifests](https://github.com/openclaw/openclaw/tree/main/scripts/k8s/manifests) |
+| Project         | Description                                                                                          |                                                  Docs / Repo                                                  |                                                                        Docker / Helm                                                                        |
+|-----------------|------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| **OpenClaw**    | Your own personal AI assistant. Any OS. Any Platform. The lobster way                                |               [repo](https://github.com/openclaw/openclaw)<br>[docs](https://docs.openclaw.ai)                | [docker](https://github.com/openclaw/openclaw/pkgs/container/openclaw)<br>[manifests](https://github.com/openclaw/openclaw/tree/main/scripts/k8s/manifests) |
+| **Browserless** | Deploy headless browsers in Docker. Run on our cloud or bring your own. Free for non-commercial uses | [repo](https://github.com/browserless/browserless)<br>[docs](https://docs.browserless.io/enterprise/overview) |                                        [docker](https://github.com/browserless/browserless/pkgs/container/chromium)                                         |
 
 ### Standalone Applications
 
