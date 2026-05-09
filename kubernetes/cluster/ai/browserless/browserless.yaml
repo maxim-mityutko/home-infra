@@ -60,7 +60,7 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
-            - name: dshm
+            - name: shm
               mountPath: /dev/shm
           securityContext:
             allowPrivilegeEscalation: false
@@ -70,7 +70,7 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
-        - name: dshm
+        - name: shm
           emptyDir:
             medium: Memory
             sizeLimit: 1Gi
