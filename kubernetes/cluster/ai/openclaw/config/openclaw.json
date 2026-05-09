@@ -122,10 +122,9 @@
     "defaultProfile": "replace-me",
     "profiles": {
       "replace-me": {
-        "cdpUrl": "http://karakeep-chrome.privacy.svc.cluster.local:9222"
-      },
-      "browserless": {},
-      "alpine-chrome": {}
+        "cdpUrl": "http://karakeep-chrome.privacy.svc.cluster.local:9222",
+        "color": "#4285F4"
+      }
     }
   }
 }
