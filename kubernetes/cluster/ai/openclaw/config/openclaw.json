@@ -119,7 +119,7 @@
     "enabled": true,
     "ssrfPolicy": {
       "allowedHostnames": [
-        "browserless.privacy.svc.cluster.local."
+        "browserless.ai.svc.cluster.local."
       ]
     },
     "defaultProfile": "browserless",
