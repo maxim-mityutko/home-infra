@@ -41,6 +41,9 @@ helmCharts:
               enabled: true
           serviceMonitor:
             enabled: false
+          operator:
+            # Note: If allowed, Prometheus CRDs should be installed
+            disable_prometheus_converter: true
         prometheus-operator-crds:
           enabled: false
         grafana:
