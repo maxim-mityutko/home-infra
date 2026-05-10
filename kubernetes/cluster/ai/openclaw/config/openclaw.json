@@ -118,7 +118,7 @@
   "browser": {
     "enabled": true,
     "ssrfPolicy": {
-      "allowedHosts": [
+      "allowedHostnames": [
         "browserless.privacy.svc.cluster.local."
       ]
     },
