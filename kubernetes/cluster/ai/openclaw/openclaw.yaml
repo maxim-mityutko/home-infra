@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: openclaw
-  namespace: openclaw
+  namespace: ai
   labels:
     app.kubernetes.io/name: openclaw
 spec:
@@ -20,7 +20,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: openclaw
-  namespace: openclaw
+  namespace: ai
   labels:
     app.kubernetes.io/name: openclaw
 spec:
@@ -165,7 +165,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: openclaw
-  namespace: openclaw
+  namespace: ai
   labels:
     app.kubernetes.io/name: openclaw
 data:
