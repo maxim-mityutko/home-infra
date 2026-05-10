@@ -118,6 +118,7 @@
   "browser": {
     "enabled": true,
     "ssrfPolicy": {
+      "dangerouslyAllowPrivateNetwork": false,
       "allowedHostnames": [
         "browserless.ai.svc.cluster.local."
       ]
