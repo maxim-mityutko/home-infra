@@ -87,9 +87,72 @@
       "memory-core",
       "active-memory",
       "telegram",
-      "browser"
+      "browser",
+      "memory-wiki"
     ],
-    "deny": []
+    "deny": [],
+    "entries": {
+      "memory-core": {
+        "config": {
+          "dreaming": {
+            "enabled": true
+          }
+        }
+      },
+      "active-memory": {
+        "enabled": true,
+        "config": {
+          "enabled": true,
+          "agents": ["default"],
+          "allowedChatTypes": ["direct"],
+          "queryMode": "recent",
+          "promptStyle": "balanced",
+          "persistTranscripts": false,
+          "logging": true
+        }
+      },
+      "memory-wiki": {
+        "enabled": true,
+        "config": {
+          "vaultMode": "isolated",
+          "vault": {
+            "path": "~/.openclaw/wiki/main",
+            "renderMode": "obsidian"
+          },
+          "obsidian": {
+            "enabled": true,
+            "useOfficialCli": false,
+            "vaultName": "OpenClaw Wiki",
+            "openAfterWrites": false
+          },
+          "bridge": {
+            "enabled": false,
+            "readMemoryArtifacts": true,
+            "indexDreamReports": true,
+            "indexDailyNotes": true,
+            "indexMemoryRoot": true,
+            "followMemoryEvents": true
+          },
+          "ingest": {
+            "autoCompile": true,
+            "maxConcurrentJobs": 1,
+            "allowUrlIngest": true
+          },
+          "search": {
+            "backend": "shared",
+            "corpus": "wiki"
+          },
+          "context": {
+            "includeCompiledDigestPrompt": false
+          },
+          "render": {
+            "preserveHumanBlocks": true,
+            "createBacklinks": true,
+            "createDashboards": false
+          }
+        }
+      }
+    }
   },
   "tools": {
     "deny": [
