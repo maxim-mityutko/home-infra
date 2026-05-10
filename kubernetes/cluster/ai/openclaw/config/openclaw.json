@@ -186,7 +186,7 @@
     "defaultProfile": "browserless",
     "profiles": {
       "browserless": {
-        "cdpUrl": "ws://browserless.ai.svc.cluster.local.:3000?token=${BROWSERLESS_API_KEY}&timeout=300000",
+        "cdpUrl": "ws://browserless.ai.svc.cluster.local.:3000?token=${BROWSERLESS_API_KEY}&timeout=600000",
         "color": "#4285F4"
       }
     }
