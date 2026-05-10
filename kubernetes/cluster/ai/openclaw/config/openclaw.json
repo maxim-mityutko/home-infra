@@ -117,10 +117,15 @@
   },
   "browser": {
     "enabled": true,
+    "ssrfPolicy": {
+      "allowedHosts": [
+        "browserless.privacy.svc.cluster.local."
+      ]
+    },
     "defaultProfile": "browserless",
     "profiles": {
       "browserless": {
-        "cdpUrl": "ws://browserless.ai.svc.cluster.local.:3000?token=${BROWSERLESS_API_KEY}&timeout=60000",
+        "cdpUrl": "ws://browserless.ai.svc.cluster.local.:3000?token=${BROWSERLESS_API_KEY}&timeout=120000",
         "color": "#4285F4"
       }
     }
