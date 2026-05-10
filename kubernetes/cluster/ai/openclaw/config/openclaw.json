@@ -55,7 +55,7 @@
       "model": {
         "primary": "ollama/gemma4:31b-cloud",
         "fallbacks": [
-          "kimi-k2.6:cloud"
+          "ollama/kimi-k2.6:cloud"
         ]
       }
     },
@@ -108,7 +108,9 @@
           "queryMode": "recent",
           "promptStyle": "balanced",
           "persistTranscripts": false,
-          "logging": true
+          "logging": true,
+          "timeoutMs": 15000,
+          "maxSummaryChars": 220
         }
       },
       "memory-wiki": {
