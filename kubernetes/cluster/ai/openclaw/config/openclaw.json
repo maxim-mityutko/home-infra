@@ -52,10 +52,13 @@
   "agents": {
     "defaults": {
       "workspace": "~/.openclaw/workspace",
+      "thinkingDefault": "medium",
+      "reasoningDefault": "off",
       "model": {
-        "primary": "ollama/gemma4:31b-cloud",
+        "primary": "ollama/minimax-m2.7:cloud",
         "fallbacks": [
-          "ollama/kimi-k2.6:cloud"
+          "ollama/kimi-k2.6:cloud",
+          "ollama/gemma4:31b-cloud"
         ]
       }
     },
