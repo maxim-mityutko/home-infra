@@ -62,6 +62,7 @@ spec:
                 -e "s|\${BITWARDEN_USER_EMAIL}|${BITWARDEN_USER_EMAIL}|g" \
                 -e "s|\${BITWARDEN_BASE_URL}|${BITWARDEN_BASE_URL}|g" \
                 /config/rbw.json > /home/node/.openclaw/workspace/.config/rbw/config.json
+              chmod a=r /home/node/.openclaw/workspace/.config/rbw/config.json
               echo "Rendered /home/node/.openclaw/workspace/.config/rbw/config.json"
           envFrom:
             - secretRef:
