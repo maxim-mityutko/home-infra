@@ -1,0 +1,26 @@
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: vl.brhd.io
+  namespace: monitoring
+spec:
+  endpoints:
+    - dnsName: vl.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: mcp.vl.brhd.io
+  namespace: monitoring
+spec:
+  endpoints:
+    - dnsName: mcp.vl.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

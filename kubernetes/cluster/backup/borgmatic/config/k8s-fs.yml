@@ -33,6 +33,7 @@ exclude_patterns:
   - '*/cnpg-*' # Cloudnative-PG (CNPG) backup buckets
   - '*/shinobi-plugins'
   - '*/vmsingle-stack'
+  - '*/vlsingle-data'
   - '*/code-server-data'
   # Stash: Streaming
   - '*/stash-cache'

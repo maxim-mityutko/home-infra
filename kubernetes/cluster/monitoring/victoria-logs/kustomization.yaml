@@ -1,0 +1,234 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - dns-endpoint.yaml
+helmCharts:
+  - name: victoria-logs-single
+    namespace: monitoring
+    releaseName: vl-single
+    version: 0.12.4
+    repo: https://victoriametrics.github.io/helm-charts/
+    valuesInline:
+      serviceAccount:
+        create: false
+      podDisruptionBudget:
+        enabled: false
+      server:
+        fullnameOverride: vl-single
+        mode: deployment
+        replicaCount: 1
+        retentionPeriod: 72h
+        retentionDiskSpaceUsage: 8GiB
+        persistentVolume:
+          enabled: true
+          name: vlsingle-data
+          size: 10Gi
+          storageClassName: nfs-subdir
+        probe:
+          readiness:
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          liveness:
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 10
+        securityContext:
+          enabled: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+        podSecurityContext:
+          enabled: true
+          fsGroup: 2000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          requests:
+            cpu: 50m
+            memory: 250Mi
+          limits:
+            cpu: 100m
+            memory: 500Mi
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: public
+            cert-manager.io/cluster-issuer: lets-encrypt
+            nginx.ingress.kubernetes.io/auth-response-headers: >-
+              Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+            nginx.ingress.kubernetes.io/auth-signin: >-
+              https://vl.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+            nginx.ingress.kubernetes.io/auth-snippet: |
+              proxy_set_header X-Forwarded-Host $http_host;
+            nginx.ingress.kubernetes.io/auth-url: >-
+              http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
+          hosts:
+            - name: vl.brhd.io
+              path:
+                - /
+              port: http
+        serviceMonitor:
+          enabled: false
+        vmServiceScrape:
+          enabled: true
+      vector:
+        enabled: false
+      dashboards:
+        enabled: true
+        labels:
+          grafana-dashboard: "true"
+        grafanaOperator:
+          enabled: false
+  - name: victoria-logs-collector
+    namespace: monitoring
+    releaseName: vl-collector
+    version: 0.3.3
+    repo: https://victoriametrics.github.io/helm-charts/
+    valuesInline:
+      fullnameOverride: vl-collector
+      collector:
+        # Ref: https://docs.victoriametrics.com/victorialogs/keyconcepts/#time-field
+        timeField:
+          - time
+          - ts
+          - timestamp
+        # Ref: https://docs.victoriametrics.com/victorialogs/keyconcepts/#message-field
+        msgField:
+          - message
+          - msg
+          - log
+        # Ref: https://docs.victoriametrics.com/victorialogs/keyconcepts/#stream-fields
+        streamFields:
+          - kubernetes.container_name
+          - kubernetes.pod_name
+          - kubernetes.pod_namespace
+        # Ref: https://docs.victoriametrics.com/victorialogs/vlagent/#filtering-kubernetes-logs
+        excludeFilter: >-
+          kubernetes.pod_name:=%{HOSTNAME}
+          or kubernetes.pod_namespace:in(ai)
+        includePodLabels: false
+        includePodAnnotations: false
+        includeNodeLabels: false
+        includeNodeAnnotations: false
+      remoteWrite:
+        - url: http://vl-single.monitoring.svc.cluster.local.:9428
+          maxDiskUsagePerURL: 100MB
+          headers:
+            VL-Ignore-Fields:
+              - kubernetes.container_id
+              - kubernetes.pod_ip
+      podMonitor:
+        enabled: false
+        vm: true
+      securityContext:
+        enabled: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        seccompProfile:
+          type: RuntimeDefault
+      resources:
+        requests:
+          cpu: 50m
+          memory: 75Mi
+        limits:
+          cpu: 100m
+          memory: 100Mi
+  - name: victoria-logs-mcp
+    namespace: monitoring
+    releaseName: vl-mcp
+    version: 0.1.0
+    repo: https://victoriametrics.github.io/helm-charts/
+    valuesInline:
+      fullnameOverride: vl-mcp
+      vl:
+        entrypoint: http://vl-single.monitoring.svc.cluster.local.:9428
+      mcp:
+        mode: http
+        disable:
+          tools: []
+          resources: false
+      service:
+        type: ClusterIP
+        port: 8080
+      serviceAccount:
+        automount: false
+      securityContext:
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+      resources:
+        requests:
+          cpu: 75m
+          memory: 75Mi
+        limits:
+          memory: 150Mi
+      ingress:
+        enabled: true
+        # TODO: tighten the security for the MCP server
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+        hosts:
+          - host: mcp.vl.brhd.io
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
+        tls:
+          - secretName: mcp-vl-brhd-io-tls
+            hosts:
+              - mcp.vl.brhd.io
+      route:
+        enabled: false
+      livenessProbe:
+        initialDelaySeconds: 10
+        timeoutSeconds: 5
+        periodSeconds: 30
+      readinessProbe:
+        initialDelaySeconds: 10
+        timeoutSeconds: 5
+        periodSeconds: 30
+      scrape:
+        enabled: false
+patches:
+  # Keep rendered workload history small. The charts do not expose this for
+  # every workload, so patch the final manifests from Kustomize.
+  - target:
+      kind: DaemonSet
+      labelSelector: app.kubernetes.io/instance=vl-collector
+    patch: |-
+      - op: add
+        path: /spec/revisionHistoryLimit
+        value: 1
+  - target:
+      kind: Deployment
+    patch: |-
+      - op: add
+        path: /spec/revisionHistoryLimit
+        value: 1
+  # Use a shorter Grafana dashboard ConfigMap name.
+  - target:
+      kind: ConfigMap
+      name: vl-single-victoria-logs-single-victorialogs-single-node
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: dashboard-vl-single
+  # Cleanup the "Vector" related dashboard which is not required
+  - patch: |-
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: vl-single-victoria-logs-single-vector-k8s-monitoring
+        namespace: monitoring
+      $patch: delete

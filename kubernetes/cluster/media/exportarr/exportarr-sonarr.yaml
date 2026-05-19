@@ -63,6 +63,8 @@ spec:
                 secretKeyRef:
                   name: exportarr
                   key: SONARR_API_KEY
+            - name: LOG_LEVEL
+              value: warn
           livenessProbe:
             httpGet:
               path: /healthz
