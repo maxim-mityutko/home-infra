@@ -110,7 +110,7 @@ helmCharts:
           resources: false
       service:
         type: ClusterIP
-        port: 8080
+        # port: 8080
       serviceAccount:
         automount: false
       # securityContext:
@@ -124,9 +124,9 @@ helmCharts:
         requests:
           cpu: 75m
           memory: 75Mi
-        limits:
-          cpu: 150m
-          memory: 150Mi
+        # limits:
+        #   cpu: 150m
+        #   memory: 150Mi
       ingress:
         enabled: true
         annotations:
@@ -148,18 +148,18 @@ helmCharts:
       route:
         enabled: false
       livenessProbe:
-        httpGet:
-          path: /health/liveness
-          port: http
-          scheme: HTTP
+        # httpGet:
+        #   path: /health/liveness
+        #   port: http
+        #   scheme: HTTP
         initialDelaySeconds: 10
         timeoutSeconds: 5
         periodSeconds: 30
       readinessProbe:
-        httpGet:
-          path: /health/readiness
-          port: http
-          scheme: HTTP
+        # httpGet:
+        #   path: /health/readiness
+        #   port: http
+        #   scheme: HTTP
         initialDelaySeconds: 10
         timeoutSeconds: 5
         periodSeconds: 30
