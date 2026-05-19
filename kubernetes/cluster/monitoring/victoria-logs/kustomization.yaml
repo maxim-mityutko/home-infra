@@ -191,6 +191,10 @@ helmCharts:
             paths:
               - path: /
                 pathType: ImplementationSpecific
+        tls:
+          - secretName: mcp-vl-brhd-io-tls
+            hosts:
+              - mcp.vl.brhd.io
       route:
         enabled: false
       livenessProbe:
