@@ -75,7 +75,7 @@ helmCharts:
         serviceMonitor:
           enabled: false
         vmServiceScrape:
-          enabled: false
+          enabled: true
       vector:
         enabled: false
       dashboards:
