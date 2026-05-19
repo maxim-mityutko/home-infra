@@ -175,6 +175,7 @@ helmCharts:
           memory: 150Mi
       ingress:
         enabled: true
+        # TODO: tighten the security for the MCP server
         annotations:
           kubernetes.io/ingress.class: public
           cert-manager.io/cluster-issuer: lets-encrypt
