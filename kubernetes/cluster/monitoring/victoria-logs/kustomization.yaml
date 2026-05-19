@@ -74,8 +74,13 @@ helmCharts:
         includeNodeLabels: false
         includeNodeAnnotations: false
       remoteWrite:
+        # TODO: can i shorten this?
         - url: http://vl-single-victoria-logs-single-server.monitoring.svc.cluster.local.:9428
           maxDiskUsagePerURL: 100MB
+          headers:
+            VL-Ignore-Fields:
+              - kubernetes.container_id
+              - kubernetes.pod_ip
       podMonitor:
         enabled: false
         vm: true
@@ -86,8 +91,13 @@ helmCharts:
           drop:
             - ALL
         readOnlyRootFilesystem: true
-        seccompProfile:
-          type: RuntimeDefault
+        # seccompProfile:
+        #   type: RuntimeDefault
+      podSecurityContext:
+        enabled: true
+        fsGroup: 2000
+        runAsNonRoot: true
+        runAsUser: 1000
       resources:
         requests:
           cpu: 50m
