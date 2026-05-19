@@ -15,6 +15,7 @@ helmCharts:
       podDisruptionBudget:
         enabled: false
       server:
+        mode: deployment
         replicaCount: 1
         retentionPeriod: 72h
         retentionDiskSpaceUsage: 10Gi
