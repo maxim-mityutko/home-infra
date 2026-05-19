@@ -68,7 +68,6 @@ helmCharts:
           nginx.ingress.kubernetes.io/session-cookie-hash: sha1
           nginx.ingress.kubernetes.io/session-cookie-max-age: "3600"
           nginx.ingress.kubernetes.io/session-cookie-name: rustfs
-          nginx.ingress.kubernetes.io/enable-access-log: "false"
           nginx.ingress.kubernetes.io/proxy-body-size: '0'
         hosts:
           - host: rustfs.brhd.io
