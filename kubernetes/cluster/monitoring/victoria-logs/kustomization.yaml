@@ -19,7 +19,7 @@ helmCharts:
         mode: deployment
         replicaCount: 1
         retentionPeriod: 72h
-        retentionDiskSpaceUsage: 10GiB
+        retentionDiskSpaceUsage: 8GiB
         persistentVolume:
           enabled: true
           name: vlsingle-data
