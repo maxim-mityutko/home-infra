@@ -102,6 +102,7 @@ helmCharts:
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
       vl:
+        # TODO: can i shorten this?
         entrypoint: http://vl-single-victoria-logs-single-server.monitoring.svc.cluster.local.:9428
       mcp:
         mode: http
@@ -110,7 +111,7 @@ helmCharts:
           resources: false
       service:
         type: ClusterIP
-        # port: 8080
+        port: 8080
       serviceAccount:
         automount: false
       securityContext:
@@ -124,9 +125,8 @@ helmCharts:
         requests:
           cpu: 75m
           memory: 75Mi
-        # limits:
-        #   cpu: 150m
-        #   memory: 150Mi
+        limits:
+          memory: 150Mi
       ingress:
         enabled: true
         annotations:
