@@ -205,6 +205,7 @@ helmCharts:
       scrape:
         enabled: false
 patches:
+  # Cleanup the "Vector" related dashboard which is not required
   - patch: |-
       apiVersion: v1
       kind: ConfigMap
