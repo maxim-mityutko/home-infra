@@ -49,18 +49,50 @@ helmCharts:
     version: 0.3.3
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
+      collector:
+        # Ref: https://docs.victoriametrics.com/victorialogs/keyconcepts/#time-field
+        timeField:
+          - time
+          - ts
+          - timestamp
+        # Ref: https://docs.victoriametrics.com/victorialogs/keyconcepts/#message-field
+        msgField:
+          - message
+          - msg
+          - log
+        # Ref: https://docs.victoriametrics.com/victorialogs/keyconcepts/#stream-fields
+        streamFields:
+          - kubernetes.container_name
+          - kubernetes.pod_name
+          - kubernetes.pod_namespace
+        # Ref: https://docs.victoriametrics.com/victorialogs/vlagent/#filtering-kubernetes-logs
+        excludeFilter: >-
+          kubernetes.pod_name:=%{HOSTNAME}
+          or kubernetes.pod_namespace:in(ai,media)
+        includePodLabels: false
+        includePodAnnotations: false
+        includeNodeLabels: false
+        includeNodeAnnotations: false
       remoteWrite:
         - url: http://vl-single-victoria-logs-single-server.monitoring.svc.cluster.local.:9428
-      # podMonitor:
-      #   enabled: true
-      #   vm: true
-      # resources:
-      #   requests:
-      #     cpu: 100m
-      #     memory: 128Mi
-      #   limits:
-      #     cpu: 500m
-      #     memory: 512Mi
+      podMonitor:
+        enabled: false
+        vm: true
+      securityContext:
+        enabled: true
+        capabilities:
+          drop:
+            - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+      resources:
+        requests:
+          cpu: 50m
+          memory: 75Mi
+        limits:
+          cpu: 100m
+          memory: 100Mi
   - name: victoria-logs-mcp
     namespace: monitoring
     releaseName: vl-mcp
