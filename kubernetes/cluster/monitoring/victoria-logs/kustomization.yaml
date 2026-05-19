@@ -105,17 +105,28 @@ helmCharts:
         entrypoint: http://vl-single-victoria-logs-single-server.monitoring.svc.cluster.local.:9428
       mcp:
         mode: http
+        disable:
+          tools: []
+          resources: false
       service:
         type: ClusterIP
+        port: 8080
       serviceAccount:
         automount: false
-      # resources:
-      #   requests:
-      #     cpu: 50m
-      #     memory: 128Mi
-      #   limits:
-      #     cpu: 250m
-      #     memory: 256Mi
+      securityContext:
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+      resources:
+        requests:
+          cpu: 50m
+          memory: 75Mi
+        limits:
+          cpu: 100m
+          memory: 150Mi
       ingress:
         enabled: true
         annotations:
@@ -134,6 +145,23 @@ helmCharts:
             paths:
               - path: /
                 pathType: ImplementationSpecific
-        tls:
-          - hosts:
-              - vlogs-mcp.brhd.io
+      route:
+        enabled: false
+      livenessProbe:
+        httpGet:
+          path: /health/liveness
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 10
+        timeoutSeconds: 5
+        periodSeconds: 30
+      readinessProbe:
+        httpGet:
+          path: /health/readiness
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 10
+        timeoutSeconds: 5
+        periodSeconds: 30
+      scrape:
+        enabled: false
