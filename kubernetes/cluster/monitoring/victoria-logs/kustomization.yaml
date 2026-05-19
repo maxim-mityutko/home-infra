@@ -75,6 +75,7 @@ helmCharts:
         includeNodeAnnotations: false
       remoteWrite:
         - url: http://vl-single-victoria-logs-single-server.monitoring.svc.cluster.local.:9428
+          maxDiskUsagePerURL: 0
       podMonitor:
         enabled: false
         vm: true
@@ -87,8 +88,8 @@ helmCharts:
         readOnlyRootFilesystem: true
         seccompProfile:
           type: RuntimeDefault
-      extraArgs:
-        remoteWrite.disableOnDiskQueue: true
+      # extraArgs:
+      #   remoteWrite.disableOnDiskQueue: true
       #   envflag.enable: true
       #   envflag.prefix: VL_
       #   loggerFormat: json
