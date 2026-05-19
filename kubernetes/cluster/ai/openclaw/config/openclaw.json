@@ -84,6 +84,14 @@
     "mcp": true,
     "plugins": true
   },
+  "mcp": {
+    "servers": {
+      "victoria-logs": {
+        "url": "https://mcp.vl.brhd.io/mcp",
+        "transport": "streamable-http"
+      }
+    }
+  },
   "plugins": {
     "allow": [
       "ollama",
