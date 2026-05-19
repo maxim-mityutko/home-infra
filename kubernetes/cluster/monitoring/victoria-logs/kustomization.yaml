@@ -113,19 +113,19 @@ helmCharts:
         port: 8080
       serviceAccount:
         automount: false
-      securityContext:
-        capabilities:
-          drop:
-          - ALL
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        runAsUser: 1000
+      # securityContext:
+      #   capabilities:
+      #     drop:
+      #     - ALL
+      #   readOnlyRootFilesystem: true
+      #   runAsNonRoot: true
+      #   runAsUser: 1000
       resources:
         requests:
-          cpu: 50m
+          cpu: 75m
           memory: 75Mi
         limits:
-          cpu: 100m
+          cpu: 150m
           memory: 150Mi
       ingress:
         enabled: true
