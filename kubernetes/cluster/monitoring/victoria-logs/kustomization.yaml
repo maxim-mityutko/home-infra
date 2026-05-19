@@ -10,18 +10,49 @@ helmCharts:
     version: 0.12.4
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
+      serviceAccount:
+        create: false
+      podDisruptionBudget:
+        enabled: false
       server:
-        retentionPeriod: 7d
+        replicaCount: 1
+        retentionPeriod: 72h
+        retentionDiskSpaceUsage: 10Gi
         persistentVolume:
-          size: 20Gi
+          enabled: true
+          name: vlogs-data
+          size: 10Gi
           storageClassName: nfs-subdir
-        # resources:
-        #   requests:
-        #     cpu: 250m
-        #     memory: 512Mi
-        #   limits:
-        #     cpu: "1"
-        #     memory: 2Gi
+        probe:
+          readiness:
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          liveness:
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 10
+        securityContext:
+          enabled: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+        podSecurityContext:
+          enabled: true
+          fsGroup: 2000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          requests:
+            cpu: 50m
+            memory: 250Mi
+          limits:
+            cpu: 100m
+            memory: 500Mi
         ingress:
           enabled: true
           annotations:
@@ -40,9 +71,18 @@ helmCharts:
               path:
                 - /
               port: http
-          # tls:
-          #   - hosts:
-          #       - vlogs.brhd.io
+        serviceMonitor:
+          enabled: false
+        vmServiceScrape:
+          enabled: false
+      vector:
+        enabled: false
+      dashboards:
+        enabled: true
+        labels:
+          grafana-dashboard: "true"
+        grafanaOperator:
+          enabled: false
   - name: victoria-logs-collector
     namespace: monitoring
     releaseName: vl-collector
@@ -90,15 +130,8 @@ helmCharts:
         capabilities:
           drop:
             - ALL
-        readOnlyRootFilesystem: true
-        runAsUser: 1000
-        # seccompProfile:
-        #   type: RuntimeDefault
-      podSecurityContext:
-        enabled: true
-        fsGroup: 2000
-        runAsNonRoot: true
-        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
       resources:
         requests:
           cpu: 50m
