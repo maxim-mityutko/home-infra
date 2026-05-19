@@ -204,3 +204,11 @@ helmCharts:
         periodSeconds: 30
       scrape:
         enabled: false
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: vl-single-victoria-logs-single-vector-k8s-monitoring
+        namespace: monitoring
+      $patch: delete
