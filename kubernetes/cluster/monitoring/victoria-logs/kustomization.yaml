@@ -113,13 +113,13 @@ helmCharts:
         # port: 8080
       serviceAccount:
         automount: false
-      # securityContext:
-      #   capabilities:
-      #     drop:
-      #     - ALL
-      #   readOnlyRootFilesystem: true
-      #   runAsNonRoot: true
-      #   runAsUser: 1000
+      securityContext:
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
       resources:
         requests:
           cpu: 75m
@@ -148,18 +148,10 @@ helmCharts:
       route:
         enabled: false
       livenessProbe:
-        # httpGet:
-        #   path: /health/liveness
-        #   port: http
-        #   scheme: HTTP
         initialDelaySeconds: 10
         timeoutSeconds: 5
         periodSeconds: 30
       readinessProbe:
-        # httpGet:
-        #   path: /health/readiness
-        #   port: http
-        #   scheme: HTTP
         initialDelaySeconds: 10
         timeoutSeconds: 5
         periodSeconds: 30
