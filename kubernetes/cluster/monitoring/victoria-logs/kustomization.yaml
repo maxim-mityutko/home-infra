@@ -80,12 +80,13 @@ helmCharts:
         vm: true
       securityContext:
         enabled: true
+        allowPrivilegeEscalation: false
         capabilities:
           drop:
             - ALL
         readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
       resources:
         requests:
           cpu: 50m
