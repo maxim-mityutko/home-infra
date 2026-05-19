@@ -20,7 +20,7 @@ helmCharts:
         retentionDiskSpaceUsage: 10Gi
         persistentVolume:
           enabled: true
-          name: vlogs-data
+          name: vlsingle-data
           size: 10Gi
           storageClassName: nfs-subdir
         probe:
@@ -89,6 +89,7 @@ helmCharts:
     version: 0.3.3
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
+      # TODO: limit the amount of controller revisions
       collector:
         # Ref: https://docs.victoriametrics.com/victorialogs/keyconcepts/#time-field
         timeField:
@@ -145,6 +146,7 @@ helmCharts:
     version: 0.1.0
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
+      # TODO: limit the amount of controller revisions
       vl:
         # TODO: can i shorten this?
         entrypoint: http://vl-single-victoria-logs-single-server.monitoring.svc.cluster.local.:9428
