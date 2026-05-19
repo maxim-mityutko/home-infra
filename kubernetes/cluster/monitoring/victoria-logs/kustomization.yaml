@@ -117,7 +117,7 @@ helmCharts:
         includeNodeLabels: false
         includeNodeAnnotations: false
       remoteWrite:
-        - url: http://vlogs.monitoring.svc.cluster.local.:9428
+        - url: http://vl-single.monitoring.svc.cluster.local.:9428
           maxDiskUsagePerURL: 100MB
           headers:
             VL-Ignore-Fields:
@@ -149,7 +149,7 @@ helmCharts:
     valuesInline:
       fullnameOverride: vl-mcp
       vl:
-        entrypoint: http://vlogs.monitoring.svc.cluster.local.:9428
+        entrypoint: http://vl-single.monitoring.svc.cluster.local.:9428
       mcp:
         mode: http
         disable:
