@@ -32,8 +32,8 @@ helmCharts:
           address: ":9000"
           console_enable: "true"
           console_address: ":9001"
-          log_level: "info"
-          rust_log: "info"
+          log_level: "warn"
+          rust_log: "warn"
           region: "eu-west-1"
           obs_log_directory: "/logs"
           obs_environment: "develop"
@@ -68,6 +68,7 @@ helmCharts:
           nginx.ingress.kubernetes.io/session-cookie-hash: sha1
           nginx.ingress.kubernetes.io/session-cookie-max-age: "3600"
           nginx.ingress.kubernetes.io/session-cookie-name: rustfs
+          nginx.ingress.kubernetes.io/enable-access-log: "false"
           nginx.ingress.kubernetes.io/proxy-body-size: '0'
         hosts:
           - host: rustfs.brhd.io
