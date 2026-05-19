@@ -15,7 +15,7 @@ helmCharts:
       podDisruptionBudget:
         enabled: false
       server:
-        fullnameOverride: vlogs
+        fullnameOverride: vl-single
         mode: deployment
         replicaCount: 1
         retentionPeriod: 72h
