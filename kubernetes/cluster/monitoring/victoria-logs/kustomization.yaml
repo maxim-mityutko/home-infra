@@ -91,6 +91,7 @@ helmCharts:
     version: 0.3.3
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
+      fullnameOverride: vl-collector
       collector:
         # Ref: https://docs.victoriametrics.com/victorialogs/keyconcepts/#time-field
         timeField:
@@ -146,6 +147,7 @@ helmCharts:
     version: 0.1.0
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
+      fullnameOverride: vl-mcp
       vl:
         entrypoint: http://vlogs.monitoring.svc.cluster.local.:9428
       mcp:
