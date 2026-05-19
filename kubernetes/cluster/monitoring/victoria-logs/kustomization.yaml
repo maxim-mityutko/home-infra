@@ -1,0 +1,105 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - dns-endpoint.yaml
+helmCharts:
+  - name: victoria-logs-single
+    namespace: monitoring
+    releaseName: vl-single
+    version: 0.12.4
+    repo: https://victoriametrics.github.io/helm-charts/
+    valuesInline:
+      server:
+        retentionPeriod: 7d
+        persistentVolume:
+          size: 20Gi
+          storageClassName: nfs-subdir
+        # resources:
+        #   requests:
+        #     cpu: 250m
+        #     memory: 512Mi
+        #   limits:
+        #     cpu: "1"
+        #     memory: 2Gi
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: public
+            cert-manager.io/cluster-issuer: lets-encrypt
+            nginx.ingress.kubernetes.io/auth-response-headers: >-
+              Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+            nginx.ingress.kubernetes.io/auth-signin: >-
+              https://vlogs.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+            nginx.ingress.kubernetes.io/auth-snippet: |
+              proxy_set_header X-Forwarded-Host $http_host;
+            nginx.ingress.kubernetes.io/auth-url: >-
+              http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
+          hosts:
+            - name: vlogs.brhd.io
+              path:
+                - /
+              port: http
+          # tls:
+          #   - hosts:
+          #       - vlogs.brhd.io
+  - name: victoria-logs-collector
+    namespace: monitoring
+    releaseName: vl-collector
+    version: 0.3.3
+    repo: https://victoriametrics.github.io/helm-charts/
+    valuesInline:
+      remoteWrite:
+        - url: http://vl-single-victoria-logs-single-server.monitoring.svc.cluster.local.:9428
+      # podMonitor:
+      #   enabled: true
+      #   vm: true
+      # resources:
+      #   requests:
+      #     cpu: 100m
+      #     memory: 128Mi
+      #   limits:
+      #     cpu: 500m
+      #     memory: 512Mi
+  - name: victoria-logs-mcp
+    namespace: monitoring
+    releaseName: vl-mcp
+    version: 0.1.0
+    repo: https://victoriametrics.github.io/helm-charts/
+    valuesInline:
+      vl:
+        entrypoint: http://vl-single-victoria-logs-single-server.monitoring.svc.cluster.local.:9428
+      mcp:
+        mode: http
+      service:
+        type: ClusterIP
+      serviceAccount:
+        automount: false
+      # resources:
+      #   requests:
+      #     cpu: 50m
+      #     memory: 128Mi
+      #   limits:
+      #     cpu: 250m
+      #     memory: 256Mi
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: public
+          cert-manager.io/cluster-issuer: lets-encrypt
+          nginx.ingress.kubernetes.io/auth-response-headers: >-
+            Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+          nginx.ingress.kubernetes.io/auth-signin: >-
+            https://vlogs-mcp.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+          nginx.ingress.kubernetes.io/auth-snippet: |
+            proxy_set_header X-Forwarded-Host $http_host;
+          nginx.ingress.kubernetes.io/auth-url: >-
+            http://authentik-outpost-embedded.default.svc.cluster.local.:9000/outpost.goauthentik.io/auth/nginx
+        hosts:
+          - host: vlogs-mcp.brhd.io
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
+        tls:
+          - hosts:
+              - vlogs-mcp.brhd.io

@@ -1,0 +1,26 @@
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: vlogs.brhd.io
+  namespace: monitoring
+spec:
+  endpoints:
+    - dnsName: vlogs.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: vlogs-mcp.brhd.io
+  namespace: monitoring
+spec:
+  endpoints:
+    - dnsName: vlogs-mcp.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
