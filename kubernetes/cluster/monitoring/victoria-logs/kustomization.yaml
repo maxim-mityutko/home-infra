@@ -15,6 +15,7 @@ helmCharts:
       podDisruptionBudget:
         enabled: false
       server:
+        fullnameOverride: vlogs
         mode: deployment
         replicaCount: 1
         retentionPeriod: 72h
@@ -115,8 +116,7 @@ helmCharts:
         includeNodeLabels: false
         includeNodeAnnotations: false
       remoteWrite:
-        # TODO: can i shorten this?
-        - url: http://vl-single-victoria-logs-single-server.monitoring.svc.cluster.local.:9428
+        - url: http://vlogs.monitoring.svc.cluster.local.:9428
           maxDiskUsagePerURL: 100MB
           headers:
             VL-Ignore-Fields:
@@ -147,8 +147,7 @@ helmCharts:
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
       vl:
-        # TODO: can i shorten this?
-        entrypoint: http://vl-single-victoria-logs-single-server.monitoring.svc.cluster.local.:9428
+        entrypoint: http://vlogs.monitoring.svc.cluster.local.:9428
       mcp:
         mode: http
         disable:
