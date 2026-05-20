@@ -80,7 +80,7 @@ spec:
             tcpSocket:
               port: 1883
             initialDelaySeconds: 10
-            periodSeconds: 15
+            periodSeconds: 30
           volumeMounts:
             - name: mosquitto-config
               mountPath: /mosquitto/config/mosquitto.conf
