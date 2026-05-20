@@ -148,6 +148,9 @@ helmCharts:
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
       fullnameOverride: vl-mcp
+      env:
+        - name: MCP_LOG_LEVEL
+          value: warn
       vl:
         entrypoint: http://vl-single.monitoring.svc.cluster.local.:9428
       mcp:
