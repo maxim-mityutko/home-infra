@@ -11,7 +11,8 @@ helmCharts:
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
       serviceAccount:
-        create: false
+        create: true
+        automountToken: false
       podDisruptionBudget:
         enabled: false
       server:
@@ -162,6 +163,7 @@ helmCharts:
         type: ClusterIP
         port: 8080
       serviceAccount:
+        create: true
         automount: false
       securityContext:
         capabilities:
