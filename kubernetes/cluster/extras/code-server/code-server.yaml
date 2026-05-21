@@ -45,7 +45,7 @@ spec:
         kubernetes.io/arch: amd64
       containers:
         - name: code-server
-          image: ghcr.io/coder/code-server:4.118.0
+          image: ghcr.io/coder/code-server:4.121.0
           resources:
             requests:
               memory: 500M
