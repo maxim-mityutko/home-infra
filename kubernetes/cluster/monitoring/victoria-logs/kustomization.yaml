@@ -104,6 +104,7 @@ helmCharts:
           - message
           - msg
           - log
+          - event
         # Ref: https://docs.victoriametrics.com/victorialogs/keyconcepts/#stream-fields
         streamFields:
           - kubernetes.container_name
