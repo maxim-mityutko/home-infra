@@ -113,7 +113,6 @@ helmCharts:
         # Ref: https://docs.victoriametrics.com/victorialogs/vlagent/#filtering-kubernetes-logs
         excludeFilter: >-
           kubernetes.pod_name:=%{HOSTNAME}
-          or kubernetes.pod_namespace:in(ai)
         includePodLabels: false
         includePodAnnotations: false
         includeNodeLabels: false
