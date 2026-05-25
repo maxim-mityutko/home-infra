@@ -102,6 +102,7 @@ helmCharts:
         # Ref: https://docs.victoriametrics.com/victorialogs/keyconcepts/#message-field
         msgField:
           - message
+          - event
           - msg
           - log
         # Ref: https://docs.victoriametrics.com/victorialogs/keyconcepts/#stream-fields
