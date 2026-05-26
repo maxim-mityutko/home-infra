@@ -71,10 +71,10 @@
         "id": "default",
         "default": true,
         "identity": {
-          "name": "Q"
+          "name": "Bender"
         },
         "groupchat": {
-          "mentionPatterns": ["@q"]
+          "mentionPatterns": ["@bender"]
         }
       },
       {
@@ -200,7 +200,14 @@
 
   "channels": {
     "discord": {
-      "enabled": false
+      "enabled": true,
+      "token": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_BOT_TOKEN"
+      },
+      "dmPolicy": "pairing",
+      "guilds": {}
     },
     "whatsapp": {
       "enabled": false
