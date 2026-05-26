@@ -73,7 +73,7 @@
         "identity": {
           "name": "Bender"
         },
-        "groupchat": {
+        "groupChat": {
           "mentionPatterns": ["@bender"]
         }
       },
