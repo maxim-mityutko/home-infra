@@ -78,11 +78,12 @@
         }
       },
       {
-        "id": "snappy",
+        "id": "fast",
         "identity": {
           "name": "Clamps"
         },
         "skills": [],
+        "model": "ollama/minimax-m2.7:cloud",
         "fastModeDefault": true,
         "thinkingDefault": "off"
       }
