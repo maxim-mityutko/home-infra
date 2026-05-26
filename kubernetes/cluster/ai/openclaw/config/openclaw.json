@@ -79,6 +79,9 @@
       },
       {
         "id": "snappy",
+        "identity": {
+          "name": "Clamps"
+        },
         "skills": [],
         "fastModeDefault": true,
         "thinkingDefault": "off"
@@ -119,7 +122,8 @@
       "telegram",
       "browser",
       "memory-wiki",
-      "codex"
+      "codex",
+      "discord"
     ],
     "deny": [],
     "entries": {
