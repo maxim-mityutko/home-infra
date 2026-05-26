@@ -22,6 +22,7 @@
       "dangerouslyDisableDeviceAuth": true
     }
   },
+
   "models": {
     "providers": {
       "ollama": {
@@ -49,14 +50,17 @@
       }
     }
   },
+
   "agents": {
     "defaults": {
       "workspace": "~/.openclaw/workspace",
+      "userTimezone": "Europe/Amsterdam",
       "thinkingDefault": "medium",
       "reasoningDefault": "off",
       "model": {
-        "primary": "ollama/minimax-m2.7:cloud",
+        "primary": "openai/gpt-5.5",
         "fallbacks": [
+          "ollama/minimax-m2.7:cloud",
           "ollama/kimi-k2.6:cloud",
           "ollama/gemma4:31b-cloud"
         ]
@@ -65,11 +69,23 @@
     "list": [
       {
         "id": "default",
-        "name": "OpenClaw Assistant",
-        "workspace": "~/.openclaw/workspace"
+        "default": true,
+        "identity": {
+          "name": "Q"
+        },
+        "groupchat": {
+          "mentionPatterns": ["@q"]
+        }
+      },
+      {
+        "id": "snappy",
+        "skills": [],
+        "fastModeDefault": true,
+        "thinkingDefault": "off"
       }
     ]
   },
+
   "cron": {
     "enabled": true,
     "maxConcurrentRuns": 1,
@@ -79,11 +95,14 @@
       "keepLines": 10000
     }
   },
+
   "commands": {
     "config": true,
     "mcp": true,
-    "plugins": true
+    "plugins": true,
+    "model": true
   },
+
   "mcp": {
     "servers": {
       "victoria-logs": {
@@ -92,6 +111,7 @@
       }
     }
   },
+
   "plugins": {
     "allow": [
       "ollama",
@@ -99,10 +119,14 @@
       "active-memory",
       "telegram",
       "browser",
-      "memory-wiki"
+      "memory-wiki",
+      "codex"
     ],
     "deny": [],
     "entries": {
+      "codex": {
+        "enabled": true
+      },
       "memory-core": {
         "config": {
           "dreaming": {
@@ -167,11 +191,13 @@
       }
     }
   },
+
   "tools": {
     "deny": [
       "canvas"
     ]
   },
+
   "channels": {
     "discord": {
       "enabled": false
@@ -191,6 +217,7 @@
       "enabled": false
     }
   },
+
   "browser": {
     "enabled": true,
     "ssrfPolicy": {
@@ -203,5 +230,30 @@
         "color": "#4285F4"
       }
     }
+  },
+
+  "auth": {
+    "profiles": {
+      "openai-codex:default": {
+        "provider": "openai-codex",
+        "mode": "oauth"
+      }
+    },
+    "order": {
+      "openai-codex": ["openai-codex:default"]
+    }
+  },
+
+  "env": {
+    "shellEnv": {
+      "enabled": true
+    }
+  },
+
+  "logging": {
+    "level": "info",
+    "consoleLevel": "info",
+    "consoleStyle": "pretty",
+    "redactSensitive": "tools"
   }
 }
