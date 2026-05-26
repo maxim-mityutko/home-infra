@@ -99,8 +99,7 @@
   "commands": {
     "config": true,
     "mcp": true,
-    "plugins": true,
-    "model": true
+    "plugins": true
   },
 
   "mcp": {
