@@ -7,7 +7,7 @@ helmCharts:
   - name: victoria-logs-single
     namespace: monitoring
     releaseName: vl-single
-    version: 0.12.4
+    version: 0.12.5
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
       serviceAccount:
