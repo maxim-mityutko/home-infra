@@ -205,16 +205,6 @@
     ]
   },
 
-  "accessGroups": {
-    "owners": {
-      "type": "message.senders",
-      "members": {
-        "discord": ["discord:${DISCORD_OWNER_ID}"],
-        "telegram": ["${TELEGRAM_OWNER_ID}"]
-      }
-    }
-  },
-
   "channels": {
     "discord": {
       "enabled": true,
@@ -224,13 +214,13 @@
         "id": "DISCORD_BOT_TOKEN"
       },
       "dmPolicy": "allowlist",
-      "allowFrom": ["accessGroup:owners"],
+      "allowFrom": ["${DISCORD_OWNER_ID}"],
       "groupPolicy": "allowlist",
       "guilds": {
         "${DISCORD_SERVER_ID}": {
           "requireMention": true,
           "ignoreOtherMentions": true,
-          "users": ["accessGroup:owners"]
+          "users": ["${DISCORD_OWNER_ID}"]
         }
       }
     },
@@ -240,9 +230,9 @@
     "telegram": {
       "enabled": true,
       "dmPolicy": "allowlist",
-      "allowFrom": ["accessGroup:owners"],
+      "allowFrom": ["${TELEGRAM_OWNER_ID}"],
       "groupPolicy": "allowlist",
-      "groupAllowFrom": ["accessGroup:owners"],
+      "groupAllowFrom": ["${TELEGRAM_OWNER_ID}"],
       "groups": { 
         "*": { 
           "requireMention": true
