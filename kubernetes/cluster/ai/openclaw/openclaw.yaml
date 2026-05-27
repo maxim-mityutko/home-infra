@@ -36,7 +36,7 @@ spec:
       labels:
         app.kubernetes.io/name: openclaw
     spec:
-      serviceAccountName: openclaw-kubectl
+      serviceAccountName: openclaw
       automountServiceAccountToken: false
       securityContext:
         fsGroup: 1000
@@ -96,8 +96,7 @@ spec:
       containers:
         - name: gateway
           # Using custom image with baked in dependencies
-          image: ghcr.io/maxim-mityutko/openclaw-docker@sha256:9a8ef18d75a48fe78479828e9c0f5d2d09ce10841997a48bb2336c7095c4fa79
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/maxim-mityutko/openclaw-docker:v2026.5.26.0
           command:
             - node
             - /app/dist/index.js
