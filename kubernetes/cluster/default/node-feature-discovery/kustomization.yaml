@@ -28,13 +28,14 @@ kind: Kustomization
 namespace: kube-system
 resources:
   # CRDs
-  - https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/refs/tags/v0.18.2/deployment/helm/node-feature-discovery/crds/nfd-api-crds.yaml
+  # - https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/refs/tags/v0.18.3/deployment/helm/node-feature-discovery/crds/nfd-api-crds.yaml
 helmCharts:
   - name: node-feature-discovery
     namespace: kube-system
     releaseName: node-feature-discovery
     version: 0.18.3
     repo: https://kubernetes-sigs.github.io/node-feature-discovery/charts
+    includeCRDs: true
     valuesInline:
       featureGates:
         NodeFeatureAPI: true
