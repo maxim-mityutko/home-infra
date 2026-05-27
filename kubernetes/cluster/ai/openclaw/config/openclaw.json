@@ -247,6 +247,16 @@
             "source": "env",
             "provider": "default",
             "id": "DISCORD_BOT_BENDER_TOKEN"
+          },
+          "dmPolicy": "allowlist",
+          "allowFrom": ["${DISCORD_OWNER_ID}"],
+          "groupPolicy": "allowlist",
+          "guilds": {
+            "${DISCORD_SERVER_ID}": {
+              "requireMention": true,
+              "ignoreOtherMentions": true,
+              "users": ["${DISCORD_OWNER_ID}"]
+            }
           }
         },
         "clamps": {
@@ -254,17 +264,17 @@
             "source": "env",
             "provider": "default",
             "id": "DISCORD_BOT_CLAMPS_TOKEN"
+          },
+          "dmPolicy": "allowlist",
+          "allowFrom": ["${DISCORD_OWNER_ID}"],
+          "groupPolicy": "allowlist",
+          "guilds": {
+            "${DISCORD_SERVER_ID}": {
+              "requireMention": true,
+              "ignoreOtherMentions": true,
+              "users": ["${DISCORD_OWNER_ID}"]
+            }
           }
-        }
-      },
-      "dmPolicy": "allowlist",
-      "allowFrom": ["${DISCORD_OWNER_ID}"],
-      "groupPolicy": "allowlist",
-      "guilds": {
-        "${DISCORD_SERVER_ID}": {
-          "requireMention": true,
-          "ignoreOtherMentions": true,
-          "users": ["${DISCORD_OWNER_ID}"]
         }
       }
     },
