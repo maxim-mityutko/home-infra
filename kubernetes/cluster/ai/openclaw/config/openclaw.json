@@ -106,6 +106,23 @@
     ]
   },
 
+  "bindings": [
+    {
+      "agentId": "default",
+      "match": {
+        "channel": "discord",
+        "accountId": "bender"
+      }
+    },
+    {
+      "agentId": "fast",
+      "match": {
+        "channel": "discord",
+        "accountId": "clamps"
+      }
+    }
+  ],
+
   "cron": {
     "enabled": true,
     "maxConcurrentRuns": 1,
