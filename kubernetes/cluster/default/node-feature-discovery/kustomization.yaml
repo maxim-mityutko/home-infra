@@ -76,6 +76,7 @@ helmCharts:
         enable: true
         config:
           core:
+            sleepInterval: 30m
             featureSources:
               - all
               - -system
