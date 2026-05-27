@@ -213,8 +213,16 @@
         "provider": "default",
         "id": "DISCORD_BOT_TOKEN"
       },
-      "dmPolicy": "pairing",
-      "guilds": {}
+      "dmPolicy": "allowlist",
+      "allowFrom": ["${DISCORD_USER_ID}"],
+      "groupPolicy": "allowlist",
+      "guilds": {
+        "${DISCORD_SERVER_ID}": {
+          "requireMention": true,
+          "ignoreOtherMentions": true,
+          "users": ["${DISCORD_USER_ID}"]
+        }
+      }
     },
     "whatsapp": {
       "enabled": false
