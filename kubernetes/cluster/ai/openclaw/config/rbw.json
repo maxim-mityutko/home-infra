@@ -1,0 +1,12 @@
+{
+  "email": "${BITWARDEN_USER_EMAIL}",
+  "sso_id": null,
+  "base_url": "${BITWARDEN_BASE_URL}",
+  "identity_url": null,
+  "ui_url": null,
+  "notifications_url": null,
+  "lock_timeout": 3600,
+  "sync_interval": 300,
+  "pinentry": "/usr/local/bin/rbw_master_password_from_env.py",
+  "client_cert_path": null
+}

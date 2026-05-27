@@ -1,0 +1,344 @@
+{
+  "gateway": {
+    "mode": "local",
+    "bind": "lan",
+    "port": 18789,
+    "trustedProxies": [
+      "10.1.0.0/16"
+    ],
+    "auth": {
+      "mode": "trusted-proxy",
+      "trustedProxy": {
+        "userHeader": "x-authentik-email",
+        "requiredHeaders": ["x-authentik-uid"]
+      },
+      "password": "${OPENCLAW_GATEWAY_PASSWORD}"
+    },
+    "controlUi": {
+      "enabled": true,
+      "allowedOrigins": [
+        "https://openclaw.brhd.io"
+      ],
+      "dangerouslyDisableDeviceAuth": true
+    }
+  },
+
+  "models": {
+    "providers": {
+      "ollama": {
+        "baseUrl": "https://ollama.com",
+        "apiKey": "OLLAMA_API_KEY",
+        "api": "ollama",
+        "timeoutSeconds": 300,
+        "models": [
+          {
+            "id": "gemma4:31b-cloud",
+            "name": "gemma4:31b-cloud",
+            "reasoning": true
+          },
+          {
+            "id": "minimax-m2.7:cloud",
+            "name": "minimax-m2.7:cloud",
+            "reasoning": true
+          },
+          {
+            "id": "kimi-k2.6:cloud",
+            "name": "kimi-k2.6:cloud",
+            "reasoning": true
+          }
+        ]
+      }
+    }
+  },
+
+  "agents": {
+    "defaults": {
+      "workspace": "~/.openclaw/workspace",
+      "userTimezone": "Europe/Amsterdam",
+      "thinkingDefault": "medium",
+      "reasoningDefault": "off",
+      "model": {
+        "primary": "openai/gpt-5.5",
+        "fallbacks": [
+          "ollama/minimax-m2.7:cloud",
+          "ollama/kimi-k2.6:cloud",
+          "ollama/gemma4:31b-cloud",
+          "ollama/gemini-3-flash-preview:cloud"
+        ]
+      }
+    },
+    "list": [
+      {
+        "id": "default",
+        "default": true,
+        "identity": {
+          "name": "Bender"
+        },
+        "groupChat": {
+          "mentionPatterns": ["@bender", "Bender"]
+        }
+      },
+      {
+        "id": "fast",
+        "workspace": "~/.openclaw/agents/fast/workspace",
+        "identity": {
+          "name": "Clamps"
+        },
+        "groupChat": {
+          "mentionPatterns": ["@clamps", "Clamps"]
+        },
+        "skills": [],
+        "model": "ollama/minimax-m2.7:cloud",
+        "fastModeDefault": true,
+        "thinkingDefault": "off"
+      },
+      {
+        "id": "small",
+        "workspace": "~/.openclaw/agents/small/workspace",
+        "identity": {
+          "name": "Tinny Tim"
+        },
+        "groupChat": {
+          "mentionPatterns": ["@tinny"]
+        },
+        "skills": [],
+        "model": "ollama/gemini-3-flash-preview:cloud",
+        "thinkingDefault": "off"
+      }
+    ]
+  },
+
+  "bindings": [
+    {
+      "agentId": "default",
+      "match": {
+        "channel": "discord",
+        "accountId": "bender"
+      }
+    },
+    {
+      "agentId": "fast",
+      "match": {
+        "channel": "discord",
+        "accountId": "clamps"
+      }
+    }
+  ],
+
+  "cron": {
+    "enabled": true,
+    "maxConcurrentRuns": 1,
+    "sessionRetention": "24h",
+    "runLog": {
+      "maxBytes": "5mb",
+      "keepLines": 10000
+    }
+  },
+
+  "commands": {
+    "config": true,
+    "mcp": true,
+    "plugins": true
+  },
+
+  "mcp": {
+    "servers": {
+      "victoria-logs": {
+        "url": "https://mcp.vl.brhd.io/mcp",
+        "transport": "streamable-http"
+      }
+    }
+  },
+
+  "plugins": {
+    "load": {
+      "paths": ["/app/custom/extensions"]
+    },
+    "allow": [
+      "ollama",
+      "memory-core",
+      "active-memory",
+      "telegram",
+      "browser",
+      "memory-wiki",
+      "codex",
+      "discord"
+    ],
+    "deny": [],
+    "entries": {
+      "codex": {
+        "enabled": true
+      },
+      "memory-core": {
+        "config": {
+          "dreaming": {
+            "enabled": true
+          }
+        }
+      },
+      "active-memory": {
+        "enabled": true,
+        "config": {
+          "enabled": true,
+          "agents": ["default"],
+          "allowedChatTypes": ["direct"],
+          "queryMode": "recent",
+          "promptStyle": "balanced",
+          "persistTranscripts": false,
+          "logging": true,
+          "timeoutMs": 15000,
+          "maxSummaryChars": 220
+        }
+      },
+      "memory-wiki": {
+        "enabled": true,
+        "config": {
+          "vaultMode": "isolated",
+          "vault": {
+            "path": "~/.openclaw/wiki/main",
+            "renderMode": "obsidian"
+          },
+          "obsidian": {
+            "enabled": true,
+            "useOfficialCli": false,
+            "vaultName": "OpenClaw Wiki",
+            "openAfterWrites": false
+          },
+          "bridge": {
+            "enabled": false,
+            "readMemoryArtifacts": true,
+            "indexDreamReports": true,
+            "indexDailyNotes": true,
+            "indexMemoryRoot": true,
+            "followMemoryEvents": true
+          },
+          "ingest": {
+            "autoCompile": true,
+            "maxConcurrentJobs": 1,
+            "allowUrlIngest": true
+          },
+          "search": {
+            "backend": "shared",
+            "corpus": "wiki"
+          },
+          "context": {
+            "includeCompiledDigestPrompt": false
+          },
+          "render": {
+            "preserveHumanBlocks": true,
+            "createBacklinks": true,
+            "createDashboards": false
+          }
+        }
+      }
+    }
+  },
+
+  "tools": {
+    "deny": [
+      "canvas"
+    ]
+  },
+
+  "channels": {
+    "discord": {
+      "enabled": true,
+      "accounts": {
+        "bender": {
+          "token": {
+            "source": "env",
+            "provider": "default",
+            "id": "DISCORD_BOT_BENDER_TOKEN"
+          },
+          "dmPolicy": "allowlist",
+          "allowFrom": ["${DISCORD_OWNER_ID}"],
+          "groupPolicy": "allowlist",
+          "guilds": {
+            "${DISCORD_SERVER_ID}": {
+              "requireMention": true,
+              "ignoreOtherMentions": true,
+              "users": ["${DISCORD_OWNER_ID}"]
+            }
+          }
+        },
+        "clamps": {
+          "token": {
+            "source": "env",
+            "provider": "default",
+            "id": "DISCORD_BOT_CLAMPS_TOKEN"
+          },
+          "dmPolicy": "allowlist",
+          "allowFrom": ["${DISCORD_OWNER_ID}"],
+          "groupPolicy": "allowlist",
+          "guilds": {
+            "${DISCORD_SERVER_ID}": {
+              "requireMention": true,
+              "ignoreOtherMentions": true,
+              "users": ["${DISCORD_OWNER_ID}"]
+            }
+          }
+        }
+      }
+    },
+    "whatsapp": {
+      "enabled": false
+    },
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "allowFrom": ["${TELEGRAM_OWNER_ID}"],
+      "groupPolicy": "allowlist",
+      "groupAllowFrom": ["${TELEGRAM_OWNER_ID}"],
+      "groups": { 
+        "*": { 
+          "requireMention": true
+        } 
+      }
+    },
+    "slack": {
+      "enabled": false
+    },
+    "signal": {
+      "enabled": false
+    }
+  },
+
+  "browser": {
+    "enabled": true,
+    "ssrfPolicy": {
+      "dangerouslyAllowPrivateNetwork": true
+    },
+    "defaultProfile": "browserless",
+    "profiles": {
+      "browserless": {
+        "cdpUrl": "ws://browserless.ai.svc.cluster.local.:3000?token=${BROWSERLESS_API_KEY}&timeout=600000",
+        "color": "#4285F4"
+      }
+    }
+  },
+
+  "auth": {
+    "profiles": {
+      "openai-codex:default": {
+        "provider": "openai-codex",
+        "mode": "oauth"
+      }
+    },
+    "order": {
+      "openai-codex": ["openai-codex:default"]
+    }
+  },
+
+  "env": {
+    "shellEnv": {
+      "enabled": true
+    }
+  },
+
+  "logging": {
+    "level": "info",
+    "consoleLevel": "info",
+    "consoleStyle": "compact",
+    "redactSensitive": "tools"
+  }
+}

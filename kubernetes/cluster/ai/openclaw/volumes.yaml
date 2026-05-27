@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: openclaw-data
+  namespace: ai
+  labels:
+    app.kubernetes.io/name: openclaw
+spec:
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 10G
