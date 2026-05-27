@@ -49,8 +49,10 @@ spec:
             - sh
             - -c
             - |
-              cp /config/openclaw.json "${OPENCLAW_CONFIG_DIR}/openclaw.json"
-              echo "Copied /config/openclaw.json to ${OPENCLAW_CONFIG_DIR}/openclaw.json"
+              sed \
+                -e "s|\${DISCORD_SERVER_ID}|${DISCORD_SERVER_ID}|g" \
+                /config/openclaw.json > "${OPENCLAW_CONFIG_DIR}/openclaw.json"
+              echo "Rendered ${OPENCLAW_CONFIG_DIR}/openclaw.json"
 
               mkdir -p "${OPENCLAW_CONFIG_DIR}/workspace"
               cp /config/AGENTS.md "${OPENCLAW_CONFIG_DIR}/workspace/AGENTS.md"
