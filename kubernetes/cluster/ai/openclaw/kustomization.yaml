@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: ai
 resources:
   - volumes.yaml
+  - rbac.yaml
   - openclaw.yaml
   - secret.yaml
   - ingress.yaml

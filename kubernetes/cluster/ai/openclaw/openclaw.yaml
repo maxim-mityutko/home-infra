@@ -36,6 +36,7 @@ spec:
       labels:
         app.kubernetes.io/name: openclaw
     spec:
+      serviceAccountName: openclaw-kubectl
       automountServiceAccountToken: false
       securityContext:
         fsGroup: 1000
@@ -95,7 +96,7 @@ spec:
       containers:
         - name: gateway
           # Using custom image with baked in dependencies
-          image: ghcr.io/maxim-mityutko/openclaw-docker:v2026.5.22.1
+          image: ghcr.io/maxim-mityutko/openclaw-docker@sha256:9a8ef18d75a48fe78479828e9c0f5d2d09ce10841997a48bb2336c7095c4fa79
           imagePullPolicy: IfNotPresent
           command:
             - node
@@ -141,6 +142,9 @@ spec:
               mountPath: /home/node/.openclaw
             - name: openclaw-temp
               mountPath: /tmp
+            - name: kube-api-access
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+              readOnly: true
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -164,6 +168,24 @@ spec:
         - name: rbw-config-template
           configMap:
             name: rbw-config
+        - name: kube-api-access
+          projected:
+            defaultMode: 0444
+            sources:
+              - serviceAccountToken:
+                  path: token
+                  expirationSeconds: 3600
+              - configMap:
+                  name: kube-root-ca.crt
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
+              - downwardAPI:
+                  items:
+                    - path: namespace
+                      fieldRef:
+                        apiVersion: v1
+                        fieldPath: metadata.namespace
 ---
 apiVersion: v1
 kind: ConfigMap
