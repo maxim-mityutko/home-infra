@@ -80,6 +80,7 @@
       },
       {
         "id": "fast",
+        "workspace": "~/.openclaw/agents/fast/workspace",
         "identity": {
           "name": "Clamps"
         },
@@ -93,6 +94,7 @@
       },
       {
         "id": "small",
+        "workspace": "~/.openclaw/agents/small/workspace",
         "identity": {
           "name": "Tinny Tim"
         },
