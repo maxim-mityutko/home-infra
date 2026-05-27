@@ -83,6 +83,9 @@
         "identity": {
           "name": "Clamps"
         },
+        "groupChat": {
+          "mentionPatterns": ["@clamps"]
+        },
         "skills": [],
         "model": "ollama/minimax-m2.7:cloud",
         "fastModeDefault": true,
