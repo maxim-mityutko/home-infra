@@ -214,13 +214,13 @@
         "id": "DISCORD_BOT_TOKEN"
       },
       "dmPolicy": "allowlist",
-      "allowFrom": ["${DISCORD_USER_ID}"],
+      "allowFrom": ["${DISCORD_OWNER_ID}"],
       "groupPolicy": "allowlist",
       "guilds": {
         "${DISCORD_SERVER_ID}": {
           "requireMention": true,
           "ignoreOtherMentions": true,
-          "users": ["${DISCORD_USER_ID}"]
+          "users": ["${DISCORD_OWNER_ID}"]
         }
       }
     },
@@ -229,8 +229,15 @@
     },
     "telegram": {
       "enabled": true,
-      "dmPolicy": "pairing",
-      "groups": { "*": { "requireMention": true } }
+      "dmPolicy": "allowlist",
+      "allowFrom": ["${TELEGRAM_OWNER_ID}"],
+      "groupPolicy": "allowlist",
+      "groupAllowFrom": ["${TELEGRAM_OWNER_ID}"],
+      "groups": { 
+        "*": { 
+          "requireMention": true
+        } 
+      }
     },
     "slack": {
       "enabled": false
