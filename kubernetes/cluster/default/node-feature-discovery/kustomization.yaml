@@ -73,6 +73,21 @@ helmCharts:
       
       worker:
         enable: true
+        config: |
+          core:
+            featureSources:
+              - all
+              - -system
+              - -memory
+            labelSources:
+              - all
+              - -system
+              - -memory
+          sources:
+            cpu:
+              cpuid:
+                attributeWhitelist:
+                  - HYPERVISOR
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
