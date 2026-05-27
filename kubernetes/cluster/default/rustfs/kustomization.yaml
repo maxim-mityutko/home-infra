@@ -9,7 +9,7 @@ helmCharts:
   - name: rustfs
     namespace: rustfs
     releaseName: rustfs
-    version: 0.1.0
+    version: 0.5.0
     repo: https://charts.rustfs.com/
     valuesInline:
       replicaCount: 1
@@ -32,8 +32,8 @@ helmCharts:
           address: ":9000"
           console_enable: "true"
           console_address: ":9001"
-          log_level: "info"
-          rust_log: "info"
+          log_level: "warn"
+          rust_log: "warn"
           region: "eu-west-1"
           obs_log_directory: "/logs"
           obs_environment: "develop"

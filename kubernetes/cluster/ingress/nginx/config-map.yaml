@@ -6,7 +6,9 @@ metadata:
   namespace: ingress
 data:
   # Ref: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
-  
+  # TODO: enable if ingress logs produce too much load on log collector
+  # disable-access-log: "true"
+  # error-log-level: warn
   # Required for Authentik
   # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#allow-snippet-annotations
   allow-snippet-annotations: "true"

@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cmd-params-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cmd-params-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  controller.log.level: "warn"
+  server.log.level: "warn"
+  reposerver.log.level: "warn"
+  dexserver.log.level: "warn"
+  applicationsetcontroller.log.level: "warn"
+  notificationscontroller.log.level: "warn"
+  commitserver.log.level: "warn"
