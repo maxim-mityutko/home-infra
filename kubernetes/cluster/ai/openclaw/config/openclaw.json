@@ -98,7 +98,7 @@
         },
         "skills": [],
         "model": "ollama/gemini-3-flash-preview:cloud",
-        "thinkingDefault": "off"        
+        "thinkingDefault": "off"
       }
     ]
   },
