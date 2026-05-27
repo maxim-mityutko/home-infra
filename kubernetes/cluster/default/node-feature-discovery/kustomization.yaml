@@ -74,7 +74,7 @@ helmCharts:
       
       worker:
         enable: true
-        config: |
+        config: >-
           core:
             featureSources:
               - all
