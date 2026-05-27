@@ -227,7 +227,7 @@
       "allowFrom": ["accessGroup:owners"],
       "groupPolicy": "allowlist",
       "guilds": {
-        "${DISCORD_SERVER_ID}": {
+        "*": {
           "requireMention": true,
           "ignoreOtherMentions": true,
           "users": ["accessGroup:owners"]
