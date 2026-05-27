@@ -235,7 +235,7 @@
         "clamps": {
           "token": {
             "source": "env",
-            "provider": "fast",
+            "provider": "default",
             "id": "DISCORD_BOT_CLAMPS_TOKEN"
           }
         }
