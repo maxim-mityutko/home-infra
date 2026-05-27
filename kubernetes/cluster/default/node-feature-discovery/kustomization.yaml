@@ -80,10 +80,12 @@ helmCharts:
               - all
               - -system
               - -memory
+              - -usb
             labelSources:
               - all
               - -system
               - -memory
+              - -usb
           sources:
             cpu:
               cpuid:
