@@ -62,7 +62,8 @@
         "fallbacks": [
           "ollama/minimax-m2.7:cloud",
           "ollama/kimi-k2.6:cloud",
-          "ollama/gemma4:31b-cloud"
+          "ollama/gemma4:31b-cloud",
+          "ollama/gemini-3-flash-preview:cloud"
         ]
       }
     },
@@ -86,6 +87,18 @@
         "model": "ollama/minimax-m2.7:cloud",
         "fastModeDefault": true,
         "thinkingDefault": "off"
+      },
+      {
+        "id": "small",
+        "identity": {
+          "name": "Tinny Tim"
+        },
+        "groupChat": {
+          "mentionPatterns": ["@tinny"]
+        },
+        "skills": [],
+        "model": "ollama/gemini-3-flash-preview:cloud",
+        "thinkingDefault": "off"        
       }
     ]
   },
