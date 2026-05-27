@@ -75,7 +75,7 @@
           "name": "Bender"
         },
         "groupChat": {
-          "mentionPatterns": ["@bender"]
+          "mentionPatterns": ["@bender", "Bender"]
         }
       },
       {
@@ -84,7 +84,7 @@
           "name": "Clamps"
         },
         "groupChat": {
-          "mentionPatterns": ["@clamps"]
+          "mentionPatterns": ["@clamps", "Clamps"]
         },
         "skills": [],
         "model": "ollama/minimax-m2.7:cloud",
