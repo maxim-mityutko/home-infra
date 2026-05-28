@@ -7,6 +7,6 @@
   "notifications_url": null,
   "lock_timeout": 3600,
   "sync_interval": 300,
-  "pinentry": "/usr/local/bin/rbw_master_password_from_env.py",
+  "pinentry": "/usr/local/bin/pinentry.py",
   "client_cert_path": null
 }

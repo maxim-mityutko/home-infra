@@ -59,13 +59,13 @@ spec:
               cp /config/AGENTS.md "${OPENCLAW_CONFIG_DIR}/workspace/AGENTS.md"
               echo "Copied /config/AGENTS.md to ${OPENCLAW_CONFIG_DIR}/workspace/AGENTS.md"
 
-              mkdir -p "${OPENCLAW_CONFIG_DIR}/workspace/.config/rbw"
+              mkdir -p "${HOME}/.config/rbw"
               sed \
                 -e "s|\${BITWARDEN_USER_EMAIL}|${BITWARDEN_USER_EMAIL}|g" \
                 -e "s|\${BITWARDEN_BASE_URL}|${BITWARDEN_BASE_URL}|g" \
-                /config/rbw.json > "${OPENCLAW_CONFIG_DIR}/workspace/.config/rbw/config.json"
-              chmod a=r "${OPENCLAW_CONFIG_DIR}/workspace/.config/rbw/config.json"
-              echo "Rendered ${OPENCLAW_CONFIG_DIR}/workspace/.config/rbw/config.json"
+                /config/rbw.json > "${HOME}/.config/rbw/config.json"
+              chmod a=r "${HOME}/.config/rbw/config.json"
+              echo "Rendered ${HOME}/.config/rbw/config.json"
           envFrom:
             - configMapRef:
                 name: openclaw
@@ -82,8 +82,11 @@ spec:
               memory: 64Mi
               cpu: 100m
           volumeMounts:
+            - name: openclaw-home
+              mountPath: /home/node
             - name: openclaw-data
               mountPath: /home/node/.openclaw
+              
             - name: openclaw-config
               mountPath: /config/openclaw.json
               subPath: openclaw.json
@@ -137,6 +140,8 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
           volumeMounts:
+            - name: openclaw-home
+              mountPath: /home/node
             - name: openclaw-data
               mountPath: /home/node/.openclaw
             - name: openclaw-temp
@@ -156,6 +161,8 @@ spec:
       nodeSelector:
         beta.kubernetes.io/arch: amd64
       volumes:
+        - name: openclaw-home
+          emptyDir: {}
         - name: openclaw-data
           persistentVolumeClaim:
             claimName: openclaw-data
