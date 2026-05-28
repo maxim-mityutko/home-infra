@@ -55,10 +55,6 @@ spec:
                 /config/openclaw.json > "${OPENCLAW_CONFIG_DIR}/openclaw.json"
               echo "Rendered ${OPENCLAW_CONFIG_DIR}/openclaw.json"
 
-              mkdir -p "${OPENCLAW_CONFIG_DIR}/workspace"
-              cp /config/AGENTS.md "${OPENCLAW_CONFIG_DIR}/workspace/AGENTS.md"
-              echo "Copied /config/AGENTS.md to ${OPENCLAW_CONFIG_DIR}/workspace/AGENTS.md"
-
               mkdir -p "${HOME}/.config/rbw"
               sed \
                 -e "s|\${BITWARDEN_USER_EMAIL}|${BITWARDEN_USER_EMAIL}|g" \
@@ -90,16 +86,13 @@ spec:
             - name: openclaw-config
               mountPath: /config/openclaw.json
               subPath: openclaw.json
-            - name: openclaw-config
-              mountPath: /config/AGENTS.md
-              subPath: AGENTS.md
             - name: rbw-config-template
               mountPath: /config/rbw.json
               subPath: rbw.json
       containers:
         - name: gateway
           # Using custom image with baked in dependencies
-          image: ghcr.io/maxim-mityutko/openclaw-docker:v2026.5.27.0
+          image: ghcr.io/maxim-mityutko/openclaw-docker@sha256:f1910bc1847584a753483d2cf7b17a79fedfaf948712ad25c6e21a240895a646
           command:
             - node
             - /app/dist/index.js
