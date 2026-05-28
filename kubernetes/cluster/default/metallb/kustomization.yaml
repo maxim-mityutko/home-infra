@@ -10,7 +10,7 @@ helmCharts:
   - name: metallb
     namespace: metallb-system
     releaseName: metallb
-    version: 0.16.0
+    version: 0.16.1
     repo: https://metallb.github.io/metallb
     valuesInline:
       rbac:
