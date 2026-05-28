@@ -87,7 +87,7 @@
         "groupChat": {
           "mentionPatterns": ["@clamps", "Clamps"]
         },
-        "skills": [],
+        "skills": ["bitwarden", "github-app-token"],
         "model": "ollama/minimax-m2.7:cloud",
         "fastModeDefault": true,
         "thinkingDefault": "off"
@@ -231,6 +231,12 @@
           }
         }
       }
+    }
+  },
+
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/custom/skills"]
     }
   },
 
