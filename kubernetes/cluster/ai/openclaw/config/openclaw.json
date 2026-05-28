@@ -138,7 +138,8 @@
   "commands": {
     "config": true,
     "mcp": true,
-    "plugins": true
+    "plugins": true,
+    "native": true
   },
 
   "mcp": {
@@ -249,6 +250,9 @@
   "channels": {
     "discord": {
       "enabled": true,
+      "commands": {
+        "native": true
+      },
       "accounts": {
         "bender": {
           "token": {
