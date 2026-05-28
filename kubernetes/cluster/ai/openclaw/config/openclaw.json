@@ -53,7 +53,7 @@
 
   "agents": {
     "defaults": {
-      "workspace": "~/.openclaw/workspace",
+      "workspace": "~/.openclaw/workspace/default",
       "userTimezone": "Europe/Amsterdam",
       "thinkingDefault": "medium",
       "reasoningDefault": "off",
@@ -61,7 +61,6 @@
         "primary": "openai/gpt-5.5",
         "fallbacks": [
           "ollama/minimax-m2.7:cloud",
-          "ollama/kimi-k2.6:cloud",
           "ollama/gemma4:31b-cloud",
           "ollama/gemini-3-flash-preview:cloud"
         ]
@@ -69,7 +68,8 @@
     },
     "list": [
       {
-        "id": "default",
+        "id": "main",
+        "workspace": "~/.openclaw/workspace/bender",
         "default": true,
         "identity": {
           "name": "Bender"
@@ -80,7 +80,7 @@
       },
       {
         "id": "fast",
-        "workspace": "~/.openclaw/agents/fast/workspace",
+        "workspace": "~/.openclaw/workspace/clamps",
         "identity": {
           "name": "Clamps"
         },
@@ -94,7 +94,7 @@
       },
       {
         "id": "small",
-        "workspace": "~/.openclaw/agents/small/workspace",
+        "workspace": "~/.openclaw/workspace/tinny-tim",
         "identity": {
           "name": "Tinny Tim"
         },
@@ -110,7 +110,7 @@
 
   "bindings": [
     {
-      "agentId": "default",
+      "agentId": "main",
       "match": {
         "channel": "discord",
         "accountId": "bender"
@@ -180,7 +180,7 @@
         "enabled": true,
         "config": {
           "enabled": true,
-          "agents": ["default"],
+          "agents": ["main"],
           "allowedChatTypes": ["direct"],
           "queryMode": "recent",
           "promptStyle": "balanced",
