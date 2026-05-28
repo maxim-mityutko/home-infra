@@ -31,10 +31,9 @@ apprise:
       label: discord
   finish:
     title: ✅ SUCCESS
-    body: Database backups created successfully!
+    body: Database backups created successfully for HA and Vectorchord cluster!
   fail:
     title: ❌ FAILED
-    body: Database backups creation failed! Check container logs for details.
+    body: Database backups creation failed for HA and / or Vectorchord! Check container logs for details.
   states:
-    - finish
     - fail

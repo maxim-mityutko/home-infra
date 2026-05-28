@@ -65,5 +65,4 @@ apprise:
     title: ❌ FAILED
     body: Filesystem backup creation failed! Check container logs for details.
   states:
-    - finish
     - fail

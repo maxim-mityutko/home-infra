@@ -47,5 +47,4 @@ apprise:
     title: ❌ FAILED
     body: Database backups creation failed! Check container logs for details.
   states:
-    - finish
     - fail
