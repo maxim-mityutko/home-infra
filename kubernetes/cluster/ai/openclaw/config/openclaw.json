@@ -87,7 +87,7 @@
         "groupChat": {
           "mentionPatterns": ["@clamps", "Clamps"]
         },
-        // "skills": ["bitwarden", "github-app-token", "github"],
+        "skills": ["bitwarden", "github-app-token", "github"],
         "model": "ollama/minimax-m2.7:cloud",
         "fastModeDefault": true,
         "thinkingDefault": "off"
@@ -255,6 +255,7 @@
       },
       "accounts": {
         "bender": {
+          "applicationId": "${DISCORD_BOT_BENDER_APPLICATION_ID}",
           "token": {
             "source": "env",
             "provider": "default",
@@ -272,6 +273,7 @@
           }
         },
         "clamps": {
+          "applicationId": "${DISCORD_BOT_CLAMPS_APPLICATION_ID}",
           "token": {
             "source": "env",
             "provider": "default",
