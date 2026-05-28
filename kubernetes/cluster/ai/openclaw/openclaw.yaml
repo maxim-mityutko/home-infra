@@ -92,7 +92,7 @@ spec:
       containers:
         - name: gateway
           # Using custom image with baked in dependencies
-          image: ghcr.io/maxim-mityutko/openclaw-docker@sha256:f1910bc1847584a753483d2cf7b17a79fedfaf948712ad25c6e21a240895a646
+          image: ghcr.io/maxim-mityutko/openclaw-docker@sha256:592bbeb1210dd6a89eeac56d2fce63a5cad4456e49437c714b65f365278cb4f9
           command:
             - node
             - /app/dist/index.js
