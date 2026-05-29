@@ -50,24 +50,11 @@ spec:
             - app-server
             - --listen
             - ws://0.0.0.0:4500
-            - --ws-auth
-            - capability-token
-            - --ws-token-file
-            - /secrets/codex-app-server-token
-          ports:
-            - name: app-server
-              containerPort: 4500
-              protocol: TCP
           env:
-            - name: CODEX_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: codex
-                  key: CODEX_API_KEY
+            - name: CODEX_HOME
+              value: /home/codex/.codex
             - name: CODEX_FS_WORKSPACE_ROOT
               value: /workspace
-            - name: CODEX_WS_AUTH_TOKEN_FILE
-              value: /secrets/codex-app-server-token
           resources:
             requests:
               memory: 2Gi
@@ -92,11 +79,8 @@ spec:
           volumeMounts:
             - name: codex-workspace
               mountPath: /workspace
-            - name: codex-cache
-              mountPath: /root/.codex
-            - name: codex-secrets
-              mountPath: /secrets
-              readOnly: true
+            - name: codex-home
+              mountPath: /home/codex/.codex
             - name: kube-api-access
               mountPath: /var/run/secrets/kubernetes.io/serviceaccount
               readOnly: true
@@ -113,11 +97,9 @@ spec:
         - name: codex-workspace
           persistentVolumeClaim:
             claimName: codex-workspace
-        - name: codex-cache
-          emptyDir: {}
-        - name: codex-secrets
-          secret:
-            secretName: codex
+        - name: codex-home
+          persistentVolumeClaim:
+            claimName: codex-home
         - name: kube-api-access
           projected:
             defaultMode: 0444

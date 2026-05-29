@@ -14,3 +14,18 @@ spec:
   resources:
     requests:
       storage: 50G
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: codex-home
+  namespace: ai
+  labels:
+    app.kubernetes.io/name: codex
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 5G
