@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: codex
+  namespace: ai
+  labels:
+    app.kubernetes.io/name: codex
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: codex
+  labels:
+    app.kubernetes.io/name: codex
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - endpoints
+      - namespaces
+      - nodes
+      - pods
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+  - nonResourceURLs:
+      - /healthz
+      - /livez
+      - /readyz
+    verbs:
+      - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: codex
+  labels:
+    app.kubernetes.io/name: codex
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: codex
+subjects:
+  - kind: ServiceAccount
+    name: codex
+    namespace: ai

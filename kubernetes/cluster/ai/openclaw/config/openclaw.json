@@ -167,7 +167,15 @@
     "deny": [],
     "entries": {
       "codex": {
-        "enabled": true
+        "enabled": true,
+        "config": {
+          "appServer": {
+            "transport": "websocket",
+            "url": "ws://codex.ai.svc.cluster.local.:4500",
+            "authToken": "${CODEX_APP_SERVER_TOKEN}",
+            "requestTimeoutMs": 60000
+          }
+        }
       },
       "memory-core": {
         "config": {
