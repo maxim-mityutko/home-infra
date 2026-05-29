@@ -46,7 +46,8 @@ defined in the [/kubernetes/argocd](./kubernetes/argocd/).
 * [Compute Blade](https://computeblade.com):
   * Raspberry Pi CM4 8GB + WD Blue SN550 500GB
   * Raspberry Pi CM4 8GB + WD Red SN700 500GB
-  * Raspberry Pi CM-TBD x 2 (in reserve)
+  * Raspberry Pi CM5 8GB + Crucial P310 500GB
+  * Raspberry PI CM- x 1 (in reserve)
 * ProxMox VE Host (Sandbox):  
   * HP 800G2 Mini
     * CPU Intel i7-6700
