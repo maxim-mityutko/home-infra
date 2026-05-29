@@ -53,7 +53,7 @@ spec:
             - --ws-auth
             - capability-token
             - --ws-token-file
-            - /secrets/codex-access-token
+            - /secrets/CODEX_ACCESS_TOKEN
           env:
             - name: CODEX_HOME
               value: /home/codex/.codex

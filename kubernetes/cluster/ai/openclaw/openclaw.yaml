@@ -93,6 +93,9 @@ spec:
             - name: rbw-config-template
               mountPath: /config/rbw.json
               subPath: rbw.json
+            - name: codex-access
+              mountPath: /secrets
+              readOnly: true
       containers:
         - name: gateway
           # Using custom image with baked in dependencies
@@ -167,6 +170,9 @@ spec:
         - name: rbw-config-template
           configMap:
             name: rbw-config
+        - name: codex-access
+          secret:
+            secretName: codex-access
         - name: kube-api-access
           projected:
             defaultMode: 0444
