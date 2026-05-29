@@ -50,6 +50,10 @@ spec:
             - app-server
             - --listen
             - ws://0.0.0.0:4500
+            - --ws-auth
+            - capability-token
+            - --ws-token-file
+            - /secrets/codex-access-token
           env:
             - name: CODEX_HOME
               value: /home/codex/.codex
@@ -81,6 +85,9 @@ spec:
               mountPath: /workspace
             - name: codex-home
               mountPath: /home/codex/.codex
+            - name: codex-access
+              mountPath: /secrets
+              readOnly: true
             - name: kube-api-access
               mountPath: /var/run/secrets/kubernetes.io/serviceaccount
               readOnly: true
@@ -100,6 +107,9 @@ spec:
         - name: codex-home
           persistentVolumeClaim:
             claimName: codex-home
+        - name: codex-access
+          secret:
+            secretName: codex-access
         - name: kube-api-access
           projected:
             defaultMode: 0444

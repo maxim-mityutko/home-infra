@@ -172,6 +172,7 @@
           "appServer": {
             "transport": "websocket",
             "url": "ws://codex.ai.svc.cluster.local.:4500",
+            "authToken": "${CODEX_ACCESS_TOKEN}",
             "requestTimeoutMs": 60000
           }
         }

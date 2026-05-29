@@ -4,4 +4,6 @@ namespace: ai
 resources:
   - volumes.yaml
   - rbac.yaml
+  - network-policy.yaml
   - codex.yaml
+  - secret.yaml
