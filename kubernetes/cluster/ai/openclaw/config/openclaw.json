@@ -122,6 +122,13 @@
         "channel": "discord",
         "accountId": "clamps"
       }
+    },
+    {
+      "agentId": "small",
+      "match": {
+        "channel": "discord",
+        "accountId": "tinny"
+      }
     }
   ],
 
@@ -278,6 +285,24 @@
             "source": "env",
             "provider": "default",
             "id": "DISCORD_BOT_CLAMPS_TOKEN"
+          },
+          "dmPolicy": "allowlist",
+          "allowFrom": ["${DISCORD_OWNER_ID}"],
+          "groupPolicy": "allowlist",
+          "guilds": {
+            "${DISCORD_SERVER_ID}": {
+              "requireMention": true,
+              "ignoreOtherMentions": true,
+              "users": ["${DISCORD_OWNER_ID}"]
+            }
+          }
+        },
+        "tinny": {
+          "applicationId": "${DISCORD_BOT_TINNY_APPLICATION_ID}",
+          "token": {
+            "source": "env",
+            "provider": "default",
+            "id": "DISCORD_BOT_TINNY_TOKEN"
           },
           "dmPolicy": "allowlist",
           "allowFrom": ["${DISCORD_OWNER_ID}"],
