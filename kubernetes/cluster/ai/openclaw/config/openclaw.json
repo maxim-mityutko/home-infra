@@ -53,7 +53,7 @@
 
   "agents": {
     "defaults": {
-      "workspace": "~/.openclaw/workspace",
+      "workspace": "~/.openclaw/workspace/default",
       "userTimezone": "Europe/Amsterdam",
       "thinkingDefault": "medium",
       "reasoningDefault": "off",
@@ -61,7 +61,6 @@
         "primary": "openai/gpt-5.5",
         "fallbacks": [
           "ollama/minimax-m2.7:cloud",
-          "ollama/kimi-k2.6:cloud",
           "ollama/gemma4:31b-cloud",
           "ollama/gemini-3-flash-preview:cloud"
         ]
@@ -69,7 +68,8 @@
     },
     "list": [
       {
-        "id": "default",
+        "id": "main",
+        "workspace": "~/.openclaw/workspace/bender",
         "default": true,
         "identity": {
           "name": "Bender"
@@ -80,21 +80,21 @@
       },
       {
         "id": "fast",
-        "workspace": "~/.openclaw/agents/fast/workspace",
+        "workspace": "~/.openclaw/workspace/clamps",
         "identity": {
           "name": "Clamps"
         },
         "groupChat": {
           "mentionPatterns": ["@clamps", "Clamps"]
         },
-        "skills": [],
+        "skills": ["bitwarden", "github-app-token", "github"],
         "model": "ollama/minimax-m2.7:cloud",
         "fastModeDefault": true,
         "thinkingDefault": "off"
       },
       {
         "id": "small",
-        "workspace": "~/.openclaw/agents/small/workspace",
+        "workspace": "~/.openclaw/workspace/tinny-tim",
         "identity": {
           "name": "Tinny Tim"
         },
@@ -110,7 +110,7 @@
 
   "bindings": [
     {
-      "agentId": "default",
+      "agentId": "main",
       "match": {
         "channel": "discord",
         "accountId": "bender"
@@ -138,7 +138,8 @@
   "commands": {
     "config": true,
     "mcp": true,
-    "plugins": true
+    "plugins": true,
+    "native": true
   },
 
   "mcp": {
@@ -188,7 +189,7 @@
         "enabled": true,
         "config": {
           "enabled": true,
-          "agents": ["default"],
+          "agents": ["main", "fast"],
           "allowedChatTypes": ["direct"],
           "queryMode": "recent",
           "promptStyle": "balanced",
@@ -242,6 +243,12 @@
     }
   },
 
+  "skills": {
+    "load": {
+      "extraDirs": ["/app/custom/skills"]
+    }
+  },
+
   "tools": {
     "deny": [
       "canvas"
@@ -251,8 +258,12 @@
   "channels": {
     "discord": {
       "enabled": true,
+      "commands": {
+        "native": true
+      },
       "accounts": {
         "bender": {
+          "applicationId": "${DISCORD_BOT_BENDER_APPLICATION_ID}",
           "token": {
             "source": "env",
             "provider": "default",
@@ -270,6 +281,7 @@
           }
         },
         "clamps": {
+          "applicationId": "${DISCORD_BOT_CLAMPS_APPLICATION_ID}",
           "token": {
             "source": "env",
             "provider": "default",
