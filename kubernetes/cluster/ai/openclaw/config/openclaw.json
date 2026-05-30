@@ -181,7 +181,7 @@
         "enabled": true,
         "config": {
           "enabled": true,
-          "agents": ["main"],
+          "agents": ["main", "fast"],
           "allowedChatTypes": ["direct"],
           "queryMode": "recent",
           "promptStyle": "balanced",
