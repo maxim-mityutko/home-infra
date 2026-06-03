@@ -147,6 +147,10 @@
       "victoria-logs": {
         "url": "https://mcp.vl.brhd.io/mcp",
         "transport": "streamable-http"
+      },
+      "victoria-metrics": {
+        "url": "https://mcp.vm.brhd.io/mcp",
+        "transport": "streamable-http"
       }
     }
   },

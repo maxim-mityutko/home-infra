@@ -287,6 +287,21 @@ services:
         logo: "https://cdn.brhd.io/cdn/icons/docker.svg"
         tag: "development"
         url: "https://hub.docker.com/repositories/beerhead"
+
+  - name: "AI"
+    icon: "fas fa-robot"
+    items:
+      - name: "Victoria Metrics - MCP"
+        tag: "ai"
+        logo: "https://cdn.brhd.io/cdn/icons/victoriametrics.svg"
+        url: "https://mcp.vm.brhd.io/"
+        target: "_blank"
+      - name: "Victoria Logs - MCP"
+        tag: "ai"
+        logo: "https://cdn.brhd.io/cdn/icons/victoriametrics.svg"
+        url: "https://mcp.vl.brhd.io/"
+        target: "_blank"
+
   - name: "Development"
     icon: "fas fa-archive"
     items:
