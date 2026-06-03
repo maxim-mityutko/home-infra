@@ -53,6 +53,10 @@ Use these conventions unless a nearby service has a stronger local pattern:
 - Split supporting concerns into clear files such as `ingress.yaml`,
   `volumes.yaml`, `secret.yaml`, `scaler.yaml`, `service-scrape.yaml`, and
   `dns-endpoint.yaml`.
+- Manage service-specific Grafana dashboards in the owning service directory
+  with a `dashboards/kustomization.yaml` ConfigMap generator, following
+  `kubernetes/cluster/default/cloudnative-pg/dashboards/`, instead of placing
+  service dashboards in the Victoria Metrics kustomization.
 - Use `revisionHistoryLimit: 1` for Deployments unless there is a reason not to.
 - Use explicit resource requests. Add limits where the existing service pattern
   or workload risk calls for them.
