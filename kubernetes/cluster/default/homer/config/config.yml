@@ -125,7 +125,7 @@ services:
         url: "https://vl.brhd.io/"
         target: "_blank"
       - name: "Victoria Logs - MCP"
-        tag: "monitoring"
+        tag: "ai"
         logo: "https://cdn.brhd.io/cdn/icons/victoriametrics.svg"
         url: "https://mcp.vl.brhd.io/"
         target: "_blank"
