@@ -1,0 +1,27 @@
+# Ref: https://github.com/samber/awesome-prometheus-alerts/blob/master/dist/rules/argocd/embedded-exporter.yml
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: argocd-rules
+  namespace: argocd
+spec:
+  groups:
+    - name: argocd.rules
+      rules:
+        - alert: ArgocdServiceNotSynced
+          expr: argocd_app_info{sync_status!="Synced"} != 0
+          for: 30m
+          labels:
+            severity: warning
+          annotations:
+            summary: ArgoCD application is not synced
+            description: "Application {{ $labels.name }} is currently not synced.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+        - alert: ArgocdServiceUnhealthy
+          expr: argocd_app_info{health_status!="Healthy"} != 0
+          for: 30m
+          labels:
+            severity: warning
+          annotations:
+            summary: ArgoCD application is unhealthy
+            description: "Application {{ $labels.name }} is currently unhealthy.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
