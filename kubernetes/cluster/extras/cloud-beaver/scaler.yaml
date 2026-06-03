@@ -20,6 +20,9 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: cloud-beaver-scaler
+  annotations:
+    # KEDA metrics API is disabled; HTTP add-on scalers report noisy HPAMetricsUnavailable.
+    argocd.argoproj.io/ignore-healthcheck: "true"
 spec:
   scaleTargetRef:
     name: cloud-beaver

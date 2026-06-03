@@ -122,3 +122,17 @@ helmCharts:
           cert_secret: keda-http-interceptor-tls
         pdb:
           enabled: false
+patches:
+  - target:
+      group: keda.sh
+      version: v1alpha1
+      kind: ScaledObject
+      name: keda-add-ons-http-interceptor
+    patch: |-
+      apiVersion: keda.sh/v1alpha1
+      kind: ScaledObject
+      metadata:
+        name: keda-add-ons-http-interceptor
+        annotations:
+          # KEDA metrics API is disabled; HTTP add-on scalers report noisy HPAMetricsUnavailable.
+          argocd.argoproj.io/ignore-healthcheck: "true"
