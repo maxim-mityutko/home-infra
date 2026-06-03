@@ -43,7 +43,11 @@ configMapGenerator:
   - name: dashboard-node-exporter-full
     files:
       - https://raw.githubusercontent.com/rfmoz/grafana-dashboards/refs/heads/master/prometheus/node-exporter-full.json
-  # - TODO: ArgoCD
+  # ArgoCD
+  # Ref: https://github.com/argoproj/argo-cd/blob/v3.3.0/examples/dashboard.json
+  - name: dashboard-argocd
+    files:
+      - https://raw.githubusercontent.com/argoproj/argo-cd/v3.3.0/examples/dashboard.json
   # - TODO: Longhorn
   - name: dashboard-hardware-monitor
     files:
