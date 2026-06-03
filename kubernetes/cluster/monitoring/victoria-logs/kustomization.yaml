@@ -142,69 +142,6 @@ helmCharts:
         limits:
           cpu: 100m
           memory: 100Mi
-  - name: victoria-logs-mcp
-    namespace: monitoring
-    releaseName: vl-mcp
-    version: 0.1.0
-    repo: https://victoriametrics.github.io/helm-charts/
-    valuesInline:
-      fullnameOverride: vl-mcp
-      env:
-        - name: MCP_LOG_LEVEL
-          value: warn
-      vl:
-        entrypoint: http://vl-single.monitoring.svc.cluster.local.:9428
-      mcp:
-        mode: http
-        disable:
-          tools: []
-          resources: false
-      service:
-        type: ClusterIP
-        port: 8080
-      serviceAccount:
-        create: true
-        automount: false
-      securityContext:
-        capabilities:
-          drop:
-          - ALL
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        runAsUser: 1000
-      resources:
-        requests:
-          cpu: 75m
-          memory: 75Mi
-        limits:
-          memory: 150Mi
-      ingress:
-        enabled: true
-        # TODO: tighten the security for the MCP server
-        annotations:
-          kubernetes.io/ingress.class: public
-          cert-manager.io/cluster-issuer: lets-encrypt
-        hosts:
-          - host: mcp.vl.brhd.io
-            paths:
-              - path: /
-                pathType: ImplementationSpecific
-        tls:
-          - secretName: mcp-vl-brhd-io-tls
-            hosts:
-              - mcp.vl.brhd.io
-      route:
-        enabled: false
-      livenessProbe:
-        initialDelaySeconds: 10
-        timeoutSeconds: 5
-        periodSeconds: 30
-      readinessProbe:
-        initialDelaySeconds: 10
-        timeoutSeconds: 5
-        periodSeconds: 30
-      scrape:
-        enabled: false
 patches:
   # Keep rendered workload history small. The charts do not expose this for
   # every workload, so patch the final manifests from Kustomize.
