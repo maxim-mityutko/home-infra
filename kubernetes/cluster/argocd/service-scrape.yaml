@@ -8,22 +8,10 @@ metadata:
 spec:
   endpoints:
     - port: metrics
-      interval: 300s
+      interval: 600s
   namespaceSelector:
     matchNames:
       - argocd
   selector:
-    matchExpressions:
-      - key: app.kubernetes.io/part-of
-        operator: In
-        values:
-          - argocd
-      - key: app.kubernetes.io/name
-        operator: In
-        values:
-          - argocd-applicationset-controller
-          - argocd-dex-server
-          - argocd-metrics
-          - argocd-notifications-controller-metrics
-          - argocd-repo-server
-          - argocd-server-metrics
+    matchLabels:
+      app.kubernetes.io/name: argocd-metrics
