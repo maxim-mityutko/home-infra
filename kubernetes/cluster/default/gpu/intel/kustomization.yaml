@@ -67,4 +67,5 @@ helmCharts:
         hub: registry.brhd.io/docker.io/intel
       nodeFeatureRule: true
       enableMonitoring: true
+      monitoringMode: split
       sharedDevNum: 10
