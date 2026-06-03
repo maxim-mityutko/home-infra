@@ -11,7 +11,7 @@ spec:
       rules:
         - alert: ArgocdServiceNotSynced
           expr: argocd_app_info{sync_status!="Synced"} != 0
-          for: 15m
+          for: 30m
           labels:
             severity: warning
           annotations:
@@ -19,7 +19,7 @@ spec:
             description: "Application {{ $labels.name }} is currently not synced.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
         - alert: ArgocdServiceUnhealthy
           expr: argocd_app_info{health_status!="Healthy"} != 0
-          for: 15m
+          for: 30m
           labels:
             severity: warning
           annotations:
