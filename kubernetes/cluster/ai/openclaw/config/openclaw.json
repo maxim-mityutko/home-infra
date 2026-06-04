@@ -310,7 +310,7 @@
         "enabled": false
       },
       "karakeep": {
-        "enabled": false
+        "enabled": true
       },
       "mcporter": {
         "enabled": false
@@ -319,6 +319,9 @@
         "enabled": false
       },
       "nano-pdf": {
+        "enabled": false
+      },
+      "notion": {
         "enabled": false
       },
       "obsidian": {
@@ -367,7 +370,7 @@
         "enabled": false
       },
       "vikunja": {
-        "enabled": false
+        "enabled": true
       },
       "voice-call": {
         "enabled": false
