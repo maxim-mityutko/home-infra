@@ -34,17 +34,20 @@
           {
             "id": "gemma4:31b-cloud",
             "name": "gemma4:31b-cloud",
-            "reasoning": true
+            "reasoning": true,
+            "input": ["text"]
           },
           {
             "id": "minimax-m2.7:cloud",
             "name": "minimax-m2.7:cloud",
-            "reasoning": true
+            "reasoning": true,
+            "input": ["text"]
           },
           {
             "id": "kimi-k2.6:cloud",
             "name": "kimi-k2.6:cloud",
-            "reasoning": true
+            "reasoning": true,
+            "input": ["text"]
           }
         ]
       }
@@ -167,7 +170,8 @@
       "browser",
       "memory-wiki",
       "codex",
-      "discord"
+      "discord",
+      "openai"
     ],
     "deny": [],
     "entries": {
@@ -179,7 +183,8 @@
           "dreaming": {
             "enabled": true
           }
-        }
+        },
+        "enabled": true
       },
       "active-memory": {
         "enabled": true,
@@ -235,16 +240,146 @@
             "createDashboards": false
           }
         }
+      },
+      "openai": {
+        "enabled": true
+      },
+      "ollama": {
+        "enabled": true
+      },
+      "browser": {
+        "enabled": true
       }
-    }
+    },
+    "bundledDiscovery": "compat"
   },
-
   "skills": {
     "load": {
       "extraDirs": ["/app/custom/skills"]
+    },
+    "entries": {
+      "1password": {
+        "enabled": false
+      },
+      "apple-notes": {
+        "enabled": false
+      },
+      "apple-reminders": {
+        "enabled": false
+      },
+      "bear-notes": {
+        "enabled": false
+      },
+      "blogwatcher": {
+        "enabled": false
+      },
+      "blucli": {
+        "enabled": false
+      },
+      "camsnap": {
+        "enabled": false
+      },
+      "clawhub": {
+        "enabled": false
+      },
+      "coding-agent": {
+        "enabled": false
+      },
+      "discord": {
+        "enabled": false
+      },
+      "eightctl": {
+        "enabled": false
+      },
+      "gemini": {
+        "enabled": false
+      },
+      "gifgrep": {
+        "enabled": false
+      },
+      "gog": {
+        "enabled": false
+      },
+      "goplaces": {
+        "enabled": false
+      },
+      "himalaya": {
+        "enabled": false
+      },
+      "imsg": {
+        "enabled": false
+      },
+      "karakeep": {
+        "enabled": false
+      },
+      "mcporter": {
+        "enabled": false
+      },
+      "model-usage": {
+        "enabled": false
+      },
+      "nano-pdf": {
+        "enabled": false
+      },
+      "obsidian": {
+        "enabled": false
+      },
+      "openai-whisper": {
+        "enabled": false
+      },
+      "openai-whisper-api": {
+        "enabled": false
+      },
+      "openhue": {
+        "enabled": false
+      },
+      "oracle": {
+        "enabled": false
+      },
+      "ordercli": {
+        "enabled": false
+      },
+      "peekaboo": {
+        "enabled": false
+      },
+      "sag": {
+        "enabled": false
+      },
+      "sherpa-onnx-tts": {
+        "enabled": false
+      },
+      "songsee": {
+        "enabled": false
+      },
+      "sonoscli": {
+        "enabled": false
+      },
+      "spotify-player": {
+        "enabled": false
+      },
+      "things-mac": {
+        "enabled": false
+      },
+      "tmux": {
+        "enabled": false
+      },
+      "trello": {
+        "enabled": false
+      },
+      "vikunja": {
+        "enabled": false
+      },
+      "voice-call": {
+        "enabled": false
+      },
+      "wacli": {
+        "enabled": false
+      },
+      "xurl": {
+        "enabled": false
+      }
     }
   },
-
   "tools": {
     "deny": [
       "canvas"
@@ -293,7 +428,8 @@
               "users": ["${DISCORD_OWNER_ID}"]
             }
           }
-        }
+        },
+        "default": {"groupPolicy": "allowlist"}
       }
     },
     "whatsapp": {
@@ -335,13 +471,13 @@
 
   "auth": {
     "profiles": {
-      "openai-codex:default": {
-        "provider": "openai-codex",
+      "openai:default": {
+        "provider": "openai",
         "mode": "oauth"
       }
     },
     "order": {
-      "openai-codex": ["openai-codex:default"]
+      "openai": ["openai:default"]
     }
   },
 
