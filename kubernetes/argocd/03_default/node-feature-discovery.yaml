@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: node-feature-discovery
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   destination:
     namespace: kube-system

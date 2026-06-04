@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: media
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   generators:
     - git:
@@ -10,11 +12,14 @@ spec:
         revision: main
         directories:
           - path: kubernetes/cluster/media/*
+          - path: kubernetes/cluster/media/x-media-shared
+            exclude: true
   template:
     metadata:
       name: "{{path.basename}}"
       annotations:
         argocd.argoproj.io/manifest-generate-paths: ".;.."
+        argocd.argoproj.io/sync-wave: "7"
       finalizers:
         - resources-finalizer.argocd.argoproj.io
       labels:

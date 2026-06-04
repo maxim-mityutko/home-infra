@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: invidious
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "9"
 spec:
   destination:
     name: ''

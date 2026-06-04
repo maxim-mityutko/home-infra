@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: speedtest
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   destination:
     name: ''

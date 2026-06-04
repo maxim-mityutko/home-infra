@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: meshcentral
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
 spec:
   destination:
     name: ''

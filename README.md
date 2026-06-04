@@ -9,7 +9,8 @@ The rollout from scratch has not been fully automated yet, and generally require
 the process defined in the [/readme](./readme/) and [/kubernetes/scripts](./kubernetes/scripts/) folders for the initial setup.
 
 After the initial steps are complete, deployments are handled via ArgoCD application manifests
-defined in the [/kubernetes/argocd](./kubernetes/argocd/).
+defined in the [/kubernetes/argocd](./kubernetes/argocd/) app-of-apps tree. Bootstrap
+the parent application with [/kubernetes/app-of-apps.yaml](./kubernetes/app-of-apps.yaml).
 
 ## Hardware
 

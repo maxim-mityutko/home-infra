@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: victoria-metrics
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   destination:
     namespace: monitoring

@@ -1,16 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: calico
+  name: app-of-apps
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "3"
 spec:
   destination:
-    namespace: default
+    namespace: argocd
     server: 'https://kubernetes.default.svc'
   source:
-    path: kubernetes/cluster/default/calico
+    path: kubernetes/argocd
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
+    directory:
+      recurse: true
   project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
