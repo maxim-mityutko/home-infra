@@ -9,7 +9,7 @@ helmCharts:
   - name: rustfs
     namespace: rustfs
     releaseName: rustfs
-    version: 0.6.0
+    version: 0.7.0
     repo: https://charts.rustfs.com/
     valuesInline:
       replicaCount: 1
@@ -98,9 +98,9 @@ helmCharts:
 
       readinessProbe:
         httpGet:
-          path: /health
+          path: /health/ready
           port: endpoint
-        initialDelaySeconds: 30
+        initialDelaySeconds: 10
         periodSeconds: 30
         timeoutSeconds: 3
         successThreshold: 1
