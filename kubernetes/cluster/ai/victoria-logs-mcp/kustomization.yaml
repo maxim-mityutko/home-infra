@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: ai
 resources:
   - dns-endpoint.yaml
+  - scaler.yaml
 helmCharts:
   - name: victoria-logs-mcp
     namespace: ai
@@ -74,3 +75,11 @@ patches:
       - op: add
         path: /spec/revisionHistoryLimit
         value: 1
+  - target:
+      group: networking.k8s.io
+      kind: Ingress
+      name: vl-mcp
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/http/paths/0/backend/service/name
+        value: keda-http-interceptor

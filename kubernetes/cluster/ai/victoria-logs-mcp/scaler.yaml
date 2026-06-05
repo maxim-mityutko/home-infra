@@ -1,0 +1,35 @@
+---
+apiVersion: http.keda.sh/v1beta1
+kind: InterceptorRoute
+metadata:
+  name: vl-mcp-scaler
+spec:
+  target:
+    service: vl-mcp
+    port: 8080
+  rules:
+    - hosts:
+        - mcp.vl.brhd.io
+  scalingMetric:
+    concurrency:
+      targetValue: 25
+  # timeouts:
+  #   readiness: 30s
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: vl-mcp-scaler
+spec:
+  scaleTargetRef:
+    name: vl-mcp
+  minReplicaCount: 0
+  maxReplicaCount: 1
+  pollingInterval: 60
+  initialCooldownPeriod: 600
+  cooldownPeriod: 1800
+  triggers:
+    - type: external-push
+      metadata:
+        scalerAddress: keda-add-ons-http-external-scaler.keda:9090
+        interceptorRoute: vl-mcp-scaler
