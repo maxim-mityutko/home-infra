@@ -98,9 +98,9 @@ helmCharts:
 
       readinessProbe:
         httpGet:
-          path: /health
+          path: /health/ready
           port: endpoint
-        initialDelaySeconds: 30
+        initialDelaySeconds: 10
         periodSeconds: 30
         timeoutSeconds: 3
         successThreshold: 1
