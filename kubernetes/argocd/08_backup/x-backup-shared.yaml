@@ -4,7 +4,7 @@ metadata:
   name: x-backup-shared
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/sync-wave: "12"
 spec:
   destination:
     name: in-cluster

@@ -4,7 +4,7 @@ metadata:
   name: home-assistant
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "8"
+    argocd.argoproj.io/sync-wave: "9"
 spec:
   destination:
     name: in-cluster

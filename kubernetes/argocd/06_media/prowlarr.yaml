@@ -4,7 +4,7 @@ metadata:
   name: prowlarr
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "11"
+    argocd.argoproj.io/sync-wave: "14"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   labels:

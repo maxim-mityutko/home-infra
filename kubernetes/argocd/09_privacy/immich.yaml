@@ -4,7 +4,7 @@ metadata:
   name: immich
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "12"
+    argocd.argoproj.io/sync-wave: "17"
 spec:
   destination:
     name: in-cluster
