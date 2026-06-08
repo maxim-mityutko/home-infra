@@ -5,9 +5,8 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    name: ''
+    name: in-cluster
     namespace: ai
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/ai/x-ai-shared
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
