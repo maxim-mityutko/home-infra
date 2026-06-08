@@ -7,7 +7,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "5"
 spec:
   destination:
-    name: ''
     namespace: monitoring
     name: in-cluster
   source:

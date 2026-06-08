@@ -7,7 +7,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "4"
 spec:
   destination:
-    name: ''
     namespace: smart-home
     name: in-cluster
   source:

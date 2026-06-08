@@ -7,7 +7,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "8"
 spec:
   destination:
-    name: ''
     namespace: backup
     name: in-cluster
   source:
