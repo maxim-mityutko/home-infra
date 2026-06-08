@@ -4,7 +4,7 @@ metadata:
   name: unpackerr
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "15"
+    argocd.argoproj.io/sync-wave: "16"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   labels:
