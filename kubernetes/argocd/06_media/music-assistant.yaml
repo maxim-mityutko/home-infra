@@ -1,16 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: x-privacy-shared
+  name: music-assistant
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "18"
+    argocd.argoproj.io/sync-wave: "16"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    group: media
 spec:
   destination:
     name: in-cluster
-    namespace: privacy
+    namespace: media
   source:
-    path: kubernetes/cluster/privacy/x-privacy-shared
+    path: kubernetes/cluster/media/music-assistant
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
@@ -20,3 +24,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - RespectIgnoreDifferences=true

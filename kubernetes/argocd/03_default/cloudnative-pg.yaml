@@ -3,11 +3,12 @@ kind: Application
 metadata:
   name: cloudnative-pg
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 spec:
   destination:
-    name: ''
+    name: in-cluster
     namespace: default
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/default/cloudnative-pg
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

@@ -3,10 +3,12 @@ kind: Application
 metadata:
   name: tailscale
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
 spec:
   destination:
+    name: in-cluster
     namespace: tailscale
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/default/tailscale
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

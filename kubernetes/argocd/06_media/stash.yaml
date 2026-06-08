@@ -1,24 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: code-server
+  name: stash
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "12"
+    argocd.argoproj.io/sync-wave: "17"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    group: media
 spec:
   destination:
     name: in-cluster
-    namespace: extras
+    namespace: media
   source:
-    path: kubernetes/cluster/extras/code-server
+    path: kubernetes/cluster/media/stash
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
-  ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      jsonPointers:
-        - /spec/replicas  # On-demand scaling
   syncPolicy:
     automated:
       prune: true
@@ -26,3 +25,9 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - RespectIgnoreDifferences=true
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      name: stash
+      jsonPointers:
+        - /spec/replicas  # On-demand scaling

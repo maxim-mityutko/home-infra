@@ -3,11 +3,12 @@ kind: Application
 metadata:
   name: x-backup-shared
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "13"
 spec:
   destination:
-    name: ''
+    name: in-cluster
     namespace: backup
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/backup/x-backup-shared
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

@@ -4,10 +4,12 @@ kind: Application
 metadata:
   name: argocd
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   destination:
+    name: in-cluster
     namespace: argocd
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/argocd
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

@@ -1,15 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: exportarr
+  name: x-media-shared
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "14"
 spec:
   destination:
-    name: ''
-    namespace: monitoring
-    server: 'https://kubernetes.default.svc'
+    name: in-cluster
+    namespace: media
   source:
-    path: kubernetes/cluster/monitoring/exportarr
+    path: kubernetes/cluster/media/x-media-shared
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default

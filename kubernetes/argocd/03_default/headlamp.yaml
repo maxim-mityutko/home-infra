@@ -3,10 +3,12 @@ kind: Application
 metadata:
   name: headlamp
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "8"
 spec:
   destination:
+    name: in-cluster
     namespace: kube-dashboard
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/default/headlamp
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

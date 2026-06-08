@@ -3,11 +3,12 @@ kind: Application
 metadata:
   name: victoria-metrics-mcp
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "19"
 spec:
   destination:
-    name: ''
+    name: in-cluster
     namespace: ai
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/ai/victoria-metrics-mcp
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

@@ -3,11 +3,12 @@ kind: Application
 metadata:
   name: frigate
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   destination:
-    name: ''
+    name: in-cluster
     namespace: smart-home
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/smart-home/frigate
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

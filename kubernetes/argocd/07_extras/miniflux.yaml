@@ -3,11 +3,12 @@ kind: Application
 metadata:
   name: miniflux
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "12"
 spec:
   destination:
-    name: ''
+    name: in-cluster
     namespace: extras
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/extras/miniflux
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

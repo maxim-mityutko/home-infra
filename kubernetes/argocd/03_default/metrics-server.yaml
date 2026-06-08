@@ -3,10 +3,12 @@ kind: Application
 metadata:
   name: metrics-server
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
 spec:
   destination:
+    name: in-cluster
     namespace: kube-system
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/default/metrics-server
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

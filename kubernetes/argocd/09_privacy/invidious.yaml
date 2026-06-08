@@ -3,11 +3,12 @@ kind: Application
 metadata:
   name: invidious
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "18"
 spec:
   destination:
-    name: ''
+    name: in-cluster
     namespace: privacy
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/privacy/invidious
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

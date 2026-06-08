@@ -10,10 +10,12 @@ kind: Application
 metadata:
   name: nginx-ingress
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   destination:
+    name: in-cluster
     namespace: ingress
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/ingress/nginx
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
