@@ -24,8 +24,7 @@ spec:
       - RespectIgnoreDifferences=true
   # Ref: https://docs.victoriametrics.com/helm/victoriametrics-k8s-stack/#operator-self-signed-certificates
   ignoreDifferences:
-    - group: ""
-      kind: Secret
+    - kind: Secret
       name: victoria-metrics-victoria-metrics-operator-validation
       namespace: monitoring
       jsonPointers:
