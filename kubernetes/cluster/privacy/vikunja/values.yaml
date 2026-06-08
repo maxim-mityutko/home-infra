@@ -19,7 +19,7 @@ vikunja:
       cpu: 50m
     limits:
       memory: 150M
-      cpu: 100m
+      cpu: 250m
   probes:
     liveness:
       enabled: true
