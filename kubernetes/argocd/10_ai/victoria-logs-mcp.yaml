@@ -4,7 +4,7 @@ metadata:
   name: victoria-logs-mcp
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "66"
+    argocd.argoproj.io/sync-wave: "81"
 spec:
   destination:
     name: in-cluster

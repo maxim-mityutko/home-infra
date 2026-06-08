@@ -4,7 +4,7 @@ metadata:
   name: karakeep
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "60"
+    argocd.argoproj.io/sync-wave: "75"
 spec:
   destination:
     name: in-cluster

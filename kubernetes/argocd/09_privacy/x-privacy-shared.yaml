@@ -4,7 +4,7 @@ metadata:
   name: x-privacy-shared
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "56"
+    argocd.argoproj.io/sync-wave: "71"
 spec:
   destination:
     name: in-cluster

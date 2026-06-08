@@ -1,16 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: exportarr
+  name: jellyseerr
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "34"
+    argocd.argoproj.io/sync-wave: "63"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    group: media
 spec:
   destination:
     name: in-cluster
-    namespace: monitoring
+    namespace: media
   source:
-    path: kubernetes/cluster/monitoring/exportarr
+    path: kubernetes/cluster/media/jellyseerr
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
     targetRevision: main
   project: default
@@ -20,3 +24,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - RespectIgnoreDifferences=true
