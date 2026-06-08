@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     namespace: media
-    server: 'https://kubernetes.default.svc'
+    name: in-cluster
   source:
     path: kubernetes/cluster/media/x-media-shared
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

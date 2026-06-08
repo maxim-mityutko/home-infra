@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     namespace: default
-    server: 'https://kubernetes.default.svc'
+    name: in-cluster
   source:
     path: kubernetes/cluster/default/calico
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

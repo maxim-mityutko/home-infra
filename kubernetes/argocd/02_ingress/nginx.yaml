@@ -15,7 +15,7 @@ metadata:
 spec:
   destination:
     namespace: ingress
-    server: 'https://kubernetes.default.svc'
+    name: in-cluster
   source:
     path: kubernetes/cluster/ingress/nginx
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

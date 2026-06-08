@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     namespace: rustfs
-    server: 'https://kubernetes.default.svc'
+    name: in-cluster
   source:
     path: kubernetes/cluster/default/rustfs
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

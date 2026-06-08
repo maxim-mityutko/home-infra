@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     namespace: kube-system
-    server: 'https://kubernetes.default.svc'
+    name: in-cluster
   source:
     path: kubernetes/cluster/default/nfs-subdir
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

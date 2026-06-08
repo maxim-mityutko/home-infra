@@ -9,7 +9,7 @@ spec:
   destination:
     name: ''
     namespace: backup
-    server: 'https://kubernetes.default.svc'
+    name: in-cluster
   source:
     path: kubernetes/cluster/backup/syncthing
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

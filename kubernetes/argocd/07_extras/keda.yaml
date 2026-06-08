@@ -9,7 +9,7 @@ spec:
   destination:
     name: ''
     namespace: keda
-    server: 'https://kubernetes.default.svc'
+    name: in-cluster
   source:
     path: kubernetes/cluster/extras/keda
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

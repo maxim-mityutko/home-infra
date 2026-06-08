@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     namespace: monitoring
-    server: 'https://kubernetes.default.svc'
+    name: in-cluster
   source:
     path: kubernetes/cluster/monitoring/victoria-metrics
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

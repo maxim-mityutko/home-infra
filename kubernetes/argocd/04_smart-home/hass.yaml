@@ -9,7 +9,7 @@ spec:
   destination:
     name: ''
     namespace: smart-home
-    server: 'https://kubernetes.default.svc'
+    name: in-cluster
   source:
     path: kubernetes/cluster/smart-home/hass
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
