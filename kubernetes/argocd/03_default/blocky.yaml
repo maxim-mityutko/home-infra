@@ -4,11 +4,11 @@ metadata:
   name: blocky
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "18"
 spec:
   destination:
+    name: in-cluster
     namespace: default
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/default/blocky
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

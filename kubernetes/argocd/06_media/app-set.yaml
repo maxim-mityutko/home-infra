@@ -4,7 +4,7 @@ metadata:
   name: media
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-wave: "55"
 spec:
   generators:
     - git:
@@ -19,7 +19,7 @@ spec:
       name: "{{path.basename}}"
       annotations:
         argocd.argoproj.io/manifest-generate-paths: ".;.."
-        argocd.argoproj.io/sync-wave: "7"
+        argocd.argoproj.io/sync-wave: "56"
       finalizers:
         - resources-finalizer.argocd.argoproj.io
       labels:
@@ -31,8 +31,8 @@ spec:
         targetRevision: main
         path: "{{path}}"
       destination:
+        name: in-cluster
         namespace: media
-        server: https://kubernetes.default.svc
       syncPolicy:
         automated:
           prune: true

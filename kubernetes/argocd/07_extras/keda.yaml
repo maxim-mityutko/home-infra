@@ -4,12 +4,11 @@ metadata:
   name: keda
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "7"
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   destination:
-    name: ''
+    name: in-cluster
     namespace: keda
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/extras/keda
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

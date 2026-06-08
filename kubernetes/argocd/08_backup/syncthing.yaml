@@ -4,12 +4,11 @@ metadata:
   name: syncthing
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "8"
+    argocd.argoproj.io/sync-wave: "53"
 spec:
   destination:
-    name: ''
+    name: in-cluster
     namespace: backup
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/backup/syncthing
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

@@ -7,9 +7,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "3"
 spec:
   destination:
-    name: ''
+    name: in-cluster
     namespace: kube-system
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/default/core-dns
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

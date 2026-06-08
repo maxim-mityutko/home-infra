@@ -5,8 +5,8 @@ metadata:
   namespace: argocd
 spec:
   destination:
+    name: in-cluster
     namespace: argocd
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/argocd
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'

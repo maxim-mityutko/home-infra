@@ -4,12 +4,11 @@ metadata:
   name: exportarr
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "34"
 spec:
   destination:
-    name: ''
+    name: in-cluster
     namespace: monitoring
-    server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/cluster/monitoring/exportarr
     repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
