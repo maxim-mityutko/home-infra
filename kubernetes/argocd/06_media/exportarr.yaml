@@ -4,7 +4,7 @@ metadata:
   name: exportarr
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "64"
+    argocd.argoproj.io/sync-wave: "11"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   labels:

@@ -4,7 +4,7 @@ metadata:
   name: openebs
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "8"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   destination:
     name: in-cluster

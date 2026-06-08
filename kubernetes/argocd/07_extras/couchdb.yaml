@@ -4,7 +4,7 @@ metadata:
   name: couchdb
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "47"
+    argocd.argoproj.io/sync-wave: "9"
 spec:
   destination:
     name: in-cluster

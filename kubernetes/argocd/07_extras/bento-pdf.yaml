@@ -4,7 +4,7 @@ metadata:
   name: bento-pdf
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "41"
+    argocd.argoproj.io/sync-wave: "9"
 spec:
   destination:
     name: in-cluster

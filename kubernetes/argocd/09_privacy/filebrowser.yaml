@@ -4,7 +4,7 @@ metadata:
   name: filebrowser
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "73"
+    argocd.argoproj.io/sync-wave: "12"
 spec:
   destination:
     name: in-cluster

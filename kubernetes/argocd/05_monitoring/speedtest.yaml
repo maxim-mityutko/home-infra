@@ -4,7 +4,7 @@ metadata:
   name: speedtest
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "33"
+    argocd.argoproj.io/sync-wave: "8"
 spec:
   destination:
     name: in-cluster

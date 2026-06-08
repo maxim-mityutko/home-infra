@@ -4,7 +4,7 @@ metadata:
   name: gpu
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "21"
+    argocd.argoproj.io/sync-wave: "7"
 spec:
   destination:
     name: in-cluster

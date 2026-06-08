@@ -4,7 +4,7 @@ metadata:
   name: x-media-shared
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "54"
+    argocd.argoproj.io/sync-wave: "11"
 spec:
   destination:
     name: in-cluster

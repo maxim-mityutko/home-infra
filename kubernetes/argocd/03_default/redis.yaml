@@ -4,7 +4,7 @@ metadata:
   name: redis
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "25"
+    argocd.argoproj.io/sync-wave: "7"
 spec:
   destination:
     name: in-cluster

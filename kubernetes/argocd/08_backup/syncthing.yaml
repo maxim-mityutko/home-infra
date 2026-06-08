@@ -4,7 +4,7 @@ metadata:
   name: syncthing
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "53"
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   destination:
     name: in-cluster

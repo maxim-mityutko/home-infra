@@ -4,7 +4,7 @@ metadata:
   name: cnpg-default
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "23"
+    argocd.argoproj.io/sync-wave: "7"
 spec:
   destination:
     name: in-cluster

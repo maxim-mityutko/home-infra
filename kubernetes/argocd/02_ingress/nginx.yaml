@@ -11,7 +11,7 @@ metadata:
   name: nginx-ingress
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "16"
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   destination:
     name: in-cluster

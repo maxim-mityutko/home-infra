@@ -4,7 +4,7 @@ metadata:
   name: browserless
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "79"
+    argocd.argoproj.io/sync-wave: "13"
 spec:
   destination:
     name: in-cluster

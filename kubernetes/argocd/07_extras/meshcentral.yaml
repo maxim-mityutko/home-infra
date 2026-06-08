@@ -4,7 +4,7 @@ metadata:
   name: meshcentral
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "45"
+    argocd.argoproj.io/sync-wave: "9"
 spec:
   destination:
     name: in-cluster
