@@ -15,6 +15,10 @@ cluster changes unless they are clearly documentation-only.
   - any operational impact, migration, or follow-up needed
 - For a new service, update `README.md` with the service name, short
   description, repository/docs links, and Docker or Helm links.
+- When creating a new ArgoCD Application, assign a proper
+  `argocd.argoproj.io/sync-wave` annotation. Sync-wave details and selection
+  criteria are documented in `readme/bootstrap-cluster.md`; update that document
+  when adding or changing an Application sync-wave assignment.
 - If a new user-facing service should appear on the Homer dashboard, update
   `kubernetes/cluster/default/homer/config/config.yml`.
 - Mention validation performed in the PR description. At minimum, inspect the
