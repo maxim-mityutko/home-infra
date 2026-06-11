@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: prowlarr
-          image: ghcr.io/hotio/prowlarr:release-2.3.5.5327
+          image: ghcr.io/hotio/prowlarr:release-2.4.0.5397
           resources:
             requests:
               memory: 100Mi
