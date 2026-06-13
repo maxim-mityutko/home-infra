@@ -34,7 +34,7 @@ spec:
         spec:
           containers:
             - name: renovate
-              image: renovate/renovate:43.0.9
+              image: renovate/renovate:43.220.0
               envFrom:
                 - secretRef:
                     name: renovate
