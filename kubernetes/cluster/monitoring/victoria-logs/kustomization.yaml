@@ -89,7 +89,7 @@ helmCharts:
   - name: victoria-logs-collector
     namespace: monitoring
     releaseName: vl-collector
-    version: 0.3.4
+    version: 0.3.5
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
       fullnameOverride: vl-collector
