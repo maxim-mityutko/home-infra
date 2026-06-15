@@ -23,6 +23,43 @@ helmCharts:
             vmalert:
               create: false
           rules:
+            TargetDown:
+              spec:
+                expr: >-
+                  (100 * (count((up unless on(cluster,node)
+                  kube_node_labels{job="kube-state-metrics",label_node_kubernetes_io_enable_alerts="false"})
+                  == 0) by(cluster,job,namespace,service) / count(up unless on(cluster,node)
+                  kube_node_labels{job="kube-state-metrics",label_node_kubernetes_io_enable_alerts="false"})
+                  by(cluster,job,namespace,service))) > 10
+            KubeNodeNotReady:
+              spec:
+                expr: >-
+                  ((kube_node_status_condition{job="kube-state-metrics",condition="Ready",status="true"}
+                  == 0) and on(cluster,node) (kube_node_spec_unschedulable{job="kube-state-metrics"}
+                  == 0)) unless on(cluster,node)
+                  kube_node_labels{job="kube-state-metrics",label_node_kubernetes_io_enable_alerts="false"}
+            KubeNodePressure:
+              spec:
+                expr: >-
+                  ((kube_node_status_condition{job="kube-state-metrics",condition=~"(MemoryPressure|DiskPressure|PIDPressure)",status="true"}
+                  == 1) and on(cluster,node) (kube_node_spec_unschedulable{job="kube-state-metrics"}
+                  == 0)) unless on(cluster,node)
+                  kube_node_labels{job="kube-state-metrics",label_node_kubernetes_io_enable_alerts="false"}
+            KubeNodeUnreachable:
+              spec:
+                expr: >-
+                  ((kube_node_spec_taint{job="kube-state-metrics",key="node.kubernetes.io/unreachable",effect="NoSchedule"}
+                  unless ignoring(key,value) kube_node_spec_taint{job="kube-state-metrics",key=~"ToBeDeletedByClusterAutoscaler|cloud.google.com/impending-node-termination|aws-node-termination-handler/spot-itn"})
+                  == 1) unless on(cluster,node)
+                  kube_node_labels{job="kube-state-metrics",label_node_kubernetes_io_enable_alerts="false"}
+            KubeNodeReadinessFlapping:
+              spec:
+                expr: >-
+                  (sum(changes(kube_node_status_condition{job="kube-state-metrics",status="true",condition="Ready"}[15m]))
+                  by(cluster,node) > 2 and on(cluster,node)
+                  (kube_node_spec_unschedulable{job="kube-state-metrics"} == 0))
+                  unless on(cluster,node)
+                  kube_node_labels{job="kube-state-metrics",label_node_kubernetes_io_enable_alerts="false"}
             # Quick hack to exclude "false positive" cases, when scaling is done from 0 to 1 replicas via KEDA HTTP Add-on
             KubeHpaMaxedOut:
               create: true
@@ -225,6 +262,9 @@ helmCharts:
                   replacement: brhd.io
         kube-state-metrics:
           enabled: true
+          # Required by alert overrides using kube_node_labels{label_node_kubernetes_io_enable_alerts="false"}.
+          metricLabelsAllowlist:
+            - nodes=[node.kubernetes.io/enable-alerts]
           vmScrape:
             spec:
               endpoints:
@@ -245,6 +285,8 @@ helmCharts:
                 - port: metrics
                   interval: 60s
                   relabelConfigs:
+                    - source_labels: [ __meta_kubernetes_pod_node_name ]
+                      target_label: node
                     - target_label: cluster
                       replacement: brhd.io
                   metricRelabelConfigs:
