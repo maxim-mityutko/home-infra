@@ -71,7 +71,7 @@
 - run the node bootstrap helper from the repository root
 
     ```shell
-    sudo ./node/initial-node-setup.sh
+    sudo ./node/01-initial-node-setup.sh
     ```
 
 - install dependencies

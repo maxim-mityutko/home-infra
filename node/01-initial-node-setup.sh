@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# initial-node-setup.sh
+# 01-initial-node-setup.sh
 #
 # Purpose:
 #   Interactive bootstrap script for a MicroK8s node on Ubuntu-based systems.

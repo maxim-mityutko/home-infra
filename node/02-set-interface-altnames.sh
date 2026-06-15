@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# set-interface-altnames.sh
+# 02-set-interface-altnames.sh
 #
 # Purpose:
 #   Detect two network interfaces and assign persistent systemd altnames via

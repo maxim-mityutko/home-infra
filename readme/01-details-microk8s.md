@@ -20,7 +20,7 @@ or [these](https://microk8s.io/) instructions to install `microk8s`:
   ```
 
 __Important__, when prepping a new node, make sure to:
-* Run `sudo ./node/initial-node-setup.sh` from the repository root for the common
+* Run `sudo ./node/01-initial-node-setup.sh` from the repository root for the common
   bootstrap steps.
 * Install NFS dependencies: `sudo apt install nfs-common`
 * Add convenience alias to kubectl `sudo snap alias microk8s.kubectl kubectl`
