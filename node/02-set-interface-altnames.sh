@@ -22,9 +22,9 @@
 #   - bash, iproute2 (ip), awk, grep, sed, python3, udevadm
 #
 # Usage:
-#   sudo ./set-altnames.sh
-#   sudo ./set-altnames.sh --subnet 192.168.42.0/25
-#   sudo ./set-altnames.sh --confirm --subnet 192.168.42.0/25
+#   sudo ./node/02-set-interface-altnames.sh
+#   sudo ./node/02-set-interface-altnames.sh --subnet 192.168.42.0/25
+#   sudo ./node/02-set-interface-altnames.sh --confirm --subnet 192.168.42.0/25
 #
 # Exit behavior:
 #   - Fails if no matching interface is found

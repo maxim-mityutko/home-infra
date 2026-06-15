@@ -4,195 +4,117 @@
 
 ### Installation
 
-- configure static IP
 - select **minimized** OS installation
-- select **microk8s** during Ubuntu installation
 - use LVM while setting up volumes
+- configure enough temporary network access to clone this repository
+- do not select the installer MicroK8s snap if this repository's node bootstrap
+  script will be used
 
-### (Optional) Post-Installation RPi
-- configure **network**
+### Node Bootstrap
 
-  ```shell
-  sudo nano /etc/netplan/00-installer-config.yaml
-  # use the below template
-  sudo chmod u=rw,g=,o= /etc/netplan/00-installer-config.yaml
-  sudo netplan try
-  ```
-  
-  Config template:
-  ```yaml
-    network:
-      ethernets:
-        eth0:
-          addresses:
-          - x.x.x.x/x        # node ip and mask
-          nameservers:
-            addresses:
-            - x.x.x.x        # gateway ip
-            search:
-            - brhd.io
-          routes:
-          - to: default
-            via: x.x.x.x    # gateway ip
-      version: 2
-    ```
+Run the node bootstrap helper from the repository root:
 
-- enable **cgroups**
+```shell
+sudo ./node/01-initial-node-setup.sh
+```
 
-  ```shell
-  sudo nano /boot/firmware/cmdline.txt
-  ```
-  Add options `cgroup_enable=memory cgroup_memory=1`
+The script prompts for the static node IP, gateway, nameserver, MicroK8s
+version, target user, and network interface layout. It then performs the common
+node setup that used to be documented here manually:
 
-- install **rpi kernel modules**
+- writes `/etc/netplan/50-cloud-init.yaml`
+- optionally adds Raspberry Pi cgroup memory flags
+- updates the system and installs `nfs-common`, `nano`, `git`, and `btop`
+- installs MicroK8s from the selected stable snap channel
+- creates the `kubectl` snap alias
+- adds the selected user to the `microk8s` group and prepares `~/.kube`
+- switches journald to volatile storage
+- disables the systemd-resolved DNS stub listener for pod DNS compatibility
 
-  ```shell
-  sudo apt install linux-modules-extra-raspi
+Review the script's summary before confirming. Reboot after it finishes so
+network and boot parameter changes take effect.
 
-  # On Ubuntu 24.04 the package with extra modules is not yet(?) available
-  sudo apt install linux-raspi
-  ```
+### Interface Altnames
 
-- install **microk8s**
+After the node has the expected IP layout, create persistent interface altnames:
 
-  ```shell
-  # Version 1.29 or whatever is currently installed on the master nodes
-  snap install microk8s --channel=1.29/stable --classic
-  ```
+```shell
+sudo ./node/02-set-interface-altnames.sh --subnet x.x.x.x/xx
+```
 
-### (Optional) Post-Installation Proxmox
-- install **qemu-guest-agent** to enable proper management of the node from Proxmox, refer to [docs](https://pve.proxmox.com/wiki/Qemu-guest-agent)
+The script maps the interface with an IPv4 address in the provided subnet to
+`forge` and the interface without a global IPv4 address to `pub`. Use
+`--confirm` only when the subnet is already known and non-interactive execution
+is wanted.
 
-  ```
-  sudo apt install qemu-guest-agent
-  ```
+### Optional Proxmox Step
 
-### Post-Installation
-- run the node bootstrap helper from the repository root
+Install **qemu-guest-agent** on Proxmox VMs to enable proper management from
+Proxmox:
 
-    ```shell
-    sudo ./node/01-initial-node-setup.sh
-    ```
+```shell
+sudo apt install qemu-guest-agent
+```
 
-- install dependencies
+See the [Proxmox docs](https://pve.proxmox.com/wiki/Qemu-guest-agent) for more
+details.
 
-    ```shell
-    sudo apt update
-    sudo apt install nfs-common nano git
-    ```
-- add **kubectl** alias
-    ```shell
-    sudo snap alias microk8s.kubectl kubectl
-    ```
-- grant permissions on **microk8s** command
+## MicroK8s
 
-    ```shell
-    mkdir ~/.kube
-    microk8s config > ~/.kube/config
+### Addons
 
-    sudo usermod -a -G microk8s <user>
-    sudo chown -R <user> ~/.kube
-    newgrp microk8s
-    ```
-- (optional) add **DNS** servers
+Enable only the addons that are still expected for the current cluster. Most
+cluster services are managed through ArgoCD after bootstrap.
 
-    ```shell
-    sudo nano /etc/systemd/resolved.conf
-    ```
-    Set `DNS=x.x.x.x` (gateway IP) and ensure that `FallbackDNS=1.0.0.1` is commented out
-
-- move **journald logs** to *volatile* storage to reduce the disk pressure
-
-    ```shell
-    sudo nano /etc/systemd/journald.conf 
-    ```
-    Set `Storage=volatile`
-
-- disable **DNS stub resolver** to enable DNS resolving in pods
-
-    ```shell
-    sudo sed -r -i.orig 's/#?DNSStubListener=yes/DNSStubListener=no/g' /etc/systemd/resolved.conf  
-
-    sudo sh -c 'rm /etc/resolv.conf && ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf' 
-
-    sudo systemctl restart systemd-resolved
-    ```
-
-## Microk8s
-
-### Plugins
-
-- enable **plugins**
-
-    ```shell
-    # microk8s enable dashboard
-    # microk8s enable dns
-    # microk8s enable ingress:default-ssl-certificate=default/brhd-io-tls
-    # When NVIDIA drivers can be preinstalled on the node `--gpu-operator-driver host`, more info https://microk8s.io/docs/addon-gpu
-    microk8s enable nvidia --gpu-operator-driver host
-    ```
+```shell
+# microk8s enable dashboard
+# microk8s enable dns
+# microk8s enable ingress:default-ssl-certificate=default/brhd-io-tls
+# When NVIDIA drivers can be preinstalled on the node:
+microk8s enable nvidia --gpu-operator-driver host
+```
 
 ### Dashboard
 
-- use **Headlamp** as the GitOps-managed Kubernetes dashboard after bootstrap.
-  For the built-in MicroK8s dashboard, create a temporary token when needed:
+Use **Headlamp** as the GitOps-managed Kubernetes dashboard after bootstrap. For
+the built-in MicroK8s dashboard, create a temporary token when needed:
 
-    ```shell
-    microk8s kubectl create token default
-    ```
+```shell
+microk8s kubectl create token default
+```
 
 ### ArgoCD
 
-- install **ArgoCD**
+Install ArgoCD and bootstrap the app-of-apps tree:
 
-    ```shell
-    # Create namespace and apply ArgoCD manifest
-    kubectl create namespace argocd
-    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-    # Get admin password
-    kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
-    # Drop admin password secret
-    kubectl delete secret argocd-initial-admin-secret -n argocd
-    ```
+```shell
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+kubectl delete secret argocd-initial-admin-secret -n argocd
+kubectl apply -f kubernetes/app-of-apps.yaml
+```
 
-- enable **ingress**
-    ```shell
-    kubectl apply -f home-infra/kubernetes/cluster/argocd/ingress.yaml
-    ```
-- setup **configs**
-    ```shell
-    kubectl apply -f home-infra/kubernetes/cluster/argocd/config.yaml
-    ```
-- add **repos**
-    ```shell
-    kubectl apply -f home-infra/kubernetes/cluster/argocd/repo.yaml
-    ```
-
-
-- bootstrap the **app-of-apps** tree
-    ```shell
-    kubectl apply -f home-infra/kubernetes/app-of-apps.yaml
-    ```
-
-- login into **ArgoCD** and create repo from SSH repo
+Follow [02-details-argocd.md](./02-details-argocd.md) for detailed ArgoCD setup.
 
 ### Sealed Secrets
 
-- wait for the **Sealed Secrets** application to sync, then apply **certificate**
-  and **key** to be able to unseal the secrets
-    ```shell
-    kubectl apply -f <path--to-secret>/key.yaml
-    ```
+Wait for the **Sealed Secrets** application to sync, then restore the backed-up
+key if needed:
 
-### Other
+```shell
+kubectl apply -f <path-to-secret>/key.yaml
+```
 
-- application rollout is handled by the **app-of-apps** tree after bootstrap
+Follow [03-details-sealed-secrets.md](./03-details-sealed-secrets.md) for
+backup, recovery, and `kubeseal` usage.
 
 ## Kubernetes Cluster
 
 ### Tags
 
-- add custom tags to nodes
+Add custom tags to nodes:
+
 ```shell
 # type = intel / nvidia
 kubectl label nodes <node> kubernetes.io/gpu=<type>
@@ -201,11 +123,15 @@ kubectl label nodes <node> kubernetes.io/node-size=<size>
 ```
 
 ### Local Storage
-- create and / or mount drive that will be used for local storage
+
+Create or mount the drive that will be used for local storage:
+
 ```shell
 sudo mkdir /mnt/my-local-storage
 ```
-- tag the node
+
+Tag the node:
+
 ```shell
 kubectl label nodes <node> kubernetes.io/local-storage=true
 ```

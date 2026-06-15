@@ -1,182 +1,202 @@
 # MicroK8s
-## Cluster Setup
-* Follow [these](https://ubuntu.com/tutorials/how-to-kubernetes-cluster-on-raspberry-pi#4-installing-microk8s) 
-or [these](https://microk8s.io/) instructions to install `microk8s`:
-  ```
-  sudo nano /boot/firmware/cmdline.txt
-  ```
-  Add options `cgroup_enable=memory cgroup_memory=1`
-  ```
-  sudo reboot
-  sudo snap install microk8s --classic
-  ```
-  Set permissions:
-  ```
-  sudo usermod -a -G microk8s <user>
-  sudo chown -f -R <user> ~/.kube
-  newgrp microk8s
-    
-  micrkok8s status
-  ```
 
-__Important__, when prepping a new node, make sure to:
-* Run `sudo ./node/01-initial-node-setup.sh` from the repository root for the common
-  bootstrap steps.
-* Install NFS dependencies: `sudo apt install nfs-common`
-* Add convenience alias to kubectl `sudo snap alias microk8s.kubectl kubectl`
-* Configure DNS resolvers (see Troubleshooting section)
-* Configure volatile storage for logs (see Troubleshooting section)
+## Node Setup
+
+Run the repository bootstrap script instead of repeating the old manual setup
+steps:
+
+```shell
+sudo ./node/01-initial-node-setup.sh
+```
+
+The script handles the common setup for a new Ubuntu MicroK8s node:
+
+- static netplan configuration for the selected main interface
+- optional VLAN or second NIC configuration for a no-address secondary interface
+- optional Raspberry Pi cgroup memory flags
+- package updates and base package installation
+- MicroK8s installation from the selected stable channel
+- `kubectl` alias and `microk8s` group access
+- volatile journald storage
+- systemd-resolved DNS stub listener disablement
+
+Reboot after the script completes. If the current shell user was added to the
+`microk8s` group, run `newgrp microk8s` after reboot or start a new login
+session.
+
+For persistent interface altnames, run:
+
+```shell
+sudo ./node/02-set-interface-altnames.sh --subnet x.x.x.x/xx
+```
+
+This maps the interface with an IPv4 address in the provided subnet to `forge`
+and the interface without a global IPv4 address to `pub`.
 
 ## Cluster Upgrade and HA
-* [Upgrade](https://microk8s.io/docs/upgrading)
-* [HA Clustering](https://microk8s.io/docs/clustering)
-  
-## Resources
-* Commands:
-  * create / update: `microk8s kubectl apply -f <name>.yaml` or `microk8s kubectl apply -f <folder>`
-  * delete: `microk8s kubectl delete -f <name>.yaml` or `microk8s kubectl delete -f <folder>`
 
-## k8s Dashboard
-* Installation
-    ```
-    microk8s enable dashboard
-    ```
-* Login Token
-    ```
-    microk8s kubectl create token default
-    ```
-    Login to `https://<master-node>:<port>` and use token from above command. If ingress for
-    dashboard is configured, port can be omitted.
-* Authentication<br>
-  Use a temporary token from the command above when opening the built-in dashboard.
-  Headlamp is the GitOps-managed dashboard for regular use.
+- [Upgrade](https://microk8s.io/docs/upgrading)
+- [HA Clustering](https://microk8s.io/docs/clustering)
+
+## Resources
+
+Commands:
+
+```shell
+microk8s kubectl apply -f <name>.yaml
+microk8s kubectl apply -f <folder>
+microk8s kubectl delete -f <name>.yaml
+microk8s kubectl delete -f <folder>
+```
+
+## Dashboard
+
+Headlamp is the GitOps-managed dashboard for regular use. The built-in MicroK8s
+dashboard can still be enabled temporarily when needed:
+
+```shell
+microk8s enable dashboard
+microk8s kubectl create token default
+```
 
 ## Ingress
-* Links
-  * MicroK8s Info: https://microk8s.io/docs/addon-ingress 
-  * General Info: https://kubernetes.io/docs/concepts/services-networking/ingress/
-* Installation
-    ```
-    microk8s enable ingress
-    ```
-* Commands
-  * List all ingresses: `microk8s kubectl get ing -A`
-  * Delete ingress: `microk8s kubectl delete ingress -n <namespace>  <ingress-name>`
-* Notes
-  * TCP and UDP services can be exposed by editing the `nginx-ingress-tcp-microk8s-conf` 
-  and `nginx-ingress-udp-microk8s-conf` and 
-  [exposing port in the ingress controller](https://microk8s.io/docs/addon-ingress)
+
+Links:
+
+- MicroK8s Info: https://microk8s.io/docs/addon-ingress
+- General Info: https://kubernetes.io/docs/concepts/services-networking/ingress/
+
+Installation:
+
+```shell
+microk8s enable ingress
+```
+
+Commands:
+
+```shell
+microk8s kubectl get ing -A
+microk8s kubectl delete ingress -n <namespace> <ingress-name>
+```
+
+TCP and UDP services can be exposed by editing
+`nginx-ingress-tcp-microk8s-conf` and `nginx-ingress-udp-microk8s-conf`, then
+exposing the port in the ingress controller.
+
 ## Storage
-### Persistent Volumes (PV) and Persistent Volume Claims (PVC)
-* Links
-  * General Info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-  * Configuration: https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
-* Commands
-  * List claims: ` microk8s kubectl get pvc`
-  * List volumes: ` microk8s kubectl get pv`
+
+### Persistent Volumes and Claims
+
+Links:
+
+- https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+- https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
+
+Commands:
+
+```shell
+microk8s kubectl get pvc
+microk8s kubectl get pv
+```
+
 ### NFS
-NFS should be configured separately before it can be used in PV.
-* Links
-  * General info and installation: [link1](https://ubuntu.com/server/docs/service-nfs) 
-  and [link2](https://linuxize.com/post/how-to-install-and-configure-an-nfs-server-on-ubuntu-20-04/)
-  * Permissions and caveats: https://serverfault.com/questions/240897/how-to-properly-set-permissions-for-nfs-folder-permission-denied-on-mounting-en
-* Installation
-    ```
-    sudo apt install nfs-kernel-server nfs-common
-    sudo systemctl start nfs-kernel-server.service
-    ```
-* Configuration
-    ```
-    sudo mkdir -p /srv/nfs/<folder>
-    sudo chown -R <user>:<group> /srv/nfs/<folder>
-    sudo chmod -R 777 /srv/nfs/<folder>
-    
-    echo '/srv/nfs/<folder>        *(rw,async,no_subtree_check,no_root_squash)' | sudo tee -a /etc/exports
-    sudo exportfs -arv
-    ```
-* Testing
-    ```
-    sudo mount -t nfs -o vers=4 <server>:/srv/nfs/<folder> /<local>/<path>
-    ```
-* Mount in Windows: https://graspingtech.com/mount-nfs-share-windows-10/
+
+NFS server setup is separate from node bootstrap. Client dependency
+`nfs-common` is installed by `node/01-initial-node-setup.sh`.
+
+Links:
+
+- https://ubuntu.com/server/docs/service-nfs
+- https://linuxize.com/post/how-to-install-and-configure-an-nfs-server-on-ubuntu-20-04/
+- https://serverfault.com/questions/240897/how-to-properly-set-permissions-for-nfs-folder-permission-denied-on-mounting-en
+
+Server installation:
+
+```shell
+sudo apt install nfs-kernel-server
+sudo systemctl start nfs-kernel-server.service
+```
+
+Configuration:
+
+```shell
+sudo mkdir -p /srv/nfs/<folder>
+sudo chown -R <user>:<group> /srv/nfs/<folder>
+sudo chmod -R 777 /srv/nfs/<folder>
+echo '/srv/nfs/<folder> *(rw,async,no_subtree_check,no_root_squash)' | sudo tee -a /etc/exports
+sudo exportfs -arv
+```
+
+Testing:
+
+```shell
+sudo mount -t nfs -o vers=4 <server>:/srv/nfs/<folder> /<local>/<path>
+```
+
+Windows mount reference: https://graspingtech.com/mount-nfs-share-windows-10/
 
 ### Longhorn
-* Installation prerequisites: https://longhorn.io/docs/1.6.2/deploy/install/#installation-requirements
-* Installation with ArgoCD: https://longhorn.io/docs/1.6.2/deploy/install/install-with-argocd/
-* Uninstall Longhorn: https://longhorn.io/docs/1.6.2/deploy/uninstall/
 
-* Data migration example: https://github.com/longhorn/longhorn/blob/master/examples/data_migration.yaml
-* Various examples: https://github.com/longhorn/longhorn/tree/v1.6.2/examples
+- Installation prerequisites: https://longhorn.io/docs/1.6.2/deploy/install/#installation-requirements
+- Installation with ArgoCD: https://longhorn.io/docs/1.6.2/deploy/install/install-with-argocd/
+- Uninstall Longhorn: https://longhorn.io/docs/1.6.2/deploy/uninstall/
+- Data migration example: https://github.com/longhorn/longhorn/blob/master/examples/data_migration.yaml
+- Various examples: https://github.com/longhorn/longhorn/tree/v1.6.2/examples
+
 ## Services
-* Commands
-  * List services: `microk8s kubectl -n k<namespace> get services`
+
+```shell
+microk8s kubectl -n <namespace> get services
+```
 
 ## Secrets
-* Links
-  * General info: https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/
-* Commands
-  * Secret should be `base64` encoded before putting it in the secrets manifest: `echo -n '<secret>' | base64`
+
+Secrets should be `base64` encoded before putting them in a Secret manifest:
+
+```shell
+echo -n '<secret>' | base64
+```
 
 ## Tagging
-* Links
-  * General Info on Labels and Selectors: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-  * Recommended Labels: https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
+
+- https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+- https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
 
 ## Commands Cheat Sheet
-`microk8s kubectl scale deploy <deployment> --replicas=0`
-`microk8s.add-node`
-`microk8s kubectl delete pod --grace-period=0 --force --namespace [NAMESPACE] [POD_NAME]`
+
+```shell
+microk8s kubectl scale deploy <deployment> --replicas=0
+microk8s.add-node
+microk8s kubectl delete pod --grace-period=0 --force --namespace <namespace> <pod-name>
+```
 
 ## Troubleshooting
-* [Microk8s Troubleshooting](https://microk8s.io/docs/troubleshooting)
-* [Microk8s Services](https://microk8s.io/docs/configuring-services)
-* [Microk8s Installation on ARM](https://microk8s.io/docs/install-alternatives#heading--arm)
-* [False Positive `snap.microk8s.daemon-apiserver-proxy is not running`](https://github.com/canonical/microk8s/issues/3375#issuecomment-1322023278)
-* Fix IO performance / reduce write pressure
-  ```
-  In some cases, a way to mitigate the issue of low disk IO performance is to move 
-  the journald logs on volatile storage. This is done by editing /etc/systemd/journald.conf 
-  setting Storage=volatile
-  ```
-* DNS resolution
-  ```
-  Modern releases of Ubuntu (17.10+) include systemd-resolved which is configured by default to implement a caching 
-  DNS stub resolver. The stub resolver should be disabled with: 
-  
-  sudo sed -r -i.orig 's/#?DNSStubListener=yes/DNSStubListener=no/g' /etc/systemd/resolved.conf
 
-  This will not change the nameserver settings, which point to the stub resolver thus preventing DNS resolution. 
-  Change the `/etc/resolv.conf` symlink to point to `/run/systemd/resolve/resolv.conf`, which is automatically 
-  updated to follow the system's netplan:
-  
-  sudo sh -c 'rm /etc/resolv.conf && ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf' 
+- [MicroK8s Troubleshooting](https://microk8s.io/docs/troubleshooting)
+- [MicroK8s Services](https://microk8s.io/docs/configuring-services)
+- [MicroK8s Installation on ARM](https://microk8s.io/docs/install-alternatives#heading--arm)
+- [False Positive `snap.microk8s.daemon-apiserver-proxy is not running`](https://github.com/canonical/microk8s/issues/3375#issuecomment-1322023278)
 
-  After making these changes, you should restart systemd-resolved using:
-  
-  systemctl restart systemd-resolved
-  ```
-* Logs are not displayed with x509 certificate validation error
-  ```sh
-  sudo microk8s refresh-certs --cert server.crt
-  ```
+The bootstrap script already configures volatile journald storage and disables
+the systemd-resolved DNS stub listener. If either setting must be repaired
+manually, rerun the script or inspect these files:
+
+- `/etc/systemd/journald.conf`
+- `/etc/systemd/resolved.conf`
+- `/etc/resolv.conf`
+
+Refresh MicroK8s certs if logs fail with an x509 certificate validation error:
+
+```shell
+sudo microk8s refresh-certs --cert server.crt
+```
 
 ## Useful Links
-* docker - [Hub](https://hub.docker.com/)
-* helm - [ArtifactHUB](https://artifacthub.io/)
-* k8s - [Pull an image from a Private Registry](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
-* docker-compose - [Convert to k8s Manifest](https://github.com/kubernetes/kompose/releases)
-  * Installation
-    ```
-    curl -L https://github.com/kubernetes/kompose/releases/download/v1.25/kompose-linux-arm64 -o kompose
-    chmod +x kompose
-    sudo mv ./kompose /usr/local/bin/kompose
-    ```
-  * Usage
-    ```
-    # Run at location of `docker-compose.yaml` file
-    kompose convert
-    ```
-* k8s - [Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
-* k8s - [Commands](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
-* k9s - [Installation](https://github.com/derailed/k9s#installation)
-* k9s - [MicroK8s Setup](https://github.com/derailed/k9s/issues/267#issuecomment-513431314)
+
+- docker: https://hub.docker.com/
+- helm: https://artifacthub.io/
+- k8s private registry pull secrets: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+- k8s cheat sheet: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+- k8s commands: https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
+- k9s installation: https://github.com/derailed/k9s#installation
+- k9s MicroK8s setup: https://github.com/derailed/k9s/issues/267#issuecomment-513431314
