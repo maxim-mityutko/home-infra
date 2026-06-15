@@ -68,6 +68,12 @@
   ```
 
 ### Post-Installation
+- run the node bootstrap helper from the repository root
+
+    ```shell
+    sudo ./node/initial-node-setup.sh
+    ```
+
 - install dependencies
 
     ```shell
@@ -128,11 +134,11 @@
 
 ### Dashboard
 
-- configure **ingress** and **authentication**
+- use **Headlamp** as the GitOps-managed Kubernetes dashboard after bootstrap.
+  For the built-in MicroK8s dashboard, create a temporary token when needed:
 
     ```shell
-    kubectl apply -f home-infra/kubernetes/cluster/kube-system/dashboard/ingress.yaml
-    ./home-infra/kubernetes/scripts/02-dashboad-auth.sh
+    microk8s kubectl create token default
     ```
 
 ### ArgoCD

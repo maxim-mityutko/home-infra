@@ -6,7 +6,8 @@
 ## Notes
 
 The rollout from scratch has not been fully automated yet, and generally requires following
-the process defined in the [/readme](./readme/) and [/kubernetes/scripts](./kubernetes/scripts/) folders for the initial setup.
+the process defined in the [/readme](./readme/) docs. Node bootstrap helpers live in
+the [/node](./node/) folder.
 
 After the initial steps are complete, deployments are handled via ArgoCD application manifests
 defined in the [/kubernetes/argocd](./kubernetes/argocd/) app-of-apps tree. Bootstrap
@@ -64,7 +65,8 @@ the parent application with [/kubernetes/app-of-apps.yaml](./kubernetes/app-of-a
 
 ### Microk8s
 
-Some services are installed out of the box in Microk8s, refer to `kubernetes/scripts/00.0-init.sh`
+Base node prep can be run with `node/initial-node-setup.sh`; keep MicroK8s addon
+selection aligned with the current cluster before enabling optional addons.
 
 ### Default (Tier 1)
 

@@ -1,7 +1,7 @@
 # MicroK8s
 ## Cluster Setup
 * Follow [these](https://ubuntu.com/tutorials/how-to-kubernetes-cluster-on-raspberry-pi#4-installing-microk8s) 
-or [these](https://microk8s.io/) instuctions to install `microk8s`:
+or [these](https://microk8s.io/) instructions to install `microk8s`:
   ```
   sudo nano /boot/firmware/cmdline.txt
   ```
@@ -20,10 +20,12 @@ or [these](https://microk8s.io/) instuctions to install `microk8s`:
   ```
 
 __Important__, when prepping a new node, make sure to:
+* Run `sudo ./node/initial-node-setup.sh` from the repository root for the common
+  bootstrap steps.
 * Install NFS dependencies: `sudo apt install nfs-common`
-* Add convinience alias to kubectl `sudo snap alias microk8s.kubectl kubectl`
+* Add convenience alias to kubectl `sudo snap alias microk8s.kubectl kubectl`
 * Configure DNS resolvers (see Troubleshooting section)
-* Configure volatile storage for logs (see Troubleshhoting section)
+* Configure volatile storage for logs (see Troubleshooting section)
 
 ## Cluster Upgrade and HA
 * [Upgrade](https://microk8s.io/docs/upgrading)
@@ -44,10 +46,10 @@ __Important__, when prepping a new node, make sure to:
     microk8s kubectl create token default
     ```
     Login to `https://<master-node>:<port>` and use token from above command. If ingress for
-    dashboard is configures, port can be omitted.
+    dashboard is configured, port can be omitted.
 * Authentication<br>
-  The easiest way to allow permanent authentication to the dashboard is to use `token` obtained
-  above, and add it as header to the `ingress` configuration: `k8s--dashboard--auth-patch.yaml`
+  Use a temporary token from the command above when opening the built-in dashboard.
+  Headlamp is the GitOps-managed dashboard for regular use.
 
 ## Ingress
 * Links
