@@ -5,7 +5,6 @@ metadata:
   name: cold-start-placeholder
   namespace: extras
   labels:
-    app.kubernetes.io/name: bento-pdf
     http.keda.sh/response-body: "true"
 data:
   index.html: |
