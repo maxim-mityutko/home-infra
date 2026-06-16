@@ -14,7 +14,7 @@ Encrypt using the certificate from the K8s cluster:
 
 ```shell
 cat secret.yaml | kubeseal \
-    --controller-namespace sealed-secrets \
+    --controller-namespace default \
     --controller-name sealed-secrets \
     --format yaml \
     > sealed-secret.yaml
@@ -39,13 +39,13 @@ repository:
 
 ```shell
 # backup
-microk8s kubectl get secret -n sealed-secrets -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml > main.key
+microk8s kubectl get secret -n default -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml > main.key
 
 # NOTE: if existing key exists in `sealed-secrets\secrets`, it must be dropped
 
 # restore
 microk8s kubectl apply -f main.key
-microk8s kubectl delete pod -n sealed-secrets -l app.kubernetes.io/name=sealed-secrets
+microk8s kubectl delete pod -n default -l app.kubernetes.io/name=sealed-secrets
 ```
 
 ## cert-manager

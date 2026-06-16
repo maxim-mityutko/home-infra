@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - rule-oom.yaml
+  - cold-start-placeholder.yaml
   - secret.yaml
   - dns-endpoint.yaml
   - dashboards/
@@ -12,7 +13,7 @@ helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring
       releaseName: victoria-metrics
-      version: 0.83.0
+      version: 0.84.0
       repo: https://victoriametrics.github.io/helm-charts/
       valuesInline:
         defaultDashboards:

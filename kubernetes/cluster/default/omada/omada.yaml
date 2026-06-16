@@ -68,10 +68,23 @@ spec:
               mountPath: /opt/tplink/EAPController/logs
             - name: omada-autobackup
               mountPath: /opt/tplink/EAPController/data/autobackup
-      nodeSelector:
-        # Latest images are incompatible with Raspberry Pi nodes, due to absence of
-        # processor instructions required to run MongoDB.
-        beta.kubernetes.io/arch: amd64
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values: ["amd64"]
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values: ["arm64"]
+                  # Raspberry Pi 5 Cortex-A76 supports the ARMv8.2-A instructions
+                  # required by the MongoDB version bundled with Omada 6.
+                  - key: feature.node.kubernetes.io/cpu-model.id
+                    operator: In
+                    values: ["53425"]
       volumes:
         - name: omada-data
           persistentVolumeClaim:
