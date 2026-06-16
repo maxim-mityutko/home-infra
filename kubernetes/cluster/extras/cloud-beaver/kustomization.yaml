@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: extras
 resources:
   - cloud-beaver.yaml
+  - cold-start-placeholder.yaml
   - ingress.yaml
   - volumes.yaml
   - scaler.yaml
