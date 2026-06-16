@@ -21,8 +21,8 @@ key if needed:
 kubectl apply -f <path-to-secret>/key.yaml
 ```
 
-Follow [03-details-sealed-secrets.md](./03-details-sealed-secrets.md) for
-backup, recovery, and `kubeseal` usage.
+Follow [secrets-and-certificates.md](./secrets-and-certificates.md) for
+Sealed Secrets recovery and `kubeseal` usage.
 
 ## ArgoCD Sync Waves
 
