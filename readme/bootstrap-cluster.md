@@ -12,8 +12,6 @@ kubectl delete secret argocd-initial-admin-secret -n argocd
 kubectl apply -f kubernetes/app-of-apps.yaml
 ```
 
-Follow [02-details-argocd.md](./02-details-argocd.md) for detailed ArgoCD setup.
-
 ## Sealed Secrets
 
 Wait for the **Sealed Secrets** application to sync, then restore the backed-up
