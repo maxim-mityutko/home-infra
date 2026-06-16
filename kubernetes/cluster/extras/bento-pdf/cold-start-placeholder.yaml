@@ -5,6 +5,7 @@ metadata:
   name: cold-start-placeholder
   namespace: extras
   labels:
+    app.kubernetes.io/name: bento-pdf
     http.keda.sh/response-body: "true"
 data:
   index.html: |
@@ -13,7 +14,7 @@ data:
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Container is starting</title>
+        <title>Service is starting</title>
         <style>
           :root {
             color-scheme: light dark;
