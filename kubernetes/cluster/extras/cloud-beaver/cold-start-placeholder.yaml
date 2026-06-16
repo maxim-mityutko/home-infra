@@ -15,15 +15,16 @@ data:
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>CloudBeaver is starting</title>
         <style>
-          :root { color-scheme: light dark; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f4f7fb; color: #172033; --panel: #fff; --edge: #d8e0ea; --muted: #5d697c; --accent: #0f766e; --accent-soft: #ccfbf1; }
+          :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f4f7fb; color: #172033; --page-start: #f8fbff; --page-end: #eef3f8; --panel: #fff; --edge: #d8e0ea; --muted: #5d697c; --accent: #0f766e; --accent-soft: #ccfbf1; --shadow: rgba(23, 32, 51, 0.14); }
           * { box-sizing: border-box; }
-          body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 32rem), linear-gradient(180deg, #f8fbff 0%, #eef3f8 100%); }
+          body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 32rem), linear-gradient(180deg, var(--page-start) 0%, var(--page-end) 100%); }
           main { display: grid; justify-items: center; gap: 1.15rem; padding: 1.5rem; text-align: center; inline-size: min(100%, 28rem); }
           .scene { position: relative; width: 9rem; height: 8rem; display: grid; place-items: center; }
           h1 { margin: 0; font-size: 1.35rem; line-height: 1.2; font-weight: 800; letter-spacing: 0; }
           p { margin: 0; color: var(--muted); font-size: 0.98rem; line-height: 1.5; }
+          @media (prefers-color-scheme: dark) { :root { color-scheme: dark; background: #0f1b1a; color: #eafffb; --page-start: #132725; --page-end: #071211; --panel: #142722; --edge: #2a4f48; --muted: #9ec4bd; --accent: #4fd1c5; --accent-soft: #1f514b; --shadow: rgba(0, 0, 0, 0.34); } }
           @media (prefers-reduced-motion: reduce) { .scene * { animation: none !important; } }
-          .database { width: 5.8rem; height: 6.2rem; position: relative; border: 1px solid var(--edge); border-radius: 50% / 13%; background: var(--panel); box-shadow: 0 1.25rem 2.5rem rgba(23, 32, 51, 0.14); overflow: hidden; }
+          .database { width: 5.8rem; height: 6.2rem; position: relative; border: 1px solid var(--edge); border-radius: 50% / 13%; background: var(--panel); box-shadow: 0 1.25rem 2.5rem var(--shadow); overflow: hidden; }
           .database::before, .database::after { content: ""; position: absolute; left: -1px; right: -1px; height: 1.4rem; border: 1px solid var(--edge); border-radius: 50%; }
           .database::before { top: -0.1rem; background: var(--accent-soft); } .database::after { bottom: 1.7rem; border-color: var(--accent-soft); }
           .query { position: absolute; left: 1rem; right: 1rem; bottom: 0.9rem; height: 0.5rem; border-radius: 999px; background: var(--accent); animation: query-scan 1.8s ease-in-out infinite; }
