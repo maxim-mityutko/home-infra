@@ -8,6 +8,16 @@ tree:
 
 ## Sealed Secrets
 
+Install `kubeseal` CLI:
+
+```shell
+# version = 0.37.0
+# release-tag = v0.37.0
+wget https://github.com/bitnami/sealed-secrets/releases/download/<release-tag>/kubeseal-<version>-linux-arm64.tar.gz
+tar -xvzf kubeseal-<version>-linux-arm64.tar.gz kubeseal
+sudo install -m 755 kubeseal /usr/local/bin/kubeseal
+```
+
 Use `kubeseal` when adding or rotating a Kubernetes Secret in this repository.
 
 Encrypt using the certificate from the K8s cluster:
