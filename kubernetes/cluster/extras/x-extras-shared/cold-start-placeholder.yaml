@@ -74,7 +74,7 @@ data:
       <body>
         <main aria-live="polite">
           <div class="loader" aria-hidden="true"></div>
-          <p>Container is creating, please wait&hellip;</p>
+          <p>Service is starting up, please wait&hellip;</p>
         </main>
       </body>
     </html>
