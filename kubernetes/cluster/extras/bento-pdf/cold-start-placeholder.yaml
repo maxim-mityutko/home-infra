@@ -115,7 +115,7 @@ data:
             bottom: 1rem;
             padding: 0.35rem 0.45rem;
             border-radius: 0.4rem;
-            background: var(--accent);
+            background: var(--green);
             color: #fff;
             font-size: 0.72rem;
             font-weight: 800;
@@ -177,8 +177,8 @@ data:
           }
 
           @keyframes badge-pulse {
-            0%, 100% { transform: scale(1); background: var(--accent); }
-            50% { transform: scale(1.06); background: var(--green); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
           }
 
           @keyframes dot {
