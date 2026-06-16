@@ -13,13 +13,21 @@ data:
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Service is starting</title>
+        <title>BentoPDF is starting</title>
         <style>
           :root {
             color-scheme: light dark;
             font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #f8fafc;
-            color: #111827;
+            background: #f4f7fb;
+            color: #172033;
+            --paper: #ffffff;
+            --paper-edge: #d8e0ea;
+            --ink: #172033;
+            --muted: #5d697c;
+            --accent: #d64045;
+            --accent-soft: #f6c7ca;
+            --blue: #2978b5;
+            --green: #34a853;
           }
 
           * {
@@ -31,41 +39,157 @@ data:
             margin: 0;
             display: grid;
             place-items: center;
-            background: #f8fafc;
+            background:
+              radial-gradient(circle at 50% 35%, rgba(41, 120, 181, 0.12), transparent 32rem),
+              linear-gradient(180deg, #f8fbff 0%, #eef3f8 100%);
           }
 
           main {
             display: grid;
             justify-items: center;
-            gap: 1rem;
+            gap: 1.15rem;
             padding: 1.5rem;
             text-align: center;
+            inline-size: min(100%, 26rem);
           }
 
-          .loader {
-            width: 3rem;
-            height: 3rem;
-            border: 0.35rem solid #d1d5db;
-            border-top-color: #2563eb;
-            border-radius: 50%;
-            animation: spin 0.9s linear infinite;
+          .press {
+            position: relative;
+            width: 9rem;
+            height: 8rem;
+            display: grid;
+            place-items: center;
+          }
+
+          .page {
+            position: absolute;
+            width: 5.4rem;
+            height: 7rem;
+            border: 1px solid var(--paper-edge);
+            border-radius: 0.55rem 0.55rem 0.45rem 0.45rem;
+            background: var(--paper);
+            box-shadow: 0 1.25rem 2.5rem rgba(23, 32, 51, 0.14);
+            transform-origin: 50% 100%;
+          }
+
+          .page::before {
+            content: "";
+            position: absolute;
+            inset: 0.85rem 0.75rem auto;
+            height: 0.45rem;
+            border-radius: 999px;
+            background: var(--blue);
+            box-shadow:
+              0 1.05rem 0 -0.08rem var(--paper-edge),
+              0 2.1rem 0 -0.08rem var(--paper-edge),
+              0 3.15rem 0 -0.08rem var(--paper-edge);
+          }
+
+          .page::after {
+            content: "";
+            position: absolute;
+            right: -1px;
+            bottom: -1px;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.45rem 0 0.45rem 0;
+            background:
+              linear-gradient(135deg, transparent 49%, var(--paper-edge) 50%, #eef3f8 51%);
+          }
+
+          .page:nth-child(1) {
+            animation: page-one 2.4s ease-in-out infinite;
+          }
+
+          .page:nth-child(2) {
+            animation: page-two 2.4s ease-in-out infinite;
+          }
+
+          .page:nth-child(3) {
+            animation: page-three 2.4s ease-in-out infinite;
+          }
+
+          .badge {
+            position: absolute;
+            right: 0.9rem;
+            bottom: 1rem;
+            padding: 0.35rem 0.45rem;
+            border-radius: 0.4rem;
+            background: var(--green);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0;
+            box-shadow: 0 0.5rem 1rem rgba(214, 64, 69, 0.22);
+            animation: badge-pulse 2.4s ease-in-out infinite;
+          }
+
+          h1 {
+            margin: 0;
+            font-size: 1.35rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: 0;
           }
 
           p {
             margin: 0;
-            font-size: 1rem;
+            color: var(--muted);
+            font-size: 0.98rem;
             line-height: 1.5;
-            font-weight: 500;
           }
 
-          @keyframes spin {
-            to {
-              transform: rotate(360deg);
-            }
+          .progress {
+            display: flex;
+            gap: 0.35rem;
+            margin-top: 0.25rem;
+          }
+
+          .progress span {
+            width: 0.55rem;
+            height: 0.55rem;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            animation: dot 1.4s ease-in-out infinite;
+          }
+
+          .progress span:nth-child(2) {
+            animation-delay: 0.18s;
+          }
+
+          .progress span:nth-child(3) {
+            animation-delay: 0.36s;
+          }
+
+          @keyframes page-one {
+            0%, 100% { transform: translateX(-1.3rem) rotate(-10deg); }
+            45%, 65% { transform: translateX(-0.55rem) translateY(-0.2rem) rotate(-4deg); }
+          }
+
+          @keyframes page-two {
+            0%, 100% { transform: translateX(0.2rem) rotate(1deg); }
+            45%, 65% { transform: translateX(0) translateY(-0.45rem) rotate(0deg); }
+          }
+
+          @keyframes page-three {
+            0%, 100% { transform: translateX(1.35rem) rotate(10deg); }
+            45%, 65% { transform: translateX(0.55rem) translateY(-0.2rem) rotate(4deg); }
+          }
+
+          @keyframes badge-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+          }
+
+          @keyframes dot {
+            0%, 100% { transform: translateY(0); opacity: 0.45; }
+            50% { transform: translateY(-0.35rem); opacity: 1; }
           }
 
           @media (prefers-reduced-motion: reduce) {
-            .loader {
+            .page,
+            .badge,
+            .progress span {
               animation: none;
             }
           }
@@ -73,8 +197,19 @@ data:
       </head>
       <body>
         <main aria-live="polite">
-          <div class="loader" aria-hidden="true"></div>
-          <p>The service is starting up, please wait&hellip;</p>
+          <div class="press" aria-hidden="true">
+            <div class="page"></div>
+            <div class="page"></div>
+            <div class="page"></div>
+            <div class="badge">PDF</div>
+          </div>
+          <h1>BentoPDF is warming up</h1>
+          <p>Your PDF workspace is being started. This page will refresh automatically.</p>
+          <div class="progress" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </main>
       </body>
     </html>
