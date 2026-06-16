@@ -143,6 +143,7 @@ data:
             display: flex;
             gap: 0.35rem;
             margin-top: 0.25rem;
+            transform: translateX(-0.4rem);
           }
 
           .progress span {
