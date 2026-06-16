@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: cold-start-placeholder
+  name: bento-pdf-cold-start-placeholder
   namespace: extras
   labels:
     http.keda.sh/response-body: "true"
