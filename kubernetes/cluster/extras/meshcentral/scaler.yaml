@@ -13,6 +13,19 @@ spec:
   scalingMetric:
     concurrency:
       targetValue: 25
+    requestRate:
+      targetValue: 1
+      window: 1m
+  coldStart:
+    placeholder:
+      response:
+        bodyFromConfigMap:
+          name: meshcentral-cold-start-placeholder
+          key: index.html
+        headers:
+          Content-Type: text/html; charset=utf-8
+          Refresh: "5"
+        statusCode: 503
   # timeouts:
   #   readiness: 30s
 ---

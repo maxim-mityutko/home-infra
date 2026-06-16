@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: victoria-metrics-mcp-cold-start-placeholder
+  namespace: ai
+  labels:
+    http.keda.sh/response-body: "true"
+data:
+  index.html: |
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Victoria Metrics MCP is starting</title>
+        <style>
+          :root { color-scheme: light dark; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f4f7fb; color: #172033; --panel: #fff; --edge: #d8e0ea; --muted: #5d697c; --accent: #dd6b20; --accent-soft: #ffe2c2; }
+          * { box-sizing: border-box; }
+          body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 32rem), linear-gradient(180deg, #f8fbff 0%, #eef3f8 100%); }
+          main { display: grid; justify-items: center; gap: 1.15rem; padding: 1.5rem; text-align: center; inline-size: min(100%, 28rem); }
+          .scene { position: relative; width: 9rem; height: 8rem; display: grid; place-items: center; }
+          .badge { position: absolute; right: 0.8rem; bottom: 0.85rem; padding: 0.35rem 0.45rem; border-radius: 0.4rem; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 800; letter-spacing: 0; box-shadow: 0 0.5rem 1rem color-mix(in srgb, var(--accent) 24%, transparent); animation: badge-pulse 2.4s ease-in-out infinite; }
+          h1 { margin: 0; font-size: 1.35rem; line-height: 1.2; font-weight: 800; letter-spacing: 0; }
+          p { margin: 0; color: var(--muted); font-size: 0.98rem; line-height: 1.5; }
+          .progress { display: flex; gap: 0.35rem; margin-top: 0.25rem; transform: translateX(-0.4rem); }
+          .progress span { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--accent-soft); animation: dot 1.4s ease-in-out infinite; }
+          .progress span:nth-child(2) { animation-delay: 0.18s; }
+          .progress span:nth-child(3) { animation-delay: 0.36s; }
+          @keyframes badge-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+          @keyframes dot { 0%, 100% { transform: translateY(0); opacity: 0.45; } 50% { transform: translateY(-0.35rem); opacity: 1; } }
+          @media (prefers-reduced-motion: reduce) { .badge, .progress span, .scene * { animation: none !important; } }
+          .chart { width: 7rem; height: 5.6rem; border: 1px solid var(--edge); border-radius: 0.75rem; background: var(--panel); box-shadow: 0 1.25rem 2.5rem rgba(23, 32, 51, 0.14); display: flex; align-items: end; justify-content: center; gap: 0.5rem; padding: 1rem 0.8rem; }
+          .bar { width: 0.72rem; border-radius: 999px 999px 0.25rem 0.25rem; background: var(--accent); animation: bar-rise 1.6s ease-in-out infinite; }
+          .bar:nth-child(1) { height: 36%; } .bar:nth-child(2) { height: 62%; animation-delay: 0.15s; } .bar:nth-child(3) { height: 48%; animation-delay: 0.3s; } .bar:nth-child(4) { height: 78%; animation-delay: 0.45s; }
+          @keyframes bar-rise { 50% { transform: scaleY(0.55); background: var(--accent-soft); } }
+        </style>
+      </head>
+      <body>
+        <main aria-live="polite">
+          <div class="scene" aria-hidden="true">
+            <div class="chart"><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+            <div class="badge">MCP</div>
+          </div>
+          <h1>Victoria Metrics MCP is warming up</h1>
+          <p>The service is being started; it may take a few minutes. This page will refresh automatically.</p>
+          <div class="progress" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </main>
+      </body>
+    </html>

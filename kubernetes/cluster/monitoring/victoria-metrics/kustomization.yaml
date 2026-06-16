@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - rule-oom.yaml
+  - cold-start-placeholder.yaml
   - secret.yaml
   - dns-endpoint.yaml
   - dashboards/
