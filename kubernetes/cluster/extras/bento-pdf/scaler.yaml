@@ -13,6 +13,16 @@ spec:
   scalingMetric:
     concurrency:
       targetValue: 50
+  coldStart:
+    placeholder:
+      response:
+        bodyFromConfigMap:
+          name: cold-start-placeholder
+          key: index.html
+        headers:
+          Content-Type: text/html; charset=utf-8
+          Refresh: "5"
+        statusCode: 503
   # timeouts:
   #   readiness: 30s
 ---
