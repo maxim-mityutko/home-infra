@@ -19,12 +19,14 @@ sudo ./node/01-initial-node-setup.sh
 ```
 
 The script prompts for the static node IP, gateway, nameserver, MicroK8s
-version, target user, and network interface layout. It then performs the common
-node setup that used to be documented here manually:
+version, target user, whether Raspberry Pi cgroup memory flags are needed,
+whether the node is a Proxmox VM, and network interface layout. It then
+performs the common node setup that used to be documented here manually:
 
 - writes `/etc/netplan/50-cloud-init.yaml`
 - optionally adds Raspberry Pi cgroup memory flags
 - updates the system and installs `nfs-common`, `nano`, `git`, and `btop`
+- optionally installs `qemu-guest-agent` on Proxmox VMs
 - installs MicroK8s from the selected stable snap channel
 - creates the `kubectl` snap alias
 - adds the selected user to the `microk8s` group and prepares `~/.kube`
@@ -47,41 +49,7 @@ The script maps the interface with an IPv4 address in the provided subnet to
 `--confirm` only when the subnet is already known and non-interactive execution
 is wanted.
 
-### Optional Proxmox Step
-
-Install **qemu-guest-agent** on Proxmox VMs to enable proper management from
-Proxmox:
-
-```shell
-sudo apt install qemu-guest-agent
-```
-
-See the [Proxmox docs](https://pve.proxmox.com/wiki/Qemu-guest-agent) for more
-details.
-
 ## MicroK8s
-
-### Addons
-
-Enable only the addons that are still expected for the current cluster. Most
-cluster services are managed through ArgoCD after bootstrap.
-
-```shell
-# microk8s enable dashboard
-# microk8s enable dns
-# microk8s enable ingress:default-ssl-certificate=default/brhd-io-tls
-# When NVIDIA drivers can be preinstalled on the node:
-microk8s enable nvidia --gpu-operator-driver host
-```
-
-### Dashboard
-
-Use **Headlamp** as the GitOps-managed Kubernetes dashboard after bootstrap. For
-the built-in MicroK8s dashboard, create a temporary token when needed:
-
-```shell
-microk8s kubectl create token default
-```
 
 ### ArgoCD
 
@@ -108,30 +76,3 @@ kubectl apply -f <path-to-secret>/key.yaml
 
 Follow [03-details-sealed-secrets.md](./03-details-sealed-secrets.md) for
 backup, recovery, and `kubeseal` usage.
-
-## Kubernetes Cluster
-
-### Tags
-
-Add custom tags to nodes:
-
-```shell
-# type = intel / nvidia
-kubectl label nodes <node> kubernetes.io/gpu=<type>
-# size = large / medium / small
-kubectl label nodes <node> kubernetes.io/node-size=<size>
-```
-
-### Local Storage
-
-Create or mount the drive that will be used for local storage:
-
-```shell
-sudo mkdir /mnt/my-local-storage
-```
-
-Tag the node:
-
-```shell
-kubectl label nodes <node> kubernetes.io/local-storage=true
-```

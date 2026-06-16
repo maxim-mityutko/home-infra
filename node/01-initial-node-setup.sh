@@ -12,6 +12,8 @@
 #      - NAMESERVER_IP (IPv4 nameserver, defaults to MAIN_GW)
 #      - Username to add to the microk8s group
 #      - MicroK8s channel version
+#      - Whether this is a Raspberry Pi install requiring cgroup memory flags
+#      - Whether this is a Proxmox VM requiring qemu-guest-agent
 #   2) Lists available network interfaces and prompts for:
 #      - Main interface (required)
 #      - Secondary interface (optional)
@@ -25,8 +27,9 @@
 #        (in VLAN mode this applies to the VLAN interface, in 2-NIC mode to
 #        the selected secondary NIC).
 #   5) Optionally enables cgroup memory flags.
-#   6) Installs MicroK8s and common packages.
-#   7) Configures user access, journald, and DNS resolver behavior.
+#   6) Optionally installs qemu-guest-agent for Proxmox VMs.
+#   7) Installs MicroK8s and common packages.
+#   8) Configures user access, journald, and DNS resolver behavior.
 #
 # Notes:
 #   - Run with sudo/root privileges.
@@ -48,6 +51,8 @@ MAIN_IFACE=""
 SETUP_MODE=""
 SECONDARY_IFACE=""
 VLAN_ID="$DEFAULT_VLAN_ID"
+ENABLE_RPI_CGROUP_MEMORY="false"
+IS_PROXMOX_VM="false"
 AVAILABLE_IFACES=()
 
 log() {
@@ -155,6 +160,22 @@ prompt_microk8s_version() {
   MICROK8S_VERSION="${input:-$DEFAULT_MICROK8S_VERSION}"
 }
 
+prompt_raspberry_pi_cgroup_memory() {
+  local input
+  read -r -p "Enable Raspberry Pi cgroup memory flags? This is only needed for Raspberry Pi installs. [y/N]: " input
+  if [[ "$input" =~ ^[Yy]$ ]]; then
+    ENABLE_RPI_CGROUP_MEMORY="true"
+  fi
+}
+
+prompt_proxmox_vm() {
+  local input
+  read -r -p "Is this node running inside a Proxmox VM? [y/N]: " input
+  if [[ "$input" =~ ^[Yy]$ ]]; then
+    IS_PROXMOX_VM="true"
+  fi
+}
+
 list_available_interfaces() {
   mapfile -t AVAILABLE_IFACES < <(ip -o link show | awk -F': ' '$2 != "lo" {split($2, a, "@"); print a[1]}' | sort -u)
   (( ${#AVAILABLE_IFACES[@]} > 0 )) || die "No non-loopback network interfaces found."
@@ -229,20 +250,15 @@ prompt_interface_settings() {
     log "Invalid secondary interface selection."
   done
 
-  if [[ "$SETUP_MODE" == "vlan" ]]; then
-    while true; do
-      read -r -p "VLAN ID [${DEFAULT_VLAN_ID}]: " input
-      VLAN_ID="${input:-$DEFAULT_VLAN_ID}"
-      if [[ "$VLAN_ID" =~ ^[0-9]+$ ]] && (( VLAN_ID >= 1 && VLAN_ID <= 4094 )); then
-        SECONDARY_IFACE="${MAIN_IFACE}.${VLAN_ID}"
-        return
-      fi
-      log "VLAN ID must be an integer between 1 and 4094."
-    done
-  else
-    read -r -p "Secondary interface name [${DEFAULT_SECONDARY_IFACE}]: " input
-    SECONDARY_IFACE="${input:-$DEFAULT_SECONDARY_IFACE}"
-  fi
+  while true; do
+    read -r -p "VLAN ID [${DEFAULT_VLAN_ID}]: " input
+    VLAN_ID="${input:-$DEFAULT_VLAN_ID}"
+    if [[ "$VLAN_ID" =~ ^[0-9]+$ ]] && (( VLAN_ID >= 1 && VLAN_ID <= 4094 )); then
+      SECONDARY_IFACE="${MAIN_IFACE}.${VLAN_ID}"
+      return
+    fi
+    log "VLAN ID must be an integer between 1 and 4094."
+  done
 }
 
 print_summary() {
@@ -258,6 +274,8 @@ print_summary() {
   fi
   log "  User         : ${USERNAME}"
   log "  MicroK8s ver : ${MICROK8S_VERSION}"
+  log "  RPi cgroups : ${ENABLE_RPI_CGROUP_MEMORY}"
+  log "  Proxmox VM   : ${IS_PROXMOX_VM}"
   log ""
 }
 
@@ -285,7 +303,7 @@ network:
         - to: default
           via: ${MAIN_GW}
   vlans:
-    ${MAIN_IFACE}.1:
+    ${SECONDARY_IFACE}:
       id: ${VLAN_ID}
       link: ${MAIN_IFACE}
       dhcp4: false
@@ -313,18 +331,20 @@ EOF
 }
 
 configure_cgroup_memory() {
-  local confirm_cgroup
-  log ""
-  read -r -p "Modify /boot/firmware/cmdline.txt to enable cgroup memory? [y/N]: " confirm_cgroup
-  if [[ "$confirm_cgroup" =~ ^[Yy]$ ]]; then
-    if ! grep -q "cgroup_enable=memory" /boot/firmware/cmdline.txt; then
-      sudo sed -i 's/$/ cgroup_enable=memory cgroup_memory=1/' /boot/firmware/cmdline.txt
-      log "cgroup memory flags added."
-    else
-      log "cgroup memory flags already present, skipping."
-    fi
+  local cmdline_file="/boot/firmware/cmdline.txt"
+
+  if [[ "$ENABLE_RPI_CGROUP_MEMORY" != "true" ]]; then
+    log "Skipping Raspberry Pi cgroup memory modification."
+    return
+  fi
+
+  [[ -f "$cmdline_file" ]] || die "Raspberry Pi cmdline file not found: ${cmdline_file}"
+
+  if ! grep -q "cgroup_enable=memory" "$cmdline_file"; then
+    sudo sed -i 's/$/ cgroup_enable=memory cgroup_memory=1/' "$cmdline_file"
+    log "cgroup memory flags added."
   else
-    log "Skipping cgroup memory modification."
+    log "cgroup memory flags already present, skipping."
   fi
 }
 
@@ -334,11 +354,17 @@ install_microk8s() {
 }
 
 update_system() {
+  local packages=(nfs-common nano git btop)
+
   log "Updating system packages..."
   sudo apt update && sudo apt upgrade -y
 
-  log "Installing packages: nfs-common, nano, git, btop..."
-  sudo apt install -y nfs-common nano git btop
+  if [[ "$IS_PROXMOX_VM" == "true" ]]; then
+    packages+=(qemu-guest-agent)
+  fi
+
+  log "Installing packages: ${packages[*]}..."
+  sudo apt install -y "${packages[@]}"
 }
 
 configure_user_access() {
@@ -387,6 +413,8 @@ main() {
   prompt_nameserver_ip
   prompt_username
   prompt_microk8s_version
+  prompt_raspberry_pi_cgroup_memory
+  prompt_proxmox_vm
   prompt_interface_settings
   print_summary
   confirm_continue

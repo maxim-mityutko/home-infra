@@ -65,8 +65,9 @@ the parent application with [/kubernetes/app-of-apps.yaml](./kubernetes/app-of-a
 
 ### Microk8s
 
-Base node prep can be run with `node/01-initial-node-setup.sh`; keep MicroK8s addon
-selection aligned with the current cluster before enabling optional addons.
+Base node prep can be run with `node/01-initial-node-setup.sh`; see
+[`readme/bootstrap-node.md`](readme/bootstrap-node.md) for the node bootstrap
+runbook.
 
 ### Default (Tier 1)
 
