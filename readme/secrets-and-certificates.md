@@ -75,8 +75,5 @@ Use these permissions:
 
 Use `Include - All Zones` for zone resources.
 
-The `lets-encrypt` ClusterIssuer and wildcard `brhd.io` certificate are applied
-from:
-
-- `kubernetes/cluster/default/cert-manager/cluster-issuer.yaml`
-- `kubernetes/cluster/default/cert-manager/wildcard-certificate.yaml`
+The `lets-encrypt` ClusterIssuer is applied from
+`kubernetes/cluster/default/cert-manager/cluster-issuer.yaml`.
