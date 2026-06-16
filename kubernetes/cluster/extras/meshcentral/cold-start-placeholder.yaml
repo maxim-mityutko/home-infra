@@ -20,36 +20,27 @@ data:
           body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 32rem), linear-gradient(180deg, #f8fbff 0%, #eef3f8 100%); }
           main { display: grid; justify-items: center; gap: 1.15rem; padding: 1.5rem; text-align: center; inline-size: min(100%, 28rem); }
           .scene { position: relative; width: 9rem; height: 8rem; display: grid; place-items: center; }
-          .badge { position: absolute; right: 0.8rem; bottom: 0.85rem; padding: 0.35rem 0.45rem; border-radius: 0.4rem; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 800; letter-spacing: 0; box-shadow: 0 0.5rem 1rem color-mix(in srgb, var(--accent) 24%, transparent); animation: badge-pulse 2.4s ease-in-out infinite; }
           h1 { margin: 0; font-size: 1.35rem; line-height: 1.2; font-weight: 800; letter-spacing: 0; }
           p { margin: 0; color: var(--muted); font-size: 0.98rem; line-height: 1.5; }
-          .progress { display: flex; gap: 0.35rem; margin-top: 0.25rem; transform: translateX(-0.4rem); }
-          .progress span { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--accent-soft); animation: dot 1.4s ease-in-out infinite; }
-          .progress span:nth-child(2) { animation-delay: 0.18s; }
-          .progress span:nth-child(3) { animation-delay: 0.36s; }
-          @keyframes badge-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-          @keyframes dot { 0%, 100% { transform: translateY(0); opacity: 0.45; } 50% { transform: translateY(-0.35rem); opacity: 1; } }
-          @media (prefers-reduced-motion: reduce) { .badge, .progress span, .scene * { animation: none !important; } }
-          .mesh { width: 7rem; height: 6rem; position: relative; }
-          .mesh::before { content: ""; position: absolute; inset: 1.2rem 1.4rem; background: linear-gradient(32deg, transparent 47%, var(--accent-soft) 48% 52%, transparent 53%), linear-gradient(148deg, transparent 47%, var(--accent-soft) 48% 52%, transparent 53%), linear-gradient(90deg, transparent 47%, var(--accent-soft) 48% 52%, transparent 53%); }
-          .node { position: absolute; width: 1.55rem; height: 1.55rem; border-radius: 50%; background: var(--panel); border: 0.35rem solid var(--accent); box-shadow: 0 0.8rem 1.6rem rgba(23, 32, 51, 0.14); animation: node-pulse 1.8s ease-in-out infinite; }
-          .node:nth-child(1) { left: 2.7rem; top: 0.3rem; } .node:nth-child(2) { left: 0.4rem; top: 3.8rem; animation-delay: 0.2s; } .node:nth-child(3) { right: 0.4rem; top: 3.8rem; animation-delay: 0.4s; }
-          @keyframes node-pulse { 50% { transform: scale(1.14); } }
+          @media (prefers-reduced-motion: reduce) { .scene * { animation: none !important; } }
+          .kvm { width: 7.2rem; height: 6rem; position: relative; display: grid; place-items: start center; }
+          .monitor { width: 6.6rem; height: 4.1rem; border: 0.35rem solid var(--accent); border-radius: 0.65rem; background: var(--panel); box-shadow: 0 1.25rem 2.5rem rgba(23, 32, 51, 0.14); position: relative; overflow: hidden; }
+          .monitor::before { content: ""; position: absolute; inset: 0.75rem 0.9rem; border-radius: 0.35rem; background: linear-gradient(90deg, var(--accent-soft) 35%, transparent 0 48%, var(--accent-soft) 0 76%, transparent 0), linear-gradient(var(--accent-soft), var(--accent-soft)); background-size: 100% 0.45rem, 62% 0.45rem; background-position: 0 0, 0 1.05rem; background-repeat: no-repeat; }
+          .monitor::after { content: ""; position: absolute; left: 1.1rem; top: 2.4rem; width: 0.55rem; height: 0.55rem; border-right: 0.2rem solid var(--accent); border-bottom: 0.2rem solid var(--accent); transform: rotate(-45deg); animation: pointer-move 2s ease-in-out infinite; }
+          .stand { position: absolute; top: 4.05rem; width: 2.8rem; height: 1rem; border-radius: 0 0 0.35rem 0.35rem; border-bottom: 0.35rem solid var(--accent); border-left: 0.35rem solid transparent; border-right: 0.35rem solid transparent; }
+          .keyboard { position: absolute; bottom: 0.15rem; width: 5.8rem; height: 1rem; border: 1px solid var(--edge); border-radius: 0.35rem; background: var(--panel); box-shadow: 0 0.8rem 1.6rem rgba(23, 32, 51, 0.12); }
+          .keyboard::before { content: ""; position: absolute; inset: 0.3rem 0.55rem; border-radius: 999px; background: var(--accent-soft); box-shadow: 0.75rem 0 0 var(--accent-soft), 1.5rem 0 0 var(--accent-soft), 2.25rem 0 0 var(--accent-soft), 3rem 0 0 var(--accent-soft), 3.75rem 0 0 var(--accent-soft); animation: key-tap 1.8s ease-in-out infinite; }
+          @keyframes pointer-move { 50% { transform: translate(2.6rem, -0.9rem) rotate(-45deg); } }
+          @keyframes key-tap { 50% { box-shadow: 0.75rem 0 0 var(--accent), 1.5rem 0 0 var(--accent-soft), 2.25rem 0 0 var(--accent), 3rem 0 0 var(--accent-soft), 3.75rem 0 0 var(--accent); } }
         </style>
       </head>
       <body>
         <main aria-live="polite">
           <div class="scene" aria-hidden="true">
-            <div class="mesh"><span class="node"></span><span class="node"></span><span class="node"></span></div>
-            <div class="badge">MESH</div>
+            <div class="kvm"><div class="monitor"></div><div class="stand"></div><div class="keyboard"></div></div>
           </div>
           <h1>MeshCentral is warming up</h1>
           <p>The service is being started; it may take a few minutes. This page will refresh automatically.</p>
-          <div class="progress" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
         </main>
       </body>
     </html>

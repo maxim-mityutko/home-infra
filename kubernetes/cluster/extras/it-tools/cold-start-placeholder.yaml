@@ -20,16 +20,9 @@ data:
           body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 32rem), linear-gradient(180deg, #f8fbff 0%, #eef3f8 100%); }
           main { display: grid; justify-items: center; gap: 1.15rem; padding: 1.5rem; text-align: center; inline-size: min(100%, 28rem); }
           .scene { position: relative; width: 9rem; height: 8rem; display: grid; place-items: center; }
-          .badge { position: absolute; right: 0.8rem; bottom: 0.85rem; padding: 0.35rem 0.45rem; border-radius: 0.4rem; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 800; letter-spacing: 0; box-shadow: 0 0.5rem 1rem color-mix(in srgb, var(--accent) 24%, transparent); animation: badge-pulse 2.4s ease-in-out infinite; }
           h1 { margin: 0; font-size: 1.35rem; line-height: 1.2; font-weight: 800; letter-spacing: 0; }
           p { margin: 0; color: var(--muted); font-size: 0.98rem; line-height: 1.5; }
-          .progress { display: flex; gap: 0.35rem; margin-top: 0.25rem; transform: translateX(-0.4rem); }
-          .progress span { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--accent-soft); animation: dot 1.4s ease-in-out infinite; }
-          .progress span:nth-child(2) { animation-delay: 0.18s; }
-          .progress span:nth-child(3) { animation-delay: 0.36s; }
-          @keyframes badge-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-          @keyframes dot { 0%, 100% { transform: translateY(0); opacity: 0.45; } 50% { transform: translateY(-0.35rem); opacity: 1; } }
-          @media (prefers-reduced-motion: reduce) { .badge, .progress span, .scene * { animation: none !important; } }
+          @media (prefers-reduced-motion: reduce) { .scene * { animation: none !important; } }
           .tools { width: 7rem; height: 6rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.65rem; }
           .tile { border: 1px solid var(--edge); border-radius: 0.7rem; background: var(--panel); box-shadow: 0 0.8rem 1.6rem rgba(23, 32, 51, 0.12); position: relative; animation: tile-lift 2s ease-in-out infinite; }
           .tile::before { content: ""; position: absolute; inset: 1rem; border-radius: 0.35rem; border: 0.35rem solid var(--accent); border-left-color: var(--accent-soft); }
@@ -41,15 +34,9 @@ data:
         <main aria-live="polite">
           <div class="scene" aria-hidden="true">
             <div class="tools"><span class="tile"></span><span class="tile"></span><span class="tile"></span><span class="tile"></span></div>
-            <div class="badge">TOOLS</div>
           </div>
           <h1>IT Tools is warming up</h1>
           <p>The service is being started; it may take a few minutes. This page will refresh automatically.</p>
-          <div class="progress" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
         </main>
       </body>
     </html>
