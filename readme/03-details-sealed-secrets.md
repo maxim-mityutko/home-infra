@@ -2,14 +2,14 @@
 ## Controller
 Can be installed directly from manifest, however Helm charts are also available. ArgoCD app is configured.
 ```shell
-kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.18.5/controller.yaml
+kubectl apply -f https://github.com/bitnami/sealed-secrets/releases/download/v0.37.0/controller.yaml
 ```
 
 ## CLI
 ```shell
-# version = 0.18.5
-# release-tag = v0.18.5
-wget https://github.com/bitnami-labs/sealed-secrets/releases/download/<release-tag>/kubeseal-<version>-linux-arm64.tar.gz
+# version = 0.37.0
+# release-tag = v0.37.0
+wget https://github.com/bitnami/sealed-secrets/releases/download/<release-tag>/kubeseal-<version>-linux-arm64.tar.gz
 tar -xvzf kubeseal-<version>-linux-arm64.tar.gz kubeseal
 sudo install -m 755 kubeseal /usr/local/bin/kubeseal
 ```
@@ -18,7 +18,7 @@ sudo install -m 755 kubeseal /usr/local/bin/kubeseal
 ```shell
 # Encrypt using the certificate from the K8s cluster
 cat secret.yaml | kubeseal \
-    --controller-namespace sealed-secrets \
+    --controller-namespace default \
     --controller-name sealed-secrets \
     --format yaml \
     > sealed-secret.yaml
@@ -40,16 +40,16 @@ Public and private keys that controller generates upon startup can be backed up 
 the cluster if necessary.
 ```shell
 # backup
-microk8s kubectl get secret -n sealed-secrets -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml > main.key
+microk8s kubectl get secret -n default -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml > main.key
 
 # NOTE: if existing key exists in `sealed-secrets\secrets`, it must be dropped
 
 # restore
 microk8s kubectl apply -f main.key
-microk8s kubectl delete pod -n sealed-secrets -l app.kubernetes.io/name=sealed-secrets
+microk8s kubectl delete pod -n default -l app.kubernetes.io/name=sealed-secrets
 ```
 
-FAQ: https://github.com/bitnami-labs/sealed-secrets#how-can-i-do-a-backup-of-my-sealedsecrets
+FAQ: https://github.com/bitnami/sealed-secrets#how-can-i-do-a-backup-of-my-sealedsecrets
 
 # Pre-Commit Hook
 ```shell
@@ -70,5 +70,5 @@ pre-commit install
 ```
 
 # Links
-* [Sealed Secrets Releases](https://github.com/bitnami-labs/sealed-secrets/releases)
-* [Sealed Secrets Readme](https://github.com/bitnami-labs/sealed-secrets/tree/main/helm/sealed-secrets)
+* [Sealed Secrets Releases](https://github.com/bitnami/sealed-secrets/releases)
+* [Sealed Secrets Helm Chart](https://github.com/bitnami/sealed-secrets/tree/main/helm/sealed-secrets)
