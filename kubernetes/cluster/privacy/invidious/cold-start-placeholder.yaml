@@ -25,7 +25,7 @@ data:
           @media (prefers-reduced-motion: reduce) { .scene * { animation: none !important; } }
           .screen { width: 7.2rem; height: 4.6rem; border: 1px solid var(--edge); border-radius: 0.7rem; background: var(--panel); box-shadow: 0 1.25rem 2.5rem rgba(23, 32, 51, 0.14); position: relative; overflow: hidden; }
           .screen::before { content: ""; position: absolute; inset: 1.45rem 3rem; clip-path: polygon(0 0, 100% 50%, 0 100%); background: var(--accent); animation: play-pulse 2s ease-in-out infinite; }
-          .screen::after { content: ""; position: absolute; left: 0.8rem; right: 0.8rem; bottom: 0.7rem; height: 0.35rem; border-radius: 999px; background: var(--accent-soft); box-shadow: inset 2.4rem 0 0 var(--accent); animation: scrub 2.2s ease-in-out infinite; }
+          .screen::after { content: ""; position: absolute; left: 0.8rem; right: 0.8rem; bottom: 0.45rem; height: 0.35rem; border-radius: 999px; background: var(--accent-soft); box-shadow: inset 2.4rem 0 0 var(--accent); animation: scrub 2.2s ease-in-out infinite; }
           @keyframes play-pulse { 50% { transform: scale(1.07); } }
           @keyframes scrub { 50% { box-shadow: inset 5.2rem 0 0 var(--accent); } }
         </style>
