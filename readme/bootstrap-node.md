@@ -48,31 +48,3 @@ The script maps the interface with an IPv4 address in the provided subnet to
 `forge` and the interface without a global IPv4 address to `pub`. Use
 `--confirm` only when the subnet is already known and non-interactive execution
 is wanted.
-
-## MicroK8s
-
-### ArgoCD
-
-Install ArgoCD and bootstrap the app-of-apps tree:
-
-```shell
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
-kubectl delete secret argocd-initial-admin-secret -n argocd
-kubectl apply -f kubernetes/app-of-apps.yaml
-```
-
-Follow [02-details-argocd.md](./02-details-argocd.md) for detailed ArgoCD setup.
-
-### Sealed Secrets
-
-Wait for the **Sealed Secrets** application to sync, then restore the backed-up
-key if needed:
-
-```shell
-kubectl apply -f <path-to-secret>/key.yaml
-```
-
-Follow [03-details-sealed-secrets.md](./03-details-sealed-secrets.md) for
-backup, recovery, and `kubeseal` usage.
