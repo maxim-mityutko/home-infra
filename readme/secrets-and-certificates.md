@@ -10,49 +10,42 @@ tree:
 
 Use `kubeseal` when adding or rotating a Kubernetes Secret in this repository.
 
-Encrypt a Secret with the certificate from the current cluster:
+Encrypt using the certificate from the K8s cluster:
 
 ```shell
 cat secret.yaml | kubeseal \
-  --controller-namespace sealed-secrets \
-  --controller-name sealed-secrets \
-  --format yaml \
-  > sealed-secret.yaml
+    --controller-namespace sealed-secrets \
+    --controller-name sealed-secrets \
+    --format yaml \
+    > sealed-secret.yaml
 ```
 
-Encrypt with a local public certificate from a backed-up key:
+Encrypt with the key stored locally:
 
 ```shell
 cat secret.yaml | kubeseal \
-  --cert sealed-secrets-public.crt \
-  --format yaml \
-  > sealed-secret.yaml
+    --cert my_cert.cert --format yaml >> sealed-secret.yaml
 ```
 
 Decrypt a SealedSecret with the recovery private key:
 
 ```shell
 cat sealed-secret.yaml | kubeseal \
-  --recovery-private-key sealed-secrets-key.yaml \
-  --recovery-unseal
+    --recovery-private-key backup.yaml --recovery-unseal
 ```
 
 Back up the controller key after a fresh bootstrap and store it outside this
 repository:
 
 ```shell
-kubectl get secret \
-  -n sealed-secrets \
-  -l sealedsecrets.bitnami.com/sealed-secrets-key \
-  -o yaml \
-  > sealed-secrets-key.yaml
-```
+# backup
+microk8s kubectl get secret -n sealed-secrets -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml > main.key
 
-Restore the key before syncing existing SealedSecrets into a rebuilt cluster:
+# NOTE: if existing key exists in `sealed-secrets\secrets`, it must be dropped
 
-```shell
-kubectl apply -f sealed-secrets-key.yaml
-kubectl delete pod -n sealed-secrets -l app.kubernetes.io/name=sealed-secrets
+# restore
+microk8s kubectl apply -f main.key
+microk8s kubectl delete pod -n sealed-secrets -l app.kubernetes.io/name=sealed-secrets
 ```
 
 ## cert-manager
