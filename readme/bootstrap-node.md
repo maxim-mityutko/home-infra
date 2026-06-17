@@ -28,6 +28,8 @@ performs the common node setup that used to be documented here manually:
 - updates the system and installs `nfs-common`, `nano`, `git`, and `btop`
 - optionally installs `qemu-guest-agent` on Proxmox VMs
 - installs MicroK8s from the selected stable snap channel
+- holds automatic MicroK8s snap refreshes so node upgrades can be performed
+  deliberately
 - creates the `kubectl` snap alias
 - adds the selected user to the `microk8s` group and prepares `~/.kube`
 - switches journald to volatile storage
@@ -35,6 +37,10 @@ performs the common node setup that used to be documented here manually:
 
 Review the script's summary before confirming. Reboot after it finishes so
 network and boot parameter changes take effect.
+
+MicroK8s snap refreshes are held with `snap refresh --hold microk8s`.
+Upgrade nodes manually, one at a time, with `sudo snap refresh microk8s` when a
+new revision should be rolled out.
 
 ### Interface Altnames
 

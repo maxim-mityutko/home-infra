@@ -29,7 +29,8 @@
 #   5) Optionally enables cgroup memory flags.
 #   6) Optionally installs qemu-guest-agent for Proxmox VMs.
 #   7) Installs MicroK8s and common packages.
-#   8) Configures user access, journald, and DNS resolver behavior.
+#   8) Disables automatic MicroK8s snap refreshes.
+#   9) Configures user access, journald, and DNS resolver behavior.
 #
 # Notes:
 #   - Run with sudo/root privileges.
@@ -353,6 +354,11 @@ install_microk8s() {
   sudo snap install microk8s --channel="${MICROK8S_VERSION}/stable" --classic
 }
 
+disable_microk8s_auto_refresh() {
+  log "Disabling automatic MicroK8s snap refreshes..."
+  sudo snap refresh --hold microk8s
+}
+
 update_system() {
   local packages=(nfs-common nano git btop)
 
@@ -423,6 +429,7 @@ main() {
   write_netplan_config
   configure_cgroup_memory
   install_microk8s
+  disable_microk8s_auto_refresh
   configure_user_access
   configure_logging
   configure_dns
