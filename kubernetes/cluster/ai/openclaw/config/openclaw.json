@@ -91,7 +91,7 @@
           "mentionPatterns": ["@clamps", "Clamps"]
         },
         "skills": ["bitwarden", "github-app-token", "github"],
-        "model": "ollama/minimax-m2.7:cloud",
+        "model": "ollama/gemma4:31b-cloud",
         "fastModeDefault": true,
         "thinkingDefault": "off"
       },
