@@ -3,6 +3,8 @@ kind: Kustomization
 namespace: default
 resources:
   - blocky.yaml
+  - omada-generated-config.yaml
+  - omada-sync.yaml
   - service-api.yaml
   - service-dns.yaml
   - secret.yaml

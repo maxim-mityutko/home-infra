@@ -1,0 +1,227 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: blocky-omada-sync
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+    app.kubernetes.io/component: omada-sync
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: blocky-omada-sync
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+    app.kubernetes.io/component: omada-sync
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "create", "patch", "update"]
+  - apiGroups: ["apps"]
+    resources: ["statefulsets"]
+    verbs: ["get", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: blocky-omada-sync
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+    app.kubernetes.io/component: omada-sync
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: blocky-omada-sync
+subjects:
+  - kind: ServiceAccount
+    name: blocky-omada-sync
+    namespace: default
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: blocky-omada-sync
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+    app.kubernetes.io/component: omada-sync
+spec:
+  schedule: "*/15 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: blocky
+            app.kubernetes.io/component: omada-sync
+        spec:
+          serviceAccountName: blocky-omada-sync
+          restartPolicy: Never
+          containers:
+            - name: sync
+              image: bitnami/kubectl:latest
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: OMADA_BASE_URL
+                  value: https://use1-omada-northbound.tplinkcloud.com
+                - name: OMADA_DNS_ORIGIN
+                  value: internal.brhd.io.
+                - name: OMADA_DNS_TTL
+                  value: "3600"
+                - name: CLIENT_LOOKUP_UPSTREAM
+                  value: 192.168.12.1
+                - name: CUSTOM_DNS_CONFIGMAP
+                  value: blocky-omada-customdns
+                - name: CLIENT_LOOKUP_CONFIGMAP
+                  value: blocky-omada-clientlookup
+                - name: BLOCKY_STATEFULSET
+                  value: blocky
+                - name: OMADA_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: blocky-omada-sync
+                      key: OMADA_ID
+                - name: OMADA_SITE_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: blocky-omada-sync
+                      key: OMADA_SITE_ID
+                - name: OMADA_LAN_NETWORK_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: blocky-omada-sync
+                      key: OMADA_LAN_NETWORK_ID
+                - name: OMADA_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: blocky-omada-sync
+                      key: OMADA_CLIENT_ID
+                - name: OMADA_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: blocky-omada-sync
+                      key: OMADA_CLIENT_SECRET
+              command:
+                - /bin/sh
+                - -ec
+                - |
+                  workdir="$(mktemp -d)"
+                  trap 'rm -rf "$workdir"' EXIT
+
+                  token_json="$(
+                    jq -nc \
+                      --arg omadacId "$OMADA_ID" \
+                      --arg clientId "$OMADA_CLIENT_ID" \
+                      --arg clientSecret "$OMADA_CLIENT_SECRET" \
+                      '{omadacId: $omadacId, client_id: $clientId, client_secret: $clientSecret}' |
+                    curl -fsS -X POST "$OMADA_BASE_URL/openapi/authorize/token?grant_type=client_credentials" \
+                      -H "Content-Type: application/json" \
+                      -d @-
+                  )"
+                  access_token="$(printf '%s' "$token_json" | jq -er '.result.accessToken')"
+
+                  dns_json="$(
+                    curl -fsS \
+                      "$OMADA_BASE_URL/openapi/v1/$OMADA_ID/sites/$OMADA_SITE_ID/setting/lan/dns?page=1&pageSize=1000" \
+                      -H "Authorization: AccessToken=$access_token"
+                  )"
+
+                  records="$(
+                    printf '%s' "$dns_json" |
+                    jq -r --arg lan "$OMADA_LAN_NETWORK_ID" '
+                      def fqdn: if endswith(".") then . else . + "." end;
+
+                      .result.data
+                      | map(select(
+                          .enable == true
+                          and .type == 0
+                          and ((.lanNetworkIds // []) | index($lan))
+                          and (((.ipAddresses // []) | length) > 0 or (((.ipv6Addresses // []) | length) > 0))
+                        ))
+                      | sort_by(.domain)
+                      | .[]
+                      | (.domain | fqdn) as $domain
+                      | (
+                          (.ipAddresses // [] | sort[] | "\($domain) 3600 IN A \(.)"),
+                          (.ipv6Addresses // [] | sort[] | "\($domain) 3600 IN AAAA \(.)"),
+                          (.aliases // [] | sort[] | (. | fqdn) as $alias | "\($alias) 3600 IN CNAME \($domain)")
+                        )
+                    '
+                  )"
+
+                  {
+                    printf 'customDNS:\n'
+                    printf '  filterUnmappedTypes: true\n'
+                    printf '  zone: |\n'
+                    printf '    $ORIGIN %s\n' "$OMADA_DNS_ORIGIN"
+                    printf '    $TTL %s\n' "$OMADA_DNS_TTL"
+                    printf '\n'
+                    if [ -n "$records" ]; then
+                      printf '%s\n' "$records" | sed 's/^/    /'
+                    fi
+                  } > "$workdir/omada-custom-dns.yml"
+
+                  printf '%s' "$dns_json" |
+                    jq -r --arg lan "$OMADA_LAN_NETWORK_ID" '
+                      .result.data
+                      | map(select(
+                          .enable == true
+                          and .type == 0
+                          and ((.lanNetworkIds // []) | index($lan))
+                          and (((.ipAddresses // []) | length) > 0 or (((.ipv6Addresses // []) | length) > 0))
+                        ))
+                      | sort_by(.domain)
+                      | ["clientLookup:", "  upstream: " + env.CLIENT_LOOKUP_UPSTREAM, "  clients:"],
+                        (
+                          .[] |
+                          ["    \"" + .domain + "\":"] +
+                          (((.ipAddresses // []) + (.ipv6Addresses // [])) | sort | map("      - " + .))
+                        )
+                      | .[]
+                    ' > "$workdir/omada-client-lookup.yml"
+
+                  new_hash="$(cat "$workdir/omada-custom-dns.yml" "$workdir/omada-client-lookup.yml" | sha256sum | awk '{print $1}')"
+                  old_hash="$(
+                    kubectl get configmap "$CUSTOM_DNS_CONFIGMAP" \
+                      -o jsonpath='{.metadata.annotations.omada\.brhd\.io/hash}' 2>/dev/null || true
+                  )"
+
+                  if [ "$new_hash" = "$old_hash" ]; then
+                    echo "Omada DNS config is unchanged ($new_hash)"
+                    exit 0
+                  fi
+
+                  kubectl create configmap "$CUSTOM_DNS_CONFIGMAP" \
+                    --from-file=omada-custom-dns.yml="$workdir/omada-custom-dns.yml" \
+                    --dry-run=client -o yaml |
+                    kubectl label --local -f - \
+                      app.kubernetes.io/name=blocky \
+                      app.kubernetes.io/component=omada-sync \
+                      -o yaml |
+                    kubectl annotate --local -f - \
+                      omada.brhd.io/hash="$new_hash" \
+                      -o yaml |
+                    kubectl apply -f -
+
+                  kubectl create configmap "$CLIENT_LOOKUP_CONFIGMAP" \
+                    --from-file=omada-client-lookup.yml="$workdir/omada-client-lookup.yml" \
+                    --dry-run=client -o yaml |
+                    kubectl label --local -f - \
+                      app.kubernetes.io/name=blocky \
+                      app.kubernetes.io/component=omada-sync \
+                      -o yaml |
+                    kubectl annotate --local -f - \
+                      omada.brhd.io/hash="$new_hash" \
+                      -o yaml |
+                    kubectl apply -f -
+
+                  kubectl patch statefulset "$BLOCKY_STATEFULSET" \
+                    --type merge \
+                    -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"omada.brhd.io/dns-hash\":\"$new_hash\"}}}}}"

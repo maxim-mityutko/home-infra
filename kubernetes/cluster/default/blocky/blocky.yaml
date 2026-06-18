@@ -63,6 +63,12 @@ spec:
             - name: blocky-secret-config
               mountPath: /app/config/custom-dns.yml
               subPath: custom-dns.yml
+            - name: blocky-omada-customdns
+              mountPath: /app/config/omada-custom-dns.yml
+              subPath: omada-custom-dns.yml
+            - name: blocky-omada-clientlookup
+              mountPath: /app/config/omada-client-lookup.yml
+              subPath: omada-client-lookup.yml
           readinessProbe:
             tcpSocket:
               port: dns-tcp
@@ -77,6 +83,12 @@ spec:
         - name: blocky-secret-config
           secret:
             secretName: blocky-secret-config
+        - name: blocky-omada-customdns
+          configMap:
+            name: blocky-omada-customdns
+        - name: blocky-omada-clientlookup
+          configMap:
+            name: blocky-omada-clientlookup
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

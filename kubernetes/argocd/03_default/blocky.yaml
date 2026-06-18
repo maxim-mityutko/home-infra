@@ -18,3 +18,23 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
+  ignoreDifferences:
+    - group: ""
+      kind: ConfigMap
+      name: blocky-omada-customdns
+      jsonPointers:
+        - /data
+        - /metadata/annotations/omada.brhd.io~1hash
+    - group: ""
+      kind: ConfigMap
+      name: blocky-omada-clientlookup
+      jsonPointers:
+        - /data
+        - /metadata/annotations/omada.brhd.io~1hash
+    - group: apps
+      kind: StatefulSet
+      name: blocky
+      jsonPointers:
+        - /spec/template/metadata/annotations/omada.brhd.io~1dns-hash
