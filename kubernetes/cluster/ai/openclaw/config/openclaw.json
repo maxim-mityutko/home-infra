@@ -38,20 +38,8 @@
             "input": ["text"]
           },
           {
-            "id": "gpt-oss:120b",
-            "name": "gpt-oss:120b",
-            "reasoning": true,
-            "input": ["text"]
-          },
-          {
             "id": "qwen3-coder-next",
             "name": "qwen3-coder-next",
-            "reasoning": true,
-            "input": ["text"]
-          },
-          {
-            "id": "devstral-small-2:24b",
-            "name": "devstral-small-2:24b",
             "reasoning": true,
             "input": ["text"]
           },
@@ -76,9 +64,7 @@
         "primary": "openai/gpt-5.5",
         "fallbacks": [
           "ollama/gemma4:31b",
-          "ollama/gpt-oss:120b",
           "ollama/qwen3-coder-next",
-          "ollama/devstral-small-2:24b",
           "ollama/nemotron-3-nano:30b"
         ]
       }
@@ -108,9 +94,7 @@
         "model": {
           "primary": "ollama/gemma4:31b",
           "fallbacks": [
-            "ollama/gpt-oss:120b",
             "ollama/qwen3-coder-next",
-            "ollama/devstral-small-2:24b",
             "ollama/nemotron-3-nano:30b"
           ]
         },
