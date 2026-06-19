@@ -91,11 +91,13 @@ spec:
                 - /bin/sh
                 - -ec
                 - |
+                  echo "Starting Omada DNS sync"
                   dns_ttl="3600"
 
                   workdir="$(mktemp -d)"
-                  trap 'rm -rf "$workdir"' EXIT
+                  trap 'status=$?; rm -rf "$workdir"; if [ "$status" -ne 0 ]; then echo "Omada DNS sync failed with exit code $status" >&2; fi' EXIT
 
+                  echo "Requesting Omada access token"
                   token_json="$(
                     jq -nc \
                       --arg omadacId "$OMADA_CONTROLLER_ID" \
@@ -108,6 +110,7 @@ spec:
                   )"
                   access_token="$(printf '%s' "$token_json" | jq -er '.result.accessToken')"
 
+                  echo "Fetching Omada LAN network"
                   lan_network_json="$(
                     curl -fsS \
                       "$OMADA_BASE_URL/openapi/v1/$OMADA_CONTROLLER_ID/sites/$OMADA_SITE_ID/lan-networks/$OMADA_LAN_NETWORK_ID" \
@@ -121,7 +124,9 @@ spec:
                       | if endswith(".") then . else . + "." end
                     '
                   )"
+                  echo "Using DNS origin $dns_origin"
 
+                  echo "Fetching Omada LAN DNS records"
                   dns_json="$(
                     curl -fsS \
                       "$OMADA_BASE_URL/openapi/v1/$OMADA_CONTROLLER_ID/sites/$OMADA_SITE_ID/setting/lan/dns?page=1&pageSize=1000" \
@@ -151,6 +156,12 @@ spec:
                         )
                     '
                   )"
+                  if [ -n "$records" ]; then
+                    record_count="$(printf '%s\n' "$records" | wc -l | tr -d ' ')"
+                  else
+                    record_count="0"
+                  fi
+                  echo "Generated $record_count DNS zone records"
 
                   {
                     printf 'customDNS:\n'
@@ -176,21 +187,42 @@ spec:
                     exit 0
                   fi
 
-                  kubectl create configmap "$CUSTOM_DNS_CONFIGMAP" \
-                    --from-file=omada-custom-dns.yml="$workdir/omada-custom-dns.yml" \
-                    --dry-run=client -o yaml |
-                    kubectl label --local -f - \
-                      app.kubernetes.io/name=blocky \
-                      app.kubernetes.io/component=omada-dns-sync \
-                      -o yaml |
-                    kubectl annotate --local -f - \
-                      omada/hash="$new_hash" \
-                      -o yaml |
-                    kubectl apply -f -
+                  echo "Updating $CUSTOM_DNS_CONFIGMAP ($new_hash)"
+                  if kubectl get configmap "$CUSTOM_DNS_CONFIGMAP" >/dev/null 2>&1; then
+                    kubectl patch configmap "$CUSTOM_DNS_CONFIGMAP" --type merge -p "$(
+                      jq -n \
+                        --arg hash "$new_hash" \
+                        --rawfile config "$workdir/omada-custom-dns.yml" \
+                        '{
+                          metadata: {
+                            labels: {
+                              "app.kubernetes.io/name": "blocky",
+                              "app.kubernetes.io/component": "omada-dns-sync"
+                            },
+                            annotations: {"omada/hash": $hash}
+                          },
+                          data: {"omada-custom-dns.yml": $config}
+                        }'
+                    )"
+                  else
+                    kubectl create configmap "$CUSTOM_DNS_CONFIGMAP" \
+                      --from-file=omada-custom-dns.yml="$workdir/omada-custom-dns.yml" \
+                      --dry-run=client -o yaml |
+                      kubectl label --local -f - \
+                        app.kubernetes.io/name=blocky \
+                        app.kubernetes.io/component=omada-dns-sync \
+                        -o yaml |
+                      kubectl annotate --local -f - \
+                        omada/hash="$new_hash" \
+                        -o yaml |
+                      kubectl create -f -
+                  fi
 
+                  echo "Patching $BLOCKY_STATEFULSET with DNS config hash"
                   kubectl patch statefulset "$BLOCKY_STATEFULSET" \
                     --type merge \
                     -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"omada/dns-hash\":\"$new_hash\"}}}}}"
+                  echo "Omada DNS sync completed"
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -228,9 +260,11 @@ spec:
                 - /bin/sh
                 - -ec
                 - |
+                  echo "Starting Omada clients sync"
                   workdir="$(mktemp -d)"
-                  trap 'rm -rf "$workdir"' EXIT
+                  trap 'status=$?; rm -rf "$workdir"; if [ "$status" -ne 0 ]; then echo "Omada clients sync failed with exit code $status" >&2; fi' EXIT
 
+                  echo "Requesting Omada access token"
                   token_json="$(
                     jq -nc \
                       --arg omadacId "$OMADA_CONTROLLER_ID" \
@@ -248,6 +282,7 @@ spec:
                   : > "$workdir/clients.jsonl"
 
                   while :; do
+                    echo "Fetching Omada clients page $page"
                     client_json="$(
                       jq -nc \
                         --argjson page "$page" \
@@ -263,6 +298,7 @@ spec:
                     printf '%s' "$client_json" | jq -c '.result.data[]?' >> "$workdir/clients.jsonl"
                     current_size="$(printf '%s' "$client_json" | jq -r '.result.currentSize // (.result.data // [] | length)')"
                     total_rows="$(printf '%s' "$client_json" | jq -r '.result.totalRows // 0')"
+                    echo "Fetched $current_size clients on page $page ($total_rows total rows reported)"
 
                     if [ "$current_size" -eq 0 ] || [ "$((page * page_size))" -ge "$total_rows" ]; then
                       break
@@ -270,6 +306,8 @@ spec:
 
                     page="$((page + 1))"
                   done
+                  raw_client_count="$(wc -l < "$workdir/clients.jsonl" | tr -d ' ')"
+                  echo "Fetched $raw_client_count raw client records with IPs"
 
                   clients="$(
                     jq -s -r '
@@ -304,6 +342,7 @@ spec:
                       printf '  clients: {}\n'
                     fi
                   } > "$workdir/omada-client-lookup.yml"
+                  echo "Generated Omada client lookup config"
 
                   new_hash="$(sha256sum "$workdir/omada-client-lookup.yml" | awk '{print $1}')"
                   old_hash="$(
@@ -317,18 +356,39 @@ spec:
                     exit 0
                   fi
 
-                  kubectl create configmap "$CLIENT_LOOKUP_CONFIGMAP" \
-                    --from-file=omada-client-lookup.yml="$workdir/omada-client-lookup.yml" \
-                    --dry-run=client -o yaml |
-                    kubectl label --local -f - \
-                      app.kubernetes.io/name=blocky \
-                      app.kubernetes.io/component=omada-clients-sync \
-                      -o yaml |
-                    kubectl annotate --local -f - \
-                      omada/hash="$new_hash" \
-                      -o yaml |
-                    kubectl apply -f -
+                  echo "Updating $CLIENT_LOOKUP_CONFIGMAP ($new_hash)"
+                  if kubectl get configmap "$CLIENT_LOOKUP_CONFIGMAP" >/dev/null 2>&1; then
+                    kubectl patch configmap "$CLIENT_LOOKUP_CONFIGMAP" --type merge -p "$(
+                      jq -n \
+                        --arg hash "$new_hash" \
+                        --rawfile config "$workdir/omada-client-lookup.yml" \
+                        '{
+                          metadata: {
+                            labels: {
+                              "app.kubernetes.io/name": "blocky",
+                              "app.kubernetes.io/component": "omada-clients-sync"
+                            },
+                            annotations: {"omada/hash": $hash}
+                          },
+                          data: {"omada-client-lookup.yml": $config}
+                        }'
+                    )"
+                  else
+                    kubectl create configmap "$CLIENT_LOOKUP_CONFIGMAP" \
+                      --from-file=omada-client-lookup.yml="$workdir/omada-client-lookup.yml" \
+                      --dry-run=client -o yaml |
+                      kubectl label --local -f - \
+                        app.kubernetes.io/name=blocky \
+                        app.kubernetes.io/component=omada-clients-sync \
+                        -o yaml |
+                      kubectl annotate --local -f - \
+                        omada/hash="$new_hash" \
+                        -o yaml |
+                      kubectl create -f -
+                  fi
 
+                  echo "Patching $BLOCKY_STATEFULSET with client lookup config hash"
                   kubectl patch statefulset "$BLOCKY_STATEFULSET" \
                     --type merge \
                     -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"omada/clients-hash\":\"$new_hash\"}}}}}"
+                  echo "Omada clients sync completed"
