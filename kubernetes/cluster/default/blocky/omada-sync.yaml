@@ -91,7 +91,6 @@ spec:
                 - /bin/sh
                 - -ec
                 - |
-                  dns_origin="internal.brhd.io."
                   dns_ttl="3600"
 
                   workdir="$(mktemp -d)"
@@ -108,6 +107,20 @@ spec:
                       -d @-
                   )"
                   access_token="$(printf '%s' "$token_json" | jq -er '.result.accessToken')"
+
+                  lan_network_json="$(
+                    curl -fsS \
+                      "$OMADA_BASE_URL/openapi/v1/$OMADA_ID/sites/$OMADA_SITE_ID/lan-networks/$OMADA_LAN_NETWORK_ID" \
+                      -H "Authorization: AccessToken=$access_token"
+                  )"
+                  dns_origin="$(
+                    printf '%s' "$lan_network_json" |
+                    jq -er '
+                      .result.domain
+                      | select(type == "string" and length > 0)
+                      | if endswith(".") then . else . + "." end
+                    '
+                  )"
 
                   dns_json="$(
                     curl -fsS \
