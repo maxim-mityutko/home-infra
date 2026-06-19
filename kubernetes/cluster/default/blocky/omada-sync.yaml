@@ -288,7 +288,10 @@ spec:
                   )"
                   lan_network_name="$(
                     printf '%s' "$lan_network_json" |
-                    jq -er '.result.name | select(type == "string" and length > 0)'
+                    jq -er '
+                      (.result.origName // .result.name)
+                      | select(type == "string" and length > 0)
+                    '
                   )"
                   echo "Filtering Omada clients by LAN network '$lan_network_name'"
 
