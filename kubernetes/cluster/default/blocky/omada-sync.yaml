@@ -323,7 +323,7 @@ spec:
 
                     while :; do
                       echo "Fetching Omada clients page $page"
-                      client_json="$(
+                      request_body="$(
                         jq -nc \
                           --argjson page "$page" \
                           --argjson pageSize "$page_size" \
@@ -339,7 +339,10 @@ spec:
                             else
                               {}
                             end
-                          }' |
+                          )'
+                      )"
+                      client_json="$(
+                        printf '%s' "$request_body" |
                         curl -fsS -X POST \
                           "$OMADA_BASE_URL/openapi/v2/$OMADA_CONTROLLER_ID/sites/$OMADA_SITE_ID/clients" \
                           -H "Authorization: AccessToken=$access_token" \
