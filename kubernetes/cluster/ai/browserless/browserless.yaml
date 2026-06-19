@@ -39,7 +39,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: browserless
-          image: ghcr.io/browserless/chromium:v2.53.0
+          image: ghcr.io/browserless/chromium:v2.54.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
