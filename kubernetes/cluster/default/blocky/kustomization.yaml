@@ -3,13 +3,19 @@ kind: Kustomization
 namespace: default
 resources:
   - blocky.yaml
+  - omada-generated-config.yaml
+  - omada-sync.yaml
   - service-api.yaml
   - service-dns.yaml
-  - secret.yaml
   - ingress.yaml
   - service-scrape.yaml
+  - secret.yaml
   - dashboards/
 configMapGenerator:
   - name: blocky-config
     files:
       - config/config.yml
+  - name: blocky-omada-sync-scripts
+    files:
+      - scripts/omada-clients-sync.sh
+      - scripts/omada-dns-sync.sh
