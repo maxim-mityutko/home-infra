@@ -7,7 +7,6 @@ resources:
   - omada-sync.yaml
   - service-api.yaml
   - service-dns.yaml
-  - secret.yaml
   - ingress.yaml
   - service-scrape.yaml
   - dashboards/

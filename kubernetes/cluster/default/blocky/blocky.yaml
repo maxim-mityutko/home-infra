@@ -59,10 +59,6 @@ spec:
             - name: blocky-config
               mountPath: /app/config/config.yml
               subPath: config.yml
-            # Ref: https://0xerr0r.github.io/blocky/latest/configuration/#custom-dns
-            - name: blocky-secret-config
-              mountPath: /app/config/custom-dns.yml
-              subPath: custom-dns.yml
             - name: blocky-omada-customdns
               mountPath: /app/config/omada-custom-dns.yml
               subPath: omada-custom-dns.yml
@@ -80,9 +76,6 @@ spec:
         - name: blocky-config
           configMap:
             name: blocky-config
-        - name: blocky-secret-config
-          secret:
-            secretName: blocky-secret-config
         - name: blocky-omada-customdns
           configMap:
             name: blocky-omada-customdns
