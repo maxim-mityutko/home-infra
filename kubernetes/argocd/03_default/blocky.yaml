@@ -38,3 +38,4 @@ spec:
       name: blocky
       jsonPointers:
         - /spec/template/metadata/annotations/omada.brhd.io~1dns-hash
+        - /spec/template/metadata/annotations/omada.brhd.io~1clients-hash
