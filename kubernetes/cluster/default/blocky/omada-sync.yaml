@@ -8,6 +8,17 @@ metadata:
     app.kubernetes.io/name: blocky
     app.kubernetes.io/component: omada-sync
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: blocky-omada-sync
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+    app.kubernetes.io/component: omada-sync
+data:
+  OMADA_BASE_URL: https://use1-omada-northbound.tplinkcloud.com
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -66,13 +77,12 @@ spec:
           restartPolicy: Never
           containers:
             - name: sync-dns
-              image: bitnami/kubectl:latest
+              image: bitnami/kubectl@sha256:08afc880eea24f36572644ccae85fb3e573a6ff1b7161135a3ae9a5eab222df2
               imagePullPolicy: IfNotPresent
-              env:
-                - name: OMADA_BASE_URL
-                  value: https://use1-omada-northbound.tplinkcloud.com
               envFrom:
                 - secretRef:
+                    name: blocky-omada-sync
+                - configMapRef:
                     name: blocky-omada-sync
               command:
                 - /bin/sh
@@ -115,7 +125,7 @@ spec:
                           .enable == true
                           and .type == 0
                           and ((.lanNetworkIds // []) | index($lan))
-                          and (((.ipAddresses // []) | length) > 0 or (((.ipv6Addresses // []) | length) > 0))
+                          and (((.ipAddresses // []) | length) > 0)
                         ))
                       | sort_by(.domain)
                       | .[]
@@ -123,7 +133,6 @@ spec:
                       | (record_ttl | tostring) as $ttl
                       | (
                           (.ipAddresses // [] | sort[] | "\($domain) \($ttl) IN A \(.)"),
-                          (.ipv6Addresses // [] | sort[] | "\($domain) \($ttl) IN AAAA \(.)"),
                           (.aliases // [] | sort[] | (. | fqdn) as $alias | "\($alias) \($ttl) IN CNAME \($domain)")
                         )
                     '
@@ -144,7 +153,8 @@ spec:
                   new_hash="$(sha256sum "$workdir/omada-custom-dns.yml" | awk '{print $1}')"
                   old_hash="$(
                     kubectl get configmap "$custom_dns_configmap" \
-                      -o jsonpath='{.metadata.annotations.omada\.brhd\.io/hash}' 2>/dev/null || true
+                      -o json 2>/dev/null |
+                      jq -r '.metadata.annotations["omada/hash"] // ""' || true
                   )"
 
                   if [ "$new_hash" = "$old_hash" ]; then
@@ -160,13 +170,13 @@ spec:
                       app.kubernetes.io/component=omada-dns-sync \
                       -o yaml |
                     kubectl annotate --local -f - \
-                      omada.brhd.io/hash="$new_hash" \
+                      omada/hash="$new_hash" \
                       -o yaml |
                     kubectl apply -f -
 
                   kubectl patch statefulset "$blocky_statefulset" \
                     --type merge \
-                    -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"omada.brhd.io/dns-hash\":\"$new_hash\"}}}}}"
+                    -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"omada/dns-hash\":\"$new_hash\"}}}}}"
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -193,13 +203,12 @@ spec:
           restartPolicy: Never
           containers:
             - name: sync-clients
-              image: bitnami/kubectl:latest
+              image: bitnami/kubectl@sha256:08afc880eea24f36572644ccae85fb3e573a6ff1b7161135a3ae9a5eab222df2
               imagePullPolicy: IfNotPresent
-              env:
-                - name: OMADA_BASE_URL
-                  value: https://use1-omada-northbound.tplinkcloud.com
               envFrom:
                 - secretRef:
+                    name: blocky-omada-sync
+                - configMapRef:
                     name: blocky-omada-sync
               command:
                 - /bin/sh
@@ -258,7 +267,7 @@ spec:
 
                       map({
                         name: ((.name // .hostName // .mac // "") | tostring | trim),
-                        ips: ([.ip?] + (.ipv6List // []) | map(select(type == "string" and length > 0)) | unique)
+                        ips: ([.ip?] | map(select(type == "string" and length > 0)) | unique)
                       })
                       | map(select(.name != "" and (.ips | length > 0)))
                       | sort_by(.name | ascii_downcase)
@@ -290,7 +299,8 @@ spec:
                   new_hash="$(sha256sum "$workdir/omada-client-lookup.yml" | awk '{print $1}')"
                   old_hash="$(
                     kubectl get configmap "$client_lookup_configmap" \
-                      -o jsonpath='{.metadata.annotations.omada\.brhd\.io/hash}' 2>/dev/null || true
+                      -o json 2>/dev/null |
+                      jq -r '.metadata.annotations["omada/hash"] // ""' || true
                   )"
 
                   if [ "$new_hash" = "$old_hash" ]; then
@@ -306,10 +316,10 @@ spec:
                       app.kubernetes.io/component=omada-clients-sync \
                       -o yaml |
                     kubectl annotate --local -f - \
-                      omada.brhd.io/hash="$new_hash" \
+                      omada/hash="$new_hash" \
                       -o yaml |
                     kubectl apply -f -
 
                   kubectl patch statefulset "$blocky_statefulset" \
                     --type merge \
-                    -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"omada.brhd.io/clients-hash\":\"$new_hash\"}}}}}"
+                    -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"omada/clients-hash\":\"$new_hash\"}}}}}"
