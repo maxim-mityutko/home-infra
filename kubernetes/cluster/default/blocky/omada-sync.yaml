@@ -277,37 +277,78 @@ spec:
                   )"
                   access_token="$(printf '%s' "$token_json" | jq -er '.result.accessToken')"
 
-                  page=1
                   page_size=1000
                   : > "$workdir/clients.jsonl"
 
-                  while :; do
-                    echo "Fetching Omada clients page $page"
-                    client_json="$(
-                      jq -nc \
-                        --argjson page "$page" \
-                        --argjson pageSize "$page_size" \
-                        '{page: $page, pageSize: $pageSize, scope: 0, filters: {ipExist: true}}' |
-                      curl -fsS -X POST \
-                        "$OMADA_BASE_URL/openapi/v2/$OMADA_CONTROLLER_ID/sites/$OMADA_SITE_ID/clients" \
-                        -H "Authorization: AccessToken=$access_token" \
-                        -H "Content-Type: application/json" \
-                        -d @-
-                    )"
+                  echo "Fetching Omada LAN network"
+                  lan_network_json="$(
+                    curl -fsS \
+                      "$OMADA_BASE_URL/openapi/v1/$OMADA_CONTROLLER_ID/sites/$OMADA_SITE_ID/lan-networks/$OMADA_LAN_NETWORK_ID" \
+                      -H "Authorization: AccessToken=$access_token"
+                  )"
+                  lan_network_name="$(
+                    printf '%s' "$lan_network_json" |
+                    jq -er '.result.name | select(type == "string" and length > 0)'
+                  )"
+                  echo "Filtering Omada clients by LAN network '$lan_network_name'"
 
-                    printf '%s' "$client_json" | jq -c '.result.data[]?' >> "$workdir/clients.jsonl"
-                    current_size="$(printf '%s' "$client_json" | jq -r '.result.currentSize // (.result.data // [] | length)')"
-                    total_rows="$(printf '%s' "$client_json" | jq -r '.result.totalRows // 0')"
-                    echo "Fetched $current_size clients on page $page ($total_rows total rows reported)"
+                  fetch_clients() {
+                    filter_name="$1"
+                    page=1
 
-                    if [ "$current_size" -eq 0 ] || [ "$((page * page_size))" -ge "$total_rows" ]; then
-                      break
-                    fi
+                    while :; do
+                      echo "Fetching Omada clients page $page with $filter_name filter"
+                      client_json="$(
+                        jq -nc \
+                          --argjson page "$page" \
+                          --argjson pageSize "$page_size" \
+                          --arg filterName "$filter_name" \
+                          --arg network "$lan_network_name" \
+                          '{
+                            page: $page,
+                            pageSize: $pageSize,
+                            scope: 1,
+                            filters: ({ipExist: true} + {($filterName): [$network]})
+                          }' |
+                        curl -fsS -X POST \
+                          "$OMADA_BASE_URL/openapi/v2/$OMADA_CONTROLLER_ID/sites/$OMADA_SITE_ID/clients" \
+                          -H "Authorization: AccessToken=$access_token" \
+                          -H "Content-Type: application/json" \
+                          -d @-
+                      )"
 
-                    page="$((page + 1))"
-                  done
+                      printf '%s' "$client_json" |
+                      jq -c --arg filterName "$filter_name" --arg network "$lan_network_name" '
+                        .result.data[]?
+                        | select(.active == true)
+                        | select(.ip? | type == "string" and length > 0)
+                        | select(
+                            if $filterName == "network" then
+                              (.networkName? // $network) == $network
+                            elif $filterName == "ssid" then
+                              (.ssid? // $network) == $network
+                            else
+                              false
+                            end
+                          )
+                      ' >> "$workdir/clients.jsonl"
+
+                      current_size="$(printf '%s' "$client_json" | jq -r '.result.currentSize // (.result.data // [] | length)')"
+                      total_rows="$(printf '%s' "$client_json" | jq -r '.result.totalRows // 0')"
+                      echo "Fetched $current_size clients on page $page with $filter_name filter ($total_rows total rows reported)"
+
+                      if [ "$current_size" -eq 0 ] || [ "$((page * page_size))" -ge "$total_rows" ]; then
+                        break
+                      fi
+
+                      page="$((page + 1))"
+                    done
+                  }
+
+                  fetch_clients network
+                  fetch_clients ssid
                   raw_client_count="$(wc -l < "$workdir/clients.jsonl" | tr -d ' ')"
-                  echo "Fetched $raw_client_count raw client records with IPs"
+                  echo "Fetched $raw_client_count active client records with IPs"
 
                   clients="$(
                     jq -s -r '
