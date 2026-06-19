@@ -15,3 +15,7 @@ configMapGenerator:
   - name: blocky-config
     files:
       - config/config.yml
+  - name: blocky-omada-sync-scripts
+    files:
+      - scripts/omada-clients-sync.sh
+      - scripts/omada-dns-sync.sh
