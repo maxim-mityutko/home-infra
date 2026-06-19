@@ -1,4 +1,15 @@
 #!/bin/sh
+#
+# Sync active Omada clients from the configured LAN subnet into Blocky's generated
+# clientLookup ConfigMap, then patch the Blocky StatefulSet annotation so pods
+# roll when the generated config changes.
+#
+# Prerequisites:
+# - tools in the image: curl, jq, kubectl, sha256sum, awk
+# - Kubernetes RBAC to get/create/patch ConfigMaps and patch the Blocky StatefulSet
+# - config env: OMADA_BASE_URL, BLOCKY_STATEFULSET, CLIENT_LOOKUP_CONFIGMAP
+# - secret env: OMADA_CONTROLLER_ID, OMADA_SITE_ID, OMADA_LAN_NETWORK_ID,
+#   OMADA_CLIENT_ID, OMADA_CLIENT_SECRET
 
 echo "Starting Omada clients sync"
 workdir="$(mktemp -d)"

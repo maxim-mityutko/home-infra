@@ -1,4 +1,15 @@
 #!/bin/sh
+#
+# Sync enabled Omada LAN DNS A/CNAME records into Blocky's generated customDNS
+# ConfigMap, then patch the Blocky StatefulSet annotation so pods roll when the
+# generated config changes.
+#
+# Prerequisites:
+# - tools in the image: curl, jq, kubectl, sha256sum, awk, sed
+# - Kubernetes RBAC to get/create/patch ConfigMaps and patch the Blocky StatefulSet
+# - config env: OMADA_BASE_URL, BLOCKY_STATEFULSET, CUSTOM_DNS_CONFIGMAP
+# - secret env: OMADA_CONTROLLER_ID, OMADA_SITE_ID, OMADA_LAN_NETWORK_ID,
+#   OMADA_CLIENT_ID, OMADA_CLIENT_SECRET
 
 echo "Starting Omada DNS sync"
 dns_ttl="3600"
