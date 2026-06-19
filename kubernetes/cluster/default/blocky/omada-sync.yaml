@@ -108,6 +108,7 @@ spec:
                     printf '%s' "$dns_json" |
                     jq -r --arg lan "$OMADA_LAN_NETWORK_ID" '
                       def fqdn: if endswith(".") then . else . + "." end;
+                      def record_ttl: if .customTtl == true and ((.ttl? // 0) >= 1) then .ttl else 3600 end;
 
                       .result.data
                       | map(select(
@@ -119,10 +120,11 @@ spec:
                       | sort_by(.domain)
                       | .[]
                       | (.domain | fqdn) as $domain
+                      | (record_ttl | tostring) as $ttl
                       | (
-                          (.ipAddresses // [] | sort[] | "\($domain) 3600 IN A \(.)"),
-                          (.ipv6Addresses // [] | sort[] | "\($domain) 3600 IN AAAA \(.)"),
-                          (.aliases // [] | sort[] | (. | fqdn) as $alias | "\($alias) 3600 IN CNAME \($domain)")
+                          (.ipAddresses // [] | sort[] | "\($domain) \($ttl) IN A \(.)"),
+                          (.ipv6Addresses // [] | sort[] | "\($domain) \($ttl) IN AAAA \(.)"),
+                          (.aliases // [] | sort[] | (. | fqdn) as $alias | "\($alias) \($ttl) IN CNAME \($domain)")
                         )
                     '
                   )"
