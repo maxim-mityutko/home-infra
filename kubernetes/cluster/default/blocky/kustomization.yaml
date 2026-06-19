@@ -9,6 +9,7 @@ resources:
   - service-dns.yaml
   - ingress.yaml
   - service-scrape.yaml
+  - secret.yaml
   - dashboards/
 configMapGenerator:
   - name: blocky-config
