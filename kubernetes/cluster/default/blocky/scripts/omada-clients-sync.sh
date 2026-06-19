@@ -16,12 +16,15 @@ workdir="$(mktemp -d)"
 trap 'status=$?; rm -rf "$workdir"; if [ "$status" -ne 0 ]; then echo "Omada clients sync failed with exit code $status" >&2; fi' EXIT
 
 echo "Requesting Omada access token"
-token_json="$(
+request_body="$(
   jq -nc \
     --arg omadacId "$OMADA_CONTROLLER_ID" \
     --arg clientId "$OMADA_CLIENT_ID" \
     --arg clientSecret "$OMADA_CLIENT_SECRET" \
-    '{omadacId: $omadacId, client_id: $clientId, client_secret: $clientSecret}' |
+    '{omadacId: $omadacId, client_id: $clientId, client_secret: $clientSecret}'
+)"
+token_json="$(
+  printf '%s' "$request_body" |
   curl -fsS -X POST "$OMADA_BASE_URL/openapi/authorize/token?grant_type=client_credentials" \
     -H "Content-Type: application/json" \
     -d @-
