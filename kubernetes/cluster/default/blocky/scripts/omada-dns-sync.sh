@@ -5,8 +5,8 @@
 # generated config changes.
 #
 # Prerequisites:
-# - tools in the image: curl, jq, kubectl, sha256sum, awk, sed
-# - Kubernetes RBAC to get/create/patch ConfigMaps and patch the Blocky StatefulSet
+# - Omada OpenAPI access must be enabled and the client credentials must have
+#   permission to read LAN network details and LAN DNS settings
 # - config env: OMADA_BASE_URL, BLOCKY_STATEFULSET, CUSTOM_DNS_CONFIGMAP
 # - secret env: OMADA_CONTROLLER_ID, OMADA_SITE_ID, OMADA_LAN_NETWORK_ID,
 #   OMADA_CLIENT_ID, OMADA_CLIENT_SECRET
