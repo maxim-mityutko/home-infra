@@ -98,7 +98,7 @@ spec:
 
                   token_json="$(
                     jq -nc \
-                      --arg omadacId "$OMADA_ID" \
+                      --arg omadacId "$OMADA_CONTROLLER_ID" \
                       --arg clientId "$OMADA_CLIENT_ID" \
                       --arg clientSecret "$OMADA_CLIENT_SECRET" \
                       '{omadacId: $omadacId, client_id: $clientId, client_secret: $clientSecret}' |
@@ -110,7 +110,7 @@ spec:
 
                   lan_network_json="$(
                     curl -fsS \
-                      "$OMADA_BASE_URL/openapi/v1/$OMADA_ID/sites/$OMADA_SITE_ID/lan-networks/$OMADA_LAN_NETWORK_ID" \
+                      "$OMADA_BASE_URL/openapi/v1/$OMADA_CONTROLLER_ID/sites/$OMADA_SITE_ID/lan-networks/$OMADA_LAN_NETWORK_ID" \
                       -H "Authorization: AccessToken=$access_token"
                   )"
                   dns_origin="$(
@@ -124,7 +124,7 @@ spec:
 
                   dns_json="$(
                     curl -fsS \
-                      "$OMADA_BASE_URL/openapi/v1/$OMADA_ID/sites/$OMADA_SITE_ID/setting/lan/dns?page=1&pageSize=1000" \
+                      "$OMADA_BASE_URL/openapi/v1/$OMADA_CONTROLLER_ID/sites/$OMADA_SITE_ID/setting/lan/dns?page=1&pageSize=1000" \
                       -H "Authorization: AccessToken=$access_token"
                   )"
 
@@ -233,7 +233,7 @@ spec:
 
                   token_json="$(
                     jq -nc \
-                      --arg omadacId "$OMADA_ID" \
+                      --arg omadacId "$OMADA_CONTROLLER_ID" \
                       --arg clientId "$OMADA_CLIENT_ID" \
                       --arg clientSecret "$OMADA_CLIENT_SECRET" \
                       '{omadacId: $omadacId, client_id: $clientId, client_secret: $clientSecret}' |
@@ -254,7 +254,7 @@ spec:
                         --argjson pageSize "$page_size" \
                         '{page: $page, pageSize: $pageSize, scope: 0, filters: {ipExist: true}}' |
                       curl -fsS -X POST \
-                        "$OMADA_BASE_URL/openapi/v2/$OMADA_ID/sites/$OMADA_SITE_ID/clients" \
+                        "$OMADA_BASE_URL/openapi/v2/$OMADA_CONTROLLER_ID/sites/$OMADA_SITE_ID/clients" \
                         -H "Authorization: AccessToken=$access_token" \
                         -H "Content-Type: application/json" \
                         -d @-
