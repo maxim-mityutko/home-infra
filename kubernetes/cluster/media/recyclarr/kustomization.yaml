@@ -8,6 +8,3 @@ configMapGenerator:
   - name: recyclarr-config
     files:
     - config.yml
-  - name: recyclarr-scripts
-    files:
-    - scripts/recyclarr-sync.sh

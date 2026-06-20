@@ -5,7 +5,3 @@ resources:
   - multus.yaml
   - cron-job.yaml
   - network-attachment.yaml
-configMapGenerator:
-  - name: multus-scripts
-    files:
-      - scripts/restart-multus.sh

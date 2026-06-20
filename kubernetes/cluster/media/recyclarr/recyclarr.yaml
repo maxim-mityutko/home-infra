@@ -32,23 +32,18 @@ spec:
               command:
                 - /bin/sh
               args:
-                - -e
-                - /scripts/recyclarr-sync.sh
+                - '-c'
+                - |
+                  /app/recyclarr/recyclarr sync;
               envFrom:
                 - secretRef:
                     name: recyclarr
               volumeMounts:
-                - name: recyclarr-scripts
-                  mountPath: /scripts
-                  readOnly: true
                 - name: recyclarr-config
                   mountPath: /config/recyclarr.yml
                   subPath: config.yml
                   readOnly: true
           volumes:
-            - name: recyclarr-scripts
-              configMap:
-                name: recyclarr-scripts
             - name: recyclarr-config
               configMap:
                 name: recyclarr-config
