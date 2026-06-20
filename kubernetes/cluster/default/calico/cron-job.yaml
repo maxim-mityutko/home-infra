@@ -21,7 +21,14 @@ spec:
             image: bitnami/kubectl:latest
             command:
             - /bin/sh
-            - -c
-            - |
-              kubectl rollout restart daemonset/calico-node
+            - -e
+            - /scripts/restart-calico-node.sh
+            volumeMounts:
+            - name: calico-scripts
+              mountPath: /scripts
+              readOnly: true
+          volumes:
+          - name: calico-scripts
+            configMap:
+              name: calico-scripts
           restartPolicy: Never

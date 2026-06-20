@@ -21,7 +21,14 @@ spec:
             image: bitnami/kubectl:latest
             command:
             - /bin/sh
-            - -c
-            - |
-              kubectl rollout restart daemonset/multus
+            - -e
+            - /scripts/restart-multus.sh
+            volumeMounts:
+            - name: multus-scripts
+              mountPath: /scripts
+              readOnly: true
+          volumes:
+          - name: multus-scripts
+            configMap:
+              name: multus-scripts
           restartPolicy: Never

@@ -11,3 +11,7 @@ resources:
   - cron-job.yaml
 patches:
   - path: patch.yaml
+configMapGenerator:
+  - name: calico-scripts
+    files:
+      - scripts/restart-calico-node.sh
