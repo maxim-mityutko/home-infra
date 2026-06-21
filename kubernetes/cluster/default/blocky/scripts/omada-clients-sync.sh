@@ -198,7 +198,7 @@ new_hash="$(sha256sum "$workdir/omada-client-lookup.yml" | awk '{print $1}')"
 old_hash="$(
   kubectl get configmap "$CLIENT_LOOKUP_CONFIGMAP" \
     -o json 2>/dev/null |
-    jq -r '.metadata.annotations["omada/hash"] // ""' || true
+    jq -r '.metadata.annotations["omada.brhd.io/hash"] // ""' || true
 )"
 
 if [ "$new_hash" = "$old_hash" ]; then
@@ -216,9 +216,9 @@ if kubectl get configmap "$CLIENT_LOOKUP_CONFIGMAP" >/dev/null 2>&1; then
         metadata: {
           labels: {
             "app.kubernetes.io/name": "blocky",
-            "app.kubernetes.io/component": "omada-clients-sync"
+            "app.kubernetes.io/component": "omada-sync"
           },
-          annotations: {"omada/hash": $hash}
+          annotations: {"omada.brhd.io/hash": $hash}
         },
         data: {"omada-client-lookup.yml": $config}
       }'
@@ -229,10 +229,10 @@ else
     --dry-run=client -o yaml |
     kubectl label --local -f - \
       app.kubernetes.io/name=blocky \
-      app.kubernetes.io/component=omada-clients-sync \
+      app.kubernetes.io/component=omada-sync \
       -o yaml |
     kubectl annotate --local -f - \
-      omada/hash="$new_hash" \
+      omada.brhd.io/hash="$new_hash" \
       -o yaml |
     kubectl create -f -
 fi
@@ -240,5 +240,5 @@ fi
 echo "Patching $BLOCKY_STATEFULSET with client lookup config hash"
 kubectl patch statefulset "$BLOCKY_STATEFULSET" \
   --type merge \
-  -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"omada/clients-hash\":\"$new_hash\"}}}}}"
+  -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"omada.brhd.io/clients-hash\":\"$new_hash\"}}}}}"
 echo "Omada clients sync completed"
