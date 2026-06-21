@@ -37,5 +37,4 @@ spec:
       kind: StatefulSet
       name: blocky
       jsonPointers:
-        - /spec/template/metadata/annotations/omada~1dns-hash
-        - /spec/template/metadata/annotations/omada~1clients-hash
+        - /spec/template/metadata/annotations
