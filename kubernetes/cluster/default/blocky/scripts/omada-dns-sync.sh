@@ -102,7 +102,7 @@ new_hash="$(sha256sum "$workdir/omada-custom-dns.yml" | awk '{print $1}')"
 old_hash="$(
   kubectl get configmap "$CUSTOM_DNS_CONFIGMAP" \
     -o json 2>/dev/null |
-    jq -r '.metadata.annotations["omada/hash"] // ""' || true
+    jq -r '.metadata.annotations["omada.brhd.io/hash"] // ""' || true
 )"
 
 if [ "$new_hash" = "$old_hash" ]; then
@@ -122,7 +122,7 @@ if kubectl get configmap "$CUSTOM_DNS_CONFIGMAP" >/dev/null 2>&1; then
             "app.kubernetes.io/name": "blocky",
             "app.kubernetes.io/component": "omada-dns-sync"
           },
-          annotations: {"omada/hash": $hash}
+          annotations: {"omada.brhd.io/hash": $hash}
         },
         data: {"omada-custom-dns.yml": $config}
       }'
@@ -136,7 +136,7 @@ else
       app.kubernetes.io/component=omada-dns-sync \
       -o yaml |
     kubectl annotate --local -f - \
-      omada/hash="$new_hash" \
+      omada.brhd.io/hash="$new_hash" \
       -o yaml |
     kubectl create -f -
 fi
@@ -144,5 +144,5 @@ fi
 echo "Patching $BLOCKY_STATEFULSET with DNS config hash"
 kubectl patch statefulset "$BLOCKY_STATEFULSET" \
   --type merge \
-  -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"omada/dns-hash\":\"$new_hash\"}}}}}"
+  -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"omada.brhd.io/dns-hash\":\"$new_hash\"}}}}}"
 echo "Omada DNS sync completed"

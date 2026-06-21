@@ -26,13 +26,13 @@ spec:
       name: blocky-omada-customdns
       jsonPointers:
         - /data
-        - /metadata/annotations/omada~1hash
+        - /metadata/annotations/omada.brhd.io~1hash
     - group: ""
       kind: ConfigMap
       name: blocky-omada-clientlookup
       jsonPointers:
         - /data
-        - /metadata/annotations/omada~1hash
+        - /metadata/annotations/omada.brhd.io~1hash
     - group: apps
       kind: StatefulSet
       name: blocky
