@@ -18,6 +18,7 @@ spec:
   replicas: 2
   template:
     metadata:
+      annotations: {}
       labels:
         app.kubernetes.io/name: blocky
     spec:
