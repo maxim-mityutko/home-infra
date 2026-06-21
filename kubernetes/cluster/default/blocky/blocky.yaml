@@ -24,7 +24,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: blocky
-          image: registry.brhd.io/ghcr.io/0xerr0r/blocky:v0.32.0
+          image: registry.brhd.io/ghcr.io/0xerr0r/blocky:v0.32.1
           securityContext:
             capabilities:
               drop:
