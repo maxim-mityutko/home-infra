@@ -120,7 +120,7 @@ if kubectl get configmap "$CUSTOM_DNS_CONFIGMAP" >/dev/null 2>&1; then
         metadata: {
           labels: {
             "app.kubernetes.io/name": "blocky",
-            "app.kubernetes.io/component": "omada-dns-sync"
+            "app.kubernetes.io/component": "omada-sync"
           },
           annotations: {"omada.brhd.io/hash": $hash}
         },
@@ -133,7 +133,7 @@ else
     --dry-run=client -o yaml |
     kubectl label --local -f - \
       app.kubernetes.io/name=blocky \
-      app.kubernetes.io/component=omada-dns-sync \
+      app.kubernetes.io/component=omada-sync \
       -o yaml |
     kubectl annotate --local -f - \
       omada.brhd.io/hash="$new_hash" \
