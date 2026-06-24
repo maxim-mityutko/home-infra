@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Sync active Omada clients from the configured LAN subnet into Blocky's generated
+# Sync Omada clients from the configured LAN subnet into Blocky's generated
 # clientLookup ConfigMap, then patch the Blocky StatefulSet annotation so pods
 # roll when the generated config changes.
 #
@@ -69,7 +69,7 @@ echo "Filtering Omada clients by LAN subnet $lan_gateway_subnet"
 if [ -n "$client_search_key" ]; then
   echo "Using Omada client search key '$client_search_key'"
 else
-  echo "LAN subnet is too broad for an Omada client search key; scanning online clients"
+  echo "LAN subnet is too broad for an Omada client search key; scanning all clients"
 fi
 
 fetch_clients() {
@@ -85,7 +85,7 @@ fetch_clients() {
         '{
           page: $page,
           pageSize: $pageSize,
-          scope: 1,
+          scope: 0,
           filters: {ipExist: true}
         } + (
           if $searchKey != "" then
@@ -138,7 +138,6 @@ fetch_clients() {
           end;
 
       .result.data[]?
-      | select(.active == true)
       | select(.ip? | type == "string" and length > 0)
       | select(ipv4_in_cidr(.ip; $subnet))
     ' >> "$workdir/clients.jsonl"
@@ -157,7 +156,7 @@ fetch_clients() {
 
 fetch_clients
 raw_client_count="$(wc -l < "$workdir/clients.jsonl" | tr -d ' ')"
-echo "Retained $raw_client_count active client records inside $lan_gateway_subnet"
+echo "Retained $raw_client_count client records inside $lan_gateway_subnet"
 
 clients="$(
   jq -s -r '
