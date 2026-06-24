@@ -340,3 +340,16 @@ patches:
       - op: replace
         path: /spec/rules/0/http/paths/0/backend/service/port/number
         value: 8080
+  - target:
+      group: batch
+      version: v1
+      kind: Job
+      name: stack-sync-job
+      namespace: monitoring
+    patch: |-
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1hook
+        value: PostSync
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1hook-delete-policy
+        value: BeforeHookCreation,HookSucceeded
