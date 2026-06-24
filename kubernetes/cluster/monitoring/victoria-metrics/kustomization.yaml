@@ -21,6 +21,20 @@ helmCharts:
         defaultRules:
           enabled: true
           groups:
+            kube-apiserver-burnrate.rules:
+              enabled: false
+            kube-apiserver-histogram.rules:
+              enabled: false
+            kube-apiserver-slos:
+              enabled: false
+            kube-scheduler.rules:
+              enabled: false
+            kubernetes-system-apiserver:
+              enabled: false
+            kubernetes-system-controller-manager:
+              enabled: false
+            kubernetes-system-scheduler:
+              enabled: false
             vmalert:
               create: false
           rules:
