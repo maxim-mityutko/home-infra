@@ -32,6 +32,9 @@ token_json="$(
 access_token="$(printf '%s' "$token_json" | jq -er '.result.accessToken')"
 
 page_size=1000
+now_seconds="$(date +%s)"
+client_seen_since_ms="$(((now_seconds - 86400) * 1000))"
+client_seen_until_ms="$((now_seconds * 1000))"
 : > "$workdir/clients.jsonl"
 
 echo "Fetching Omada LAN network"
@@ -66,6 +69,7 @@ client_search_key="$(
   '
 )"
 echo "Filtering Omada clients by LAN subnet $lan_gateway_subnet"
+echo "Filtering Omada clients to records last seen in the previous 24 hours"
 if [ -n "$client_search_key" ]; then
   echo "Using Omada client search key '$client_search_key'"
 else
@@ -81,12 +85,18 @@ fetch_clients() {
       jq -nc \
         --argjson page "$page" \
         --argjson pageSize "$page_size" \
+        --argjson timeStart "$client_seen_since_ms" \
+        --argjson timeEnd "$client_seen_until_ms" \
         --arg searchKey "$client_search_key" \
         '{
           page: $page,
           pageSize: $pageSize,
           scope: 0,
-          filters: {ipExist: true}
+          filters: {
+            ipExist: true,
+            timeStart: $timeStart,
+            timeEnd: $timeEnd
+          }
         } + (
           if $searchKey != "" then
             {searchKey: $searchKey}
@@ -156,7 +166,7 @@ fetch_clients() {
 
 fetch_clients
 raw_client_count="$(wc -l < "$workdir/clients.jsonl" | tr -d ' ')"
-echo "Retained $raw_client_count client records inside $lan_gateway_subnet"
+echo "Retained $raw_client_count recent client records inside $lan_gateway_subnet"
 
 clients="$(
   jq -s -r '
