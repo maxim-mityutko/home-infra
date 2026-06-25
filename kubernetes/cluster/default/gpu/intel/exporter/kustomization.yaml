@@ -16,9 +16,6 @@ helmCharts:
           enabled: true
           labels:
             grafana-dashboard: "true"
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        feature.node.kubernetes.io/pci-0300_8086.present: "true"
       resources:
         limits:
           gpu.intel.com/i915_monitoring: 1
