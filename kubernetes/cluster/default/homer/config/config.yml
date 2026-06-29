@@ -148,7 +148,7 @@ services:
       - name: "Ignis"
         logo: "https://cdn.brhd.io/cdn/icons/obsidian.svg"
         tag: "obsidian"
-        url: "https://ignis.brhd.io"
+        url: "https://obsidian.brhd.io"
         target: "_blank"
       - name: "Immich"
         logo: "https://cdn.brhd.io/cdn/icons/immich.svg"

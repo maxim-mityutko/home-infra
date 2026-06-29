@@ -1,5 +1,5 @@
 # Service: Ignis
-# Ingress: ignis.brhd.io
+# Ingress: obsidian.brhd.io
 # Label: app.kubernetes.io/name: ignis
 ---
 apiVersion: v1
@@ -98,4 +98,4 @@ data:
   OBSIDIAN_VERSION: "1.12.7"
   PUID: "1000"
   PGID: "1000"
-  WS_ORIGINS: "https://ignis.brhd.io"
+  WS_ORIGINS: "https://obsidian.brhd.io"
