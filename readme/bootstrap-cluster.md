@@ -125,6 +125,7 @@ The current wave plan was created with these criteria:
 | unpackerr | 16 | Media automation wave after download/Servarr apps. |
 | stash | 17 | Single heavy media wave. |
 | filebrowser | 18 | Privacy wave. |
+| ignis | 18 | Privacy wave. |
 | immich | 18 | Privacy wave; heavier by declared resources but still okay within this group. |
 | invidious | 18 | Privacy wave. |
 | karakeep | 18 | Privacy wave; heavier by declared resources but still okay within this group. |
