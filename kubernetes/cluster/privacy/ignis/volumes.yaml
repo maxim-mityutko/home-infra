@@ -17,7 +17,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: ignis-data
+  name: ignis-app
   namespace: privacy
   labels:
     app.kubernetes.io/name: ignis
@@ -27,19 +27,4 @@ spec:
   storageClassName: nfs-subdir
   resources:
     requests:
-      storage: 1Gi
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: ignis-obsidian-app
-  namespace: privacy
-  labels:
-    app.kubernetes.io/name: ignis
-spec:
-  accessModes:
-  - ReadWriteOnce
-  storageClassName: nfs-subdir
-  resources:
-    requests:
-      storage: 1Gi
+      storage: 2Gi

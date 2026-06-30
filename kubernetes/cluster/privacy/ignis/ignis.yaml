@@ -71,20 +71,19 @@ spec:
           volumeMounts:
             - name: ignis-vaults
               mountPath: /vaults
-            - name: ignis-data
-              mountPath: /app/data
-            - name: ignis-obsidian-app
-              mountPath: /app/obsidian-app
+            - name: ignis-app
+              mountPath: /app/ignis
+              subPath: ignis
+            - name: ignis-app
+              mountPath: /app/obsidian
+              subPath: obsidian
       volumes:
         - name: ignis-vaults
           persistentVolumeClaim:
             claimName: ignis-vaults
-        - name: ignis-data
+        - name: ignis-app
           persistentVolumeClaim:
-            claimName: ignis-data
-        - name: ignis-obsidian-app
-          persistentVolumeClaim:
-            claimName: ignis-obsidian-app
+            claimName: ignis-app
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -95,6 +94,9 @@ metadata:
     app.kubernetes.io/name: ignis
 data:
   # Ref: https://github.com/Nystik-gh/ignis/tree/main/apps/ignis-server#environment-variables
+  VAULT_ROOT: "/vaults"
+  DATA_ROOT: "/app/ignis"
+  OBSIDIAN_ASSETS_PATH: "/app/obsidian"
   OBSIDIAN_VERSION: "1.12.7"
   PUID: "1000"
   PGID: "1000"
