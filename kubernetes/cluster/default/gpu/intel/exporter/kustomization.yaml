@@ -23,6 +23,8 @@ helmCharts:
           gpu.intel.com/i915_monitoring: 1
         requests:
           gpu.intel.com/i915_monitoring: 1
+      securityContext:
+        privileged: true
       podSecurityContext:
         seccompProfile:
           type: Unconfined
