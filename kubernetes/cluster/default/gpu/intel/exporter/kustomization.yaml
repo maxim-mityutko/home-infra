@@ -25,6 +25,7 @@ helmCharts:
           gpu.intel.com/i915_monitoring: 1
       securityContext:
         privileged: true
+        allowPrivilegeEscalation: true
       podSecurityContext:
         seccompProfile:
           type: Unconfined
