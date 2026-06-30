@@ -72,11 +72,11 @@ spec:
             - name: ignis-vaults
               mountPath: /vaults
             - name: ignis-app
-              mountPath: /app/ignis
-              subPath: ignis
+              mountPath: /app/data
+              subPath: data
             - name: ignis-app
-              mountPath: /app/obsidian
-              subPath: obsidian
+              mountPath: /app/obsidian-app
+              subPath: obsidian-app
       volumes:
         - name: ignis-vaults
           persistentVolumeClaim:
@@ -95,8 +95,8 @@ metadata:
 data:
   # Ref: https://github.com/Nystik-gh/ignis/tree/main/apps/ignis-server#environment-variables
   VAULT_ROOT: "/vaults"
-  DATA_ROOT: "/app/ignis"
-  OBSIDIAN_ASSETS_PATH: "/app/obsidian"
+  DATA_ROOT: "/app/data"
+  OBSIDIAN_ASSETS_PATH: "/app/obsidian-app"
   OBSIDIAN_VERSION: "1.12.7"
   PUID: "1000"
   PGID: "1000"
