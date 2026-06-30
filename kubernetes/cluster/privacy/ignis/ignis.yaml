@@ -45,10 +45,11 @@ spec:
           image: nobbe/ignis:0.8.7
           resources:
             requests:
-              memory: 256Mi
-              cpu: 100m
+              cpu: 50m
+              memory: 128Mi
             limits:
-              memory: 1Gi
+              cpu: 500m
+              memory: 512Mi
           ports:
             - containerPort: 8080
           livenessProbe:
