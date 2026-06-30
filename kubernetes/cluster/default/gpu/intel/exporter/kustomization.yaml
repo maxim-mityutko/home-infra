@@ -18,9 +18,6 @@ helmCharts:
             grafana-dashboard: "true"
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
-      podSecurityContext:
-        seccompProfile:
-          type: Unconfined
       resources:
         limits:
           gpu.intel.com/i915_monitoring: 1
