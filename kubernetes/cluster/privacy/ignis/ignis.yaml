@@ -102,3 +102,4 @@ data:
   PUID: "1000"
   PGID: "1000"
   WS_ORIGINS: "https://obsidian.brhd.io"
+  PROXY_ALLOW_PRIVATE_HOSTS: "192.168.12.0/25"
