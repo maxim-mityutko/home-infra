@@ -16,6 +16,8 @@ helmCharts:
           enabled: true
           labels:
             grafana-dashboard: "true"
+      nodeSelector:
+        intel.feature.node.kubernetes.io/gpu: "true"
       resources:
         limits:
           gpu.intel.com/i915_monitoring: 1
