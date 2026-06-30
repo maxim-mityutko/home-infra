@@ -3,5 +3,7 @@ kind: Kustomization
 namespace: privacy
 resources:
   - ignis.yaml
+  - cold-start-placeholder.yaml
   - ingress.yaml
+  - scaler.yaml
   - volumes.yaml

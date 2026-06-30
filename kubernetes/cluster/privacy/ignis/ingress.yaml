@@ -27,7 +27,7 @@ spec:
             path: /
             backend:
               service:
-                name: ignis
+                name: keda-http-interceptor
                 port:
                   number: 8080
   tls:
