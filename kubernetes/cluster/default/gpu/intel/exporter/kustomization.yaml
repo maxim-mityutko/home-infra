@@ -7,7 +7,7 @@ helmCharts:
   - name: drm-exporter
     namespace: gpu
     releaseName: drm-exporter
-    version: 0.2.4
+    version: 0.2.5
     repo: oci://ghcr.io/home-operations/charts
     valuesInline:
       fullnameOverride: drm-exporter
