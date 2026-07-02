@@ -12,7 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-response-headers: >-
       Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
     nginx.ingress.kubernetes.io/auth-signin: >-
-      https://obsidian.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
+      https://notes.brhd.io/outpost.goauthentik.io/start?rd=$escaped_request_uri
     nginx.ingress.kubernetes.io/auth-snippet: |
       proxy_set_header X-Forwarded-Host $http_host;
     nginx.ingress.kubernetes.io/auth-url: >-
@@ -20,7 +20,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: '0'
 spec:
   rules:
-    - host: obsidian.brhd.io
+    - host: notes.brhd.io
       http:
         paths:
           - pathType: Prefix
@@ -32,16 +32,16 @@ spec:
                   number: 8080
   tls:
     - hosts:
-        - obsidian.brhd.io
+        - notes.brhd.io
 ---
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: obsidian.brhd.io
+  name: notes.brhd.io
   namespace: privacy
 spec:
   endpoints:
-    - dnsName: obsidian.brhd.io
+    - dnsName: notes.brhd.io
       recordTTL: 86400
       recordType: CNAME
       targets:

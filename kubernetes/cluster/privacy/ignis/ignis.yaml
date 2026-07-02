@@ -1,5 +1,5 @@
 # Service: Ignis
-# Ingress: obsidian.brhd.io
+# Ingress: notes.brhd.io
 # Label: app.kubernetes.io/name: ignis
 ---
 apiVersion: v1
@@ -101,5 +101,5 @@ data:
   OBSIDIAN_VERSION: "1.12.7"
   PUID: "1000"
   PGID: "1000"
-  WS_ORIGINS: "https://obsidian.brhd.io"
+  WS_ORIGINS: "https://notes.brhd.io"
   PROXY_ALLOW_PRIVATE_HOSTS: "192.168.12.0/25"
