@@ -8,6 +8,5 @@ resources:
   - object-store.yaml
   - backup.yaml
   - pooler.yaml
-  - pooler-pdb.yaml
   # Enable the `service` manifest if LoadBalancer is required
   # - service.yaml
