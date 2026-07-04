@@ -57,20 +57,6 @@ spec:
                 name: prowlarr
           ports:
             - containerPort: 9696
-          startupProbe:
-            httpGet:
-              path: /ping
-              port: 9696
-            failureThreshold: 30
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /ping
-              port: 9696
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            timeoutSeconds: 5
-            failureThreshold: 3
           livenessProbe:
             httpGet:
               path: /ping

@@ -57,20 +57,6 @@ spec:
                 name: radarr
           ports:
             - containerPort: 7878
-          startupProbe:
-            httpGet:
-              path: /ping
-              port: 7878
-            failureThreshold: 30
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /ping
-              port: 7878
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            timeoutSeconds: 5
-            failureThreshold: 3
           livenessProbe:
             httpGet:
               path: /ping
