@@ -9,7 +9,7 @@ spec:
     port: 8080
   rules:
     - hosts:
-        - obsidian.brhd.io
+        - notes.brhd.io
   scalingMetric:
     concurrency:
       targetValue: 25
