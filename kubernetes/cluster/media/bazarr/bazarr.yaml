@@ -51,7 +51,29 @@ spec:
               memory: 1000Mi
               cpu: 1000m
           ports:
-            - containerPort: 8787
+            - containerPort: 6767
+          startupProbe:
+            httpGet:
+              path: /api/system/ping
+              port: 6767
+            failureThreshold: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/system/ping
+              port: 6767
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /api/system/ping
+              port: 6767
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 3
           envFrom:
             - secretRef:
                 name: bazarr
