@@ -7,5 +7,6 @@ resources:
   - pod-scrape.yaml
   - object-store.yaml
   - backup.yaml
+  - pooler.yaml
   # Enable the `service` manifest if LoadBalancer is required
   # - service.yaml
