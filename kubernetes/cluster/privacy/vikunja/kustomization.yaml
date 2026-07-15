@@ -10,17 +10,3 @@ helmCharts:
     version: v2.0.2
     repo: oci://ghcr.io/go-vikunja/helm-chart
     valuesFile: values.yaml
-patches:
-  - target:
-      kind: Deployment
-      name: vikunja
-    # patch: |-
-    #   - op: replace
-    #     path: /spec/template/spec/containers/0/livenessProbe
-    #     value:
-    #       tcpSocket:
-    #         port: http
-    #       initialDelaySeconds: 30
-    #       periodSeconds: 30
-    #       timeoutSeconds: 3
-    #       failureThreshold: 3
