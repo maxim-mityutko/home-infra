@@ -23,10 +23,9 @@ vikunja:
   probes:
     liveness:
       enabled: true
-      custom: true
+      type: TCP
+      port: http
       spec:
-        tcpSocket:
-          port: http
         initialDelaySeconds: 30
         periodSeconds: 30
         timeoutSeconds: 3
