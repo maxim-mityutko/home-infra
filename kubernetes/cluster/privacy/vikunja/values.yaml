@@ -24,13 +24,15 @@ vikunja:
     liveness:
       enabled: true
       spec:
-        initialDelaySeconds: 10
+        initialDelaySeconds: 30
         periodSeconds: 30
+        timeoutSeconds: 3
     readiness:
       enabled: true
       spec:
         initialDelaySeconds: 10
         periodSeconds: 30
+        timeoutSeconds: 3
   ingress:
     main:
       enabled: true
