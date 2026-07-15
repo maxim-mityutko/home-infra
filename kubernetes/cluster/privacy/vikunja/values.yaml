@@ -23,6 +23,7 @@ vikunja:
   probes:
     liveness:
       enabled: true
+      custom: true
       spec:
         tcpSocket:
           port: http
