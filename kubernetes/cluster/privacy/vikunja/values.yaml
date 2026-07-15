@@ -23,13 +23,10 @@ vikunja:
   probes:
     liveness:
       enabled: true
-      type: TCP
-      port: http
       spec:
         initialDelaySeconds: 30
         periodSeconds: 30
         timeoutSeconds: 3
-        failureThreshold: 3
     readiness:
       enabled: true
       spec:
