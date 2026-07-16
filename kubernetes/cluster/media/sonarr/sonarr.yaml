@@ -57,6 +57,14 @@ spec:
                 name: sonarr
           ports:
             - containerPort: 8989
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8989
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 3
           volumeMounts:
             - name: sonarr-config
               mountPath: /config

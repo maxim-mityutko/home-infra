@@ -57,6 +57,14 @@ spec:
                 name: radarr
           ports:
             - containerPort: 7878
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 7878
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 3
           volumeMounts:
             - name: radarr-config
               mountPath: /config
