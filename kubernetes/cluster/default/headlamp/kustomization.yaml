@@ -13,11 +13,8 @@ helmCharts:
     valuesInline:
       replicaCount: 2
       config:
-        # Note: Use "inCluster = true" and remove "extraArgs" for "-kubeconfig" if token / OIDC authentication required
-        # See note below for "initContainers" section.
-        inCluster: false
-        extraArgs:
-          - "-kubeconfig=/mnt/config/kubeconfig"
+        inCluster: true
+        unsafeUseServiceAccountToken: true
         inClusterContextName: "main"
         oidc:
           secret:
@@ -49,7 +46,7 @@ helmCharts:
           nginx.ingress.kubernetes.io/server-snippet: |-
             large_client_header_buffers 4 64k;
             proxy_set_header X-Forwarded-Proto $scheme;
-          # Note: Use proxy auth, remove below annotations if / when OIDC authentication is implemented.
+          # Note: Authentik gates browser access while Headlamp uses its service account for Kubernetes API access.
           nginx.ingress.kubernetes.io/auth-response-headers: >-
             Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
           nginx.ingress.kubernetes.io/auth-signin: >-
@@ -82,44 +79,3 @@ helmCharts:
       tolerations:
         - key: "node.kubernetes.io/unschedulable"
           operator: Exists
-      # Fully bypass authentication, ref: https://github.com/kubernetes-sigs/headlamp/issues/1801#issuecomment-3753050855
-      initContainers:
-        - name: init-kubeconfig
-          image: busybox:latest
-          command:
-            - /bin/sh
-            - -c
-            - |
-              KUBE_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
-              KUBE_CA=$(cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt | base64 | tr -d '\n')
-              NAMESPACE=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
-              
-              cat <<EOF > /mnt/config/kubeconfig
-              apiVersion: v1
-              kind: Config
-              clusters:
-              - name: default-cluster
-                cluster:
-                  certificate-authority-data: ${KUBE_CA}
-                  server: https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}
-              contexts:
-              - name: default-context
-                context:
-                  cluster: default-cluster
-                  user: headlamp
-                  namespace: ${NAMESPACE}
-              current-context: default-context
-              users:
-              - name: headlamp
-                user:
-                  token: ${KUBE_TOKEN}
-              EOF
-          volumeMounts:
-            - name: shared-config
-              mountPath: /mnt/config
-      volumeMounts:
-        - name: shared-config
-          mountPath: /mnt/config
-      volumes:
-        - name: shared-config
-          emptyDir: {}
