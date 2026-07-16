@@ -18,13 +18,14 @@ spec:
   replicas: 2
   template:
     metadata:
+      annotations: {}
       labels:
         app.kubernetes.io/name: blocky
     spec:
       restartPolicy: Always
       containers:
         - name: blocky
-          image: registry.brhd.io/ghcr.io/0xerr0r/blocky:v0.32.0
+          image: registry.brhd.io/ghcr.io/0xerr0r/blocky:v0.33.0
           securityContext:
             capabilities:
               drop:
@@ -57,12 +58,8 @@ spec:
               value: Europe/Amsterdam
           volumeMounts:
             - name: blocky-config
-              mountPath: /app/config/config.yml
-              subPath: config.yml
-            # Ref: https://0xerr0r.github.io/blocky/latest/configuration/#custom-dns
-            - name: blocky-secret-config
-              mountPath: /app/config/custom-dns.yml
-              subPath: custom-dns.yml
+              mountPath: /app/config
+              readOnly: true
           readinessProbe:
             tcpSocket:
               port: dns-tcp
@@ -72,11 +69,14 @@ spec:
             failureThreshold: 5
       volumes:
         - name: blocky-config
-          configMap:
-            name: blocky-config
-        - name: blocky-secret-config
-          secret:
-            secretName: blocky-secret-config
+          projected:
+            sources:
+              - configMap:
+                  name: blocky-config
+              - configMap:
+                  name: blocky-omada-customdns
+              - configMap:
+                  name: blocky-omada-clientlookup
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

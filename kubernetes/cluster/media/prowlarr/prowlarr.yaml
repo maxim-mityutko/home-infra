@@ -57,6 +57,14 @@ spec:
                 name: prowlarr
           ports:
             - containerPort: 9696
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 9696
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 3
           volumeMounts:
             - name: prowlarr-config
               mountPath: /config

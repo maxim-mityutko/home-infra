@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: radarr
-          image: ghcr.io/hotio/radarr:release-6.2.1.10461
+          image: ghcr.io/hotio/radarr:release-6.3.0.10514
           resources:
             requests:
               memory: 500Mi
@@ -57,6 +57,14 @@ spec:
                 name: radarr
           ports:
             - containerPort: 7878
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 7878
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 3
           volumeMounts:
             - name: radarr-config
               mountPath: /config

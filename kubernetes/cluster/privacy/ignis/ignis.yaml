@@ -1,0 +1,105 @@
+# Service: Ignis
+# Ingress: notes.brhd.io
+# Label: app.kubernetes.io/name: ignis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ignis
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: ignis
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: ignis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ignis
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: ignis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ignis
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      namespace: privacy
+      labels:
+        app.kubernetes.io/name: ignis
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: ignis
+          image: nobbe/ignis:0.8.8
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 3
+            failureThreshold: 5
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 6
+          envFrom:
+            - configMapRef:
+                name: ignis
+          volumeMounts:
+            - name: ignis-vaults
+              mountPath: /vaults
+            - name: ignis-app
+              mountPath: /app/data
+              subPath: data
+            - name: ignis-app
+              mountPath: /app/obsidian-app
+              subPath: obsidian-app
+      volumes:
+        - name: ignis-vaults
+          persistentVolumeClaim:
+            claimName: ignis-vaults
+        - name: ignis-app
+          persistentVolumeClaim:
+            claimName: ignis-app
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ignis
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: ignis
+data:
+  # Ref: https://github.com/Nystik-gh/ignis/tree/main/apps/ignis-server#environment-variables
+  VAULT_ROOT: "/vaults"
+  DATA_ROOT: "/app/data"
+  OBSIDIAN_ASSETS_PATH: "/app/obsidian-app"
+  OBSIDIAN_VERSION: "1.12.7"
+  PUID: "1000"
+  PGID: "1000"
+  WS_ORIGINS: "https://notes.brhd.io"
+  PROXY_ALLOW_PRIVATE_HOSTS: "192.168.12.0/25"

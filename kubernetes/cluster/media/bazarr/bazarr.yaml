@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: bazarr
-          image: ghcr.io/hotio/bazarr:release-1.5.6
+          image: ghcr.io/hotio/bazarr:release-1.6.0
           resources:
             requests:
               memory: 500Mi
@@ -51,7 +51,15 @@ spec:
               memory: 1000Mi
               cpu: 1000m
           ports:
-            - containerPort: 8787
+            - containerPort: 6767
+          livenessProbe:
+            httpGet:
+              path: /api/system/ping
+              port: 6767
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 3
           envFrom:
             - secretRef:
                 name: bazarr
