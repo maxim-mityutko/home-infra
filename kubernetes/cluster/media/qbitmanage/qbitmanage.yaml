@@ -41,7 +41,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: qbitmanage
-          image: ghcr.io/hotio/qbitmanage:release-4.9.1
+          image: ghcr.io/hotio/qbitmanage:release-4.10.0
           imagePullPolicy: IfNotPresent
           resources:
             requests:
