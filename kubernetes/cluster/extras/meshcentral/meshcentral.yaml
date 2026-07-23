@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: meshcentral
-          image: ghcr.io/ylianst/meshcentral:1.2.2
+          image: ghcr.io/ylianst/meshcentral:1.2.4
           resources:
             requests:
               memory: 150M
