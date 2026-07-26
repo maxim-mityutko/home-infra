@@ -3,8 +3,8 @@ kind: Kustomization
 namespace: default
 configMapGenerator:
   - name: dashboard-cloudnative-pg
-    files: 
-      - https://raw.githubusercontent.com/cloudnative-pg/grafana-dashboards/refs/heads/main/charts/cluster/grafana-dashboard.json
+    files:
+      - cloudnative-pg.json=https://raw.githubusercontent.com/cloudnative-pg/grafana-dashboards/refs/heads/main/charts/cluster/grafana-dashboard.json
 generatorOptions:
   labels:
     grafana-dashboard: "true"
