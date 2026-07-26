@@ -12,8 +12,8 @@ data:
   # Optional: increase these if periodic Git polling/reconciliation is too noisy.
   # This reduces background reconcile frequency, but Git changes may take longer
   # to appear unless webhooks or manual refreshes trigger Argo CD sooner.
-  # timeout.reconciliation: 15m
-  # timeout.reconciliation.jitter: 5m
+  timeout.reconciliation: 10m
+  timeout.reconciliation.jitter: 3m
   
   # Authentik Auth
   admin.enabled: "true" # keep the possibility of normal auth
