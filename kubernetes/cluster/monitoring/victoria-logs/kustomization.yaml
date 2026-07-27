@@ -19,7 +19,7 @@ helmCharts:
         fullnameOverride: vl-single
         mode: deployment
         replicaCount: 1
-        retentionPeriod: 7d
+        retentionPeriod: 3
         retentionDiskSpaceUsage: 8GiB
         persistentVolume:
           enabled: true
