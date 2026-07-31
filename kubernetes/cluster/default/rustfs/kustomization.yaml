@@ -81,10 +81,10 @@ helmCharts:
 
       resources:
         limits:
-          memory: 768Mi
+          memory: 1Gi
         requests:
           cpu: 50m
-          memory: 300Mi
+          memory: 500Mi
 
       livenessProbe:
         httpGet:
