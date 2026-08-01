@@ -60,6 +60,9 @@
       "userTimezone": "Europe/Amsterdam",
       "thinkingDefault": "medium",
       "reasoningDefault": "off",
+      "memorySearch": {
+        "provider": "none"
+      },
       "model": {
         "primary": "openai/gpt-5.5",
         "fallbacks": [
