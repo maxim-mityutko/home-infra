@@ -1,0 +1,20 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: cpu-temperature
+  namespace: monitoring
+spec:
+  groups:
+    - name: cpu-temperature.rules
+      rules:
+        - alert: HostCpuTemperatureHigh
+          expr: |-
+            max by(instance, chip) (node_hwmon_temp_celsius{chip=~".*thermal_thermal_zone0.*"} > 80)
+            * on(instance) group_left(nodename) node_uname_info{nodename=~".+"}
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host CPU temperature is high
+            description: "CPU temperature on {{ $labels.nodename }} is {{ $value }}C for more than 10 minutes.\n  INSTANCE = {{ $labels.instance }}\n  CHIP = {{ $labels.chip }}"
