@@ -4,9 +4,16 @@ metadata:
   name: rustfs-config
   namespace: rustfs
 data:
+  RUSTFS_BROWSER_REDIRECT_URL: https://rustfs.brhd.io
   RUSTFS_ENABLE_HEAL: 'false'
   RUSTFS_ENABLE_SCANNER: 'false'
-  RUSTFS_IDENTITY_OPENID_CONFIG_URL_AUTHENTIK: https://auth.brhd.io/application/o/rust-fs/.well-known/openid-configuration
-  RUSTFS_IDENTITY_OPENID_SCOPES_AUTHENTIK: openid,profile,email
+  RUSTFS_IDENTITY_OPENID_CLAIM_NAME_AUTHENTIK: rustfs_policy
+  RUSTFS_IDENTITY_OPENID_CONFIG_URL_AUTHENTIK: https://auth.brhd.io/application/o/rust-fs/
   RUSTFS_IDENTITY_OPENID_DISPLAY_NAME_AUTHENTIK: Authentik
+  RUSTFS_IDENTITY_OPENID_ENABLE_AUTHENTIK: 'on'
+  RUSTFS_IDENTITY_OPENID_GROUPS_CLAIM_AUTHENTIK: rustfs_policy
+  RUSTFS_IDENTITY_OPENID_REDIRECT_URI_AUTHENTIK: https://rustfs.brhd.io/rustfs/admin/v3/oidc/callback/AUTHENTIK
+  RUSTFS_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC_AUTHENTIK: 'off'
   RUSTFS_IDENTITY_OPENID_ROLE_POLICY_AUTHENTIK: consoleAdmin
+  RUSTFS_IDENTITY_OPENID_SCOPES_AUTHENTIK: openid,profile,email
+  RUSTFS_OUTBOUND_ALLOW_ORIGINS: https://auth.brhd.io
