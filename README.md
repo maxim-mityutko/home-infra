@@ -41,7 +41,7 @@ the parent application with [/kubernetes/app-of-apps.yaml](./kubernetes/app-of-a
     5. (NAS) HDD Seagate IronWolf Pro NAS 12TB x3
   * Virtual Machines:
     * (NAS) TrueNAS Scale with 4 CPUs, 8GB RAM and extension cards (1) and (2) as direct passthrough and SSD (4) and HDD (5) in ZFS pulls for storage
-    * (Master) Ubuntu Server with 2 CPUs and 8GB RAM x2
+    * (Master) Ubuntu Server with 2 CPUs and 8GB RAM x1
     * (Worker) Ubuntu Server with 4 CPUs and 8GB RAM
     * (Worker) Ubuntu Server with 6 CPUs and 16GB RAM
   * KVM: [SiPeed NanoKVM-PCIe-PoE](https://sipeed.com/nanokvm/pcie)
@@ -49,7 +49,7 @@ the parent application with [/kubernetes/app-of-apps.yaml](./kubernetes/app-of-a
   * Raspberry Pi CM4 8GB + WD Blue SN550 500GB
   * Raspberry Pi CM4 8GB + WD Red SN700 500GB
   * Raspberry Pi CM5 8GB + Crucial P310 500GB
-  * Raspberry PI CM- x 1 (in reserve)
+  * Raspberry Pi CM5 8GB + Crucial P310 500GB
 * ProxMox VE Host (Sandbox):  
   * HP 800G2 Mini
     * CPU Intel i7-6700
