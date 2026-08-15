@@ -65,6 +65,7 @@ The current wave plan was created with these criteria:
 | external-dns | 1 | DNS/cert/network add-on wave. |
 | multus | 1 | DNS/cert/network add-on wave. |
 | keda | 2 | Storage and KEDA provider wave; before all KEDA HTTP consumers. |
+| longhorn | 2 | Storage provider wave; before apps can consume Longhorn StorageClasses. |
 | nfs-subdir | 2 | Storage and KEDA provider wave. |
 | openebs | 2 | Storage and KEDA provider wave. |
 | victoria-metrics | 3 | Single provider wave because VM scrape/rule CRDs gate many later apps. |
