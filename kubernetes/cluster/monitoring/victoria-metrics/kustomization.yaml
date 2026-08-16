@@ -60,6 +60,14 @@ helmCharts:
                   unless ignoring(key,value) kube_node_spec_taint{job="kube-state-metrics",key=~"ToBeDeletedByClusterAutoscaler|cloud.google.com/impending-node-termination|aws-node-termination-handler/spot-itn"})
                   == 1) unless on(cluster,node)
                   kube_node_labels{job="kube-state-metrics",label_node_kubernetes_io_disable_alerts="true"}
+            # Quick hack to exclude "false positive" cases, when scaling is done from 0 to 1 replicas via KEDA HTTP Add-on
+            KubeHpaMaxedOut:
+              create: true
+              spec:
+                expr: >-
+                  kube_horizontalpodautoscaler_status_current_replicas{namespace=~".*",job="kube-state-metrics"} == kube_horizontalpodautoscaler_spec_max_replicas{namespace=~".*",job="kube-state-metrics"}
+                  and
+                  kube_horizontalpodautoscaler_spec_max_replicas{namespace=~".*",job="kube-state-metrics"} > 1
         fullnameOverride: stack
         victoria-metrics-operator:
           enabled: true
