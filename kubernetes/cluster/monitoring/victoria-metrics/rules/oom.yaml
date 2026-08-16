@@ -23,7 +23,7 @@ spec:
           minutes.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
     - alert: HostOomKillDetected
       expr: (increase(node_vmstat_oom_kill[1m]) > 0) * on(instance) group_left (nodename)
-              node_uname_info{nodename=~".+"}
+        node_uname_info{nodename=~".+"}
       for: 0m
       labels:
         severity: warning
