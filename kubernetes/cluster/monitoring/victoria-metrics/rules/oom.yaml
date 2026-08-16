@@ -22,11 +22,8 @@ spec:
           }}/{{ $labels.pod }} has been OOMKilled {{ $value }} times in the last 10
           minutes.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
     - alert: HostOomKillDetected
-      expr: >-
-        ((increase(node_vmstat_oom_kill[1m]) > 0) * on(instance) group_left (nodename)
-        node_uname_info{nodename=~".+"}) unless on(nodename)
-        label_replace(kube_node_labels{job="kube-state-metrics",label_node_kubernetes_io_enable_alerts="false"},
-        "nodename", "$1", "node", "(.+)")
+      expr: (increase(node_vmstat_oom_kill[1m]) > 0) * on(instance) group_left (nodename)
+              node_uname_info{nodename=~".+"}
       for: 0m
       labels:
         severity: warning
