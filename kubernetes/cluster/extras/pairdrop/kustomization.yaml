@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: extras
 resources:
   - pairdrop.yaml
+  - cold-start-placeholder.yaml
   - ingress.yaml
   - scaler.yaml

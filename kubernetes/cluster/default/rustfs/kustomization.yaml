@@ -9,7 +9,7 @@ helmCharts:
   - name: rustfs
     namespace: rustfs
     releaseName: rustfs
-    version: 0.8.0
+    version: 0.12.0
     repo: https://charts.rustfs.com/
     valuesInline:
       replicaCount: 1
@@ -81,10 +81,10 @@ helmCharts:
 
       resources:
         limits:
-          memory: 300Mi
+          memory: 768Mi
         requests:
           cpu: 50m
-          memory: 150Mi
+          memory: 300Mi
 
       livenessProbe:
         httpGet:

@@ -6,7 +6,8 @@
 ## Notes
 
 The rollout from scratch has not been fully automated yet, and generally requires following
-the process defined in the [/readme](./readme/) and [/kubernetes/scripts](./kubernetes/scripts/) folders for the initial setup.
+the process defined in the [/readme](./readme/) docs. Node bootstrap helpers live in
+the [/node](./node/) folder.
 
 After the initial steps are complete, deployments are handled via ArgoCD application manifests
 defined in the [/kubernetes/argocd](./kubernetes/argocd/) app-of-apps tree. Bootstrap
@@ -40,7 +41,7 @@ the parent application with [/kubernetes/app-of-apps.yaml](./kubernetes/app-of-a
     5. (NAS) HDD Seagate IronWolf Pro NAS 12TB x3
   * Virtual Machines:
     * (NAS) TrueNAS Scale with 4 CPUs, 8GB RAM and extension cards (1) and (2) as direct passthrough and SSD (4) and HDD (5) in ZFS pulls for storage
-    * (Master) Ubuntu Server with 2 CPUs and 8GB RAM x2
+    * (Master) Ubuntu Server with 2 CPUs and 8GB RAM x1
     * (Worker) Ubuntu Server with 4 CPUs and 8GB RAM
     * (Worker) Ubuntu Server with 6 CPUs and 16GB RAM
   * KVM: [SiPeed NanoKVM-PCIe-PoE](https://sipeed.com/nanokvm/pcie)
@@ -48,7 +49,7 @@ the parent application with [/kubernetes/app-of-apps.yaml](./kubernetes/app-of-a
   * Raspberry Pi CM4 8GB + WD Blue SN550 500GB
   * Raspberry Pi CM4 8GB + WD Red SN700 500GB
   * Raspberry Pi CM5 8GB + Crucial P310 500GB
-  * Raspberry PI CM- x 1 (in reserve)
+  * Raspberry Pi CM5 8GB + Crucial P310 500GB
 * ProxMox VE Host (Sandbox):  
   * HP 800G2 Mini
     * CPU Intel i7-6700
@@ -64,7 +65,9 @@ the parent application with [/kubernetes/app-of-apps.yaml](./kubernetes/app-of-a
 
 ### Microk8s
 
-Some services are installed out of the box in Microk8s, refer to `kubernetes/scripts/00.0-init.sh`
+Base node prep can be run with `node/01-initial-node-setup.sh`; see
+[`readme/bootstrap-node.md`](readme/bootstrap-node.md) for the node bootstrap
+runbook.
 
 ### Default (Tier 1)
 
@@ -89,7 +92,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | **OpenEBS**                   | A popular & widely deployed Open Source Container Native Storage platform for Stateful Persistent Applications on Kubernetes                                                                                          |                                     [repo](https://github.com/openebs/openebs/tree/v4.3.3)<br>[docs](https://openebs.io/docs/)                                     |                             [helm](https://github.com/openebs/openebs/blob/v4.3.3/charts/README.md)                             |
 | **Redis**                     | In-memory database that persists on disk                                                                                                                                                                              |                                                               [repo](https://github.com/redis/redis)                                                               |                           [helm](https://github.com/bitnami/charts/blob/main/bitnami/redis/README.md)                           |
 | **RustFS**                    | RustFS is an open-source, S3-compatible high-performance object storage                                                                                                                                               |                                     [repo](https://github.com/rustfs/rustfs/)<br>[docs](https://docs.rustfs.com/installation/)                                     |                                     [helm](https://github.com/rustfs/rustfs/tree/main/helm)                                     |
-| **Sealed Secrets**            | A Kubernetes controller and tool for one-way encrypted Secrets                                                                                                                                                        |                                                       [repo](https://github.com/bitnami-labs/sealed-secrets)                                                       |                                      [helm](https://bitnami.com/stack/sealed-secrets/helm)                                      |
+| **Sealed Secrets**            | A Kubernetes controller and tool for one-way encrypted Secrets                                                                                                                                                        |                                                       [repo](https://github.com/bitnami/sealed-secrets)                                                       |                                      [helm](https://github.com/bitnami/sealed-secrets/tree/main/helm/sealed-secrets)                                      |
 | **Tailscale K8s Operator**    | Secure, remote access to on-premises                                                                                                                                                                                  |                            [repo](https://github.com/tailscale/tailscale)<br>[docs](https://tailscale.com/kb/1236/kubernetes-operator)                             |                   [helm](https://github.com/tailscale/tailscale/blob/main/cmd/k8s-operator/deploy/README.md)                    |
 | **Zot** | A scale-out production-ready vendor-neutral OCI-native container image/artifact registry (purely based on OCI Distribution Specification) | [repo](https://github.com/project-zot/zot)<br>[docs](https://zotregistry.dev) | [helm](https://github.com/project-zot/helm-charts)
 
@@ -160,6 +163,7 @@ Some services are installed out of the box in Microk8s, refer to `kubernetes/scr
 | Project                 | Description                                                                                                                       | Docs / Repo                                                                                            | Docker / Helm                                                                    |
 |-------------------------|-----------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
 | **Filebrowser Quantum** | FileBrowser Quantum provides an easy way to access and manage your files from the web                                             | [repo](https://github.com/gtsteffaniak/filebrowser)<br>[docs](https://filebrowserquantum.com/en/docs/) | [docker](https://github.com/gtsteffaniak/filebrowser/pkgs/container/filebrowser) |
+| **Ignis**               | Run Obsidian as a self-hosted web app without a remote desktop                                                                    | [repo](https://github.com/Nystik-gh/ignis)<br>[docs](https://github.com/Nystik-gh/ignis/tree/main/apps/ignis-server) | [docker](https://hub.docker.com/r/nobbe/ignis)                                   |
 | **SearXNG**             | Privacy-respecting, hackable metasearch engine                                                                                    | [repo](https://github.com/searxng/searxng)<br>[docs](https://docs.searxng.org/index.html)              | [docker](https://hub.docker.com/r/searxng/searxng)                               |
 | **Invidious**           | **STOPPED WORKING DUE TO YOUTUBE CHANGES, NO FIX** <br>Invidious is an open source alternative front-end to YouTube               | [repo](https://github.com/iv-org/invidious)<br>[docs](https://docs.invidious.io/)                      | [docker](https://quay.io/repository/invidious/invidious?tab=info)                |
 | **Immich**              | High-performance self-hosted solution for backing up, viewing, managing, and sharing photos from your phone or existing galleries | [repo](https://github.com/immich-app/immich)<br>[docs](https://immich.app/docs)                        | [helm](https://github.com/immich-app/immich-charts)                              |

@@ -2,7 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: monitoring
 resources:
-  - rule-oom.yaml
+  - rules/
+  - cold-start-placeholder.yaml
   - secret.yaml
   - dns-endpoint.yaml
   - dashboards/
@@ -12,7 +13,7 @@ helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring
       releaseName: victoria-metrics
-      version: 0.83.0
+      version: 0.89.0
       repo: https://victoriametrics.github.io/helm-charts/
       valuesInline:
         defaultDashboards:
@@ -20,6 +21,20 @@ helmCharts:
         defaultRules:
           enabled: true
           groups:
+            kube-apiserver-burnrate.rules:
+              enabled: false
+            kube-apiserver-histogram.rules:
+              enabled: false
+            kube-apiserver-slos:
+              enabled: false
+            kube-scheduler.rules:
+              enabled: false
+            kubernetes-system-apiserver:
+              enabled: false
+            kubernetes-system-controller-manager:
+              enabled: false
+            kubernetes-system-scheduler:
+              enabled: false
             vmalert:
               create: false
           rules:

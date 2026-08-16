@@ -1,5 +1,29 @@
 # Bootstrap Cluster
 
+## ArgoCD
+
+Install ArgoCD and bootstrap the app-of-apps tree:
+
+```shell
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+kubectl delete secret argocd-initial-admin-secret -n argocd
+kubectl apply -f kubernetes/app-of-apps.yaml
+```
+
+## Sealed Secrets
+
+Wait for the **Sealed Secrets** application to sync, then restore the backed-up
+key if needed:
+
+```shell
+kubectl apply -f <path-to-secret>/key.yaml
+```
+
+Follow [secrets-and-certificates.md](./secrets-and-certificates.md) for
+Sealed Secrets recovery and `kubeseal` usage.
+
 ## ArgoCD Sync Waves
 
 ArgoCD Application manifests are assigned `argocd.argoproj.io/sync-wave`
@@ -101,6 +125,7 @@ The current wave plan was created with these criteria:
 | unpackerr | 16 | Media automation wave after download/Servarr apps. |
 | stash | 17 | Single heavy media wave. |
 | filebrowser | 18 | Privacy wave. |
+| ignis | 18 | Privacy wave. |
 | immich | 18 | Privacy wave; heavier by declared resources but still okay within this group. |
 | invidious | 18 | Privacy wave. |
 | karakeep | 18 | Privacy wave; heavier by declared resources but still okay within this group. |

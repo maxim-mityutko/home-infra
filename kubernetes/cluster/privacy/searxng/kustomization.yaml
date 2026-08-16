@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: privacy
 resources:
   - searxng.yaml
+  - cold-start-placeholder.yaml
   - ingress.yaml
   - secret.yaml
   - scaler.yaml

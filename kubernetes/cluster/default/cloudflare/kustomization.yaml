@@ -5,3 +5,7 @@ resources:
   - cloudflare-ddns.yaml
   - node-dns.yaml
   - secret.yaml
+configMapGenerator:
+  - name: cloudflare-node-dns-scripts
+    files:
+      - scripts/sync-node-dns.sh

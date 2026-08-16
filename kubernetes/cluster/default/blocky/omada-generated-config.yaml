@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: blocky-omada-customdns
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+    app.kubernetes.io/component: omada-sync
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: blocky-omada-clientlookup
+  namespace: default
+  labels:
+    app.kubernetes.io/name: blocky
+    app.kubernetes.io/component: omada-sync

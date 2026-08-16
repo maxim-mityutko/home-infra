@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: extras
 resources:
   - code-server.yaml
+  - cold-start-placeholder.yaml
   - ingress.yaml
   - volumes.yaml
   - scaler.yaml

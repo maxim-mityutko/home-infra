@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: ai
 resources:
   - dns-endpoint.yaml
+  - cold-start-placeholder.yaml
   - scaler.yaml
 helmCharts:
   - name: victoria-metrics-mcp

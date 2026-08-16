@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: extras
 resources:
   - bento-pdf.yaml
+  - cold-start-placeholder.yaml
   - ingress.yaml
   - scaler.yaml

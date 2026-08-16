@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: sonarr
-          image: ghcr.io/hotio/sonarr:release-4.0.17.2952
+          image: ghcr.io/hotio/sonarr:release-4.0.19.2979
           resources:
             requests:
               memory: 500Mi
@@ -57,6 +57,14 @@ spec:
                 name: sonarr
           ports:
             - containerPort: 8989
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8989
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 3
           volumeMounts:
             - name: sonarr-config
               mountPath: /config

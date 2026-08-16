@@ -25,6 +25,6 @@ spec:
         name: cnpg-default-secret
         key: password
     data:
-      compression: bzip2
+      compression: lz4
     wal:
-      compression: bzip2
+      compression: lz4
