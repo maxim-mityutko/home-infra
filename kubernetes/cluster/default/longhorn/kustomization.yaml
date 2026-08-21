@@ -1,13 +1,14 @@
 # NOTES:
-# - To uninstall follow: https://longhorn.io/docs/1.8.0/deploy/uninstall/#uninstalling-longhorn-using-argo-cd;
+# - To uninstall follow: https://longhorn.io/docs/1.12.1/deploy/uninstall/#uninstalling-longhorn-using-argo-cd;
 # - If there is an error in defaultSettings, none will be applied, check "Longhorn Manager" pod for logs;
-# - For custom storage class: https://longhorn.io/docs/1.6.1/references/storage-class-parameters/
+# - For custom storage class: https://longhorn.io/docs/1.12.1/references/storage-class-parameters/
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: longhorn-system
 resources:
   - dns-endpoint.yaml
+  - storage-class.yaml
   # - recurring-job.yaml
   # - service-scrape.yaml
 helmCharts:
@@ -17,22 +18,25 @@ helmCharts:
     version: 1.12.1
     repo: https://charts.longhorn.io
     valuesInline:
-      global:
-        nodeSelector:
-          beta.kubernetes.io/arch: amd64
       defaultSettings:
         replicaAutoBalance: least-effort
+        replicaZoneSoftAntiAffinity: false
         storageOverProvisioningPercentage: 50
         storageMinimalAvailablePercentage: 20
         upgradeChecker: false
         # For Kubernetes configuration, modify the `numberOfReplicas` field in the StorageClass.
-        defaultReplicaCount: 3  
+        defaultReplicaCount: 2
         autoDeletePodWhenVolumeDetachedUnexpectedly: true
         detachManuallyAttachedVolumesWhenCordoned: true
         disableSchedulingOnCordonedNode: true
         orphanAutoDeletion: false
         nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
+        # Risk: this permits drains even when the node has the last healthy replica.
+        # Removing or losing that node after drain can cause data loss, and a running
+        # last replica can be corrupted during the drain. Keep this only for manual,
+        # closely supervised maintenance windows.
         nodeDrainPolicy: always-allow
+        csiAllowedTopologyKeys: topology.kubernetes.io/zone
         logLevel: Info
         deletingConfirmationFlag: true
         allowCollectingLonghornUsageMetrics: false
@@ -45,9 +49,8 @@ helmCharts:
       persistence:
         defaultClass: false
         defaultFsType: ext4
-        defaultClassReplicaCount: 3
+        defaultClassReplicaCount: 2
         reclaimPolicy: Delete   # or "Retain"
-        migratable: true
         nfsOptions: vers=4.1
       preUpgradeChecker:
         jobEnabled: false
@@ -55,10 +58,10 @@ helmCharts:
       csi:
         # This should be changed specifically for Microk8s
         kubeletRootDir: /var/snap/microk8s/common/var/lib/kubelet 
-        attacherReplicaCount: 1
-        provisionerReplicaCount: 1
-        resizerReplicaCount: 1 
-        snapshotterReplicaCount: 1
+        attacherReplicaCount: 1 # Handles CSI volume attach/detach operations.
+        provisionerReplicaCount: 1 # Creates/deletes PVs for Longhorn-backed PVCs.
+        resizerReplicaCount: 1 # Expands volumes after PVC size increases.
+        snapshotterReplicaCount: 1 # Serves CSI snapshot create/delete requests.
       longhornUI:
         replicas: 1
       metrics:
