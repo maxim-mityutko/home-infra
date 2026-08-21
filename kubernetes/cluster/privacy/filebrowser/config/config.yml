@@ -73,11 +73,13 @@ auth:
     oidc:
       enabled: true
       issuerUrl: "https://auth.brhd.io/application/o/filebrowser/"
-      scopes: "email openid profile groups"
+      scopes: "email openid profile x_groups"
       userIdentifier: "email"
       disableVerifyTLS: false
       logoutRedirectUrl: "https://auth.brhd.io/application/o/filebrowser/end-session/"
-      adminGroup: "admin"
+      adminGroup: admin
+      userGroups: user
+      groupsClaim: groups
   adminUsername: admin
 frontend:
   name: Filebrowser Quantum
