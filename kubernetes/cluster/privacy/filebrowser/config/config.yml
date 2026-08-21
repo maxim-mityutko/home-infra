@@ -3,7 +3,6 @@
 server:
   database:
     path: data/filebrowser.sqlite
-    migrateFrom: data/database.db.old
   numImageProcessors: 2
   disablePreviews: false
   disablePreviewResize: false
