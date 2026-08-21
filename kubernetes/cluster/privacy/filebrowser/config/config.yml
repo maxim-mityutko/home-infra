@@ -79,6 +79,7 @@ auth:
       logoutRedirectUrl: "https://auth.brhd.io/application/o/filebrowser/end-session/"
       adminGroup: admin
       userGroups:
+        - admin
         - user
       groupsClaim: groups
   adminUsername: admin
