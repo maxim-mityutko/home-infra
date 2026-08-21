@@ -78,7 +78,8 @@ auth:
       disableVerifyTLS: false
       logoutRedirectUrl: "https://auth.brhd.io/application/o/filebrowser/end-session/"
       adminGroup: admin
-      userGroups: user
+      userGroups:
+        - user
       groupsClaim: groups
   adminUsername: admin
 frontend:
