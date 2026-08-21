@@ -58,6 +58,7 @@ http:
   baseURL: /
   externalUrl: https://drive.brhd.io
   internalUrl: ""
+  trustProxyHeaders: true
   disableWebDAV: false
 auth:
   tokenExpirationHours: 2
