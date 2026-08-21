@@ -2,8 +2,8 @@
 # Ref: https://filebrowserquantum.com/en/docs/reference/full-config-example/
 server:
   database:
-    path: filebrowser.sqlite
-    migrateFrom: database.db.old
+    path: data/filebrowser.sqlite
+    migrateFrom: data/database.db.old
   numImageProcessors: 2
   disablePreviews: false
   disablePreviewResize: false
