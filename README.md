@@ -7,7 +7,7 @@
 
 The rollout from scratch has not been fully automated yet, and generally requires following
 the process defined in the [/readme](./readme/) docs. Node bootstrap helpers live in
-the [/node](./node/) folder.
+the [/scripts/node](./scripts/node/) folder.
 
 After the initial steps are complete, deployments are handled via ArgoCD application manifests
 defined in the [/kubernetes/argocd](./kubernetes/argocd/) app-of-apps tree. Bootstrap
@@ -65,7 +65,7 @@ the parent application with [/kubernetes/app-of-apps.yaml](./kubernetes/app-of-a
 
 ### Microk8s
 
-Base node prep can be run with `node/01-initial-node-setup.sh`; see
+Base node prep can be run with `scripts/node/01-initial-node-setup.sh`; see
 [`readme/bootstrap-node.md`](readme/bootstrap-node.md) for the node bootstrap
 runbook.
 

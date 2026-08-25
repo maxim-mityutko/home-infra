@@ -15,7 +15,7 @@
 Run the node bootstrap helper from the repository root:
 
 ```shell
-sudo ./node/01-initial-node-setup.sh
+sudo bash ./scripts/node/01-initial-node-setup.sh
 ```
 
 The script prompts for the static node IP, gateway, nameserver, MicroK8s
@@ -57,6 +57,13 @@ kubectl label node <proxmox-vm-node-1> topology.kubernetes.io/zone=proxmox --ove
 kubectl label node <proxmox-vm-node-2> topology.kubernetes.io/zone=proxmox --overwrite
 ```
 
+The cluster labeling helper can apply both `longhorn.io/node=true` and
+`topology.kubernetes.io/zone` interactively from a control-plane node:
+
+```shell
+bash ./scripts/cluster/label-longhorn-nodes.sh
+```
+
 Use one distinct zone per Raspberry Pi and the shared `proxmox` zone for all
 Proxmox VMs. The Longhorn chart passes `topology.kubernetes.io/zone` through
 CSI, and the `longhorn-replicated` StorageClass disables zone soft
@@ -69,7 +76,7 @@ instead of placing both replicas on Proxmox.
 After the node has the expected IP layout, create persistent interface altnames:
 
 ```shell
-sudo ./node/02-set-interface-altnames.sh --subnet x.x.x.x/xx
+sudo bash ./scripts/node/02-set-interface-altnames.sh --subnet x.x.x.x/xx
 ```
 
 The script maps the interface with an IPv4 address in the provided subnet to
