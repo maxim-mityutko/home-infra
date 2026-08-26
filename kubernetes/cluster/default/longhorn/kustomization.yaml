@@ -20,7 +20,7 @@ helmCharts:
     valuesInline:
       global:
         nodeSelector:
-          longhorn.io/node: "true"
+          services.brhd.io/longhorn: "true"
       defaultSettings:
         replicaAutoBalance: least-effort
         replicaZoneSoftAntiAffinity: false
@@ -47,7 +47,7 @@ helmCharts:
         recurringFailedJobsHistoryLimit: 7
         recurringJobMaxRetention: 14
         snapshotMaxCount: 14
-        systemManagedComponentsNodeSelector: longhorn.io/node:true
+        systemManagedComponentsNodeSelector: services.brhd.io/longhorn:true
       defaultBackupStore:
         backupTarget: nfs://nas.brhd.io:/mnt/spin/backup/longhorn
       persistence:
