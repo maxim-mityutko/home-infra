@@ -10,7 +10,7 @@
 #   2) Asks which nodes should run Longhorn components.
 #   3) For each selected node, prompts for a topology zone value.
 #   4) Labels each selected node with:
-#      - services.brhd.io/longhorn=true
+#      - service.brhd.io/allow-longhorn=true
 #      - topology.kubernetes.io/zone=<selected value>
 #
 # Notes:
@@ -22,7 +22,7 @@
 
 set -euo pipefail
 
-readonly LONGHORN_NODE_LABEL="services.brhd.io/longhorn=true"
+readonly LONGHORN_NODE_LABEL="service.brhd.io/allow-longhorn=true"
 readonly TOPOLOGY_LABEL_KEY="topology.kubernetes.io/zone"
 
 KUBECTL=""

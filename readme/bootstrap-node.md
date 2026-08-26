@@ -57,7 +57,7 @@ kubectl label node <proxmox-vm-node-1> topology.kubernetes.io/zone=proxmox --ove
 kubectl label node <proxmox-vm-node-2> topology.kubernetes.io/zone=proxmox --overwrite
 ```
 
-The cluster labeling helper can apply both `services.brhd.io/longhorn=true` and
+The cluster labeling helper can apply both `service.brhd.io/allow-longhorn=true` and
 `topology.kubernetes.io/zone` interactively from a control-plane node:
 
 ```shell
