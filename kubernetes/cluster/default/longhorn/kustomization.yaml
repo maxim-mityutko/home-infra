@@ -7,7 +7,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: longhorn-system
 resources:
+  - cold-start-placeholder.yaml
   - dns-endpoint.yaml
+  - keda-http-interceptor.yaml
+  - scaler.yaml
   - storage-class.yaml
   # - recurring-job.yaml
   # - service-scrape.yaml
@@ -67,7 +70,11 @@ helmCharts:
         resizerReplicaCount: 1 # Expands volumes after PVC size increases.
         snapshotterReplicaCount: 1 # Serves CSI snapshot create/delete requests.
       longhornUI:
-        replicas: 1
+        replicas: 0
+      longhornManager:
+        updateStrategy:
+          rollingUpdate:
+            maxUnavailable: "1"
       metrics:
         serviceMonitor:
           enabled: false
@@ -89,3 +96,14 @@ helmCharts:
             http://authentik-outpost-embedded.default.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
       openshift:
         enabled: false
+patches:
+  - target:
+      kind: Ingress
+      name: longhorn-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/http/paths/0/backend/service/name
+        value: keda-http-interceptor
+      - op: replace
+        path: /spec/rules/0/http/paths/0/backend/service/port/number
+        value: 8080
