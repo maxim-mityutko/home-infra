@@ -9,7 +9,6 @@ namespace: longhorn-system
 resources:
   - cold-start-placeholder.yaml
   - dns-endpoint.yaml
-  - keda-http-interceptor.yaml
   - scaler.yaml
   - storage-class.yaml
   # - recurring-job.yaml
