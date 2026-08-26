@@ -50,8 +50,6 @@ helmCharts:
         recurringJobMaxRetention: 14
         snapshotMaxCount: 14
         systemManagedComponentsNodeSelector: service.brhd.io/allow-longhorn:true
-      defaultBackupStore:
-        backupTarget: nfs://nas.brhd.io:/mnt/spin/backup/longhorn
       persistence:
         defaultClass: false
         defaultFsType: ext4
