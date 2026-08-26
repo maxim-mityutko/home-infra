@@ -40,7 +40,7 @@ helmCharts:
         # closely supervised maintenance windows.
         nodeDrainPolicy: always-allow
         csiAllowedTopologyKeys: topology.kubernetes.io/zone
-        logLevel: Info
+        logLevel: Warning
         deletingConfirmationFlag: true
         allowCollectingLonghornUsageMetrics: false
         recurringSuccessfulJobsHistoryLimit: 7
