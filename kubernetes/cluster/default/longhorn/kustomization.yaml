@@ -73,7 +73,7 @@ helmCharts:
       longhornManager:
         updateStrategy:
           rollingUpdate:
-            maxUnavailable: "1"
+            maxUnavailable: 1
       metrics:
         serviceMonitor:
           enabled: false
