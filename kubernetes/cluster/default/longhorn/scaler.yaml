@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keda-http-interceptor
+  namespace: longhorn-system
+spec:
+  type: ExternalName
+  externalName: keda-add-ons-http-interceptor-proxy.keda.svc.cluster.local.
+  ports:
+    - name: http
+      port: 8080
+    - name: https
+      port: 8443
+---
+apiVersion: http.keda.sh/v1beta1
+kind: InterceptorRoute
+metadata:
+  name: longhorn-ui-scaler
+spec:
+  target:
+    service: longhorn-frontend
+    port: 80
+  rules:
+    - hosts:
+        - longhorn.brhd.io
+  scalingMetric:
+    concurrency:
+      targetValue: 25
+    requestRate:
+      targetValue: 1
+      window: 1m
+  coldStart:
+    placeholder:
+      response:
+        bodyFromConfigMap:
+          name: longhorn-ui-cold-start-placeholder
+          key: index.html
+        headers:
+          Content-Type: text/html; charset=utf-8
+          Refresh: "5"
+        statusCode: 503
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: longhorn-ui-scaler
+spec:
+  scaleTargetRef:
+    name: longhorn-ui
+  minReplicaCount: 0
+  maxReplicaCount: 1
+  pollingInterval: 60
+  initialCooldownPeriod: 600
+  cooldownPeriod: 1800
+  triggers:
+    - type: external-push
+      metadata:
+        scalerAddress: keda-add-ons-http-external-scaler.keda:9090
+        interceptorRoute: longhorn-ui-scaler

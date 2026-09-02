@@ -15,7 +15,7 @@
 Run the node bootstrap helper from the repository root:
 
 ```shell
-sudo ./node/01-initial-node-setup.sh
+sudo bash ./scripts/node/01-initial-node-setup.sh
 ```
 
 The script prompts for the static node IP, gateway, nameserver, MicroK8s
@@ -42,12 +42,41 @@ MicroK8s snap refreshes are held with `snap refresh --hold microk8s`.
 Upgrade nodes manually, one at a time, with `sudo snap refresh microk8s` when a
 new revision should be rolled out.
 
+### Topology Labels
+
+Longhorn uses Kubernetes topology labels to spread replicas across hardware
+failure domains. Label every storage-capable node before creating
+`longhorn-replicated` PVCs:
+
+```shell
+kubectl label node <pi-node-1> topology.kubernetes.io/zone=pi-1 --overwrite
+kubectl label node <pi-node-2> topology.kubernetes.io/zone=pi-2 --overwrite
+kubectl label node <pi-node-3> topology.kubernetes.io/zone=pi-3 --overwrite
+kubectl label node <pi-node-4> topology.kubernetes.io/zone=pi-4 --overwrite
+kubectl label node <proxmox-vm-node-1> topology.kubernetes.io/zone=proxmox --overwrite
+kubectl label node <proxmox-vm-node-2> topology.kubernetes.io/zone=proxmox --overwrite
+```
+
+The cluster labeling helper can apply both `service.brhd.io/allow-longhorn=true` and
+`topology.kubernetes.io/zone` interactively from a control-plane node:
+
+```shell
+bash ./scripts/cluster/label-longhorn-nodes.sh
+```
+
+Use one distinct zone per Raspberry Pi and the shared `proxmox` zone for all
+Proxmox VMs. The Longhorn chart passes `topology.kubernetes.io/zone` through
+CSI, and the `longhorn-replicated` StorageClass disables zone soft
+anti-affinity. With two replicas, Longhorn must pick two different zones; if
+only Proxmox is available, the volume should stay unscheduled or degraded
+instead of placing both replicas on Proxmox.
+
 ### Interface Altnames
 
 After the node has the expected IP layout, create persistent interface altnames:
 
 ```shell
-sudo ./node/02-set-interface-altnames.sh --subnet x.x.x.x/xx
+sudo bash ./scripts/node/02-set-interface-altnames.sh --subnet x.x.x.x/xx
 ```
 
 The script maps the interface with an IPv4 address in the provided subnet to

@@ -7,7 +7,7 @@
 
 The rollout from scratch has not been fully automated yet, and generally requires following
 the process defined in the [/readme](./readme/) docs. Node bootstrap helpers live in
-the [/node](./node/) folder.
+the [/scripts/node](./scripts/node/) folder.
 
 After the initial steps are complete, deployments are handled via ArgoCD application manifests
 defined in the [/kubernetes/argocd](./kubernetes/argocd/) app-of-apps tree. Bootstrap
@@ -65,7 +65,7 @@ the parent application with [/kubernetes/app-of-apps.yaml](./kubernetes/app-of-a
 
 ### Microk8s
 
-Base node prep can be run with `node/01-initial-node-setup.sh`; see
+Base node prep can be run with `scripts/node/01-initial-node-setup.sh`; see
 [`readme/bootstrap-node.md`](readme/bootstrap-node.md) for the node bootstrap
 runbook.
 
@@ -85,6 +85,7 @@ runbook.
 | **Headlamp**                  | A Kubernetes web UI that is fully-featured, user-friendly and extensible                                                                                                                                              |                                  [repo](https://github.com/kubernetes-sigs/headlamp)<br>[docs](https://headlamp.dev/docs/latest/)                                  |                          [helm](https://github.com/kubernetes-sigs/headlamp/tree/main/charts/headlamp)                          |
 | **Ingress NGINX**             | Ingress NGINX Controller for Kubernetes                                                                                                                                                                               |                             [repo](https://github.com/kubernetes/ingress-nginx)<br>[docs](https://kubernetes.github.io/ingress-nginx/)                             |                  [helm](https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/README.md)                   |
 | **Kubernetes Metrics Server** | Scalable and efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines.<br><br>*Also required for statistics graphs in Kubernetes Dashboard*                                       |                                                     [repo](https://github.com/kubernetes-sigs/metrics-server)                                                      |              [helm](https://github.com/kubernetes-sigs/metrics-server/blob/master/charts/metrics-server/README.md)              |
+| **Longhorn**                  | Distributed block storage system for Kubernetes with replicated RWO volumes and NFS-backed backups                                                                                                                    |                                            [repo](https://github.com/longhorn/longhorn)<br>[docs](https://longhorn.io/docs/1.12.1/)                                  |                                      [helm](https://github.com/longhorn/charts/tree/master/charts/longhorn)                                      |
 | **MetalLB**                   | A network load-balancer implementation for Kubernetes using standard routing protocols                                                                                                                                |                                              [repo](https://github.com/metallb/metallb)<br>[docs](https://metallb.io)                                              |                          [helm](https://github.com/metallb/metallb/blob/main/charts/metallb/README.md)                          |
 | **Multus**                    | A CNI meta-plugin for multi-homed pods in Kubernetes                                                                                                                                                                  |     [repo](https://github.com/k8snetworkplumbingwg/multus-cni)<br>[docs](https://github.com/k8snetworkplumbingwg/multus-cni/blob/master/docs/configuration.md)     |                     [docker](https://github.com/k8snetworkplumbingwg/multus-cni/pkgs/container/multus-cni)                      |
 | **NFS Subdir Provisioner**    | Automatic provisioning of PVs via PVCs                                                                                                                                                                                |                                             [repo](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner)                                             |                                                                                                                                 |
@@ -216,9 +217,3 @@ A lot of general information on the topic: [TRaSH Guides](https://trash-guides.i
 | **Immich-Go** | An alternative to the immich-CLI command that doesn't depend on nodejs installation. It tries its best for importing google photos takeout archives. | [repo](https://github.com/simulot/immich-go)<br>[docs](https://github.com/simulot/immich-go#running-immich-go) |
 | **Jellifin Plugin SSO** | This plugin allows users to sign in through an SSO provider (such as Google, Microsoft, or your own provider). This enables one-click signin. | [repo](https://github.com/9p4/jellyfin-plugin-sso) |
 | **Jellyfin Intro Skipper** | Automatically detect and skip intro/credit sequences in Jellyfin | [repo](https://github.com/intro-skipper/intro-skipper) |
-
-### Decomissioned / Unused
-
-| Project      | Description                                                                                         | Docs / Repo                 | Docker / Helm                                          |
-|--------------|-----------------------------------------------------------------------------------------------------|-----------------------------|--------------------------------------------------------|
-| **Longhorn** | Longhorn is a lightweight, reliable and easy-to-use distributed block storage system for Kubernetes | [docs](https://longhorn.io) | [helm](https://github.com/longhorn/charts/tree/master) |
