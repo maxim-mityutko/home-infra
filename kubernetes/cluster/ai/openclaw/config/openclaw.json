@@ -175,7 +175,7 @@
 
   "plugins": {
     "load": {
-      "paths": ["/app/custom/extensions"]
+      "paths": []
     },
     "allow": [
       "ollama",
