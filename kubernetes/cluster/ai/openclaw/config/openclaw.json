@@ -409,6 +409,7 @@
   "channels": {
     "discord": {
       "enabled": true,
+      "defaultAccount": "bender",
       "commands": {
         "native": true
       },
@@ -448,8 +449,7 @@
               "users": ["${DISCORD_OWNER_ID}"]
             }
           }
-        },
-        "default": {"groupPolicy": "allowlist"}
+        }
       }
     },
     "whatsapp": {
