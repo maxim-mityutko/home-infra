@@ -15,7 +15,7 @@
 Run the node bootstrap helper from the repository root:
 
 ```shell
-sudo ./node/01-initial-node-setup.sh
+sudo ./scripts/node/01-initial-node-setup.sh
 ```
 
 The script prompts for the static node IP, gateway, nameserver, MicroK8s

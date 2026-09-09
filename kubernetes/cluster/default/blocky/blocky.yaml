@@ -87,3 +87,10 @@ spec:
                     values:
                       - blocky
               topologyKey: kubernetes.io/hostname
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - blocky
+              topologyKey: topology.kubernetes.io/zone
