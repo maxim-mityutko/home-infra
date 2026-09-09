@@ -18,8 +18,7 @@
       "enabled": true,
       "allowedOrigins": [
         "https://openclaw.brhd.io"
-      ],
-      "dangerouslyDisableDeviceAuth": true
+      ]
     }
   },
 
@@ -60,22 +59,29 @@
       "userTimezone": "Europe/Amsterdam",
       "thinkingDefault": "medium",
       "reasoningDefault": "off",
-      "memorySearch": {
-        "provider": "none"
-      },
       "model": {
         "primary": "openai/gpt-5.6-terra",
         "fallbacks": [
           "ollama/nemotron-3-super",
           "ollama/nemotron-3-ultra"
         ]
+      },
+      "heartbeat": {
+        "agentId": "main"
+      },
+      "systemAgent": {
+        "agentId": "main"
       }
     },
-    "list": [
-      {
-        "id": "main",
+    "ownership": "explicit",
+    "entries": {
+      "main": {
         "workspace": "~/.openclaw/workspace/bender",
-        "default": true,
+        "memory": {
+          "search": {
+            "rememberAcrossConversations": true
+          }
+        },
         "identity": {
           "name": "Bender"
         },
@@ -83,9 +89,13 @@
           "mentionPatterns": ["@bender", "Bender"]
         }
       },
-      {
-        "id": "fast",
+      "fast": {
         "workspace": "~/.openclaw/workspace/clamps",
+        "memory": {
+          "search": {
+            "rememberAcrossConversations": true
+          }
+        },
         "identity": {
           "name": "Clamps"
         },
@@ -102,8 +112,7 @@
         "fastModeDefault": true,
         "thinkingDefault": "off"
       },
-      {
-        "id": "small",
+      "small": {
         "workspace": "~/.openclaw/workspace/tinny-tim",
         "identity": {
           "name": "Tinny Tim"
@@ -115,7 +124,7 @@
         "model": "ollama/gemini-3-flash-preview:cloud",
         "thinkingDefault": "off"
       }
-    ]
+    }
   },
 
   "bindings": [
@@ -132,17 +141,26 @@
         "channel": "discord",
         "accountId": "clamps"
       }
+    },
+    {
+      "agentId": "main",
+      "match": {
+        "channel": "discord",
+        "accountId": "*"
+      }
+    },
+    {
+      "agentId": "main",
+      "match": {
+        "channel": "telegram",
+        "accountId": "*"
+      }
     }
   ],
 
   "cron": {
     "enabled": true,
-    "maxConcurrentRuns": 1,
-    "sessionRetention": "24h",
-    "runLog": {
-      "maxBytes": "5mb",
-      "keepLines": 10000
-    }
+    "sessionRetention": "24h"
   },
 
   "commands": {
@@ -167,7 +185,7 @@
 
   "plugins": {
     "load": {
-      "paths": ["/app/custom/extensions"]
+      "paths": []
     },
     "allow": [
       "ollama",
@@ -210,9 +228,10 @@
       "memory-wiki": {
         "enabled": true,
         "config": {
-          "vaultMode": "isolated",
+          "vaultMode": "bridge",
           "vault": {
-            "path": "~/.openclaw/wiki/main",
+            "scope": "agent",
+            "path": "~/.openclaw/wiki",
             "renderMode": "obsidian"
           },
           "obsidian": {
@@ -222,7 +241,7 @@
             "openAfterWrites": false
           },
           "bridge": {
-            "enabled": false,
+            "enabled": true,
             "readMemoryArtifacts": true,
             "indexDreamReports": true,
             "indexDailyNotes": true,
@@ -256,9 +275,11 @@
       },
       "browser": {
         "enabled": true
+      },
+      "discord": {
+        "enabled": true
       }
-    },
-    "bundledDiscovery": "compat"
+    }
   },
   "skills": {
     "load": {
@@ -399,6 +420,7 @@
   "channels": {
     "discord": {
       "enabled": true,
+      "defaultAccount": "bender",
       "commands": {
         "native": true
       },
@@ -438,8 +460,7 @@
               "users": ["${DISCORD_OWNER_ID}"]
             }
           }
-        },
-        "default": {"groupPolicy": "allowlist"}
+        }
       }
     },
     "whatsapp": {
@@ -451,10 +472,10 @@
       "allowFrom": ["${TELEGRAM_OWNER_ID}"],
       "groupPolicy": "allowlist",
       "groupAllowFrom": ["${TELEGRAM_OWNER_ID}"],
-      "groups": { 
-        "*": { 
+      "groups": {
+        "*": {
           "requireMention": true
-        } 
+        }
       }
     },
     "slack": {
@@ -473,8 +494,7 @@
     "defaultProfile": "browserless",
     "profiles": {
       "browserless": {
-        "cdpUrl": "ws://browserless.ai.svc.cluster.local.:3000?token=${BROWSERLESS_API_KEY}&timeout=600000",
-        "color": "#4285F4"
+        "cdpUrl": "ws://browserless.ai.svc.cluster.local.:3000?token=${BROWSERLESS_API_KEY}&timeout=600000"
       }
     }
   },
@@ -500,7 +520,19 @@
   "logging": {
     "level": "info",
     "consoleLevel": "info",
-    "consoleStyle": "compact",
-    "redactSensitive": "tools"
+    "consoleStyle": "pretty"
+  },
+  "talk": {
+    "agentId": "main"
+  },
+  "memory": {
+    "search": {
+      "provider": "none"
+    }
+  },
+  "meta": {
+    "migrations": {
+      "modelPolicyAllowlist": true
+    }
   }
 }
