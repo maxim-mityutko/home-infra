@@ -207,11 +207,6 @@
         "config": {
           "dreaming": {
             "enabled": true
-          },
-          "memoryPolicy": {
-            "excludeSessions": {
-              "chatTypes": ["group", "channel"]
-            }
           }
         },
         "enabled": true
