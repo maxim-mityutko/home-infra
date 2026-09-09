@@ -8,6 +8,7 @@ metadata:
   labels:
     app.kubernetes.io/name: tailscale
 spec:
+  proxyClass: tailscale-ha-proxy
   replicas: 2
   tags:
     - "tag:k8s"
