@@ -77,6 +77,11 @@
     "entries": {
       "main": {
         "workspace": "~/.openclaw/workspace/bender",
+        "memory": {
+          "search": {
+            "rememberAcrossConversations": true
+          }
+        },
         "identity": {
           "name": "Bender"
         },
@@ -86,6 +91,11 @@
       },
       "fast": {
         "workspace": "~/.openclaw/workspace/clamps",
+        "memory": {
+          "search": {
+            "rememberAcrossConversations": true
+          }
+        },
         "identity": {
           "name": "Clamps"
         },
@@ -197,6 +207,11 @@
         "config": {
           "dreaming": {
             "enabled": true
+          },
+          "memoryPolicy": {
+            "excludeSessions": {
+              "chatTypes": ["group", "channel"]
+            }
           }
         },
         "enabled": true
@@ -218,9 +233,10 @@
       "memory-wiki": {
         "enabled": true,
         "config": {
-          "vaultMode": "isolated",
+          "vaultMode": "bridge",
           "vault": {
-            "path": "~/.openclaw/wiki/main",
+            "scope": "agent",
+            "path": "~/.openclaw/wiki",
             "renderMode": "obsidian"
           },
           "obsidian": {
@@ -230,7 +246,7 @@
             "openAfterWrites": false
           },
           "bridge": {
-            "enabled": false,
+            "enabled": true,
             "readMemoryArtifacts": true,
             "indexDreamReports": true,
             "indexDailyNotes": true,
