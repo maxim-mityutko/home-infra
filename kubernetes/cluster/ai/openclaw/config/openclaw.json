@@ -41,7 +41,7 @@
             "name": "nemotron-3-nano:30b",
             "reasoning": true,
             "input": ["text"]
-          }
+          },
           {
             "id": "nemotron-3-ultra",
             "name": "nemotron-3-ultra",
