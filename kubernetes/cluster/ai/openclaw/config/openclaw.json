@@ -37,14 +37,20 @@
             "input": ["text"]
           },
           {
-            "id": "qwen3-coder-next",
-            "name": "qwen3-coder-next",
+            "id": "nemotron-3-nano:30b",
+            "name": "nemotron-3-nano:30b",
+            "reasoning": true,
+            "input": ["text"]
+          }
+          {
+            "id": "nemotron-3-ultra",
+            "name": "nemotron-3-ultra",
             "reasoning": true,
             "input": ["text"]
           },
           {
-            "id": "nemotron-3-nano:30b",
-            "name": "nemotron-3-nano:30b",
+            "id": "nemotron-3-super",
+            "name": "nemotron-3-super",
             "reasoning": true,
             "input": ["text"]
           }
@@ -121,7 +127,7 @@
           "mentionPatterns": ["@tinny"]
         },
         "skills": [],
-        "model": "ollama/gemini-3-flash-preview:cloud",
+        "model": "ollama/nemotron-3-nano:30b",
         "thinkingDefault": "off"
       }
     }
