@@ -1,25 +1,31 @@
-# ================================================================================================
-# Intel GPU Exporter Setup
-#
-# This setup is based on a fork og the "Intel GPU Exporter" project by onedr0p, which has since
-# been archived and is no longer actively maintained:
-#   → https://github.com/onedr0p/intel-gpu-exporter
-#
-# Intel XPU Manager:
-#   This may be relevant for newer Intel Arc B-series GPUs, but note that it does *not* support iGPUs.
-#   - Project:    https://github.com/intel/xpumanager/
-#   - Deployment: https://github.com/intel/xpumanager/blob/v1.3.3/deployment/README.md
-#   - Docker:     https://hub.docker.com/r/intel/xpumanager
-#
-# References:
-#   - Grafana Dashboard for Intel GPU metrics:
-#     https://grafana.com/grafana/dashboards/23251-intel-gpu-metrics/
-# ================================================================================================
-
-
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: gpu
 resources:
-  - exporter.yaml
-  - dashboards/
+  - service-scrape.yaml
+helmCharts:
+  - name: drm-exporter
+    namespace: gpu
+    releaseName: drm-exporter
+    version: 0.2.5
+    repo: oci://ghcr.io/home-operations/charts
+    valuesInline:
+      fullnameOverride: drm-exporter
+      monitoring:
+        dashboards:
+          enabled: true
+          labels:
+            grafana-dashboard: "true"
+      nodeSelector:
+        intel.feature.node.kubernetes.io/gpu: "true"
+      resources:
+        limits:
+          gpu.intel.com/i915_monitoring: 1
+        requests:
+          gpu.intel.com/i915_monitoring: 1
+      securityContext:
+        privileged: true
+        allowPrivilegeEscalation: true
+      podSecurityContext:
+        seccompProfile:
+          type: Unconfined
