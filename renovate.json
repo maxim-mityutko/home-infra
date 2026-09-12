@@ -10,6 +10,13 @@
     "registry.brhd.io/gcr.io": "gcr.io",
     "registry.brhd.io/k8s.io": "registry.k8s.io"
   },
+  "hostRules": [
+    {
+      "matchHost": "ghcr.io",
+      "concurrentRequestLimit": 3,
+      "maxRequestsPerSecond": 2
+    }
+  ],
   "kubernetes": {
     "managerFilePatterns": [
       "/kubernetes/cluster/.+\\.ya?ml$/"
