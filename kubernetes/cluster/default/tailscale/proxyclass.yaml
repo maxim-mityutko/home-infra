@@ -1,0 +1,17 @@
+apiVersion: tailscale.com/v1alpha1
+kind: ProxyClass
+metadata:
+  name: tailscale-ha-proxy
+spec:
+  statefulSet:
+    pod:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: tailscale.com/parent-resource
+                operator: In
+                values:
+                - tailscale-ha-router
+            topologyKey: kubernetes.io/hostname

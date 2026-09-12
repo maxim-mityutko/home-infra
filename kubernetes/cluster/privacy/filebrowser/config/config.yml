@@ -1,12 +1,12 @@
-# Ref: https://github.com/gtsteffaniak/filebrowser/wiki/Full-Config-Example
-# Ref: https://github.com/gtsteffaniak/filebrowser/wiki/Configuration-And-Examples
+# Ref: https://filebrowserquantum.com/en/docs/getting-started/v2/migration/
+# Ref: https://filebrowserquantum.com/en/docs/reference/full-config-example/
 server:
+  database:
+    path: data/filebrowser.sqlite
   numImageProcessors: 2
   disablePreviews: false
   disablePreviewResize: false
   disableTypeDetectionByHeader: false
-  port: 8080
-  baseURL: /
   logging:
     - levels: "info|warning|error"
       apiLevels: "warning|error"
@@ -17,31 +17,47 @@ server:
     - path: /home/filebrowser/data/sources/drive/shared
       name: Shared
       config:
-        indexingIntervalMinutes: 0
-        conditionals:
-          hidden: true
-          ignoreZeroSizeFolders: false
-          rules:
-            - fileNames: ".DS_Store"
+        rules:
+          - folderPath: /
+            ignoreHidden: true
+            ignoreZeroSizeFolders: false
+          - fileName: ".DS_Store"
         defaultUserScope: /
         defaultEnabled: true
         createUserDir: false
+        defaultPermissions:
+          view: true
+          download: true
+          modify: true
+          delete: true
+          create: true
+          configured: true
     - path: /home/filebrowser/data/sources/drive/users
       name: DeGoogle
       config:
-        indexingIntervalMinutes: 0
-        conditionals:
-          ignoreHidden: true
-          ignoreZeroSizeFolders: false
-          rules:
-            - fileNames: ".DS_Store"
+        rules:
+          - folderPath: /
+            ignoreHidden: true
+            ignoreZeroSizeFolders: false
+          - fileName: ".DS_Store"
         defaultUserScope: /
         defaultEnabled: true
         createUserDir: true
-  externalUrl: https://drive.brhd.io
-  internalUrl: ""
+        defaultPermissions:
+          view: true
+          download: true
+          modify: true
+          delete: true
+          create: true
+          configured: true
   cacheDir: tmp
   maxArchiveSize: 1 # in GB
+http:
+  port: 8080
+  baseURL: /
+  externalUrl: https://drive.brhd.io
+  internalUrl: ""
+  trustProxyHeaders: true
   disableWebDAV: false
 auth:
   tokenExpirationHours: 2
@@ -56,49 +72,58 @@ auth:
     oidc:
       enabled: true
       issuerUrl: "https://auth.brhd.io/application/o/filebrowser/"
-      scopes: "email openid profile groups"
+      scopes: "email openid profile x_groups"
       userIdentifier: "email"
       disableVerifyTLS: false
       logoutRedirectUrl: "https://auth.brhd.io/application/o/filebrowser/end-session/"
-      adminGroup: "admin"
-      createUser: true
+      adminGroup: admin
+      userGroups:
+        - admin
+        - user
+      groupsClaim: groups
   adminUsername: admin
 frontend:
   name: Filebrowser Quantum
   disableDefaultLinks: false
   disableUsedPercentage: false
 userDefaults:
-  stickySidebar: true
-  darkMode: true
-  locale: en
-  viewMode: normal
-  singleClick: true
-  showHidden: false
-  dateFormat: false
-  gallerySize: 3
-  themeColor: var(--blue)
-  quickDownload: true
-  disableOnlyOfficeExt: .txt .csv .html .pdf
-  disableOfficePreviewExt: ""
-  lockPassword: true
-  disableSettings: false
+  sidebar:
+    sticky: true
+  listing:
+    viewMode: normal
+    singleClick: true
+    showHidden: false
+    dateFormat: false
+    gallerySize: 3
+    quickDownload: true
   preview:
-    disableHideSidebar: false
     highQuality: false
     image: false
     video: false
+    audio: false
     motionVideoPreview: false
     office: false
     popup: false
+    folder: false
+    models: false
+    disablePreviewExt: ""
+  fileViewer:
     autoplayMedia: false
-  permissions:
-    api: false
-    admin: false
-    modify: true
-    share: true
-    realtime: false
-  loginMethod: oidc
-  disableUpdateNotifications: true 
+    disableOnlyOfficeExt: .txt .csv .html .pdf
+  ui:
+    darkMode: true
+    locale: en
+    themeColor: var(--blue)
+  account:
+    permissions:
+      api: false
+      admin: false
+      share: true
+      realtime: false
+    lockPassword: true
+    disableSettings: false
+    loginMethod: oidc
+    disableUpdateNotifications: true
 integrations:
   media:
     ffmpegPath: /usr/local/bin

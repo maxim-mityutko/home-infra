@@ -146,7 +146,7 @@ config: |
     provider: openai
     base_url: https://ollama.com/v1
     api_key: "{FRIGATE_OPENAI_API_KEY}"
-    model: gemma3:12b-cloud
+    model: gemma4:31b-cloud
 
   # Ref: https://docs.frigate.video/configuration/face_recognition/
   face_recognition:
