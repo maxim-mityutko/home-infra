@@ -34,7 +34,8 @@ spec:
       annotations:
         description: "The instance {{ $labels.instance }} has not created a backup of the repo {{ $labels.repository }} in the last {{ $value }} seconds."
         summary: "Borg missing backup."
-      expr: "time() - sum by (repository) (borg_last_backup_timestamp{job=\"borgmatic\"}) > 90000"
+      # Allow the daily backup and prune cycle to finish before declaring a miss.
+      expr: "time() - sum by (repository) (borg_last_backup_timestamp{job=\"borgmatic\"}) > 93600"
       for: "1m"
       labels:
         severity: "warning"
