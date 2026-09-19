@@ -129,6 +129,7 @@ The current wave plan was created with these criteria:
 | immich | 18 | Privacy wave; heavier by declared resources but still okay within this group. |
 | invidious | 18 | Privacy wave. |
 | karakeep | 18 | Privacy wave; heavier by declared resources but still okay within this group. |
+| keeper | 18 | Privacy wave; self-contained stateful calendar service. |
 | searxng | 18 | Privacy wave. |
 | vaultwarden | 18 | Privacy wave. |
 | vikunja | 18 | Privacy wave. |

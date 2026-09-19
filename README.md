@@ -170,6 +170,7 @@ runbook.
 | **Vaultwarden**         | Password management (alternative Bitwarden server)                                                                                | [repo](https://github.com/dani-garcia/vaultwarden)                                                     | [docker](https://hub.docker.com/r/vaultwarden/server)                            |
 | **Karakeep**            | A self-hostable bookmark-everything app (links, notes and images) with AI-based automatic tagging and full text search            | [repo](https://github.com/karakeep-app/karakeep)<br>[docs](https://docs.karakeep.app)                  | [helm](https://github.com/karakeep-app/helm-charts)                              |
 | **Vikunja**             | The to-do app to organize your life                                                                                               | [repo](https://github.com/go-vikunja/vikunja)<br>[docs](https://vikunja.io/docs/)                      | [helm](https://github.com/go-vikunja/helm-chart)                                 |
+| **Keeper.sh**           | Self-hosted calendar synchronization and calendar-management API/MCP server                                                       | [repo](https://github.com/ridafkih/keeper.sh)<br>[docs](https://github.com/ridafkih/keeper.sh#self-hosted) | [docker](https://github.com/ridafkih/keeper.sh/pkgs/container/keeper-standalone) |
 
 ### Media
 
