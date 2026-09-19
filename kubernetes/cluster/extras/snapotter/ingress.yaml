@@ -1,0 +1,39 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: snapotter
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: snapotter
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: snapotter.brhd.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: snapotter
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - snapotter.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: snapotter.brhd.io
+  namespace: extras
+spec:
+  endpoints:
+    - dnsName: snapotter.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

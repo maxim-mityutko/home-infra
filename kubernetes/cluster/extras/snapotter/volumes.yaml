@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: snapotter-data
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: snapotter
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 20Gi

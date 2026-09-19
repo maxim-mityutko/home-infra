@@ -260,6 +260,13 @@ services:
       - name: "Garden Camera (cam-01)"
         logo: "https://cdn.brhd.io/cdn/icons/cctv-1.png"
         url: "https://cam-01.internal.brhd.io/"
+  - name: "Tools"
+    icon: "fas fa-tools"
+    items:
+      - name: "SnapOtter"
+        tag: "files"
+        url: "https://snapotter.brhd.io"
+        target: "_blank"
   - name: "Backup"
     icon: ""
     items:

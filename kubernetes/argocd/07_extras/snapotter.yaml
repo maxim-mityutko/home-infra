@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: snapotter
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "12"
+spec:
+  destination:
+    name: in-cluster
+    namespace: extras
+  source:
+    path: kubernetes/cluster/extras/snapotter
+    repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
+    targetRevision: main
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

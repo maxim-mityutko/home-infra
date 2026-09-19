@@ -99,6 +99,7 @@ The current wave plan was created with these criteria:
 | pairdrop | 11 | Light extras wave. |
 | x-extras-shared | 11 | Light extras wave with shared resources. |
 | code-server | 12 | Heavier/stateful extras wave. |
+| snapotter | 12 | Heavier/stateful extras file-processing service. |
 | couchdb | 12 | Heavier/stateful extras wave. |
 | gitea | 12 | Heavier/stateful extras wave. |
 | meshcentral | 12 | Heavier/stateful extras wave. |
