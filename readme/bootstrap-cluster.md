@@ -113,6 +113,7 @@ The current wave plan was created with these criteria:
 | bazarr | 15 | Servarr manager wave. |
 | lidarr | 15 | Servarr manager wave. |
 | prowlarr | 15 | Servarr manager wave. |
+| profilarr | 16 | Media configuration helper after the Servarr managers. |
 | radarr | 15 | Servarr manager wave. |
 | sonarr | 15 | Servarr manager wave. |
 | exportarr | 16 | Media exporter wave; fixes the old nonexistent monitoring path. |

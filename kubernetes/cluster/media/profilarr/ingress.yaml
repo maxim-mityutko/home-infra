@@ -1,0 +1,39 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: profilarr
+  namespace: media
+  labels:
+    app.kubernetes.io/name: profilarr
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: profilarr.brhd.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: profilarr
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - profilarr.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: profilarr.brhd.io
+  namespace: media
+spec:
+  endpoints:
+    - dnsName: profilarr.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

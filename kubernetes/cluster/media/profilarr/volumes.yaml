@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: profilarr-config
+  namespace: media
+  labels:
+    app.kubernetes.io/name: profilarr
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1Gi

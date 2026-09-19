@@ -237,6 +237,10 @@ services:
         tag: "media"
         url: "https://lidarr.brhd.io"
         target: "_blank"
+      - name: "Profilarr"
+        tag: "media"
+        url: "https://profilarr.brhd.io"
+        target: "_blank"
   - name: "Home"
     icon: "fas fa-home"
     items:
