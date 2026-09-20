@@ -7,7 +7,9 @@
 # Prerequisites:
 # - Omada OpenAPI access must be enabled and the client credentials must have
 #   permission to read LAN network details and LAN DNS settings
-# - config env: OMADA_BASE_URL, BLOCKY_STATEFULSET, CUSTOM_DNS_CONFIGMAP
+# - config env: OMADA_BASE_URL, BLOCKY_STATEFULSET, CUSTOM_DNS_CONFIGMAP,
+#   AUTHORITATIVE_ZONE_PRIMARY_NS, AUTHORITATIVE_ZONE_SECONDARY_NS,
+#   AUTHORITATIVE_ZONE_ADMIN
 # - secret env: OMADA_CONTROLLER_ID, OMADA_SITE_ID, OMADA_LAN_NETWORK_ID,
 #   OMADA_CLIENT_ID, OMADA_CLIENT_SECRET
 
@@ -16,6 +18,13 @@ dns_ttl="3600"
 
 workdir="$(mktemp -d)"
 trap 'status=$?; rm -rf "$workdir"; if [ "$status" -ne 0 ]; then echo "Omada DNS sync failed with exit code $status" >&2; fi' EXIT
+
+fqdn() {
+  case "$1" in
+    *.) printf '%s' "$1" ;;
+    *) printf '%s.' "$1" ;;
+  esac
+}
 
 echo "Requesting Omada access token"
 request_body="$(
@@ -48,6 +57,10 @@ dns_origin="$(
   '
 )"
 echo "Using DNS origin $dns_origin"
+primary_ns="$(fqdn "$AUTHORITATIVE_ZONE_PRIMARY_NS")"
+secondary_ns="$(fqdn "$AUTHORITATIVE_ZONE_SECONDARY_NS")"
+zone_admin="$(fqdn "$AUTHORITATIVE_ZONE_ADMIN")"
+echo "Using authoritative zone primary NS $primary_ns"
 
 echo "Fetching Omada LAN DNS records"
 dns_json="$(
@@ -85,6 +98,7 @@ else
   record_count="0"
 fi
 echo "Generated $record_count DNS zone records"
+zone_serial="$(printf '%s\n%s\n' "$dns_origin" "$records" | cksum | awk '{print $1}')"
 
 {
   printf 'customDNS:\n'
@@ -92,6 +106,12 @@ echo "Generated $record_count DNS zone records"
   printf '  zone: |\n'
   printf '    $ORIGIN %s\n' "$dns_origin"
   printf '    $TTL %s\n' "$dns_ttl"
+  printf '    @ %s IN SOA %s %s %s 3600 600 604800 300\n' \
+    "$dns_ttl" "$primary_ns" "$zone_admin" "$zone_serial"
+  printf '    @ %s IN NS %s\n' "$dns_ttl" "$primary_ns"
+  if [ -n "$secondary_ns" ]; then
+    printf '    @ %s IN NS %s\n' "$dns_ttl" "$secondary_ns"
+  fi
   printf '\n'
   if [ -n "$records" ]; then
     printf '%s\n' "$records" | sed 's/^/    /'
