@@ -74,6 +74,13 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
+              add:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - KILL
+                - SETGID
+                - SETUID
               drop:
                 - ALL
           volumeMounts:
