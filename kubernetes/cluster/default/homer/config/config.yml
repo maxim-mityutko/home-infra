@@ -346,7 +346,7 @@ services:
         url: "https://pdf.brhd.io"
       - name: "Mazanoke"
         icon: "fas fa-image"
-        url: "https://image.brhd.io"
+        url: "https://jpg.brhd.io"
   - name: "Servers"
     icon: "fas fa-server"
     items:

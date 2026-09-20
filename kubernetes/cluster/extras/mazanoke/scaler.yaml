@@ -9,7 +9,7 @@ spec:
     port: 80
   rules:
     - hosts:
-        - image.brhd.io
+        - jpg.brhd.io
   scalingMetric:
     concurrency:
       targetValue: 50
