@@ -42,7 +42,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: ignis
-          image: nobbe/ignis:0.8.10
+          image: nobbe/ignis:0.8.11
           resources:
             requests:
               cpu: 50m
