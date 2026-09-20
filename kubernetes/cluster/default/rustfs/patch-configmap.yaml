@@ -4,6 +4,7 @@ metadata:
   name: rustfs-config
   namespace: rustfs
 data:
+  RUSTFS_ALLOCATOR_RECLAIM_ENABLED: 'true'
   RUSTFS_HEAL_ENABLED: 'false'
   RUSTFS_SCANNER_ENABLED: 'false'
   RUSTFS_IDENTITY_OPENID_CONFIG_URL_AUTHENTIK: https://auth.brhd.io/application/o/rust-fs/.well-known/openid-configuration
