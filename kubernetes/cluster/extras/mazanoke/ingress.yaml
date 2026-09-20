@@ -1,0 +1,40 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mazanoke
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: mazanoke
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  ingressClassName: public
+  rules:
+    - host: jpg.brhd.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: keda-http-interceptor
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - jpg.brhd.io
+      secretName: jpg-brhd-io-tls
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: jpg.brhd.io
+  namespace: extras
+spec:
+  endpoints:
+    - dnsName: jpg.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io

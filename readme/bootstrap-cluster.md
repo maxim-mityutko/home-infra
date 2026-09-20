@@ -96,6 +96,7 @@ The current wave plan was created with these criteria:
 | bento-pdf | 11 | Light extras wave. |
 | cloud-beaver | 11 | Light extras wave. |
 | it-tools | 11 | Light extras wave. |
+| mazanoke | 11 | Light extras wave. |
 | pairdrop | 11 | Light extras wave. |
 | x-extras-shared | 11 | Light extras wave with shared resources. |
 | code-server | 12 | Heavier/stateful extras wave. |
