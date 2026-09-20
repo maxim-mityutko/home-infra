@@ -5,3 +5,4 @@ resources:
   - snapotter.yaml
   - ingress.yaml
   - volumes.yaml
+  - secret.yaml
