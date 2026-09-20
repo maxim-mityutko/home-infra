@@ -35,6 +35,12 @@ spec:
       labels:
         app.kubernetes.io/name: profilarr
     spec:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
       containers:
         - name: profilarr
           image: ghcr.io/dictionarry-hub/profilarr:2.2.0
