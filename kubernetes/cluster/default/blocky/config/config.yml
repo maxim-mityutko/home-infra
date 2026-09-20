@@ -62,7 +62,7 @@ blocking:
       - adult
   loading:
     refreshPeriod: 12h
-    concurrency: 4
+    concurrency: 2
     downloads:
       timeout: 120s
       cooldown: 5s
