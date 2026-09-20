@@ -1,0 +1,59 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mazanoke
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: mazanoke
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app.kubernetes.io/name: mazanoke
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mazanoke
+  namespace: extras
+  labels:
+    app.kubernetes.io/name: mazanoke
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mazanoke
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mazanoke
+    spec:
+      containers:
+        - name: mazanoke
+          image: ghcr.io/civilblur/mazanoke:v1.1.7
+          ports:
+            - containerPort: 80
+              name: http
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
