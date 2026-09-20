@@ -345,7 +345,7 @@ services:
         logo: "https://cdn.brhd.io/cdn/icons/bentopdf.svg"
         url: "https://pdf.brhd.io"
       - name: "Mazanoke"
-        icon: "fas fa-image"
+        logo: "https://cdn.brhd.io/cdn/icons/mazanoke.svg"
         url: "https://jpg.brhd.io"
   - name: "Servers"
     icon: "fas fa-server"
