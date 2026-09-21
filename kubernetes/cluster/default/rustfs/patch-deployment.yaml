@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rustfs
+  namespace: rustfs
+spec:
+  template:
+    metadata:
+      annotations:
+        rustfs.brhd.io/config-revision: allocator-reclaim-2026-09-20
