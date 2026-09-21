@@ -74,7 +74,7 @@ spec:
       template:
         metadata:
           labels:
-            app.kubernetes.io/name: blocky
+            app.kubernetes.io/name: blocky-omada-sync
             app.kubernetes.io/component: omada-dns-sync
         spec:
           serviceAccountName: blocky-omada-sync
@@ -120,7 +120,7 @@ spec:
       template:
         metadata:
           labels:
-            app.kubernetes.io/name: blocky
+            app.kubernetes.io/name: blocky-omada-sync
             app.kubernetes.io/component: omada-clients-sync
         spec:
           serviceAccountName: blocky-omada-sync
