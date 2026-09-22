@@ -21,14 +21,12 @@ spec:
     syncOptions:
       - RespectIgnoreDifferences=true
   ignoreDifferences:
-    - group: ""
-      kind: ConfigMap
+    - kind: ConfigMap
       name: blocky-omada-customdns
       jsonPointers:
         - /data
         - /metadata/annotations/omada.brhd.io~1hash
-    - group: ""
-      kind: ConfigMap
+    - kind: ConfigMap
       name: blocky-omada-clientlookup
       jsonPointers:
         - /data
