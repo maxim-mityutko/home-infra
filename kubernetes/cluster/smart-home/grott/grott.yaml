@@ -1,0 +1,86 @@
+# Service: GrottServer
+# Label: app.kubernetes.io/name: grott
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grott-lb
+  namespace: smart-home
+  annotations:
+    metallb.io/address-pool: forge-pool
+    metallb.io/loadBalancerIPs: "192.168.12.73"
+  labels:
+    app.kubernetes.io/name: grott
+spec:
+  type: LoadBalancer
+  allocateLoadBalancerNodePorts: false
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: growatt
+      port: 5279
+      targetPort: 5279
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: grott
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grott
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: grott
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: grott
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: grott
+    spec:
+      containers:
+        - name: grott
+          # GrottServer emulates the Growatt endpoint locally. It includes Grott
+          # and forwards received telemetry to MQTT without using Growatt Cloud.
+          image: ledidobe/grottserver:2.8.3
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          ports:
+            - name: growatt
+              containerPort: 5279
+              protocol: TCP
+          env:
+            - name: TZ
+              value: Europe/Amsterdam
+            - name: gnomqtt
+              value: "False"
+            - name: gmqttip
+              value: 192.168.12.70
+            - name: gmqttport
+              value: "1883"
+            - name: gmqtttopic
+              value: energy/growatt
+            - name: gmqttauth
+              value: "False"
+            - name: gverbose
+              value: "False"
+          readinessProbe:
+            tcpSocket:
+              port: growatt
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: growatt
+            initialDelaySeconds: 30
+            periodSeconds: 30
