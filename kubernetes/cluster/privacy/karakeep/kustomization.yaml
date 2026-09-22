@@ -125,11 +125,16 @@ helmCharts:
 
       # Ref: https://github.com/meilisearch/meilisearch-kubernetes
       meilisearch:
+        image:
+          # The bundled chart defaults to v1.13.0; v1.38.0 improves vector indexing.
+          tag: v1.38.0
         environment:
           # Ref: https://www.meilisearch.com/docs/resources/self_hosting/configuration/reference
           MEILI_ENV: production
           MEILI_NO_ANALYTICS: "true"
           MEILI_LOG_LEVEL: WARN
+          # Required to migrate the existing v1.13 database when v1.38 starts.
+          MEILI_EXPERIMENTAL_DUMPLESS_UPGRADE: "true"
         auth:
           existingMasterKeySecret: karakeep
         persistence:
