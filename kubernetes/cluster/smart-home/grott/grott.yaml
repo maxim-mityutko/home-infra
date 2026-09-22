@@ -65,7 +65,7 @@ spec:
             - name: gnomqtt
               value: "False"
             - name: gmqttip
-              value: 192.168.12.70
+              value: mqtt.internal.brhd.io
             - name: gmqttport
               value: "1883"
             - name: gmqtttopic
@@ -75,12 +75,21 @@ spec:
             - name: gverbose
               value: "False"
           readinessProbe:
-            tcpSocket:
-              port: growatt
-            initialDelaySeconds: 10
+            # A TCP probe opens a real Grott proxy session, which generates a
+            # GrottServer connection log on every probe. Inspect the listening
+            # socket instead, without connecting to the Growatt protocol port.
+            exec:
+              command:
+                - /bin/sh
+                - -ec
+                - grep -q '00000000:149F 00000000:0000 0A' /proc/net/tcp
+            initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
-            tcpSocket:
-              port: growatt
-            initialDelaySeconds: 30
+            exec:
+              command:
+                - /bin/sh
+                - -ec
+                - grep -q '00000000:149F 00000000:0000 0A' /proc/net/tcp
+            initialDelaySeconds: 15
             periodSeconds: 30
