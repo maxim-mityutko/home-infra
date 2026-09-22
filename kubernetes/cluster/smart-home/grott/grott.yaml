@@ -65,7 +65,7 @@ spec:
             - name: gnomqtt
               value: "False"
             - name: gmqttip
-              value: mqtt.internal.brhd.io
+              value: 192.168.12.70
             - name: gmqttport
               value: "1883"
             - name: gmqtttopic
