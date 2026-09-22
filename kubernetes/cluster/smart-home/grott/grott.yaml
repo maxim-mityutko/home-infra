@@ -72,6 +72,8 @@ spec:
               value: energy/growatt
             - name: gmqttauth
               value: "False"
+            - name: gmqttretain
+              value: "True"
             - name: gverbose
               value: "False"
           readinessProbe:
