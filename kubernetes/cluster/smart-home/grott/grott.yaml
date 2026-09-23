@@ -1,4 +1,4 @@
-# Service: GrottServer
+# Service: Grott
 # Label: app.kubernetes.io/name: grott
 ---
 apiVersion: v1
@@ -45,9 +45,9 @@ spec:
     spec:
       containers:
         - name: grott
-          # GrottServer emulates the Growatt endpoint locally. It includes Grott
-          # and forwards received telemetry to MQTT without using Growatt Cloud.
-          image: ledidobe/grottserver:2.8.3
+          # Proxy the inverter's protocol traffic to Growatt Cloud while
+          # publishing parsed telemetry to MQTT.
+          image: ledidobe/grott:2.8.3
           resources:
             requests:
               cpu: 50m
@@ -64,6 +64,12 @@ spec:
               value: Europe/Amsterdam
             - name: gnomqtt
               value: "False"
+            - name: gmode
+              value: proxy
+            - name: ggrowattip
+              value: 47.254.130.145
+            - name: ggrowattport
+              value: "5279"
             - name: gmqttip
               value: 192.168.12.70
             - name: gmqttport
