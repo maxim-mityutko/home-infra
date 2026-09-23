@@ -1,0 +1,103 @@
+# Service: Grott
+# Label: app.kubernetes.io/name: grott
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grott-lb
+  namespace: smart-home
+  annotations:
+    metallb.io/address-pool: forge-pool
+    metallb.io/loadBalancerIPs: "192.168.12.73"
+  labels:
+    app.kubernetes.io/name: grott
+spec:
+  type: LoadBalancer
+  allocateLoadBalancerNodePorts: false
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: growatt
+      port: 5279
+      targetPort: 5279
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: grott
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grott
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: grott
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: grott
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: grott
+    spec:
+      containers:
+        - name: grott
+          # Proxy the inverter's protocol traffic to Growatt Cloud while
+          # publishing parsed telemetry to MQTT.
+          image: ledidobe/grott:2.8.3
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 400m
+              memory: 256Mi
+          ports:
+            - name: growatt
+              containerPort: 5279
+              protocol: TCP
+          env:
+            - name: TZ
+              value: Europe/Amsterdam
+            - name: gnomqtt
+              value: "False"
+            - name: gmode
+              value: proxy
+            - name: ggrowattip
+              value: 47.254.130.145
+            - name: ggrowattport
+              value: "5279"
+            - name: gmqttip
+              value: 192.168.12.70
+            - name: gmqttport
+              value: "1883"
+            - name: gmqtttopic
+              value: energy/growatt
+            - name: gmqttauth
+              value: "False"
+            - name: gmqttretain
+              value: "True"
+            - name: gverbose
+              value: "False"
+          readinessProbe:
+            # A TCP probe opens a real Grott proxy session, which generates a
+            # GrottServer connection log on every probe. Inspect the listening
+            # socket instead, without connecting to the Growatt protocol port.
+            exec:
+              command:
+                - /bin/sh
+                - -ec
+                - grep -q '00000000:149F 00000000:0000 0A' /proc/net/tcp
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -ec
+                - grep -q '00000000:149F 00000000:0000 0A' /proc/net/tcp
+            initialDelaySeconds: 15
+            periodSeconds: 30
