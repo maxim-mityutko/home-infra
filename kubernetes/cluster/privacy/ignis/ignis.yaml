@@ -98,7 +98,7 @@ data:
   VAULT_ROOT: "/vaults"
   DATA_ROOT: "/app/data"
   OBSIDIAN_ASSETS_PATH: "/app/obsidian-app"
-  OBSIDIAN_VERSION: "1.12.7"
+  OBSIDIAN_VERSION: "1.13.7"
   PUID: "1000"
   PGID: "1000"
   WS_ORIGINS: "https://notes.brhd.io"
