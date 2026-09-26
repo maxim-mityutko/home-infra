@@ -80,7 +80,7 @@ spec:
           volumeMounts:
             - name: openclaw-home
               mountPath: /home/node
-            - name: openclaw-data
+            - name: openclaw-data-iscsi
               mountPath: /home/node/.openclaw
               
             - name: openclaw-config
@@ -135,7 +135,7 @@ spec:
           volumeMounts:
             - name: openclaw-home
               mountPath: /home/node
-            - name: openclaw-data
+            - name: openclaw-data-iscsi
               mountPath: /home/node/.openclaw
             - name: openclaw-temp
               mountPath: /tmp
@@ -156,9 +156,9 @@ spec:
       volumes:
         - name: openclaw-home
           emptyDir: {}
-        - name: openclaw-data
+        - name: openclaw-data-iscsi
           persistentVolumeClaim:
-            claimName: openclaw-data
+            claimName: openclaw-data-iscsi
         - name: openclaw-config
           configMap:
             name: openclaw-config
