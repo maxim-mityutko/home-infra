@@ -19,6 +19,7 @@ spec:
           image: ubuntu:xenial
           tty: true
           command: [ "/bin/sh" ]
+          # TODO: fix - preserve original permissions
           args: [ "-c", "cp -r -v /mnt/old/. /mnt/new" ]
           volumeMounts:
             - name: old-vol
