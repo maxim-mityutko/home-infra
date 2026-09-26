@@ -344,7 +344,7 @@
         "enabled": false
       },
       "karakeep": {
-        "enabled": false
+        "enabled": true
       },
       "mcporter": {
         "enabled": false
@@ -404,7 +404,7 @@
         "enabled": false
       },
       "vikunja": {
-        "enabled": false
+        "enabled": true
       },
       "voice-call": {
         "enabled": false
