@@ -33,7 +33,7 @@ spec:
             - |
               git init /app/source
               git -C /app/source remote add origin https://github.com/smar000/evoGateway.git
-              git -C /app/source fetch --depth 1 origin 01359f4acdd3b364304c8b41810a48564396b781
+              git -C /app/source fetch --depth 1 origin refs/tags/v4.6.2
               git -C /app/source checkout --detach FETCH_HEAD
               rm -rf /app/source/.git
           resources:
@@ -46,6 +46,35 @@ spec:
           volumeMounts:
             - name: app
               mountPath: /app
+            - name: config
+              mountPath: /config-template/evogateway.cfg
+              subPath: evogateway.cfg
+              readOnly: true
+            - name: gateway-config
+              mountPath: /app/config
+            - name: gateway-logs
+              mountPath: /app/logs
+        - name: initialize-config
+          image: busybox:1.37.0
+          command:
+            - sh
+            - -ec
+            - |
+              cp /config-template/evogateway.cfg /app/config/evogateway.cfg
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 50m
+              memory: 32Mi
+          volumeMounts:
+            - name: config
+              mountPath: /config-template/evogateway.cfg
+              subPath: evogateway.cfg
+              readOnly: true
+            - name: gateway-config
+              mountPath: /app/config
         - name: install-dependencies
           image: python:3.12.12-slim
           command:
@@ -65,18 +94,15 @@ spec:
       containers:
         - name: evohome-gateway
           image: python:3.12.12-slim
+          tty: true
           command:
             - python
             - /app/source/evogateway.py
             - --config
-            - /config/evogateway.cfg
-          env:
-            - name: PYTHONPATH
-              value: /app/vendor:/app/source
-            - name: PYTHONUNBUFFERED
-              value: "1"
-            - name: TZ
-              value: Europe/Amsterdam
+            - /app/config/evogateway.cfg
+          envFrom:
+            - configMapRef:
+                name: evohome-gateway
           resources:
             requests:
               cpu: 100m
@@ -97,12 +123,10 @@ spec:
             - name: app
               mountPath: /app
               readOnly: true
-            - name: config
-              mountPath: /config/evogateway.cfg
-              subPath: evogateway.cfg
-              readOnly: true
-            - name: data
-              mountPath: /data
+            - name: gateway-config
+              mountPath: /app/config
+            - name: gateway-logs
+              mountPath: /app/logs
             - name: tmp
               mountPath: /tmp
       volumes:
@@ -111,8 +135,11 @@ spec:
         - name: config
           configMap:
             name: evohome-gateway-config
-        - name: data
+        - name: gateway-config
           persistentVolumeClaim:
-            claimName: evohome-gateway-data
+            claimName: evohome-gateway-config
+        - name: gateway-logs
+          persistentVolumeClaim:
+            claimName: evohome-gateway-logs
         - name: tmp
           emptyDir: {}

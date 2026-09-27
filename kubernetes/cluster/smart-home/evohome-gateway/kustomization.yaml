@@ -8,3 +8,8 @@ configMapGenerator:
   - name: evohome-gateway-config
     files:
       - evogateway.cfg=config/evogateway.cfg
+  - name: evohome-gateway
+    literals:
+      - PYTHONPATH=/app/vendor:/app/source
+      - PYTHONUNBUFFERED=1
+      - TZ=Europe/Amsterdam
