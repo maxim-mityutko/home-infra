@@ -82,6 +82,9 @@ spec:
               value: "True"
             - name: gverbose
               value: "False"
+            # Allow / Block commands from outside to the inverter
+            - name: gblockcmd
+              value: "False"
           readinessProbe:
             # A TCP probe opens a real Grott proxy session, which generates a
             # GrottServer connection log on every probe. Inspect the listening
