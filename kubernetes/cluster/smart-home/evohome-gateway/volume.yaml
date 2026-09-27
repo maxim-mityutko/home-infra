@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: evohome-gateway-data
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: evohome-gateway
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-subdir
+  resources:
+    requests:
+      storage: 1Gi
