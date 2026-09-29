@@ -12,10 +12,10 @@ spec:
     - port: health
       scheme: http
       path: /metrics
-      scrapeTimeout: 180s
-      # Keep the interval longer than the timeout so slow repository queries
-      # cannot accumulate overlapping exporter requests during backups.
-      interval: 5m
+      scrapeTimeout: 10m
+      # Repository queries can outlive a timed-out HTTP request, so leave enough
+      # time for the exporter subprocess to finish before the next scrape starts.
+      interval: 30m
       relabelConfigs:
         - target_label: job
           replacement: borgmatic
