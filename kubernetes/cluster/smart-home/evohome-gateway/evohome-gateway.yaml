@@ -1,0 +1,145 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evohome-gateway
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: evohome-gateway
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: evohome-gateway
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: evohome-gateway
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+        - name: fetch-source
+          image: alpine/git:2.52.0
+          command:
+            - sh
+            - -ec
+            - |
+              git init /app/source
+              git -C /app/source remote add origin https://github.com/smar000/evoGateway.git
+              git -C /app/source fetch --depth 1 origin refs/tags/v4.6.2
+              git -C /app/source checkout --detach FETCH_HEAD
+              rm -rf /app/source/.git
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - name: app
+              mountPath: /app
+            - name: config
+              mountPath: /config-template/evogateway.cfg
+              subPath: evogateway.cfg
+              readOnly: true
+            - name: gateway-config
+              mountPath: /app/config
+            - name: gateway-logs
+              mountPath: /app/logs
+        - name: initialize-config
+          image: busybox:1.37.0
+          command:
+            - sh
+            - -ec
+            - |
+              cp /config-template/evogateway.cfg /app/config/evogateway.cfg
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 50m
+              memory: 32Mi
+          volumeMounts:
+            - name: config
+              mountPath: /config-template/evogateway.cfg
+              subPath: evogateway.cfg
+              readOnly: true
+            - name: gateway-config
+              mountPath: /app/config
+        - name: install-dependencies
+          image: python:3.12.12-slim
+          command:
+            - sh
+            - -ec
+            - pip install --no-cache-dir --target /app/vendor -r /app/source/requirements.txt
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 512Mi
+          volumeMounts:
+            - name: app
+              mountPath: /app
+      containers:
+        - name: evohome-gateway
+          image: python:3.12.12-slim
+          tty: true
+          command:
+            - python
+            - /app/source/evogateway.py
+            - --config
+            - /app/config/evogateway.cfg
+          envFrom:
+            - configMapRef:
+                name: evohome-gateway
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: app
+              mountPath: /app
+              readOnly: true
+            - name: gateway-config
+              mountPath: /app/config
+            - name: gateway-logs
+              mountPath: /app/logs
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: app
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: evohome-gateway-config
+        - name: gateway-config
+          persistentVolumeClaim:
+            claimName: evohome-gateway-config
+        - name: gateway-logs
+          persistentVolumeClaim:
+            claimName: evohome-gateway-logs
+        - name: tmp
+          emptyDir: {}
