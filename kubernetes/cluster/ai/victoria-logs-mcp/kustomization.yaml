@@ -9,7 +9,7 @@ helmCharts:
   - name: victoria-logs-mcp
     namespace: ai
     releaseName: vl-mcp
-    version: 0.1.0
+    version: 0.2.0
     repo: https://victoriametrics.github.io/helm-charts/
     valuesInline:
       fullnameOverride: vl-mcp
