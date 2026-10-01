@@ -40,6 +40,10 @@ helmCharts:
               - auth.brhd.io
         worker:
           replicas: 1
+          livenessProbe:
+            timeoutSeconds: 10
+          readinessProbe:
+            timeoutSeconds: 10
         prometheus:
           rules:
             enabled: false
