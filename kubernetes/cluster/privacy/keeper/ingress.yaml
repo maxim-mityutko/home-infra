@@ -1,0 +1,39 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keeper
+  namespace: privacy
+  labels:
+    app.kubernetes.io/name: keeper
+  annotations:
+    kubernetes.io/ingress.class: public
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  rules:
+    - host: keeper.brhd.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: keeper
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - keeper.brhd.io
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: keeper.brhd.io
+  namespace: privacy
+spec:
+  endpoints:
+    - dnsName: keeper.brhd.io
+      recordTTL: 86400
+      recordType: CNAME
+      targets:
+        - casa.brhd.io
