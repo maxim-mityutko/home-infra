@@ -1,0 +1,23 @@
+# Longhorn replicated StorageClass for general RWO volumes.
+#
+# Nodes must be labeled with topology.kubernetes.io/zone. Each Raspberry Pi
+# should have its own zone, while all Proxmox VMs share the proxmox zone.
+# With replicaZoneSoftAntiAffinity disabled and two replicas, Longhorn must
+# place replicas in two different zones and must not put both on Proxmox.
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: longhorn-replicated
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "false"
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
+parameters:
+  numberOfReplicas: "2"
+  staleReplicaTimeout: "1440"
+  fsType: ext4
+  replicaSoftAntiAffinity: disabled
+  replicaZoneSoftAntiAffinity: disabled
