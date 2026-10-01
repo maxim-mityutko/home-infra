@@ -17,13 +17,18 @@ helmCharts:
             send_pii: false
           log_level: warning
           postgresql:
-            host: cnpg-ha-rw.default.svc.cluster.local.
+            host: cnpg-ha-rw-pooler.default.svc.cluster.local.
         blueprints:
           configMaps: []
         global:
           revisionHistoryLimit: 1
           deploymentStrategy: 
             type: RollingUpdate
+          env:
+            - name: AUTHENTIK_POSTGRESQL__CONN_HEALTH_CHECKS
+              value: "true"
+            - name: AUTHENTIK_POSTGRESQL__DISABLE_SERVER_SIDE_CURSORS
+              value: "true"
           envFrom:
             - secretRef:
                 name: authentik-postgres
