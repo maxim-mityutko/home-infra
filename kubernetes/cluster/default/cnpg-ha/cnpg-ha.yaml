@@ -9,6 +9,7 @@ spec:
   instances: 3
   enablePDB: true
   primaryUpdateStrategy: unsupervised
+  primaryUpdateMethod: switchover
   logLevel: info
 
   postgresql:
