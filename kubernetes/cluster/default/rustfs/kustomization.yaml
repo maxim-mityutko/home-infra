@@ -78,6 +78,7 @@ helmCharts:
             paths:
               - path: /
                 pathType: ImplementationSpecific
+                servicePort: endpoint
 
       resources:
         limits:
