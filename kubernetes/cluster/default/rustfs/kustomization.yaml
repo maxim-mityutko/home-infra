@@ -9,7 +9,7 @@ helmCharts:
   - name: rustfs
     namespace: rustfs
     releaseName: rustfs
-    version: 1.0.0
+    version: 1.0.1
     repo: https://charts.rustfs.com/
     valuesInline:
       replicaCount: 1
@@ -78,6 +78,7 @@ helmCharts:
             paths:
               - path: /
                 pathType: ImplementationSpecific
+                servicePort: endpoint
 
       resources:
         limits:
