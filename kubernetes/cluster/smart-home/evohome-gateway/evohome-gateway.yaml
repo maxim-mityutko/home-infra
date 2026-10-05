@@ -94,6 +94,7 @@ spec:
       containers:
         - name: evohome-gateway
           image: python:3.12.12-slim
+          workingDir: /app/config
           tty: true
           command:
             - python
