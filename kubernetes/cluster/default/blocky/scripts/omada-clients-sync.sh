@@ -1,8 +1,10 @@
 #!/bin/sh
 #
-# Sync Omada clients from the configured LAN subnet into Blocky's generated
-# clientLookup ConfigMap, then patch the Blocky StatefulSet annotation so pods
-# roll when the generated config changes.
+# Sync recently seen Omada clients from the configured LAN subnet into Blocky's
+# generated clientLookup ConfigMap. Existing entries are retained when a client
+# is absent from Omada, while clients reported by Omada are added or have their
+# IP address updated. Patch the Blocky StatefulSet annotation only when the
+# generated config changes.
 #
 # Prerequisites:
 # - Omada OpenAPI access must be enabled and the client credentials must have
@@ -168,8 +170,8 @@ fetch_clients
 raw_client_count="$(wc -l < "$workdir/clients.jsonl" | tr -d ' ')"
 echo "Retained $raw_client_count recent client records inside $lan_gateway_subnet"
 
-clients="$(
-  jq -s -r '
+observed_clients="$(
+  jq -s '
     def trim: gsub("^\\s+|\\s+$"; "");
 
     map({
@@ -184,12 +186,62 @@ clients="$(
       name: .[0].name,
       ips: (map(.ips[]) | unique | sort)
     })
-    | map(
-      "    " + (.name | @json) + ":\n" +
-      (.ips | map("      - " + .) | join("\n"))
-    )
-    | join("\n")
+    | reduce .[] as $client ({}; .[$client.name] = $client.ips)
   ' "$workdir/clients.jsonl"
+)"
+
+if kubectl get configmap "$CLIENT_LOOKUP_CONFIGMAP" >/dev/null 2>&1; then
+  kubectl get configmap "$CLIENT_LOOKUP_CONFIGMAP" -o json |
+  jq -er '.data["omada-client-lookup.yml"] // ""' > "$workdir/existing-client-lookup.yml"
+else
+  : > "$workdir/existing-client-lookup.yml"
+fi
+
+existing_clients="$(
+  jq -Rrs '
+    split("\n")
+    | reduce .[] as $line (
+        {clients: {}, current_name: null};
+        if ($line | test("^    .+:$")) then
+          ($line | capture("^    (?<name>.+):$").name | fromjson) as $name
+          | .current_name = $name
+          | .clients[$name] = (.clients[$name] // [])
+        elif .current_name != null and ($line | test("^      - [0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$")) then
+          .clients[.current_name] += [($line | capture("^      - (?<ip>.+)$").ip)]
+        else
+          .
+        end
+      )
+    | .clients
+  ' "$workdir/existing-client-lookup.yml"
+)"
+
+merged_clients="$(
+  jq -n \
+    --argjson existing "$existing_clients" \
+    --argjson observed "$observed_clients" '
+      ([ $observed[]?[] ] | unique) as $observed_ips
+      | (
+          $existing
+          | with_entries(
+              .value |= ([ .[] | select(. as $ip | $observed_ips | index($ip) | not) ])
+            )
+          | with_entries(select(.value | length > 0))
+        ) + $observed
+    '
+)"
+
+clients="$(
+  printf '%s' "$merged_clients" |
+  jq -r '
+    to_entries
+    | sort_by(.key | ascii_downcase)
+    | map(
+        "    " + (.key | @json) + ":\n" +
+        (.value | unique | sort | map("      - " + .) | join("\n"))
+      )
+    | join("\n")
+  '
 )"
 
 {
@@ -201,7 +253,7 @@ clients="$(
     printf '  clients: {}\n'
   fi
 } > "$workdir/omada-client-lookup.yml"
-echo "Generated Omada client lookup config"
+echo "Generated Omada client lookup config from current and retained clients"
 
 new_hash="$(sha256sum "$workdir/omada-client-lookup.yml" | awk '{print $1}')"
 old_hash="$(
