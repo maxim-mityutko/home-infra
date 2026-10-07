@@ -219,8 +219,16 @@ existing_clients="$(
 merged_clients="$(
   jq -n \
     --argjson existing "$existing_clients" \
-    --argjson observed "$observed_clients" \
-    '$existing + $observed'
+    --argjson observed "$observed_clients" '
+      ([ $observed[]?[] ] | unique) as $observed_ips
+      | (
+          $existing
+          | with_entries(
+              .value |= ([ .[] | select(. as $ip | $observed_ips | index($ip) | not) ])
+            )
+          | with_entries(select(.value | length > 0))
+        ) + $observed
+    '
 )"
 
 clients="$(
