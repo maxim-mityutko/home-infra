@@ -120,6 +120,8 @@ machine-learning:
               spec:
                 initialDelaySeconds: 90
                 periodSeconds: 30
+                timeoutSeconds: 5
+                failureThreshold: 10
             readiness:
               spec:
                 initialDelaySeconds: 30
