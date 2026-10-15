@@ -29,9 +29,6 @@ helmCharts:
             matchLabels:
               k8s-app: kube-dns
 
-      podDisruptionBudget:
-        minAvailable: 1
-
       prometheus:
         service:
           enabled: false
