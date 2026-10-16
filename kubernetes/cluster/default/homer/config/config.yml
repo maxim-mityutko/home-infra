@@ -181,6 +181,10 @@ services:
         logo: "https://cdn.brhd.io/cdn/icons/vikunja.svg"
         url: "https://todo.brhd.io"
         target: "_blank"
+      - name: "Keeper.sh"
+        tag: "calendar"
+        url: "https://keeper.brhd.io"
+        target: "_blank"
   - name: "Media & Downloads"
     icon: "fas fa-download"
     items:
