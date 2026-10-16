@@ -81,6 +81,13 @@ spec:
                 values:
                   - cnpg-ha
           topologyKey: kubernetes.io/hostname
+        - labelSelector:
+            matchExpressions:
+              - key: cnpg.io/cluster
+                operator: In
+                values:
+                  - cnpg-ha
+          topologyKey: topology.kubernetes.io/zone
 
   bootstrap:
     # Ref: https://cloudnative-pg.io/documentation/current/recovery/#recovery-from-a-backup-object
