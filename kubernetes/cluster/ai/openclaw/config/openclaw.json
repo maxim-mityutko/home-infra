@@ -534,7 +534,11 @@
   },
   "memory": {
     "search": {
-      "provider": "none"
+      "provider": "none",
+      "sources": ["memory", "sessions"],
+      "experimental": {
+        "sessionMemory": true
+      }
     }
   },
   "meta": {
