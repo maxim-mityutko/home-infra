@@ -1,0 +1,22 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  labels:
+    app.kubernetes.io/instance: victoria-metrics
+  name: drm-exporter
+  namespace: gpu
+spec:
+  endpoints:
+    - port: metrics
+      path: /metrics
+      scheme: http
+      scrapeTimeout: 10s
+      interval: 30s
+      relabelConfigs:
+        - source_labels: [__meta_kubernetes_pod_node_name]
+          target_label: node
+        - target_label: job
+          replacement: drm-exporter
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: drm-exporter
