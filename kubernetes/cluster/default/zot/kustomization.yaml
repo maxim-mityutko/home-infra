@@ -9,7 +9,7 @@ helmCharts:
   - name: zot
     namespace: default
     releaseName: zot
-    version: 0.1.126
+    version: 0.1.128
     repo: http://zotregistry.dev/helm-charts
     valuesInline:
       image:
