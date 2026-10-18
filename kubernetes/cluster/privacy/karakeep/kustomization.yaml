@@ -8,7 +8,7 @@ helmCharts:
   - name: karakeep
     namespace: privacy
     releaseName: karakeep
-    version: 0.33.1
+    version: 0.34.1
     repo: https://karakeep-app.github.io/helm-charts
     valuesInline:
       # This chart inherits from the bjw-s library chart. You can check the default values/options here:
@@ -133,8 +133,8 @@ helmCharts:
           MEILI_ENV: production
           MEILI_NO_ANALYTICS: "true"
           MEILI_LOG_LEVEL: WARN
-          # Required to migrate the existing v1.13 database when v1.38 starts.
-          MEILI_EXPERIMENTAL_DUMPLESS_UPGRADE: "true"
+          # Required to migrate the existing database for the chart's Meilisearch v1.55 upgrade.
+          MEILI_UPGRADE_DB: "true"
         auth:
           existingMasterKeySecret: karakeep
         persistence:
