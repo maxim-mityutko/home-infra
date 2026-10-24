@@ -96,6 +96,7 @@ spec:
                 - grep -q '00000000:149F 00000000:0000 0A' /proc/net/tcp
             initialDelaySeconds: 5
             periodSeconds: 10
+            timeoutSeconds: 3
           livenessProbe:
             exec:
               command:
@@ -104,3 +105,4 @@ spec:
                 - grep -q '00000000:149F 00000000:0000 0A' /proc/net/tcp
             initialDelaySeconds: 15
             periodSeconds: 30
+            timeoutSeconds: 3
