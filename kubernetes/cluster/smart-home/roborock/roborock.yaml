@@ -1,5 +1,5 @@
 # Service: Roborock Local Server
-# Endpoint: api-roborock.brhd.io:443 (HTTPS), :8881 (MQTT/TLS)
+# Endpoint: api-roborock.internal.brhd.io:443 (HTTPS), :8881 (MQTT/TLS)
 # Label: app.kubernetes.io/name: roborock
 ---
 apiVersion: v1

@@ -252,7 +252,7 @@ services:
       - name: "Roborock"
         subtitle: "Local Roborock server administration"
         tag: "smart-home"
-        url: "https://api-roborock.brhd.io/admin"
+        url: "https://api-roborock.internal.brhd.io/admin"
       - name: "Frigate"
         logo: "https://cdn.brhd.io/cdn/icons/frigate.svg"
         tag: "smart-home"

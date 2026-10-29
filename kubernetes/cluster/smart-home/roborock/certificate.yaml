@@ -10,6 +10,6 @@ spec:
   issuerRef:
     name: lets-encrypt
     kind: ClusterIssuer
-  commonName: api-roborock.brhd.io
+  commonName: api-roborock.internal.brhd.io
   dnsNames:
-    - api-roborock.brhd.io
+    - api-roborock.internal.brhd.io

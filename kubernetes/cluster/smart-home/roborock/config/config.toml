@@ -1,5 +1,5 @@
 [network]
-stack_fqdn = "api-roborock.brhd.io"
+stack_fqdn = "api-roborock.internal.brhd.io"
 bind_host = "0.0.0.0"
 https_port = 443
 mqtt_tls_port = 8881
