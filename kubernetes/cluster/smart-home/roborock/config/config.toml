@@ -1,0 +1,37 @@
+[network]
+stack_fqdn = "api-roborock.brhd.io"
+bind_host = "0.0.0.0"
+https_port = 443
+mqtt_tls_port = 8881
+listener_mode = "local_tls"
+region = "eu"
+
+[broker]
+mode = "external"
+host = "mqtt.internal.brhd.io"
+port = 1883
+enable_topic_bridge = true
+
+[storage]
+data_dir = "/data"
+
+[logging]
+max_size_mb = 10
+backup_count = 3
+
+[tls]
+mode = "provided"
+cert_file = "/run/tls/tls.crt"
+key_file = "/run/tls/tls.key"
+
+[admin]
+# Replace all placeholder values before deploying this service.
+password_hash = "REPLACE_WITH_PBKDF2_SHA256_ADMIN_PASSWORD_HASH"
+session_secret = "REPLACE_WITH_RANDOM_SESSION_SECRET"
+protocol_auth_enabled = true
+new_connections_enabled = true
+protocol_login_email = "replace-me@example.invalid"
+protocol_login_pin_hash = "REPLACE_WITH_PBKDF2_SHA256_PROTOCOL_LOGIN_PIN_HASH"
+
+[turn]
+mode = "disabled"

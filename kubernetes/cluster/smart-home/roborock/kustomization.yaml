@@ -5,3 +5,7 @@ resources:
   - certificate.yaml
   - roborock.yaml
   - volumes.yaml
+configMapGenerator:
+  - name: roborock-config
+    files:
+      - config.toml=config/config.toml
