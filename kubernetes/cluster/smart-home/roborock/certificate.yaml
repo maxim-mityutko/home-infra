@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: roborock
+  namespace: smart-home
+  labels:
+    app.kubernetes.io/name: roborock
+spec:
+  secretName: roborock-tls
+  issuerRef:
+    name: lets-encrypt
+    kind: ClusterIssuer
+  commonName: api-roborock.internal.brhd.io
+  dnsNames:
+    - api-roborock.internal.brhd.io
