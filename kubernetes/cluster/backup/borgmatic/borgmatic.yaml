@@ -97,7 +97,7 @@ metadata:
     app.kubernetes.io/name: borgmatic
 data:
   TZ: "Europe/Amsterdam"
-  BACKUP_CRON: "0 4 * * *"
+  BACKUP_CRON: "0 5 * * *"
   RUN_ON_STARTUP: "false"
   BORGMATIC_CONFIG: "/etc/borgmatic.d/"
   BORGMATIC_EXPORTER_CACHE_TIMEOUT: "3600"
