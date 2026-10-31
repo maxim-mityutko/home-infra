@@ -37,7 +37,11 @@ spec:
         description: Pod {{ $labels.pod }} has a query exceeding its expected transaction duration.
         summary: A query is running longer than expected.
       expr: |-
-        (cnpg_backends_max_tx_duration_seconds{application_name!="pg_dump"} > 300)
+        (cnpg_backends_max_tx_duration_seconds{application_name!="pg_dump",application_name!="postgres.js"} > 300)
+        or
+        (cnpg_backends_max_tx_duration_seconds{application_name="postgres.js",datname!="immich"} > 300)
+        or
+        (cnpg_backends_max_tx_duration_seconds{application_name="postgres.js",datname="immich"} > 1800)
         or
         (cnpg_backends_max_tx_duration_seconds{application_name="pg_dump"} > 600)
       for: 1m
