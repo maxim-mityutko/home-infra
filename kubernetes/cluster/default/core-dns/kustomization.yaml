@@ -87,8 +87,11 @@ helmCharts:
         # - name: prometheus
         #   parameters: 0.0.0.0:9153
         - name: forward
-          parameters: . 192.168.12.1
+          # Keep the router resolver preferred for private LAN names, but retain
+          # public DNS when it is temporarily unavailable.
+          parameters: . 192.168.12.1 1.1.1.1 9.9.9.9
           configBlock: |-
+            policy sequential
             max_concurrent 1000
         - name: cache
           parameters: 30
