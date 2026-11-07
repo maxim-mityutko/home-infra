@@ -4,7 +4,7 @@ namespace: default
 configMapGenerator:
   - name: blocky-dashboard
     files:
-      - https://raw.githubusercontent.com/0xERR0R/blocky/v0.32.0/docs/blocky-grafana.json
+      - https://raw.githubusercontent.com/0xERR0R/blocky/v0.35.0/docs/blocky-grafana.json
 generatorOptions:
   labels:
     grafana-dashboard: "true"
