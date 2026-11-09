@@ -33,7 +33,10 @@ sqlite_databases:
   # - name: jellyfin-library
   #   path: /mnt/k8s/pods/jellyfin-config/data/library.db
   - name: stash
-    path: /mnt/k8s/pods/stash-config/stash-go.sqlite
+    # Stash is scaled down during backups. Immutable mode avoids SQLite's
+    # locking path on the NFS-mounted database while keeping this read-only.
+    path: "file:/mnt/k8s/pods/stash-config/stash-go.sqlite?immutable=1"
+    restore_path: /mnt/k8s/pods/stash-config/stash-go.sqlite
   - name: frigate
     path: /mnt/k8s/pods/frigate-config/frigate.db
 apprise:
