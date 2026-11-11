@@ -106,7 +106,7 @@ machine-learning:
         main:
           image:
             repository: ghcr.io/immich-app/immich-machine-learning
-            tag: v3.3.6-openvino # Use <tag>-cuda for NVidia GPUs
+            tag: v3.4.0-openvino # Use <tag>-cuda for NVidia GPUs
           env:
             MACHINE_LEARNING_REQUEST_THREADS: "2"
           resources:
