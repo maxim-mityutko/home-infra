@@ -5,9 +5,8 @@ configMapGenerator:
   - name: blocky-dashboard
     files:
       # - https://raw.githubusercontent.com/0xERR0R/blocky/v0.35.0/docs/blocky-grafana.json
-      # Custom version that supports filtering by client in the Traffic section, but
-      # requires Grafana v13.0 or higher.
-      - https://raw.githubusercontent.com/maxim-mityutko/blocky/refs/heads/feature/grafana-dashboard-queries-by-client/docs/blocky-grafana.json
+      # - The PR with the updated dashboard has been merged, ref: https://github.com/0xERR0R/blocky/pull/2375
+      - https://raw.githubusercontent.com/0xERR0R/blocky/23ffddb235ced0a87910f6713bd33d2263e6e1b6/docs/blocky-grafana.json
 generatorOptions:
   labels:
     grafana-dashboard: "true"
