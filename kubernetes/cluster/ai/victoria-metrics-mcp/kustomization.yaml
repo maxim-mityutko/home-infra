@@ -68,6 +68,14 @@ helmCharts:
         initialDelaySeconds: 10
         timeoutSeconds: 5
         periodSeconds: 30
+      startupProbe:
+        httpGet:
+          path: /health/readiness
+          port: http
+          scheme: HTTP
+        failureThreshold: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
       scrape:
         enabled: false
 patches:
