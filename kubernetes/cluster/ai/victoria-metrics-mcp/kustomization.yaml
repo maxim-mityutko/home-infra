@@ -73,7 +73,7 @@ helmCharts:
           path: /health/readiness
           port: http
           scheme: HTTP
-        failureThreshold: 30
+        failureThreshold: 12
         periodSeconds: 10
         timeoutSeconds: 5
       scrape:
