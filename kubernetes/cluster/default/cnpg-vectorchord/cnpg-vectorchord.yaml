@@ -6,9 +6,10 @@ metadata:
 spec:
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.5-0.3.0
   imagePullPolicy: IfNotPresent
-  instances: 1
-  enablePDB: false
+  instances: 3
+  enablePDB: true
   primaryUpdateStrategy: unsupervised
+  primaryUpdateMethod: switchover
   logLevel: info
 
   postgresql:
@@ -23,7 +24,8 @@ spec:
   managed:
     # Ref: https://cloudnative-pg.io/documentation/current/service_management/
     services:
-      disabledDefaultServices: ["r","ro"]
+      # Keep `ro` for Borgmatic's read-only logical dumps.
+      disabledDefaultServices: ["r"]
 
   enableSuperuserAccess: true
   superuserSecret:
@@ -38,8 +40,7 @@ spec:
   
   storage:
     size: 5Gi
-    # resizeInUseVolumes: true
-    storageClass: nfs-subdir
+    storageClass: openebs-hostpath
 
   # Ref: https://cloudnative-pg.io/documentation/current/wal_archiving/#plugin-based-architecture
   plugins:
@@ -48,7 +49,8 @@ spec:
       # Ref: https://github.com/cloudnative-pg/plugin-barman-cloud/issues/682
       isWALArchiver: true
       parameters:
-        serverName: cnpg-vectorchord
+        # Do not reuse the NFS cluster's archive prefix after recovery.
+        serverName: cnpg-vectorchord-openebs
         barmanObjectName: cnpg-vectorchord-barman
 
   # Ref: https://cloudnative-pg.io/documentation/current/instance_manager/
@@ -73,6 +75,24 @@ spec:
             - key: feature.node.kubernetes.io/storage-nonrotationaldisk
               operator: In
               values: ["true"]
+            - key: node.kubernetes.io/microk8s-controlplane
+              operator: Exists
+    additionalPodAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: cnpg.io/cluster
+                operator: In
+                values:
+                  - cnpg-vectorchord
+          topologyKey: kubernetes.io/hostname
+        - labelSelector:
+            matchExpressions:
+              - key: cnpg.io/cluster
+                operator: In
+                values:
+                  - cnpg-vectorchord
+          topologyKey: topology.kubernetes.io/zone
   bootstrap:
     # Ref: https://cloudnative-pg.io/documentation/current/recovery/#recovery-from-a-backup-object
     recovery:

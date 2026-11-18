@@ -21,7 +21,8 @@ postgresql_databases:
     password: ${POSTGRES_PASSWORD}
     format: tar
   - name: all
-    hostname: cnpg-vectorchord-rw.default.svc.cluster.local.
+    # CNPG's `ro` service selects replicas only; retain the leader for writes.
+    hostname: cnpg-vectorchord-ro.default.svc.cluster.local.
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     format: tar
