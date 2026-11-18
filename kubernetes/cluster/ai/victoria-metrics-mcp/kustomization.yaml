@@ -22,8 +22,15 @@ helmCharts:
       mcp:
         mode: http
         disable:
-          tools: []
-          resources: false
+          tools:
+            - documentation
+            - downsampling_filters_debug
+            - export
+            - flags
+            - metric_relabel_debug
+            - retention_filters_debug
+            - test_rules
+          resources: true
       service:
         type: ClusterIP
         port: 8080
