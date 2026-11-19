@@ -4,13 +4,14 @@ This runbook migrates `cnpg-default` or `cnpg-vectorchord` from its existing
 `nfs-subdir` PVC to a three-instance `openebs-hostpath` cluster. It is a
 controlled maintenance operation, not an in-place StorageClass conversion.
 
-## Why a cutover is required
+## Why a rolling storage recreation is required
 
 Kubernetes does not move an existing PVC when `storageClass` changes. Scaling a
-one-instance NFS cluster directly to three instances would leave the existing
-primary on NFS, which does not meet the target state. The procedure below
-recovers a replacement cluster from a fresh physical Barman backup and creates
-all three data PVCs on OpenEBS.
+one-instance NFS cluster directly to three instances leaves the existing
+primary on NFS, but causes CNPG to create the two *new* replicas with the new
+OpenEBS StorageClass. The procedure below uses those healthy, caught-up
+OpenEBS replicas to make a controlled switchover, then has CNPG replace the
+remaining NFS-backed standby. This avoids a full restore/recovery cutover.
 
 The target manifests intentionally:
 
@@ -89,39 +90,70 @@ validation has completed.
 
 3. Ensure the final-state commit is on `main`, then render it locally and
    inspect the exact desired Cluster. It must show `instances: 3`,
-   `openebs-hostpath`, `enablePDB: true`, `primaryUpdateMethod: switchover`,
-   the two required anti-affinity rules, and only `r` in
-   `disabledDefaultServices`.
+   `storage.resizeInUseVolumes: false`, `openebs-hostpath`, `enablePDB: true`,
+   `primaryUpdateMethod: switchover`, the two required anti-affinity rules, and
+   only `r` in `disabledDefaultServices`.
 
    ```bash
    kubectl kustomize "kubernetes/cluster/default/${CLUSTER}" > "/tmp/${CLUSTER}.yaml"
-   rg -n 'instances: 3|openebs-hostpath|enablePDB: true|primaryUpdateMethod: switchover|disabledDefaultServices|topologyKey' \
+   rg -n 'instances: 3|resizeInUseVolumes: false|openebs-hostpath|enablePDB: true|primaryUpdateMethod: switchover|disabledDefaultServices|topologyKey' \
      "/tmp/${CLUSTER}.yaml"
    ```
 
-4. Delete the old Cluster and **only its PVC**. The NFS StorageClass/PV uses a
-   `Retain` policy, so do not delete the resulting PV. Confirm the names before
-   each destructive command.
-
-   ```bash
-   kubectl -n default get cluster "$CLUSTER"
-   kubectl -n default get pvc -o wide | rg "^${CLUSTER}-"
-   kubectl -n default delete cluster "$CLUSTER" --wait=true
-   kubectl -n default delete pvc "${CLUSTER}-1"
-   kubectl get pv -o wide | rg "${CLUSTER}-1"
-   ```
-
-5. Apply the rendered final state. The external-cluster entry reads the old
-   archive prefix, while the plugin writes new WAL/base backups to the distinct
-   `<cluster>-openebs` prefix. Never set `skipEmptyWalArchiveCheck` to bypass
-   this separation.
+4. Apply the rendered desired state without deleting the Cluster. CNPG retains
+   the existing NFS primary and creates two new replicas. Wait for both new
+   instances to be Ready and fully caught up; verify that their PVCs use
+   `openebs-hostpath`. Do not continue if either replica is lagging, not Ready,
+   or on an unsuitable node.
 
    ```bash
    kubectl apply -f "/tmp/${CLUSTER}.yaml"
    kubectl -n default wait --for=condition=Ready "cluster/${CLUSTER}" --timeout=2h
+   kubectl -n default get cluster "$CLUSTER" -o wide
+   kubectl -n default get pods -l "cnpg.io/cluster=${CLUSTER}" -o wide
+   kubectl -n default get pvc -o wide | rg "^${CLUSTER}-"
    ```
 
-6. Verify all three data volumes and instances before resuming writers:
+   Identify the two OpenEBS instances from the PVC StorageClass rather than
+   assuming a numeric instance name. Confirm their recovery state and LSN
+   position with the CNPG status output before proceeding.
+
+5. Stop writers, choose one verified OpenEBS replica, and make it primary with
+   a controlled CNPG switchover. Confirm that the selected instance owns the
+   `-rw` service afterwards. Do **not** delete a Pod to force promotion.
+
+   ```bash
+   OPENEBSP_PRIMARY=<verified-openebs-instance-name-or-number>
+   kubectl cnpg promote "$CLUSTER" "$OPENEBSP_PRIMARY" -n default
+   kubectl -n default wait --for=condition=Ready "cluster/${CLUSTER}" --timeout=15m
+   kubectl -n default get cluster "$CLUSTER" -o wide
+   kubectl -n default get pods -l "cnpg.io/cluster=${CLUSTER}" -o wide
+   kubectl -n default get endpointslice -l kubernetes.io/service-name="${CLUSTER}-rw"
+   ```
+
+6. The former NFS primary is now a standby. Record its PVC/PV names and ensure
+   its PV uses `Retain`. Remove that instance through CNPG, not by deleting its
+   Pod or PVC directly. CNPG creates a new replica from the OpenEBS primary;
+   wait for that replacement to become Ready before doing anything else.
+
+   ```bash
+   NFS_INSTANCE=<former-primary-instance-number>
+   kubectl -n default get pvc "${CLUSTER}-${NFS_INSTANCE}" -o wide
+   kubectl get pv -o wide | rg "${CLUSTER}-${NFS_INSTANCE}"
+   kubectl cnpg destroy "$CLUSTER" "$NFS_INSTANCE" -n default
+   kubectl -n default wait --for=condition=Ready "cluster/${CLUSTER}" --timeout=2h
+   kubectl -n default get pods -l "cnpg.io/cluster=${CLUSTER}" -o wide
+   kubectl -n default get pvc -o wide | rg "^${CLUSTER}-"
+   ```
+
+   Keep the released NFS PV intact as rollback evidence. If any other
+   NFS-backed standby remains, repeat this step for one instance at a time,
+   waiting for its OpenEBS replacement to be Ready before continuing.
+
+7. Verify all three data volumes and instances before resuming writers. The
+   external-cluster entry must still read the old archive prefix, while the
+   plugin writes new WAL/base backups to the distinct `<cluster>-openebs`
+   prefix. Never set `skipEmptyWalArchiveCheck` to bypass this separation.
 
    ```bash
    kubectl -n default get cluster "$CLUSTER" -o wide
@@ -135,11 +167,11 @@ validation has completed.
    replicas. Take a second successful CNPG backup to confirm the new archive
    prefix works.
 
-7. Apply the Borgmatic Kustomization and run one on-demand Borgmatic database
+8. Apply the Borgmatic Kustomization and run one on-demand Borgmatic database
    backup. Verify its PostgreSQL connection uses `<cluster>-ro` and the dump
    succeeds. It should fail rather than fall back to the leader if no replica
    is ready.
-8. Resume application writers, then remove the Argo CD guard and confirm it
+9. Resume application writers, then remove the Argo CD guard and confirm it
    reports `Synced` and `Healthy`:
 
    ```bash
@@ -150,15 +182,18 @@ validation has completed.
 
 ## Rollback
 
-Before writers resume, stop the failed replacement, retain its OpenEBS PVCs for
-forensics, reapply the prior Git revision, and restore the retained NFS PV/PVC
-only through an explicit Kubernetes PV reclaim procedure. Do not try to mount
-the old NFS data directory into the new cluster. After any writer has resumed
-on the replacement, use Barman recovery/PITR from the last verified backup
-instead; rolling back to the old NFS copy would discard new writes.
+Before writers resume, stop the failed replacement and retain both the OpenEBS
+PVCs and the released NFS PV for forensics. If the controlled promotion has
+not happened, reapply the prior Git revision and keep the original NFS primary
+serving. After promotion, do not attempt to re-promote the retained NFS data:
+recover/PITR from the last verified Barman backup if the OpenEBS primary cannot
+continue. After any writer has resumed on the OpenEBS primary, rolling back to
+the old NFS copy would discard new writes.
 
 ## References
 
 - [CloudNativePG service management](https://cloudnative-pg.io/docs/1.29/service_management/)
+- [CloudNativePG storage recreation](https://cloudnative-pg.io/docs/current/storage/)
+- [CloudNativePG kubectl plugin](https://cloudnative-pg.io/docs/current/kubectl-plugin/)
 - [CloudNativePG recovery](https://cloudnative-pg.io/docs/1.26/recovery/)
 - [Barman Cloud plugin restore workflow](https://cloudnative-pg.io/plugin-barman-cloud/docs/usage/)
