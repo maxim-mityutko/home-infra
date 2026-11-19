@@ -45,7 +45,7 @@ volume portable if its node is permanently lost.
    kubectl -n default get backup -l cnpg.io/cluster="$CLUSTER" -o wide
    ```
 
-5. Take and verify a fresh Barman backup after write traffic is quiesced. Do
+5. Take and verify a fresh Barman backup while the database remains online. Do
    not rely on the scheduled backup being recent enough for the maintenance
    window. The exact `Backup` object must report `completed` with no error
    before proceeding.
@@ -75,8 +75,10 @@ volume portable if its node is permanently lost.
 Perform one cluster at a time. Keep the old NFS PV intact until post-cutover
 validation has completed.
 
-1. Stop or scale down every writer for the selected cluster. Confirm no active
-   client sessions remain except the migration operator.
+1. Keep application writers running while CNPG creates and catches up the two
+   OpenEBS replicas. Confirm the applications retry database connections: a
+   controlled switchover briefly disconnects existing sessions, but does not
+   require a planned write outage or a restore.
 2. Prevent Argo CD from reconciling the target Application while the old
    cluster is being removed. This annotation is deliberately temporary:
 
@@ -118,9 +120,10 @@ validation has completed.
    assuming a numeric instance name. Confirm their recovery state and LSN
    position with the CNPG status output before proceeding.
 
-5. Stop writers, choose one verified OpenEBS replica, and make it primary with
-   a controlled CNPG switchover. Confirm that the selected instance owns the
-   `-rw` service afterwards. Do **not** delete a Pod to force promotion.
+5. Announce the brief connection-retry window, choose one verified OpenEBS
+   replica, and make it primary with a controlled CNPG switchover. Confirm
+   that the selected instance owns the `-rw` service afterwards. Do **not**
+   delete a Pod to force promotion.
 
    ```bash
    OPENEBSP_PRIMARY=<verified-openebs-instance-name-or-number>
@@ -150,7 +153,8 @@ validation has completed.
    NFS-backed standby remains, repeat this step for one instance at a time,
    waiting for its OpenEBS replacement to be Ready before continuing.
 
-7. Verify all three data volumes and instances before resuming writers. The
+7. Verify all three data volumes and instances while application writers have
+   reconnected. The
    external-cluster entry must still read the old archive prefix, while the
    plugin writes new WAL/base backups to the distinct `<cluster>-openebs`
    prefix. Never set `skipEmptyWalArchiveCheck` to bypass this separation.
@@ -171,8 +175,8 @@ validation has completed.
    backup. Verify its PostgreSQL connection uses `<cluster>-ro` and the dump
    succeeds. It should fail rather than fall back to the leader if no replica
    is ready.
-9. Resume application writers, then remove the Argo CD guard and confirm it
-   reports `Synced` and `Healthy`:
+9. Confirm application writers have reconnected successfully, then remove the
+   Argo CD guard and confirm it reports `Synced` and `Healthy`:
 
    ```bash
    kubectl -n argocd annotate application "$CLUSTER" \
@@ -182,13 +186,13 @@ validation has completed.
 
 ## Rollback
 
-Before writers resume, stop the failed replacement and retain both the OpenEBS
-PVCs and the released NFS PV for forensics. If the controlled promotion has
-not happened, reapply the prior Git revision and keep the original NFS primary
-serving. After promotion, do not attempt to re-promote the retained NFS data:
-recover/PITR from the last verified Barman backup if the OpenEBS primary cannot
-continue. After any writer has resumed on the OpenEBS primary, rolling back to
-the old NFS copy would discard new writes.
+Before promotion, stop the failed replacement and retain both the OpenEBS PVCs
+and the released NFS PV for forensics. Reapply the prior Git revision and keep
+the original NFS primary serving. After promotion, do not attempt to
+re-promote the retained NFS data: recover/PITR from the last verified Barman
+backup if the OpenEBS primary cannot continue. Reverting to the old NFS copy
+after the switchover would discard writes already accepted by the OpenEBS
+primary.
 
 ## References
 
