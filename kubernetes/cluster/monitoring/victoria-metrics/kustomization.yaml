@@ -9,6 +9,7 @@ resources:
   - dashboards/
   - scrapers/
   - scaler.yaml
+  - victorialogs-datasource.yaml
 helmCharts:
     - name: victoria-metrics-k8s-stack
       namespace: monitoring
@@ -64,6 +65,8 @@ helmCharts:
         grafana:
           enabled: true
           revisionHistoryLimit: 1
+          plugins:
+            - victoriametrics-logs-datasource
           admin:
             existingSecret: grafana
             userKey: admin-user
