@@ -23,6 +23,15 @@ spec:
         app.kubernetes.io/name: borgmatic
     spec:
       restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: openclaw
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: borgmatic
           image: ghcr.io/maxim-mityutko/borgmatic-exporter:v0.6.2
