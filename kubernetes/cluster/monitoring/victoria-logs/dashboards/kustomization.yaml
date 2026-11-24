@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+configMapGenerator:
+  - name: dashboard-victorialogs-kubernetes-explorer
+    files:
+      - https://raw.githubusercontent.com/VictoriaMetrics/VictoriaLogs/refs/tags/v1.54.0/dashboards/victorialogs-kubernetes-explorer.json
+generatorOptions:
+  labels:
+    grafana-dashboard: "true"
