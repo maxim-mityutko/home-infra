@@ -159,6 +159,7 @@ runbook.
 | **Grott**          | Growatt proxy that publishes inverter telemetry to MQTT                         | [repo](https://github.com/johanmeijer/grott)                                                     | [docker](https://hub.docker.com/r/ledidobe/grott)                              |
 | **Frigate**        | Open source NVR built around real-time AI object detection                      |   [docs](https://docs.frigate.video)<br/>[repo](https://github.com/blakeblackshear/frigate)    |    [helm](https://github.com/blakeblackshear/blakeshome-charts/tree/master)    |
 | **Zigbee2MQTT**    | Zigbee to MQTT bridge                                                           |      [docs](https://www.zigbee2mqtt.io)<br/>[repo](https://github.com/Koenkk/zigbee2mqtt)      |             [docker](https://hub.docker.com/r/koenkk/zigbee2mqtt)              |
+| **evoGateway**     | Local evohome RF-to-MQTT gateway using the RAMSES_ESP MQTT transport             | [docs](https://github.com/smar000/evoGateway#configuration)<br/>[repo](https://github.com/smar000/evoGateway) | [docker build](https://github.com/smar000/evoGateway/blob/master/misc/Dockerfile) |
 
 ### Privacy
 
