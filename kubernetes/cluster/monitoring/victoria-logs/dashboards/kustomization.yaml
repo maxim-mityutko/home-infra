@@ -4,9 +4,7 @@ namespace: monitoring
 configMapGenerator:
   - name: dashboard-victorialogs-kubernetes-explorer
     files:
-      # Source: https://grafana.com/api/dashboards/25747/revisions/1/download
-      # Vendored with the default datasource set for file provisioning.
-      - victorialogs-kubernetes-explorer.json
+      - https://raw.githubusercontent.com/VictoriaMetrics/VictoriaLogs/refs/tags/v1.54.0/dashboards/victorialogs-kubernetes-explorer.json
 generatorOptions:
   labels:
     grafana-dashboard: "true"
