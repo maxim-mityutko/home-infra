@@ -16,7 +16,8 @@ read_special: true
 relocated_repo_access_is_ok: true
 postgresql_databases:
   - name: all
-    hostname: cnpg-default-rw.default.svc.cluster.local.
+    # CNPG's `ro` service selects replicas only; retain the leader for writes.
+    hostname: cnpg-default-ro.default.svc.cluster.local.
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     format: tar
