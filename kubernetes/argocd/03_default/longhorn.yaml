@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  destination:
+    name: in-cluster
+    namespace: longhorn-system
+  source:
+    path: kubernetes/cluster/default/longhorn
+    repoURL: 'https://github.com/maxim-mityutko/home-infra.git'
+    targetRevision: main
+  project: default
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      name: longhorn-ui
+      jsonPointers:
+        - /spec/replicas  # On-demand scaling
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - RespectIgnoreDifferences=true
