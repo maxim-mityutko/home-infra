@@ -96,8 +96,14 @@ data:
   RADARR__SERVER__ENABLESSL: "False"
   RADARR__SERVER__URLBASE: ""
 
-  RADARR__AUTH__METHOD: External
+  RADARR__AUTH__METHOD: Oidc
   RADARR__AUTH__REQUIRED: Enabled
+
+  RADARR__AUTH__OIDCAUTHORITY: "https://auth.example.com/application/o/radarr/"
+  RADARR__AUTH__OIDCCLIENTID: "your-client-id"
+  RADARR__AUTH__OIDCCLIENTSECRET: "your-client-secret"
+  RADARR__AUTH__OIDCUSERIDENTIFIER: "your-verified-email-or-sub"
+  RADARR__AUTH__OIDCSCOPES: "openid profile email"
 
   RADARR__UPDATE__MECHANISM: Docker
 
