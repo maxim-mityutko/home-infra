@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: pairdrop
-          image: ghcr.io/schlagmichdoch/pairdrop:v1.11.2
+          image: ghcr.io/schlagmichdoch/pairdrop:v1.11.3
           resources:
             requests:
               memory: 50Mi
